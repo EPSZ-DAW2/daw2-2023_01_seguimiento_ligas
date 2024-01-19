@@ -12,7 +12,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
 
-    'name' => 'Ligacesto',  // Nombre de la apicación
+'name' => 'Ligacesto',  // Nombre de la apicación
 
     'components' => [
         'request' => [
