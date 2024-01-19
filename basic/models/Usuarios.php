@@ -13,7 +13,7 @@ use yii\helpers\ArrayHelper;
  * @property string $apellido1
  * @property string $apellido2
  * @property string $email
- * @property string $clave
+ * @property string $password
  * @property string $provincia
 
  */
@@ -33,8 +33,8 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function rules()
     {
         return [
-            [['nombre','apellido1','apellido2','email','clave','provincia', 'rol', 'auth_key', 'reg_token'], 'required'],
-            [['nombre', 'apellido1', 'apellido2', 'email', 'clave', 'provincia'], 'string', 'max' => 255],
+            [['nombre','apellido1','apellido2','email','password','provincia', 'rol', 'auth_key', 'reg_token'], 'required'],
+            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia'], 'string', 'max' => 255],
             [['email'], 'unique'],
             [['email'], 'email'],
             [['rol'], 'string', 'max' => 1],
@@ -54,7 +54,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             'apellido1' => Yii::t('app', 'Apellido1'),
             'apellido2' => Yii::t('app', 'Apellido2'),
             'email' => Yii::t('app', 'Email'),
-            'clave' => Yii::t('app', 'Clave'),
+            'password' => Yii::t('app', 'password'),
             'provincia' => Yii::t('app', 'Provincia'),
             'rol' => Yii::t('app', 'Rol'),
             'auth_key' => Yii::t('app', 'Auth Key'),

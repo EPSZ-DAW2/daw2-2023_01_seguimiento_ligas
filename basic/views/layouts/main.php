@@ -44,7 +44,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Contacto', 'url' => ['/site/contact']],
             ['label' => 'Prueba', 'url' => ['/test/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
-            ['label' => 'Registro', 'url' => ['/site/register'], 'visible' => Yii::$app->user->isGuest],
+            ['label' => 'Registro', 'url' => ['/usuarios/index'], 'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest
                 ? ['label' => 'Iniciar sesión', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
