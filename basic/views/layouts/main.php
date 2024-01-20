@@ -12,6 +12,8 @@ use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
 
+$this->registerCssFile('@web/css/site.css');
+
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
@@ -42,8 +44,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Inicio', 'url' => ['/site/index']],
             ['label' => 'Ligas', 'url' => ['/site/about']],
             ['label' => 'Partidos', 'url' => ['/site/contact']],
-            ['label' => 'Jugadores', 'url' => ['/test/index']],
-            ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+            ['label' => 'Equipos', 'url' => ['/test/index']],
+            ['label' => 'Jugadores', 'url' => ['/usuarios/index']],
             ['label' => 'Registro', 'url' => ['/site/register'], 'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest
                 ? ['label' => 'Iniciar sesión', 'url' => ['/site/login']]
