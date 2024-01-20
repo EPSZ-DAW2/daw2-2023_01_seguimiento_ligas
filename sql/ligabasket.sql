@@ -124,7 +124,6 @@ CREATE TABLE `estadisticas_jugador` (
 
 CREATE TABLE `imagenes` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen',
-  `id_equipo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador del equipo',
   `foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -172,6 +171,9 @@ CREATE TABLE `ligas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
+
+
+
 
 --
 -- Estructura de tabla para la tabla `noticias`
@@ -328,8 +330,7 @@ ALTER TABLE `estadisticas_jugador`
 -- Indices de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_equipo` (`id_equipo`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `jornadas_temporada`
@@ -546,12 +547,6 @@ ALTER TABLE `estadisticas_jugador`
   ADD CONSTRAINT `fk_id_idEquipoEJ` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`),
   ADD CONSTRAINT `fk_id_idJugador` FOREIGN KEY (`id_jugador`) REFERENCES `jugadores` (`id`),
   ADD CONSTRAINT `fk_id_idTemporadaJ` FOREIGN KEY (`id_temporada`) REFERENCES `temporadas` (`id`);
-
---
--- Filtros para la tabla `imagenes`
---
-ALTER TABLE `imagenes`
-  ADD CONSTRAINT `imagenes_ibfk_1` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`);
 
 --
 -- Filtros para la tabla `jornadas_temporada`
