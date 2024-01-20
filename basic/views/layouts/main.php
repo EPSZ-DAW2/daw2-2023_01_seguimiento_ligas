@@ -40,9 +40,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Sobre', 'url' => ['/site/about']],
-            ['label' => 'Contacto', 'url' => ['/site/contact']],
-            ['label' => 'Prueba', 'url' => ['/test/index']],
+            ['label' => 'Ligas', 'url' => ['/site/about']],
+            ['label' => 'Partidos', 'url' => ['/site/contact']],
+            ['label' => 'Jugadores', 'url' => ['/test/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Registro', 'url' => ['/site/register'], 'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest
