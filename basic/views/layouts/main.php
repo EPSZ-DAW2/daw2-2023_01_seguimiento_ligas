@@ -42,10 +42,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Ligas', 'url' => ['/site/about']],
-            ['label' => 'Partidos', 'url' => ['/site/contact']],
-            ['label' => 'Equipos', 'url' => ['/test/index']],
-            ['label' => 'Jugadores', 'url' => ['/usuarios/index']],
+            ['label' => 'Ligas', 'url' => ['/test/index']],
+            ['label' => 'Partidos', 'url' => ['/site/about']],
+            ['label' => 'Equipos', 'url' => ['/site/contact']],
+            ['label' => 'Jugadores', 'url' => ['/test/index']],
+            ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+        ]
+    ]);
+
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav', 'style' => 'margin-left: auto;'],
+        'items' => [
             ['label' => 'Registro', 'url' => ['/site/register'], 'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest
                 ? ['label' => 'Iniciar sesión', 'url' => ['/site/login']]
