@@ -20,4 +20,5 @@ INSERT INTO `ligas` (`nombre`, `pais`, `id_imagen`) VALUES
 
 
 INSERT INTO `equipos` (`id_liga`, `nombre`, `descripcion`, `id_imagen_escudo`, `id_imagen`, `n_jugadores`) VALUES
-(@id_liga, 'Suika FC', 'Equipo de Zamora enfocado en ganar', @id_escudo, @id_jugadores, 15);
+(@id_liga, 'Suika CB', 'Equipo de Zamora enfocado en ganar', @id_escudo, @id_jugadores, 15),
+(@id_liga, 'Zamora Basket', 'Los partidos se ganan en la cancha', @id_escudo, @id_jugadores, 21);
