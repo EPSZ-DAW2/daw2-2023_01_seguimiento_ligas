@@ -1,24 +1,27 @@
 -- INSERTAMOS UNA IMAGEN DE EJEMPLO
-INSERT INTO `imagenes` (`foto`) VALUES
+INSERT IGNORE INTO `imagenes` (`foto`) VALUES
 ('foto liga');
 
 SET @id_liga := LAST_INSERT_ID();
 
-INSERT INTO `imagenes` (`foto`) VALUES
+INSERT IGNORE INTO `imagenes` (`foto`) VALUES
 ('foto escudo');
 
 SET @id_escudo := LAST_INSERT_ID();
 
-INSERT INTO `imagenes` (`foto`) VALUES
+INSERT IGNORE INTO `imagenes` (`foto`) VALUES
 ('foto jugadores');
 
 SET @id_jugadores := LAST_INSERT_ID();
 
 -- INSERTAMOS UNA LIGA DE EJEMPLO
-INSERT INTO `ligas` (`nombre`, `pais`, `id_imagen`) VALUES
+INSERT IGNORE INTO `ligas` (`nombre`, `pais`, `id_imagen`) VALUES
 ('Liga ACB', 'España', @id_liga);
 
 
-INSERT INTO `equipos` (`id_liga`, `nombre`, `descripcion`, `id_imagen_escudo`, `id_imagen`, `n_jugadores`) VALUES
+INSERT IGNORE INTO `equipos` (`id_liga`, `nombre`, `descripcion`, `id_imagen_escudo`, `id_imagen`, `n_jugadores`) VALUES
 (@id_liga, 'Suika CB', 'Equipo de Zamora enfocado en ganar', @id_escudo, @id_jugadores, 15),
 (@id_liga, 'Zamora Basket', 'Los partidos se ganan en la cancha', @id_escudo, @id_jugadores, 21);
+
+INSERT IGNORE INTO `temporadas` (`texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
+('2023-2024', '2023-09-01', '2024-05-30');
