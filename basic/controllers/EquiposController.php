@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Equipos;
 use yii\web\Controller;
+
 
 class EquiposController extends Controller
 {
@@ -16,5 +18,30 @@ class EquiposController extends Controller
         return $this->render('index', [
             'equipos' => $equipos,
         ]);
+    }
+
+    public function actionCreate()
+    {
+        $model = new Equipos();  // Crea una nueva instancia del modelo Equipos
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // Manejar la lógica después de guardar el modelo (por ejemplo, redirigir a la vista de detalles)
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionUpdate()
+    {
+        return $this->render('update');
+    }
+
+    public function actionView()
+    {
+        return $this->render('view');
     }
 }
