@@ -12,6 +12,8 @@ use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
 
+$this->registerCssFile('@web/css/site.css');
+
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
@@ -40,11 +42,28 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Inicio', 'url' => ['/site/index']],
+<<<<<<< HEAD
             ['label' => 'Sobre', 'url' => ['/site/about']],
             ['label' => 'Contacto', 'url' => ['/site/contact']],
             ['label' => 'Prueba', 'url' => ['/test/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Registro', 'url' => ['/usuarios/index'], 'visible' => Yii::$app->user->isGuest],
+=======
+            ['label' => 'Ligas', 'url' => ['/ligas/index']],
+            ['label' => 'Temporadas', 'url' => ['/temporadas/index']],
+            ['label' => 'Equipos', 'url' => ['/equipos/index']],
+            ['label' => 'Partidos', 'url' => ['/site/about']],
+            //['label' => 'Jugadores', 'url' => ['/jugadores/index']],
+            //['label' => 'Prueba', 'url' => ['/test/index']],
+            //['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+        ]
+    ]);
+
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav', 'style' => 'margin-left: auto;'],
+        'items' => [
+            ['label' => 'Registro', 'url' => ['/site/register'], 'visible' => Yii::$app->user->isGuest],
+>>>>>>> eb3e8f6f1a375e8b142d0b449dc50c872c128594
             Yii::$app->user->isGuest
                 ? ['label' => 'Iniciar sesión', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
