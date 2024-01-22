@@ -16,9 +16,21 @@ use yii\helpers\ArrayHelper;
  * @property string $password
  * @property string $provincia
 
+
  */
 class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+
+     /**
+     * @var string Auth key attribute
+     */
+    public $auth_key;
+
+    /**
+     * @var string Registration token attribute
+     */
+    public $reg_token;
+      
     /**
      * {@inheritdoc}
      */
@@ -33,12 +45,13 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function rules()
     {
         return [
-            [['nombre','apellido1','apellido2','email','password','provincia', 'rol', 'auth_key', 'reg_token'], 'required'],
+            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia'], 'required'],
+            [['auth_key', 'reg_token'], 'safe'],
             [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia'], 'string', 'max' => 255],
             [['email'], 'unique'],
             [['email'], 'email'],
-            [['rol'], 'string', 'max' => 1],
-            [['auth_key', 'reg_token'], 'string', 'max' => 200],
+            [['auth_key'], 'string', 'max' => 200], 
+            [['reg_token'], 'string', 'max' => 200],
           
         ];
     }
@@ -56,9 +69,8 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             'email' => Yii::t('app', 'Email'),
             'password' => Yii::t('app', 'password'),
             'provincia' => Yii::t('app', 'Provincia'),
-            'rol' => Yii::t('app', 'Rol'),
-            'auth_key' => Yii::t('app', 'Auth Key'),
-            'reg_token' => Yii::t('app', 'Reg Token'),
+            'reg_token' => Yii::t('app', 'reg_token'),
+            'auth_key' => Yii::t('app', 'auth_key'),
             
         ];
     }
@@ -135,10 +147,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return $this->id;
     }
 
-    public static function getRol($id){
-        $usuario=self::find()->where(['id'=>$id])->one();
-        return $usuario['rol'];
-    }
+ 
 
     public static function getSessionRol(){
         return self::getRol(Yii::$app->user->id);
