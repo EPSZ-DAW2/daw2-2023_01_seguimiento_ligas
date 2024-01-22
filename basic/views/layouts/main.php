@@ -42,11 +42,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Ligas', 'url' => ['/test/index']],
+            ['label' => 'Ligas', 'url' => ['/ligas/index']],
+            ['label' => 'Temporadas', 'url' => ['/temporadas/index']],
+            ['label' => 'Equipos', 'url' => ['/equipos/index']],
             ['label' => 'Partidos', 'url' => ['/site/about']],
-            ['label' => 'Equipos', 'url' => ['/site/contact']],
-            ['label' => 'Jugadores', 'url' => ['/test/index']],
-            ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+            //['label' => 'Jugadores', 'url' => ['/jugadores/index']],
+            //['label' => 'Prueba', 'url' => ['/test/index']],
+            //['label' => 'Usuarios', 'url' => ['/usuarios/index']],
         ]
     ]);
 
