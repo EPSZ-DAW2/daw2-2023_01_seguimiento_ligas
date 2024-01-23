@@ -25,3 +25,6 @@ INSERT IGNORE INTO `equipos` (`id_liga`, `nombre`, `descripcion`, `id_imagen_esc
 
 INSERT IGNORE INTO `temporadas` (`texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
 ('2023-2024', '2023-09-01', '2024-05-30');
+
+INSERT IGNORE INTO `jugadores` (`id_equipo`, `nombre`, `descripcion`, `id_imagen`, `posicion`, `altura`, `peso`, `nacionalidad`) VALUES 
+(000001, 'paco lopez', 'un rumano que le pega patadas al balon', @id_liga, 'delantero pichichi', 1.20, 300, 'Rumano');
