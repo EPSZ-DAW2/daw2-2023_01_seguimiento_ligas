@@ -12,7 +12,7 @@ class JugadoresController extends Controller
     public function actionIndex()
     {
         // Obtén todos los equipos desde la base de datos
-        $jugadores = Jugadores::find()->all();
+        $jugadores = Jugadores::find()->with('equipo')->all();
 
         // Renderiza la vista y pasa los equipos como parámetro
         return $this->render('index', [
@@ -34,9 +34,21 @@ class JugadoresController extends Controller
         ]);
     }
     
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
-        return $this->render('update');
+        $model = $this->findModel($id);
+
+        if ($model === null) {
+            throw new NotFoundHttpException('El jugador solicitado no existe.');
+        }
+
+        if($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     public function actionView($id)
@@ -46,6 +58,13 @@ class JugadoresController extends Controller
         return $this->render('view', [
             'model' => $model,
         ]);
+    }
+
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
     }
     
     protected function findModel($id)

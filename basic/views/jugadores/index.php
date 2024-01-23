@@ -33,7 +33,13 @@
                     <td class="filas"><?php echo $jugador['altura']; ?></td>
                     <td class="filas"><?php echo $jugador['peso']; ?></td>
                     <td class="filas"><?php echo $jugador['nacionalidad']; ?></td>
-                    <td class="filas"><?php echo $jugador['id_equipo']; ?></td>
+                    <td class="filas"><?= isset($jugador->equipo) ? $jugador->equipo->nombre : 'Sin equipo' ?></td>
+                    <td class="filas">
+                        <!-- Botones de Acciones -->
+                        <?= \yii\helpers\Html::a('Editar', ['jugadores/update', 'id' => $jugador['id']], ['class' => 'btn btn-primary']) ?>
+                        <?= \yii\helpers\Html::a('Ver', ['jugadores/view', 'id' => $jugador['id']], ['class' => 'btn btn-info']) ?>
+                        <?= \yii\helpers\Html::a('Eliminar', ['jugadores/delete', 'id' => $jugador['id']], ['class' => 'btn btn-danger', 'data' => ['confirm' => '¿Estás seguro de que deseas eliminar este jugador?']]) ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
