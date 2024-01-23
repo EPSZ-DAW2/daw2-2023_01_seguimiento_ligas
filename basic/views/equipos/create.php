@@ -10,12 +10,18 @@ use app\models\Ligas;
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = 'Crear Equipo';
-$this->params['breadcrumbs'][] = ['label' => 'Equipos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="equipos-create">
+//$this->params['breadcrumbs'][] = ['label' => 'Equipos', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 
-    <h1><?= Html::encode($this->title) ?></h1>
+// Registrar el archivo CSS
+$this->registerCssFile('@web/css/equipos.css');
+?>
+<div class="marco">
+
+    <h2 class="equipos_presentacion"><?= Html::encode($this->title) ?></h2>
+
+    <p class="PaginaDeInicio">Por favor rellene los campos para la creacción de un equipo:</p>
+
 
     <?php $form = ActiveForm::begin([
         'options' => ['enctype' => 'multipart/form-data'],
@@ -32,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'n_jugadores')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'botonInicioSesion']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -5,3 +5,30 @@
     border: 1px solid #ddd;
     text-align: center;
 }
+
+.equipos_presentacion h2 {
+    font-weight: bold;
+    color: rgb(34, 6, 220);
+    font-size: 90px;
+    text-align: center;
+}
+
+
+  /* Estilos para el botón con la clase 'botonInicioSesion' */
+.botonInicioSesion {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px 20px;
+	background-color: #fff;
+	color: #333;
+	text-decoration: none;
+	border: 2px solid #fff;
+	border-radius: 5px;
+	font-weight: bold;
+	text-align: center; /* Centra el texto dentro del botón */
+}
+
+.botonInicioSesion:hover {
+    background-color: #ddd;
+}
