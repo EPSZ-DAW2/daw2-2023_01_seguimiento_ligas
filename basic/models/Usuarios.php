@@ -64,10 +64,10 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return [
             'id' => Yii::t('app', 'ID'),
             'nombre' => Yii::t('app', 'Nombre'),
-            'apellido1' => Yii::t('app', 'Apellido1'),
-            'apellido2' => Yii::t('app', 'Apellido2'),
+            'apellido1' => Yii::t('app', 'Primer apellido'),
+            'apellido2' => Yii::t('app', 'Segundo apellido'),
             'email' => Yii::t('app', 'Email'),
-            'password' => Yii::t('app', 'password'),
+            'password' => Yii::t('app', 'Contraseña'),
             'provincia' => Yii::t('app', 'Provincia'),
             'reg_token' => Yii::t('app', 'reg_token'),
             'auth_key' => Yii::t('app', 'auth_key'),
@@ -169,4 +169,14 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return $usuario ? $usuario->nombre : null;
 
     }
+
+    //funcion de login 
+    public static function login($email, $password){
+        $usuario = self::findByEmail($email);
+        if($usuario && $usuario->validatePassword($password)){
+            return Yii::$app->user->login($usuario);
+        }
+        return false;
+    }
+
 }

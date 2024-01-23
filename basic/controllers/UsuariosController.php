@@ -131,4 +131,22 @@ class UsuariosController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    //accion de login 
+    public function actionLogin()
+    {
+        $model = new Usuarios();
+        if ($model->load(Yii::$app->request->post())) {
+            $usuario = Usuarios::find()->where(['email' => $model->email])->one();
+            if ($usuario != null && $usuario->validatePassword($model->password)) {
+                Yii::$app->user->login($usuario);
+                return $this->redirect(['usuarios/index']);
+            } else {
+                $model->addError('password', 'Usuario o contraseña incorrectos');
+            }
+        }
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
 }

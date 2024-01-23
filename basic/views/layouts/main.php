@@ -55,7 +55,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav', 'style' => 'margin-left: auto;'],
         'items' => [
-            ['label' => 'Registro', 'url' => ['/usuarios/index'], 'visible' => Yii::$app->user->isGuest],
+            ['label' => 'Registro', 'url' => ['/usuarios/create'], 'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest
                 ? ['label' => 'Iniciar sesión', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
