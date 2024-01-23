@@ -1,0 +1,17 @@
+.tabla {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.cabecera {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    background-color: #f2f2f2;
+}
+
+.filas {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
