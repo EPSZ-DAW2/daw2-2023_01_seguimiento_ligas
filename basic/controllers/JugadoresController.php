@@ -49,11 +49,11 @@ class JugadoresController extends Controller
     }
     
     protected function findModel($id)
-{
-    if (($model = Jugadores::findOne($id)) !== null) {
-        return $model;
-    } else {
-        throw new NotFoundHttpException('The requested page does not exist.');
+    {
+        if (($model = Jugadores::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
-}
 }
