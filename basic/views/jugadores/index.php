@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <?php $this->registerCssFile('@web/css/jugadores.css'); ?>
+    <?php $this->registerCssFile('@web/css/site.css'); ?>
 
     <title>Tabla de Jugadores</title>
 </head>
