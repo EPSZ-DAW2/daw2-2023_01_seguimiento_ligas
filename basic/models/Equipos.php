@@ -41,7 +41,7 @@ class Equipos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_liga', 'nombre', 'descripcion', 'id_imagen_escudo', 'id_imagen', 'n_jugadores'], 'required'],
+            [['id_liga', 'nombre', 'descripcion', 'id_imagen_escudo', 'id_imagen', 'n_jugadores'], 'required', 'message' => 'Este campo es obligatorio'],
             [['id_liga', 'id_imagen_escudo', 'id_imagen', 'n_jugadores'], 'integer'],
             [['nombre'], 'string', 'max' => 100],
             [['descripcion'], 'string', 'max' => 200],

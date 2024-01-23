@@ -93,6 +93,13 @@ h1.PaginaDeInicio {
   text-align: center;
 }
 
+h2 {
+    font-weight: bold;
+    color: rgb(34, 6, 220);
+    font-size: 90px; /* Puedes ajustar el tamaño según tus preferencias */
+    text-align: center;
+  }
+
 body {
   background-image: url('../ImagenesVideos/fondoPaginaDeInicio.jpg'); /* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta de tu imagen de fondo */
   background-size: cover;

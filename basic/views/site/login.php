@@ -19,7 +19,7 @@ $this->title = 'Acceso';
 
 <div class="marco">
 
-	    <p class="PaginaDeInicio">Por favor rellene los campos para inicidiar sesión:</p>
+	    <p class="PaginaDeInicio">Por favor rellene los campos para Iniciar Sesión:</p>
 
 		<?php $form = ActiveForm::begin([
         'id' => 'login-form',

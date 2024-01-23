@@ -7,14 +7,15 @@ $this->title = 'ArosInsider';
 <div class="site-index">
 
     <div>
-        <h1 class="PaginaDeInicio">ArosInsider</h1>
 
-        <p class="subrayado">BIENVENIDO A LA MEJOR WEB DE SEGUIMIENTO DE BASKET DEL MUNDO.</p>
+        <h1 class="PaginaDeInicio">ArosInsider</h1>
 
     </div>
 	
 	<div class="marco">
 	
+        <p class="PaginaDeInicio">BIENVENIDO A LA MEJOR WEB DE SEGUIMIENTO DE BASKET DEL MUNDO</p>
+        
 		<p class="PaginaDeInicio">ArosInsider es tu destino principal para el seguimiento en tiempo real de Múltiples ligas de baloncesto.
 		Sumérgete en el emocionante mundo del baloncesto con acceso a marcadores en vivo, estadísticas detalladas de equipos y jugadores, noticias exclusivas y mucho más.
 		Con nuestra plataforma intuitiva, Podrás explorar resultados de partidos, seguir el rendimiento de tus equipos y jugadores favoritos, y mantener un pulso constante
