@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\web\UploadedFile;
 use Yii;
 
 /**
@@ -12,7 +13,6 @@ use Yii;
  *
  * @property AnunciosPatrocinador[] $anunciosPatrocinadors
  * @property Equipos[] $equipos
- * @property Equipos[] $equipos0
  * @property Jugadores[] $jugadores
  * @property Ligas[] $ligas
  * @property Noticias[] $noticias
@@ -20,6 +20,8 @@ use Yii;
  */
 class Imagenes extends \yii\db\ActiveRecord
 {
+    public $imagenFile;
+
     /**
      * {@inheritdoc}
      */
@@ -76,7 +78,7 @@ class Imagenes extends \yii\db\ActiveRecord
      */
     public function getEquipos0()
     {
-        return $this->hasMany(Equipos::class, ['id_imagen_escudo' => 'id']);
+        return $this->hasMany(Equipos::class, ['id_escudo' => 'id']);
     }
 
     /**
@@ -117,5 +119,22 @@ class Imagenes extends \yii\db\ActiveRecord
     public function getPatrocinadores()
     {
         return $this->hasMany(Patrocinadores::class, ['id_imagen' => 'id']);
+    }
+
+    public function saveImagen()
+    {
+        if ($this->validate()) {
+            $path = Yii::getAlias('@app/web/images/');
+
+            $imageName = $this->imagenFile->baseName . '.' . $this->imagenFile->extension;
+            $this->imagenFile->saveAs($path . $imageName);
+
+            // Guardar la ruta o el nombre del archivo en la base de datos
+            $this->foto = $path . $imageName;
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

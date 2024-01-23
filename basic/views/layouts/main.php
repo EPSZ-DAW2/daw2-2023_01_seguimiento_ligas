@@ -41,7 +41,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Inicio', 'url' => ['/site/index']],
+            //['label' => 'Inicio', 'url' => ['/site/index']],
             ['label' => 'Ligas', 'url' => ['/ligas/index']],
             ['label' => 'Temporadas', 'url' => ['/temporadas/index']],
             ['label' => 'Equipos', 'url' => ['/equipos/index']],
