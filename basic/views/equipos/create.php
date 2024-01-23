@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Ligas;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Equipos */
@@ -21,20 +23,20 @@ $this->registerCssFile('@web/css/equipos.css');
     <p class="PaginaDeInicio">Por favor rellene los campos para la creacción de un equipo:</p>
 
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => ['enctype' => 'multipart/form-data'],
+    ]); ?>
 
-    <?= $form->field($model, 'id_liga')->textInput(['placeholder' => 'Ingrese el ID de la liga']) ?>
-    <br>
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre del equipo']) ?>
-    <br>
-    <?= $form->field($model, 'descripcion')->textarea(['rows' => 6, 'placeholder' => 'Ingrese una descripcion del equipo']) ?>
-    <br>
-    <?= $form->field($model, 'id_imagen_escudo')->textInput(['placeholder' => 'Ingrese el ID de la imagen del escudo']) ?>
-    <br>
-    <?= $form->field($model, 'id_imagen')->textInput(['placeholder' => 'Ingrese el ID de la imagen']) ?>
-    <br>
-    <?= $form->field($model, 'n_jugadores')->textInput(['placeholder' => 'Ingrese el numero total de jugadores']) ?>
-    
+    <?= $form->field($model, 'id_liga')->dropDownList(
+        ArrayHelper::map(Ligas::find()->all(), 'id', 'nombre'),
+        ['prompt' => 'Seleccionar Liga']
+    ) ?>
+
+    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+    <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
+    <?= $form->field($model, 'n_jugadores')->textInput() ?>
+
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'botonInicioSesion']) ?>
     </div>
