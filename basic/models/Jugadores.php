@@ -37,8 +37,11 @@ class Jugadores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_equipo', 'id_imagen'], 'required'],
-            [['nombre'], 'required', 'message' => 'Es obligatorio introducir un nombre.'],
+
+            [['id_equipo', 'nombre', 'descripcion', 'id_imagen', 'posicion', 'altura', 'peso', 'nacionalidad'], 'required', 'message' => 'Este campo es obligatorio'],
+             // Otras reglas de validación según tus necesidades
+            //[['id_equipo', 'id_imagen'], 'required'],
+            //[['nombre'], 'required', 'message' => 'Es obligatorio introducir un nombre.'],
             [['id_equipo', 'id_imagen'], 'integer'],
             [['altura', 'peso'], 'number'],
             [['nombre', 'posicion', 'nacionalidad'], 'string', 'max' => 50],

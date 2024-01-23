@@ -7,4 +7,4 @@
     </div>
 <?php endforeach; ?>
 
-<?= \yii\helpers\Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'btn btn-success']) ?>
+<?= \yii\helpers\Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'botonInicioSesion']) ?>

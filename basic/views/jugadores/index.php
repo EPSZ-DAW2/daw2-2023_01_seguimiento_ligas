@@ -10,6 +10,8 @@
 </head>
 <body>
 
+    <div class="marco">
+
     <h2>Tabla de Jugadores</h2>
 
     <table class="tabla">
@@ -40,8 +42,12 @@
     </table>
     <br>
 
+    <div>
+        <?= \yii\helpers\Html::a('Crear Nuevo Jugador', ['jugadores/create'], ['class' => 'botonInicioSesion']) ?>
+    </div>
+    </div>
 </body>
 </html>
 
 
-<?= \yii\helpers\Html::a('Crear Nuevo Jugador', ['jugadores/create'], ['class' => 'btn btn-success']) ?>
+

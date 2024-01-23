@@ -26,8 +26,9 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
+			// username and password are both required with custom error messages
+			[['username'], 'required', 'message' => 'Por favor, ingrese su correo electronico.'],
+			[['password'], 'required', 'message' => 'Por favor, ingrese su contraseña.'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
@@ -48,7 +49,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Correo Electronico o Contraseña Incorrectos, vuelva a intentarlo.');
             }
         }
     }
