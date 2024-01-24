@@ -12,7 +12,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
 
-'name' => 'Ligacesto',  // Nombre de la apicación
+'name' => 'ArosInsider',  // Nombre de la apicación
 
     'components' => [
         'request' => [
@@ -45,14 +45,15 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
-        'urlManager' => [
+        
+        /*'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'equipos/create' => 'equipos/create',
             ],
-        ],
-        */
+        ],*/
+        
     ],
     'params' => $params,
 ];

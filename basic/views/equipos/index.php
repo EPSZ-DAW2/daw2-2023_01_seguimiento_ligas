@@ -6,3 +6,5 @@
         <p><?= $equipo->descripcion ?><p>
     </div>
 <?php endforeach; ?>
+
+<?= \yii\helpers\Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'botonInicioSesion']) ?>

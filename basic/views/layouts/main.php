@@ -41,12 +41,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Inicio', 'url' => ['/site/index']],
+            //['label' => 'Inicio', 'url' => ['/site/index']],
             ['label' => 'Ligas', 'url' => ['/ligas/index']],
             ['label' => 'Temporadas', 'url' => ['/temporadas/index']],
             ['label' => 'Equipos', 'url' => ['/equipos/index']],
             ['label' => 'Partidos', 'url' => ['/partidos/index']],
-            //['label' => 'Jugadores', 'url' => ['/jugadores/index']],
+            ['label' => 'Jugadores', 'url' => ['/jugadores/index']],
             //['label' => 'Prueba', 'url' => ['/test/index']],
             //['label' => 'Usuarios', 'url' => ['/usuarios/index']],
         ]
@@ -81,7 +81,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <?= $content ?>
     </div>
 </main>
-
+<!--
 <footer id="footer" class="mt-auto py-3 bg-light">
     <div class="container">
         <div class="row text-muted">
@@ -90,7 +90,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
     </div>
 </footer>
-
+-->
 <?php $this->endBody() ?>
 </body>
 </html>

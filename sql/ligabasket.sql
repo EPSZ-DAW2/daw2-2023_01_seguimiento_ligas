@@ -68,8 +68,7 @@ CREATE TABLE `equipos` (
   `id_liga` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador de la liga',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del equipo',
   `descripcion` varchar(200) NOT NULL COMMENT 'Descripción general del equipo',
-  `id_imagen_escudo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen del escudo',
-  `id_imagen` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de las imágenes',
+  `id_escudo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen del escudo',
   `n_jugadores` int(2) NOT NULL COMMENT 'Número de jugadores que componen el equipo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -258,19 +257,12 @@ CREATE TABLE `usuarios` (
   `apellido2` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `provincia` varchar(50) NOT NULL
+  `provincia` varchar(50) NOT NULL,
+  `id_rol` int(6) UNSIGNED ZEROFILL NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `usuario_rol`
---
-
-CREATE TABLE `usuario_rol` (
-  `id_usuario` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `id_rol` int(6) UNSIGNED ZEROFILL NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tablas volcadas
@@ -299,8 +291,7 @@ ALTER TABLE `comentarios`
 ALTER TABLE `equipos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_liga` (`id_liga`),
-  ADD KEY `fk_id_idImagenL` (`id_imagen_escudo`),
-  ADD KEY `fk_id_idImagen` (`id_imagen`);
+  ADD KEY `fk_id_idImagenL` (`id_escudo`);
 
 --
 -- Indices de la tabla `equipos_patrocinadores`
@@ -396,14 +387,9 @@ ALTER TABLE `temporadas`
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_idRoles` (`id_rol`);
 
---
--- Indices de la tabla `usuario_rol`
---
-ALTER TABLE `usuario_rol`
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_rol` (`id_rol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -523,8 +509,7 @@ ALTER TABLE `comentarios`
 --
 ALTER TABLE `equipos`
   ADD CONSTRAINT `equipos_ibfk_1` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`),
-  ADD CONSTRAINT `fk_id_idImagen` FOREIGN KEY (`id_imagen`) REFERENCES `imagenes` (`id`),
-  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_imagen_escudo`) REFERENCES `imagenes` (`id`);
+  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_escudo`) REFERENCES `imagenes` (`id`);
 
 --
 -- Filtros para la tabla `equipos_patrocinadores`
@@ -591,12 +576,10 @@ ALTER TABLE `patrocinadores`
   ADD CONSTRAINT `fk_id_idImgPatrocinadores` FOREIGN KEY (`id_imagen`) REFERENCES `imagenes` (`id`);
 
 --
--- Filtros para la tabla `usuario_rol`
+-- Filtros para la tabla `usuarios`
 --
-ALTER TABLE `usuario_rol`
-  ADD CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`);
-COMMIT;
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `fk_id_idRoles` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

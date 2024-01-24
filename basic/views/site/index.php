@@ -2,18 +2,34 @@
 
 /** @var yii\web\View $this */
 
-$this->title = 'Ligacesto';
+$this->title = 'ArosInsider';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
+    <div>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <h1 class="PaginaDeInicio">ArosInsider</h1>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
     </div>
+	
+	<div class="marco">
+	
+        <p class="PaginaDeInicio">BIENVENIDO A LA MEJOR WEB DE SEGUIMIENTO DE BASKET DEL MUNDO</p>
+        
+		<p class="PaginaDeInicio">ArosInsider es tu destino principal para el seguimiento en tiempo real de Múltiples ligas de baloncesto.
+		Sumérgete en el emocionante mundo del baloncesto con acceso a marcadores en vivo, estadísticas detalladas de equipos y jugadores, noticias exclusivas y mucho más.
+		Con nuestra plataforma intuitiva, Podrás explorar resultados de partidos, seguir el rendimiento de tus equipos y jugadores favoritos, y mantener un pulso constante
+		sobre las últimas actualizaciones en el mundo del baloncesto. Ya seas un seguidor apasionado, un aficionado casual o un ávido analista, ArosInsider te brinda la
+		experiencia definitiva de seguimiento de liga de baloncesto. ¡Suma canastas con nosotros y mantente en la cima del juego!</p>
 
+	</div>
+	
+	<div>
+	
+		<p><a class="boton" href="<?= Yii::$app->urlManager->createUrl(['test/index']) ?>">Seleccion de ligas</a></p>
+	
+	</div>
+<!--
     <div class="body-content">
 
         <div class="row">
@@ -50,4 +66,5 @@ $this->title = 'Ligacesto';
         </div>
 
     </div>
+-->
 </div>
