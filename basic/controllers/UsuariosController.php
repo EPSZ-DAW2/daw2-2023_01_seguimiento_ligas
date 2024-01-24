@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
 use yii\web\Controller;
@@ -68,19 +69,25 @@ class UsuariosController extends Controller
     public function actionCreate()
     {
         $model = new Usuarios();
-
+    
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
+    
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
         }
-
+    
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+    
 
     /**
      * Updates an existing Usuarios model.
@@ -131,22 +138,33 @@ class UsuariosController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+    
 
-    //accion de login 
     public function actionLogin()
     {
         $model = new Usuarios();
-        if ($model->load(Yii::$app->request->post())) {
-            $usuario = Usuarios::find()->where(['email' => $model->email])->one();
-            if ($usuario != null && $usuario->validatePassword($model->password)) {
-                Yii::$app->user->login($usuario);
-                return $this->redirect(['usuarios/index']);
-            } else {
-                $model->addError('password', 'Usuario o contraseña incorrectos');
+    
+        // Si el usuario está logueado, redirigir a la página de inicio
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+    
+        if ($this->request->isPost) {
+            // Cargar datos del formulario en el modelo
+            if ($model->load($this->request->post())) {
+                // Validar y loguear al usuario
+                if ($model->login($model->username, $model->password)) {
+                    return $this->goBack();
+                }
             }
         }
+    
+        // Si no está logueado, redirigir a la página de login
+        $model->password = ''; // Limpiar la contraseña por seguridad
         return $this->render('login', [
             'model' => $model,
         ]);
     }
+    
+
 }

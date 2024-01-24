@@ -15,6 +15,8 @@ use yii\helpers\ArrayHelper;
  * @property string $email
  * @property string $password
  * @property string $provincia
+ * @property int $id_rol
+ * @property string $username
 
 
  */
@@ -45,11 +47,14 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function rules()
     {
         return [
-            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia'], 'required'],
+            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia','id_rol','username'], 'required'],
             [['auth_key', 'reg_token'], 'safe'],
-            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia'], 'string', 'max' => 255],
+            [['nombre', 'apellido1', 'apellido2', 'email', 'provincia','username'], 'string', 'max' => 50],
+            [['password'], 'string', 'max' => 255],
             [['email'], 'unique'],
             [['email'], 'email'],
+            [['id_rol'], 'integer'],
+            [['username'], 'unique'],
             [['auth_key'], 'string', 'max' => 200], 
             [['reg_token'], 'string', 'max' => 200],
           
@@ -69,6 +74,8 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             'email' => Yii::t('app', 'Email'),
             'password' => Yii::t('app', 'Contraseña'),
             'provincia' => Yii::t('app', 'Provincia'),
+            'id_rol' => Yii::t('app', 'Rol'),
+            'username' => Yii::t('app', 'Nombre de usuario'),
             'reg_token' => Yii::t('app', 'reg_token'),
             'auth_key' => Yii::t('app', 'auth_key'),
             
@@ -104,6 +111,9 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function setRegToken(){
         $this->reg_token=$this->genKey();
     }
+    public function setRol(){
+        $this->id_rol=1;
+    }
 
     public function getAuthKey(){
         return $this->auth_key;
@@ -132,15 +142,30 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return self::find()->where(['email'=>$email])->one();
     }
 	
-	public function getComentarios(){
-		
-		return $this->hasMany(LibrosComentarios::class,['crea_usuario_id'=>'id'])->inverseOf('usuario');
-		
-	}
-
-    public function validatePassword($_password){
-        return $this->password === hash('sha1', $_password);
+    public static function getRol($id){
+        $usuario = self::findOne($id);
+        return $usuario ? $usuario->id_rol : null;
     }
+
+    public static function findByUsername($username)
+    {
+        return self::findOne(['username' => $username]);
+    }
+    
+	
+
+    public function validatePassword($password)
+    {
+        if( Yii::$app->security->validatePassword($password, $this->password))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
     public function getId()
     {
@@ -170,13 +195,21 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
 
     }
 
-    //funcion de login 
-    public static function login($email, $password){
-        $usuario = self::findByEmail($email);
-        if($usuario && $usuario->validatePassword($password)){
-            return Yii::$app->user->login($usuario);
-        }
-        return false;
+    public static function login($username, $password)
+{
+    $usuario = self::findByUsername($username);
+
+    if ($usuario && $usuario->validatePassword($password)) {
+        return Yii::$app->user->login($usuario);
     }
+
+    return false;
+}
+
+   
+   
+
+
+
 
 }

@@ -47,17 +47,30 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Equipos', 'url' => ['/equipos/index']],
             ['label' => 'Partidos', 'url' => ['/site/about']],
             ['label' => 'Jugadores', 'url' => ['/jugadores/index']],
+
+           
             //['label' => 'Prueba', 'url' => ['/test/index']],
             //['label' => 'Usuarios', 'url' => ['/usuarios/index']],
         ]
     ]);
+    // Agrega el elemento condicional solo si el usuario no es un invitado
+if (!Yii::$app->user->isGuest) {
+
+
+echo Nav::widget([
+    'options' => ['class' => 'navbar-nav'],
+    'items' => [
+    ['label' => 'Datos usuario', 'url' => ['/usuarios/view', 'id' => Yii::$app->user->id]],
+    ]
+]);
+}
 
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav', 'style' => 'margin-left: auto;'],
         'items' => [
             ['label' => 'Registro', 'url' => ['/usuarios/create'], 'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest
-                ? ['label' => 'Iniciar sesión', 'url' => ['/site/login']]
+                ? ['label' => 'Iniciar sesión', 'url' => ['/usuarios/login']]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
                     . Html::submitButton(
