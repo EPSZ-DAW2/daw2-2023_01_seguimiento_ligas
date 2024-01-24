@@ -91,9 +91,9 @@ class Jugadores extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEstadisticasJugadors()
+    public function getEstadisticasJugador()
     {
-        return $this->hasMany(EstadisticasJugador::class, ['id_jugador' => 'id']);
+        return $this->hasOne(EstadisticasJugador::class, ['id_jugador' => 'id']);
     }
 
     /**

@@ -3,43 +3,31 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Jugadores;
 use app\models\EstadisticasJugador;
-use app\models\Temporadas;
+use app\models\Jugadores;
 use yii\web\Controller;
 
-
-class JugadoresController extends Controller
+class EstadisticasJugadorController extends Controller
 {
     public function actionIndex()
     {
-        // Obtén todos los equipos desde la base de datos
-        $jugadores = Jugadores::find()->with('equipo')->all();
+        // Obtén todas las estadísticas de jugadores desde la base de datos
+        $estadisticasJugadores = EstadisticasJugador::find()
+            ->with(['equipo', 'jugador', 'temporada'])
+            ->all();
 
-        // Renderiza la vista y pasa los equipos como parámetro
+        // Renderiza la vista y pasa las estadísticas de jugadores como parámetro
         return $this->render('index', [
-            'jugadores' => $jugadores,
+            'estadisticasJugadores' => $estadisticasJugadores,
         ]);
     }
 
     public function actionCreate()
     {
-        $model = new Jugadores();
+        $model = new EstadisticasJugador();  // Crea una nueva instancia del modelo EstadisticasJugador
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            $estadisticasJugador = new EstadisticasJugador();
-
-            $estadisticasJugador->id_temporada = Temporadas::find()->orderBy(['id' => SORT_DESC])->one()->id;
-            $estadisticasJugador->id_equipo = $model->id_equipo;
-            $estadisticasJugador->id_jugador = $model->id;
-            $estadisticasJugador->partidos_jugados = 0;
-            $estadisticasJugador->puntos = 0;
-            $estadisticasJugador->rebotes = 0;
-            $estadisticasJugador->asistencias = 0;
-
-            $estadisticasJugador->save();
-
+            // Manejar la lógica después de guardar el modelo (por ejemplo, redirigir a la vista de detalles)
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -53,7 +41,7 @@ class JugadoresController extends Controller
         $model = $this->findModel($id);
 
         if ($model === null) {
-            throw new NotFoundHttpException('El jugador solicitado no existe.');
+            throw new NotFoundHttpException('Las estadísticas del jugador solicitadas no existen.');
         }
 
         if($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -68,10 +56,11 @@ class JugadoresController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $jugador = Jugadores::findOne($model->id_jugador);
     
-        $model->load('estadisticasJugador');
         return $this->render('view', [
             'model' => $model,
+            'jugador' => $jugador,
         ]);
     }
 
@@ -84,10 +73,10 @@ class JugadoresController extends Controller
     
     protected function findModel($id)
     {
-        if (($model = Jugadores::findOne($id)) !== null) {
+        if (($model = EstadisticasJugador::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Las estadísticas del jugador solicitadas no existen.');
         }
     }
 }
