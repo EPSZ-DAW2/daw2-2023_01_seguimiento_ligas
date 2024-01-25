@@ -60,6 +60,10 @@ class UsuariosController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    public function actionExito()
+{
+    return $this->render('exito'); 
+}
 
     /**
      * Creates a new Usuarios model.
@@ -74,9 +78,9 @@ class UsuariosController extends Controller
             if ($model->load($this->request->post())) {
                 
                 $model->password = Yii::$app->security->generatePasswordHash($model->password);
-    
                 if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                   
+                   return $this->redirect(['exito']);
                 }
             }
         } else {
@@ -99,15 +103,23 @@ class UsuariosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+    
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            // Generar el hash de la contraseña solo si se proporciona una nueva contraseña
+            if (!empty($model->password)) {
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
+            }
+    
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
+    
         return $this->render('update', [
             'model' => $model,
         ]);
     }
+    
 
     /**
      * Deletes an existing Usuarios model.

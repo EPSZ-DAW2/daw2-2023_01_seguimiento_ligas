@@ -112,7 +112,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         $this->reg_token=$this->genKey();
     }
     public function setRol(){
-        $this->id_rol=1;
+        $this->id_rol=6;
     }
 
     public function getAuthKey(){

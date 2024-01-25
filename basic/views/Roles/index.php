@@ -1,24 +1,25 @@
 <?php
 
-use app\models\Usuarios;
+use app\models\Roles;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\UsuariosSearch */
+/* @var $searchModel app\models\RolesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Usuarios');
+$this->title = Yii::t('app', 'Roles');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuarios-index">
+<div class="roles-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Registro nuevo cliente'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Crear Nuevo Rol'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -31,19 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'nombre:ntext',
-            'apellido1:ntext',
-            'apellido2:ntext',
-            'email:ntext',
-            'provincia:ntext',
-            'username:ntext',
-            'id_rol:ntext',
-            
+            'nombre',
+
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Usuarios $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Roles $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
