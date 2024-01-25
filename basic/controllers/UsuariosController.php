@@ -83,6 +83,7 @@ class UsuariosController extends Controller
             $model->loadDefaultValues();
         }
     
+        $model->password='';
         return $this->render('create', [
             'model' => $model,
         ]);
