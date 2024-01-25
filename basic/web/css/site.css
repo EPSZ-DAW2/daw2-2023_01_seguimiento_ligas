@@ -101,7 +101,7 @@ h2 {
   }
 
 body {
-  background-image: url('../ImagenesVideos/fondoPaginaDeInicio.jpg'); /* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta de tu imagen de fondo */
+  background-image: url('../ImagenesVideos/fondoPaginaDeInicio.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -165,4 +165,8 @@ a.boton:hover {
 
 .botonInicioSesion:hover {
     background-color: #ddd;
+}
+
+.margenIzquierda {
+    padding-left: 2px;
 }

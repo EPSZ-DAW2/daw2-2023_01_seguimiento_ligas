@@ -17,6 +17,7 @@ use yii\widgets\ActiveForm;
 ]); ?>
 
     
+<div class="marco">
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'apellido1')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'apellido2')->textInput(['maxlength' => true]) ?>
@@ -26,11 +27,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'id_rol')->hiddenInput(['value' => 1])->label(false) ?>
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-
-
-
+</div>
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'botonInicioSesion']) ?>
+        <?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonInicioSesion']) ?>
     </div>
 
 <?php ActiveForm::end(); ?>

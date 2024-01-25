@@ -10,8 +10,8 @@ use app\models\Ligas;
 /* @var $form yii\widgets\ActiveForm */
 
 $this->title = 'Crear Equipo';
-//$this->params['breadcrumbs'][] = ['label' => 'Equipos', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Equipos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 
 // Registrar el archivo CSS
 $this->registerCssFile('@web/css/equipos.css');

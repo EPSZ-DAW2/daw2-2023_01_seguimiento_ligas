@@ -10,20 +10,28 @@ use yii\helpers\ArrayHelper;
 
 //login de usuarios
 $this->title = Yii::t('app', 'Login');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuarios-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <p><?= Yii::t('app', 'Por favor, rellene los siguientes campos para iniciar sesión:') ?></p>
+<div>
+
+    <h1 class="PaginaDeInicio"><?= Html::encode($this->title) ?></h1>
+
+    <div class="marco">
+    <p class="PaginaDeInicio"><?= Yii::t('app', 'Por favor, rellene los siguientes campos para iniciar sesión:') ?></p>
+    
     <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'enableAjaxValidation' => false,
-        'enableClientValidation' => false,
-    ]); ?>
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    'id' => 'login-form',
+    'enableAjaxValidation' => false,
+    'enableClientValidation' => true, // Cambiar a true para habilitar la validación del cliente
+]); ?>
+
+    <?= $form->field($model, 'username')->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el usuario']) ?>
+    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true, 'placeholder' => 'Ingrese la contraseña']) ?>
+
+
+    </div>
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'botonInicioSesion']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
