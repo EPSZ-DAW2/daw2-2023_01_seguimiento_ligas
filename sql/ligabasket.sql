@@ -239,6 +239,7 @@ CREATE TABLE `roles` (
 
 CREATE TABLE `temporadas` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `id_liga` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'ID de la Liga a la que pertenece',
   `texto_de_titulo` varchar(50) DEFAULT NULL,
   `fecha_inicial` date DEFAULT NULL,
   `fecha_final` date DEFAULT NULL
@@ -382,7 +383,8 @@ ALTER TABLE `roles`
 -- Indices de la tabla `temporadas`
 --
 ALTER TABLE `temporadas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_idTempLiga` (`id_liga`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -575,6 +577,12 @@ ALTER TABLE `partidos_jornada`
 --
 ALTER TABLE `patrocinadores`
   ADD CONSTRAINT `fk_id_idImgPatrocinadores` FOREIGN KEY (`id_imagen`) REFERENCES `imagenes` (`id`);
+
+--
+-- Filtros para la tabla `temporadas`
+--
+ALTER TABLE `temporadas`
+  ADD CONSTRAINT `fk_id_idTempLiga` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`);
 
 --
 -- Filtros para la tabla `usuarios`

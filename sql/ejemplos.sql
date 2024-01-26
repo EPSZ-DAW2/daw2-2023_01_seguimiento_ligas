@@ -1,32 +1,52 @@
--- INSERTAMOS UNA IMAGEN DE EJEMPLO
+-- INSERTAMOS LAS IMAGENES DE LIGA NBA Y ACB
 INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('web/liga_acb.jpeg');
+('liga-nba.png');
 
-SET @imagen_liga := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('web/escudo_liga.jpeg');
-
-SET @id_escudo := LAST_INSERT_ID();
+SET @imagen_nba := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('foto jugadores');
+('liga-acb.png');
 
-SET @id_jugadores := LAST_INSERT_ID();
+SET @imagen_acb := LAST_INSERT_ID();
 
--- INSERTAMOS UNA LIGA DE EJEMPLO
+
+-- INSERTAMOS LAS LIGAS NBA Y ACB
 INSERT IGNORE INTO `ligas` (`nombre`, `pais`, `id_imagen`) VALUES
-('Liga ACB', 'España', @imagen_liga);
+('Liga NBA', 'USA', @imagen_nba);
 
-SET @id_liga := LAST_INSERT_ID();
+SET @id_nba := LAST_INSERT_ID();
 
+INSERT IGNORE INTO `ligas` (`nombre`, `pais`, `id_imagen`) VALUES
+('Liga ACB', 'España', @imagen_acb);
+
+SET @id_acb := LAST_INSERT_ID();
+
+-- TEMPORADAS 2023-24 DE LAS LIGAS NBA Y ACB
+INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
+(@id_nba, 'Temporada 2023-24 de la NBA', '2023-10-24', '2024-04-14');
+
+INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
+(@id_acb, 'Liga ACB 2023-24', '2023-09-23', '2024-06-24');
+
+
+-- INSERTAMOS LAS IMAGENES DE LOS ESCUDOS DE LOS EQUIPOS DE LA LIGA NBA Y ACB
+INSERT IGNORE INTO `imagenes` (`foto`) VALUES
+('lakers-logo.png');
+
+SET @escudo_lakers := LAST_INSERT_ID();
+
+INSERT IGNORE INTO `imagenes` (`foto`) VALUES
+('realmadrid-logo.png');
+
+SET @escudo_realmadrid := LAST_INSERT_ID();
+
+-- ALGUNOS EQUIPOS DE LA NBA Y ACB
 
 INSERT IGNORE INTO `equipos` (`id_liga`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
-(@id_liga, 'Suika CB', 'Equipo de Zamora enfocado en ganar', @id_escudo, 15),
-(@id_liga, 'Zamora Basket', 'Los partidos se ganan en la cancha', @id_escudo, 21);
+(@id_nba, 'Los Angeles Lakers', 'Equipo de División Pacífico de la Conferencia Oeste', @escudo_lakers, 15),
+(@id_acb, 'Real Madrid Baloncesto', 'Equipo de 1931 apodado los Blancos', @escudo_realmadrid, 14);
 
-INSERT IGNORE INTO `temporadas` (`texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-('2023-2024', '2023-09-01', '2024-05-30');
+
 
 INSERT IGNORE INTO `jugadores` (`id_equipo`, `nombre`, `descripcion`, `id_imagen`, `posicion`, `altura`, `peso`, `nacionalidad`) VALUES 
 (000001, 'paco lopez', 'un rumano que le pega patadas al balon', @id_liga, 'delantero pichichi', 1.20, 300, 'Rumano');
