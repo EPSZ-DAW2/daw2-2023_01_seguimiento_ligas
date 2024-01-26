@@ -54,7 +54,7 @@ $config = [
             ],
         ],*/
 
-        
+        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -63,7 +63,7 @@ $config = [
                 // Otras reglas de URL según sea necesario
             ],
         ],
-        
+        */
     ],
     'params' => $params,
 ];

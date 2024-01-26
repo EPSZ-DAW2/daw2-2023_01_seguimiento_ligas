@@ -30,9 +30,9 @@ class JornadasTemporada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_temporada', 'fecha_jornada'], 'required'],
-            [['id_temporada'], 'integer'],
-            [['fecha_jornada'], 'safe'],
+            [['id_temporada', ' numero', 'fecha_inicio', 'fecha_final'], 'required'],
+            [['id_temporada', 'numero'], 'integer'],
+            [['fecha_inicio', 'fecha_final'], 'safe'],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
         ];
     }
@@ -44,8 +44,10 @@ class JornadasTemporada extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_temporada' => 'Id Temporada',
-            'fecha_jornada' => 'Fecha Jornada',
+            'id_temporada' => 'ID Temporada',
+            'numero' => 'Número de jornada',
+            'fecha_inicio' => 'Inicio de la jornada',
+            'fecha_final' => 'Fin de la jornada',
         ];
     }
 

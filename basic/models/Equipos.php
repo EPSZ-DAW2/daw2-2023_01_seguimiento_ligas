@@ -104,6 +104,16 @@ class Equipos extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Imagen]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImagen()
+    {
+        return $this->hasOne(Imagenes::class, ['id' => 'id_escudo']);
+    }
+
+    /**
      * Gets query for [[Jugadores]].
      *
      * @return \yii\db\ActiveQuery
