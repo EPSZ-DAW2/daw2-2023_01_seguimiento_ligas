@@ -23,7 +23,7 @@ SET @id_acb := LAST_INSERT_ID();
 
 -- TEMPORADAS 2023-24 DE LAS LIGAS NBA Y ACB
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'Temporada 2023-24 de la NBA', '2023-10-24', '2024-04-14');
+(@id_nba, 'Liga NBA 2023-24', '2023-10-24', '2024-04-14');
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
 (@id_acb, 'Liga ACB 2023-24', '2023-09-23', '2024-06-24');

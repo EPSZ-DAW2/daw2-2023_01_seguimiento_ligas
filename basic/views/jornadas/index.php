@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Jornadas de la temporada ' . $temporada->texto_de_titulo;
+$this->title = 'Jornadas de ' . $temporada->texto_de_titulo;
 $this->params['breadcrumbs'][] = $this->title;
 
 echo GridView::widget([
