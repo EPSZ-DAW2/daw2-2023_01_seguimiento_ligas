@@ -138,8 +138,8 @@ class Imagenes extends \yii\db\ActiveRecord
 
             $this->imagenFile->saveAs(Yii::getAlias('@app/web/' . $path) . $imageName);
 
-            // Guardar la ruta relativa del archivo en la base de datos
-            $this->foto = $path . $imageName;
+            // Guardar el nombre de la imagen en la base de datos
+            $this->foto = $imageName;
     
             return $this->save();
         } else {

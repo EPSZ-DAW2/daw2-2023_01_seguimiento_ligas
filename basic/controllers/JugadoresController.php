@@ -11,6 +11,8 @@ class JugadoresController extends Controller
 {
     public function actionIndex()
     {
+        $this->view->title = 'ArosInsider - Jugadores';
+
         // Obtén todos los equipos desde la base de datos
         $jugadores = Jugadores::find()->all();
 

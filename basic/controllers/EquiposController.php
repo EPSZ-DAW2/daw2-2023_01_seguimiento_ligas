@@ -13,6 +13,8 @@ class EquiposController extends Controller
 {
     public function actionIndex()
     {
+        $this->view->title = 'ArosInsider - Equipos';
+
         // Obtén todos los equipos desde la base de datos
         $equipos = Equipos::find()->all();
 

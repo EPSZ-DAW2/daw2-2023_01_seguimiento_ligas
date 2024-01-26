@@ -11,6 +11,8 @@ class LigasController extends Controller
 {
     public function actionIndex()
     {
+        $this->view->title = 'ArosInsider - Ligas';
+
         // Obtén todos los equipos desde la base de datos
         $ligas = Ligas::find()->all();
 
