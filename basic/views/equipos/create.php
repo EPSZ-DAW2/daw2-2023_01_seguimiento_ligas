@@ -20,7 +20,7 @@ $this->registerCssFile('@web/css/equipos.css');
 
     <h2 class="equipos_presentacion"><?= Html::encode($this->title) ?></h2>
 
-    <p class="PaginaDeInicio">Por favor rellene los campos para la creacción de un equipo:</p>
+    <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de un equipo:</p>
 
 
     <?php $form = ActiveForm::begin([
@@ -34,11 +34,12 @@ $this->registerCssFile('@web/css/equipos.css');
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'n_jugadores')->hiddenInput(['value' => 0])->label(false) ?>
+    <br>
     <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
-    <?= $form->field($model, 'n_jugadores')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'botonInicioSesion']) ?>
+        <?= Html::submitButton('Añadir Equipo', ['class' => 'botonInicioSesion']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -53,6 +53,16 @@ $config = [
                 'equipos/create' => 'equipos/create',
             ],
         ],*/
+
+        
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                'jornadas/index/<id_temporada:\d+>' => 'jornadas-temporada/index',
+                // Otras reglas de URL según sea necesario
+            ],
+        ],
         
     ],
     'params' => $params,
