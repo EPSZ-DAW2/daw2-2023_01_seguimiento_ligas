@@ -45,9 +45,9 @@ class Temporadas extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'texto_de_titulo' => 'Texto De Titulo',
-            'fecha_inicial' => 'Fecha Inicial',
-            'fecha_final' => 'Fecha Final',
+            'texto_de_titulo' => 'Nombre de la Temporada',
+            'fecha_inicial' => 'Inicio de la Temporada',
+            'fecha_final' => 'Fin de la Temporada',
         ];
     }
 

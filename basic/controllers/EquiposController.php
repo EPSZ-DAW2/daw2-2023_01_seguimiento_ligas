@@ -29,24 +29,32 @@ class EquiposController extends Controller
 
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
-
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
 
-            if ($imagenModel->saveImagen()) {
-                // Guarda la imagen en la tabla imagenes
-                $imagenModel->save(false);
-
-                // Asigna el ID de la imagen al modelo de Equipos
+            // Validar y guardar la imagen
+            if ($imagenModel->validate() && $imagenModel->saveImagen()) {
+                // Asigna el ID de la imagen al modelo de Equipos después de guardarla
                 $model->id_escudo = $imagenModel->id;
-                
+
                 // Guarda el modelo de Equipos
                 if ($model->save()) {
-                    // Redirige o realiza otras acciones después de guardar
+                    return $this->redirect(['equipos/index']);
+                } else {
+                    print_r($model->errors);
+                    // Muestra los errores de validación del modelo Equipos
+                    Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
+                    
+                    return $this->render('create', [
+                        'model' => $model,
+                        'imagenModel' => $imagenModel,
+                    ]);
                 }
+            } else {
+                // Muestra los errores de validación de la imagen
+                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
         }
 
-        // Renderiza la vista del formulario
         return $this->render('create', [
             'model' => $model,
             'imagenModel' => $imagenModel,
