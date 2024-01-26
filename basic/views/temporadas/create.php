@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Ligas;
 
 /** @var yii\web\View $this */
 /** @var app\models\Temporadas $model */
@@ -19,6 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'id_liga')->dropDownList(
+        ArrayHelper::map(Ligas::find()->all(), 'id', 'nombre'),
+        ['prompt' => 'Seleccionar Liga']
+    ) ?>
 
     <?= $form->field($model, 'texto_de_titulo')->textInput(['maxlength' => true]) ?>
 

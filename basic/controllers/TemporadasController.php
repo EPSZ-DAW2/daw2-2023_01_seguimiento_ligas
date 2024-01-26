@@ -11,6 +11,8 @@ class TemporadasController extends \yii\web\Controller
 {
     public function actionIndex()
     {
+        $this->view->title = 'ArosInsider - Temporadas';
+
         // Obtén todos las temporadas desde la base de datos
         $temporadas= Temporadas::find()->all();
 

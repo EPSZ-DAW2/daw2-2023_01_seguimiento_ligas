@@ -16,11 +16,12 @@ class LigasController extends Controller
 {
     public function actionIndex()
     {
-        // Obtén todos las ligas desde la base de datos
-        $searchModel = new LigasSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-    
-        // Renderiza la vista y pasa el dataProvider como parámetro
+        $this->view->title = 'ArosInsider - Ligas';
+
+        // Obtén todos los equipos desde la base de datos
+        $ligas = Ligas::find()->all();
+
+        // Renderiza la vista y pasa los equipos como parámetro
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
