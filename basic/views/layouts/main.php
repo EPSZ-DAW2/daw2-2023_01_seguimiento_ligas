@@ -74,6 +74,7 @@ if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
                 'items' => [
                     ['label' => 'Roles', 'url' => ['/roles/index']],
                     ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+                    ['label' => 'Imagenes', 'url' => ['/imagenes/index']],
                     // Agrega más elementos desplegables aquí si es necesario
                 ],
             ],

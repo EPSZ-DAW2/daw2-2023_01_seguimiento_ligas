@@ -1,50 +1,47 @@
 <?php
 
-use app\models\Ligas;
+use app\models\Imagenes;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use app\models\LigasSearch;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\LigasSearch */
+/* @var $searchModel app\models\ImagenesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Ligas');
+$this->title = Yii::t('app', 'Imágenes');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="ligas-index">
+<div class="imagenes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Crear Nueva Liga'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Subir nueva imagen'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
+            'id',
             [
-                'attribute' => 'imagen',
+                'attribute' => 'foto',
                 'format' => 'html',
                 'value' => function ($model) {
-                    return $model->imagen ? Html::img(Yii::getAlias('@web/' . $model->imagen->foto), ['class' => 'equipo-imagen', 'width' => '50px']) : 'Imagen no encontrada';
+                    return Html::img(Url::to('@web/' . $model->foto), ['width' => '50px']);
                 },
             ],
-            'nombre:ntext',
-            'pais:ntext',
-
+            
             [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Ligas $model, $key, $index, $column) {
+                'class' => ActionColumn::class,
+                'urlCreator' => function ($action, Imagenes $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 }
             ],
@@ -54,3 +51,5 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::end(); ?>
 
 </div>
+
+

@@ -86,7 +86,8 @@ class UsuariosController extends Controller
         } else {
             $model->loadDefaultValues();
         }
-    
+        
+        $model->password = ''; // Limpiar la contraseña por seguridad
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -132,7 +133,13 @@ class UsuariosController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+     
+        if (Yii::$app->user->identity->id_rol == 1) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->redirect(['site/home']);
+        }
+       
     }
 
     /**

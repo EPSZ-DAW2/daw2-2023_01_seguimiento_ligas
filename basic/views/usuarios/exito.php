@@ -1,4 +1,3 @@
-//pagina que muestra un mensaje de exito si se ha compeltado el registro correctamente
 <?php
 use yii\helpers\Html;
 
