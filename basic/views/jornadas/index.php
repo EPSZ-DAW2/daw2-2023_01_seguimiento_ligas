@@ -3,13 +3,24 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Jornadas de la temporada ' . $temporada->texto_de_titulo;
+$this->title = 'Jornadas de ' . $temporada->texto_de_titulo;
 $this->params['breadcrumbs'][] = $this->title;
 
+?>
+<div class="marco">
+
+<?php
 echo GridView::widget([
     'dataProvider' => new \yii\data\ArrayDataProvider(['allModels' => $jornadas]),
     'columns' => [
-        'fecha_jornada',
+        [
+            'attribute' => 'fecha_inicio',
+            'format' => ['datetime', 'php:d/m/Y'], // Formatea la fecha de inicio
+        ],
+        [
+            'attribute' => 'fecha_final',
+            'format' => ['datetime', 'php:d/m/Y'], // Formatea la fecha final
+        ],
         [
             'label' => 'Equipo Local',
             'value' => function ($model) {
@@ -39,3 +50,4 @@ echo GridView::widget([
 
 
 ?>
+</div>

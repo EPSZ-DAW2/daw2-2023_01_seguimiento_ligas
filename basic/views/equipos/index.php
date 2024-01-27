@@ -1,15 +1,12 @@
 <?php $this->registerCssFile('@web/css/equipos.css'); ?>
 
 <?php foreach ($equipos as $equipo): ?>
-    <div class="marco">
-        <?php if ($equipo->escudo): ?>
-            <?= \yii\helpers\Html::img(Yii::getAlias('@web/' . $equipo->escudo->foto), ['class' => 'equipo-imagen', 'width' => '50px']) ?>
-        <?php else: ?>
-            <p>Imagen no encontrada</p>
-        <?php endif; ?>
+    <div class="liga-container">
+        <div class="liga-content">
         <h2><?= $equipo->nombre ?></h2>
         <p><?= $equipo->descripcion ?><p>
-        <p><?= $equipo->escudo->foto ?></p>
+        </div>
+        <div class="liga-image" style="background-image: url('<?= Yii::getAlias('@web/images/' . $equipo->imagen->foto) ?>');"></div>
     </div>
 <?php endforeach; ?>
 

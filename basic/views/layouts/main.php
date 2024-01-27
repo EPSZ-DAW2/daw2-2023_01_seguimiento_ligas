@@ -42,10 +42,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             //['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Ligas', 'url' => ['/ligas/index']],
+            ['label' => 'Ligas', 'url' => ['/ligas/indexCliente']],
             ['label' => 'Temporadas', 'url' => ['/temporadas/index']],
             ['label' => 'Equipos', 'url' => ['/equipos/index']],
-            ['label' => 'Partidos', 'url' => ['/site/about']],
+            ['label' => 'Partidos', 'url' => ['/partidos/index']],
             ['label' => 'Jugadores', 'url' => ['/jugadores/index']],
             ['label' => 'Noticias', 'url' => ['/noticias/index']],
             //['label' => 'Prueba', 'url' => ['/test/index']],
@@ -75,6 +75,7 @@ if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
                     ['label' => 'Roles', 'url' => ['/roles/index']],
                     ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
                     ['label' => 'Imagenes', 'url' => ['/imagenes/index']],
+                    ['label' => 'Ligas', 'url' => ['/ligas/index']],
                     // Agrega más elementos desplegables aquí si es necesario
                 ],
             ],

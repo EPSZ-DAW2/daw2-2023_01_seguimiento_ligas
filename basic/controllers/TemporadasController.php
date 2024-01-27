@@ -13,7 +13,7 @@ class TemporadasController extends \yii\web\Controller
     {
         $this->view->title = 'ArosInsider - Temporadas';
 
-        // Obtén todos las temporadas desde la base de datos
+        // Obtén todas las temporadas desde la base de datos
         $temporadas= Temporadas::find()->all();
 
         // Renderiza la vista y pasa los equipos como parámetro
