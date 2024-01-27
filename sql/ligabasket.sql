@@ -135,7 +135,9 @@ CREATE TABLE `imagenes` (
 CREATE TABLE `jornadas_temporada` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_temporada` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `fecha_jornada` date NOT NULL
+  `numero` int(6) NOT NULL COMMENT 'Número de la jornada',
+  `fecha_inicio` date NOT NULL,
+  `fecha_final` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -196,8 +198,6 @@ CREATE TABLE `noticias` (
 
 CREATE TABLE `partidos_jornada` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `id_liga` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `id_temporada` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_jornada` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_equipo_local` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_equipo_visitante` int(6) UNSIGNED ZEROFILL NOT NULL,
@@ -362,9 +362,7 @@ ALTER TABLE `partidos_jornada`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_id_idEquipoLocal` (`id_equipo_local`),
   ADD KEY `fk_id_idEquipoVisitante` (`id_equipo_visitante`),
-  ADD KEY `fk_id_idTemporadaP` (`id_temporada`),
-  ADD KEY `fk_id_idJornadaP` (`id_jornada`),
-  ADD KEY `fk_id_idLiga` (`id_liga`);
+  ADD KEY `fk_id_idJornadaP` (`id_jornada`);
 
 --
 -- Indices de la tabla `patrocinadores`
@@ -568,9 +566,7 @@ ALTER TABLE `noticias`
 ALTER TABLE `partidos_jornada`
   ADD CONSTRAINT `fk_id_idEquipoLocal` FOREIGN KEY (`id_equipo_local`) REFERENCES `equipos` (`id`),
   ADD CONSTRAINT `fk_id_idEquipoVisitante` FOREIGN KEY (`id_equipo_visitante`) REFERENCES `equipos` (`id`),
-  ADD CONSTRAINT `fk_id_idJornadaP` FOREIGN KEY (`id_jornada`) REFERENCES `jornadas_temporada` (`id`),
-  ADD CONSTRAINT `fk_id_idLiga` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`),
-  ADD CONSTRAINT `fk_id_idTemporadaP` FOREIGN KEY (`id_temporada`) REFERENCES `temporadas` (`id`);
+  ADD CONSTRAINT `fk_id_idJornadaP` FOREIGN KEY (`id_jornada`) REFERENCES `jornadas_temporada` (`id`);
 
 --
 -- Filtros para la tabla `patrocinadores`
