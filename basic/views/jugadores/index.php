@@ -31,6 +31,7 @@
         <!-- Div izquierdo: Jugador con más puntos -->
         <div class="estadisticas-item">
             <h3>Jugador con más puntos</h3>
+            <h4>
             <?php
                 $jugadorMasPuntos = \app\models\EstadisticasJugador::find()
                     ->orderBy(['puntos' => SORT_DESC])
@@ -38,11 +39,24 @@
 
                 echo $jugadorMasPuntos ? "{$jugadorMasPuntos->jugador->nombre} - Puntos: {$jugadorMasPuntos->puntos}" : 'Sin datos';
             ?>
+            </h4>
+            <?php
+                $siguientesPuntos = \app\models\EstadisticasJugador::find()
+                ->where(['not', ['id' => $jugadorMasPuntos->id]])
+                ->orderBy(['puntos' => SORT_DESC])
+                ->limit(2)
+                ->all();
+        
+                foreach ($siguientesPuntos as $jugadorPuntos) {
+                    echo "<p class='nombre-secundario'>{$jugadorPuntos->jugador->nombre}</p>";
+                }
+            ?>
         </div>
 
         <!-- Div centro: Jugador con más asistencias -->
         <div class="estadisticas-item">
             <h3>Jugador con más asistencias</h3>
+            <h4>
             <?php
                 $jugadorMasAsistencias = \app\models\EstadisticasJugador::find()
                     ->orderBy(['asistencias' => SORT_DESC])
@@ -50,17 +64,42 @@
 
                 echo $jugadorMasAsistencias ? "{$jugadorMasAsistencias->jugador->nombre} - Asistencias: {$jugadorMasAsistencias->asistencias}" : 'Sin datos';
             ?>
+            </h4>
+            <?php
+                $siguientesAsistencias = \app\models\EstadisticasJugador::find()
+                ->where(['not', ['id' => $jugadorMasAsistencias->id]])
+                ->orderBy(['asistencias' => SORT_DESC])
+                ->limit(2)
+                ->all();
+        
+                foreach ($siguientesAsistencias as $jugadorAsistencias) {
+                    echo "<p class='nombre-secundario'>{$jugadorAsistencias->jugador->nombre}</p>";
+                }
+            ?>
         </div>
 
         <!-- Div derecho: Jugador con más rebotes -->
         <div class="estadisticas-item">
             <h3>Jugador con más rebotes</h3>
+            <h4>
             <?php
                 $jugadorMasRebotes = \app\models\EstadisticasJugador::find()
                     ->orderBy(['rebotes' => SORT_DESC])
                     ->one();
 
                 echo $jugadorMasRebotes ? "{$jugadorMasRebotes->jugador->nombre} - Rebotes: {$jugadorMasRebotes->rebotes}" : 'Sin datos';
+            ?>
+            </h4>
+            <?php
+                $siguientesRebotes = \app\models\EstadisticasJugador::find()
+                ->where(['not', ['id' => $jugadorMasRebotes->id]])
+                ->orderBy(['rebotes' => SORT_DESC])
+                ->limit(2)
+                ->all();
+        
+                foreach ($siguientesRebotes as $jugadorRebotes) {
+                    echo "<p class='nombre-secundario'>{$jugadorRebotes->jugador->nombre}</p>";
+                }
             ?>
         </div>
     </div>
