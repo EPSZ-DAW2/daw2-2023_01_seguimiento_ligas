@@ -8,6 +8,7 @@ use app\models\EstadisticasJugador;
 use app\models\Imagenes;
 use app\models\Temporadas;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 
 
 class JugadoresController extends Controller
