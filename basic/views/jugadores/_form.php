@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 <div class="jugadores-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'id_equipo')->dropDownList(
         \yii\helpers\ArrayHelper::map(\app\models\Equipos::find()->all(), 'id', 'nombre'),
@@ -21,8 +21,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
 
     <?= $form->field($model, 'posicion')->dropDownList([
     ''=>'',
@@ -40,6 +38,8 @@ use yii\widgets\ActiveForm;
     \app\models\Jugadores::getNacionalidadesList(),
     ['prompt' => 'Selecciona una nacionalidad']
     ) ?>
+
+    <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
 
     <br>
 

@@ -46,6 +46,20 @@ class JugadoresController extends Controller
 
                 // Guarda el modelo de Equipos
                 if ($model->save()) {
+
+                    $estadisticasJugador = new EstadisticasJugador();
+
+                    // Asigna los valores predeterminados
+                    $estadisticasJugador->id_temporada = Temporadas::find()->orderBy(['id' => SORT_DESC])->one()->id;
+                    $estadisticasJugador->id_equipo = $model->id_equipo;
+                    $estadisticasJugador->id_jugador = $model->id;
+                    $estadisticasJugador->partidos_jugados = 0;
+                    $estadisticasJugador->puntos = 0;
+                    $estadisticasJugador->rebotes = 0;
+                    $estadisticasJugador->asistencias = 0;
+
+                    // Guarda la nueva entrada en estadisticas_jugador
+                    $estadisticasJugador->save();
                     return $this->redirect(['jugadores/index']);
                 } else {
                     print_r($model->errors);
