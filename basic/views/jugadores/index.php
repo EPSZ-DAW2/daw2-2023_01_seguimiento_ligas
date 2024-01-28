@@ -41,6 +41,7 @@
             ?>
             </h4>
             <?php
+            if($jugadorMasPuntos) {
                 $siguientesPuntos = \app\models\EstadisticasJugador::find()
                 ->where(['not', ['id' => $jugadorMasPuntos->id]])
                 ->orderBy(['puntos' => SORT_DESC])
@@ -50,6 +51,7 @@
                 foreach ($siguientesPuntos as $jugadorPuntos) {
                     echo "<p class='nombre-secundario'>{$jugadorPuntos->jugador->nombre}</p>";
                 }
+            }
             ?>
         </div>
 
@@ -66,6 +68,7 @@
             ?>
             </h4>
             <?php
+            if($jugadorMasAsistencias) {
                 $siguientesAsistencias = \app\models\EstadisticasJugador::find()
                 ->where(['not', ['id' => $jugadorMasAsistencias->id]])
                 ->orderBy(['asistencias' => SORT_DESC])
@@ -75,6 +78,7 @@
                 foreach ($siguientesAsistencias as $jugadorAsistencias) {
                     echo "<p class='nombre-secundario'>{$jugadorAsistencias->jugador->nombre}</p>";
                 }
+            }
             ?>
         </div>
 
@@ -91,6 +95,7 @@
             ?>
             </h4>
             <?php
+            if($jugadorMasRebotes) {
                 $siguientesRebotes = \app\models\EstadisticasJugador::find()
                 ->where(['not', ['id' => $jugadorMasRebotes->id]])
                 ->orderBy(['rebotes' => SORT_DESC])
@@ -100,6 +105,7 @@
                 foreach ($siguientesRebotes as $jugadorRebotes) {
                     echo "<p class='nombre-secundario'>{$jugadorRebotes->jugador->nombre}</p>";
                 }
+            }
             ?>
         </div>
     </div>

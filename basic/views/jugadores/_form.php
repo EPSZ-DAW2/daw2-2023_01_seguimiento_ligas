@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'id_imagen')->textInput() ?>
+    <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
 
     <?= $form->field($model, 'posicion')->dropDownList([
     ''=>'',
