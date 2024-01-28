@@ -43,10 +43,6 @@ class JugadoresController extends Controller
             if ($imagenModel->validate() && $imagenModel->saveImagen()) {
                 // Asigna el ID de la imagen al modelo de Jugadores después de guardarla
                 $model->id_imagen = $imagenModel->id;
-
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    // Resto de tu lógica de creación...
-                }
             } else {
                 Yii::$app->session->setFlash('error', 'Error al cargar la imagen.'); 
             }
