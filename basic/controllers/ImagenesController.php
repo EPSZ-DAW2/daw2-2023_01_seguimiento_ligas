@@ -38,6 +38,5 @@ class ImagenesController extends Controller
             'model' => $model,
         ]);
     }
-
 }
 

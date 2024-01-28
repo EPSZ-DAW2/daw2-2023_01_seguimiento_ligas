@@ -33,7 +33,7 @@ class JugadoresController extends Controller
     public function actionCreate()
     {
         $model = new Jugadores();
-        $imagenModel = new Imagenes(); // Crea una instancia de ImagenModel
+        $imagenModel = new Imagenes();
 
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
@@ -41,10 +41,25 @@ class JugadoresController extends Controller
 
             // Validar y guardar la imagen
             if ($imagenModel->validate() && $imagenModel->saveImagen()) {
-                // Asigna el ID de la imagen al modelo de Jugadores después de guardarla
+                // Asigna el ID de la imagen al modelo de Equipos después de guardarla
                 $model->id_imagen = $imagenModel->id;
+
+                // Guarda el modelo de Equipos
+                if ($model->save()) {
+                    return $this->redirect(['jugadores/index']);
+                } else {
+                    print_r($model->errors);
+                    // Muestra los errores de validación del modelo Equipos
+                    Yii::$app->session->setFlash('error', 'Error al guardar el jugador.');
+                    
+                    return $this->render('create', [
+                        'model' => $model,
+                        'imagenModel' => $imagenModel,
+                    ]);
+                }
             } else {
-                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.'); 
+                // Muestra los errores de validación de la imagen
+                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
         }
 
