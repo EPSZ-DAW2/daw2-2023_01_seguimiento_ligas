@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\web\UploadedFile;
 use Yii;
 
 /**
@@ -12,7 +13,6 @@ use Yii;
  *
  * @property AnunciosPatrocinador[] $anunciosPatrocinadors
  * @property Equipos[] $equipos
- * @property Equipos[] $equipos0
  * @property Jugadores[] $jugadores
  * @property Ligas[] $ligas
  * @property Noticias[] $noticias
@@ -20,6 +20,8 @@ use Yii;
  */
 class Imagenes extends \yii\db\ActiveRecord
 {
+    public $imagenFile;
+
     /**
      * {@inheritdoc}
      */
@@ -66,7 +68,7 @@ class Imagenes extends \yii\db\ActiveRecord
      */
     public function getEquipos()
     {
-        return $this->hasMany(Equipos::class, ['id_imagen' => 'id']);
+        return $this->hasMany(Equipos::class, ['id_escudo' => 'id']);
     }
 
     /**
@@ -76,7 +78,7 @@ class Imagenes extends \yii\db\ActiveRecord
      */
     public function getEquipos0()
     {
-        return $this->hasMany(Equipos::class, ['id_imagen_escudo' => 'id']);
+        return $this->hasMany(Equipos::class, ['id_escudo' => 'id']);
     }
 
     /**
@@ -118,4 +120,31 @@ class Imagenes extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Patrocinadores::class, ['id_imagen' => 'id']);
     }
+
+    public function saveImagen()
+    {
+        if ($this->validate()) {
+            $path = 'images/';  // Carpeta dentro de "web/" donde se guardarán las imágenes
+            
+            $imageName = $this->imagenFile->baseName . '.' . $this->imagenFile->extension;
+            $fullPath = Yii::getAlias('@app/web/' . $path) . $imageName;
+
+            // Verificar si la imagen ya existe en la carpeta
+            if (file_exists($fullPath)) {
+                // La imagen ya existe, puedes manejar este caso como desees
+                Yii::$app->session->setFlash('error', 'La imagen ya existe.');
+                return false;
+            }
+
+            $this->imagenFile->saveAs(Yii::getAlias('@app/web/' . $path) . $imageName);
+
+            // Guardar el nombre de la imagen en la base de datos
+            $this->foto = $imageName;
+    
+            return $this->save();
+        } else {
+            return false;
+        }
+    }
+    
 }

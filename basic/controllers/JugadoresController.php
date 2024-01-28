@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Jugadores;
 use app\models\EstadisticasJugador;
+use app\models\Imagenes;
 use app\models\Temporadas;
 use yii\web\Controller;
 
@@ -25,26 +26,28 @@ class JugadoresController extends Controller
     public function actionCreate()
     {
         $model = new Jugadores();
+        $imagenModel = new Imagenes(); // Crea una instancia de ImagenModel
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
 
-            $estadisticasJugador = new EstadisticasJugador();
+            // Validar y guardar la imagen
+            if ($imagenModel->validate() && $imagenModel->saveImagen()) {
+                // Asigna el ID de la imagen al modelo de Jugadores después de guardarla
+                $model->id_imagen = $imagenModel->id;
 
-            $estadisticasJugador->id_temporada = Temporadas::find()->orderBy(['id' => SORT_DESC])->one()->id;
-            $estadisticasJugador->id_equipo = $model->id_equipo;
-            $estadisticasJugador->id_jugador = $model->id;
-            $estadisticasJugador->partidos_jugados = 0;
-            $estadisticasJugador->puntos = 0;
-            $estadisticasJugador->rebotes = 0;
-            $estadisticasJugador->asistencias = 0;
-
-            $estadisticasJugador->save();
-
-            return $this->redirect(['view', 'id' => $model->id]);
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    // Resto de tu lógica de creación...
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.'); 
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'imagenModel' => $imagenModel,
         ]);
     }
     
