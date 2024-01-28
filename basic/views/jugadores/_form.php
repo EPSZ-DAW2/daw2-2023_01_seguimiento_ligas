@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 <div class="jugadores-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'id_equipo')->dropDownList(
         \yii\helpers\ArrayHelper::map(\app\models\Equipos::find()->all(), 'id', 'nombre'),
