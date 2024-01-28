@@ -9,18 +9,24 @@ use app\models\Imagenes;
 use app\models\Temporadas;
 use yii\web\Controller;
 use yii\web\UploadedFile;
+use yii\data\ActiveDataProvider;
 
 
 class JugadoresController extends Controller
 {
     public function actionIndex()
     {
-        // Obtén todos los equipos desde la base de datos
-        $jugadores = Jugadores::find()->with('equipo')->all();
-
-        // Renderiza la vista y pasa los equipos como parámetro
+        // Configura el proveedor de datos con paginación
+        $dataProvider = new ActiveDataProvider([
+            'query' => Jugadores::find()->with('equipo'),
+            'pagination' => [
+                'pageSize' => 12, // Define el número de jugadores por página
+            ],
+        ]);
+    
+        // Renderiza la vista y pasa el proveedor de datos como parámetro
         return $this->render('index', [
-            'jugadores' => $jugadores,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

@@ -1,3 +1,8 @@
+<?php
+use yii\grid\GridView;
+use yii\helpers\Html;
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -114,39 +119,45 @@
     <div>
         <h2>Tabla de Jugadores</h2>
 
-        <table class="tabla">
-            <thead class="cabecera filas">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Posición</th>
-                    <th>Descripción</th>
-                    <th>Altura</th>
-                    <th>Peso</th>
-                    <th>Nacionalidad</th>
-                    <th>Equipo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($jugadores as $jugador): ?>
-                    <tr class="filas">
-                        <td class="filas"><?php echo $jugador['nombre']; ?></td>
-                        <td class="filas"><?php echo $jugador['posicion']; ?></td>
-                        <td class="filas"><?php echo $jugador['descripcion']; ?></td>
-                        <td class="filas"><?php echo $jugador['altura']; ?></td>
-                        <td class="filas"><?php echo $jugador['peso']; ?></td>
-                        <td class="filas"><?php echo $jugador['nacionalidad']; ?></td>
-                        <td class="filas"><?= isset($jugador->equipo) ? $jugador->equipo->nombre : 'Sin equipo' ?></td>
-                        <td class="filas">
-                            <!-- Botones de Acciones -->
-                            <?= \yii\helpers\Html::a('Editar', ['jugadores/update', 'id' => $jugador['id']], ['class' => 'btn btn-primary']) ?>
-                            <?= \yii\helpers\Html::a('Ver', ['jugadores/view', 'id' => $jugador['id']], ['class' => 'btn btn-info']) ?>
-                            <?= \yii\helpers\Html::a('Eliminar', ['jugadores/delete', 'id' => $jugador['id']], ['class' => 'btn btn-danger', 'data' => ['confirm' => '¿Estás seguro de que deseas eliminar este jugador?']]) ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <br>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                'nombre',
+                'posicion',
+                'descripcion',
+                'altura',
+                'peso',
+                'nacionalidad',
+                [
+                    'attribute' => 'equipo.nombre',
+                    'label' => 'Equipo',
+                    'value' => function ($model) {
+                        return $model->equipo ? $model->equipo->nombre : 'Sin equipo';
+                    },
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update} {view} {delete}',
+                    'buttons' => [
+                        'update' => function ($url, $model) {
+                            return Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                        },
+                        'view' => function ($url, $model) {
+                            return Html::a('Ver', ['view', 'id' => $model->id], ['class' => 'btn btn-info']);
+                        },
+                        'delete' => function ($url, $model) {
+                            return Html::a('Eliminar', ['delete', 'id' => $model->id], [
+                                'class' => 'btn btn-danger',
+                                'data' => [
+                                    'confirm' => '¿Estás seguro de que deseas eliminar este jugador?',
+                                    'method' => 'post',
+                                ],
+                            ]);
+                        },
+                    ],
+                ],
+            ],
+        ]); ?>
     </div>
 
     <?= \yii\helpers\Html::a('Crear Nuevo Jugador', ['jugadores/create'], ['class' => 'btn btn-success']) ?>
