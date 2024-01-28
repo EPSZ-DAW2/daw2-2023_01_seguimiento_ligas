@@ -12,7 +12,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
 
-'name' => 'Ligacesto',  // Nombre de la apicación
+'name' => 'ArosInsider',  // Nombre de la apicación
 
     'components' => [
         'request' => [
@@ -23,7 +23,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Usuarios',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -53,7 +53,17 @@ $config = [
                 'equipos/create' => 'equipos/create',
             ],
         ],*/
-        
+
+        /*
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                'jornadas/index/<id_temporada:\d+>' => 'jornadas-temporada/index',
+                // Otras reglas de URL según sea necesario
+            ],
+        ],
+        */
     ],
     'params' => $params,
 ];

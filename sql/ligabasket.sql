@@ -68,8 +68,7 @@ CREATE TABLE `equipos` (
   `id_liga` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador de la liga',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del equipo',
   `descripcion` varchar(200) NOT NULL COMMENT 'Descripción general del equipo',
-  `id_imagen_escudo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen del escudo',
-  `id_imagen` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de las imágenes',
+  `id_escudo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen del escudo',
   `n_jugadores` int(2) NOT NULL COMMENT 'Número de jugadores que componen el equipo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -136,7 +135,9 @@ CREATE TABLE `imagenes` (
 CREATE TABLE `jornadas_temporada` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_temporada` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `fecha_jornada` date NOT NULL
+  `numero` int(6) NOT NULL COMMENT 'Número de la jornada',
+  `fecha_inicio` date NOT NULL,
+  `fecha_final` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -197,8 +198,6 @@ CREATE TABLE `noticias` (
 
 CREATE TABLE `partidos_jornada` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `id_liga` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `id_temporada` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_jornada` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_equipo_local` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_equipo_visitante` int(6) UNSIGNED ZEROFILL NOT NULL,
@@ -240,6 +239,7 @@ CREATE TABLE `roles` (
 
 CREATE TABLE `temporadas` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `id_liga` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'ID de la Liga a la que pertenece',
   `texto_de_titulo` varchar(50) DEFAULT NULL,
   `fecha_inicial` date DEFAULT NULL,
   `fecha_final` date DEFAULT NULL
@@ -257,20 +257,14 @@ CREATE TABLE `usuarios` (
   `apellido1` varchar(50) NOT NULL,
   `apellido2` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `provincia` varchar(50) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `provincia` varchar(50) NOT NULL,
+  `id_rol` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `usuario_rol`
---
-
-CREATE TABLE `usuario_rol` (
-  `id_usuario` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `id_rol` int(6) UNSIGNED ZEROFILL NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tablas volcadas
@@ -299,8 +293,7 @@ ALTER TABLE `comentarios`
 ALTER TABLE `equipos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_liga` (`id_liga`),
-  ADD KEY `fk_id_idImagenL` (`id_imagen_escudo`),
-  ADD KEY `fk_id_idImagen` (`id_imagen`);
+  ADD KEY `fk_id_idImagenL` (`id_escudo`);
 
 --
 -- Indices de la tabla `equipos_patrocinadores`
@@ -369,9 +362,7 @@ ALTER TABLE `partidos_jornada`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_id_idEquipoLocal` (`id_equipo_local`),
   ADD KEY `fk_id_idEquipoVisitante` (`id_equipo_visitante`),
-  ADD KEY `fk_id_idTemporadaP` (`id_temporada`),
-  ADD KEY `fk_id_idJornadaP` (`id_jornada`),
-  ADD KEY `fk_id_idLiga` (`id_liga`);
+  ADD KEY `fk_id_idJornadaP` (`id_jornada`);
 
 --
 -- Indices de la tabla `patrocinadores`
@@ -390,20 +381,16 @@ ALTER TABLE `roles`
 -- Indices de la tabla `temporadas`
 --
 ALTER TABLE `temporadas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_idTempLiga` (`id_liga`);
 
 --
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_idRoles` (`id_rol`);
 
---
--- Indices de la tabla `usuario_rol`
---
-ALTER TABLE `usuario_rol`
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_rol` (`id_rol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -523,8 +510,7 @@ ALTER TABLE `comentarios`
 --
 ALTER TABLE `equipos`
   ADD CONSTRAINT `equipos_ibfk_1` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`),
-  ADD CONSTRAINT `fk_id_idImagen` FOREIGN KEY (`id_imagen`) REFERENCES `imagenes` (`id`),
-  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_imagen_escudo`) REFERENCES `imagenes` (`id`);
+  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_escudo`) REFERENCES `imagenes` (`id`);
 
 --
 -- Filtros para la tabla `equipos_patrocinadores`
@@ -580,9 +566,7 @@ ALTER TABLE `noticias`
 ALTER TABLE `partidos_jornada`
   ADD CONSTRAINT `fk_id_idEquipoLocal` FOREIGN KEY (`id_equipo_local`) REFERENCES `equipos` (`id`),
   ADD CONSTRAINT `fk_id_idEquipoVisitante` FOREIGN KEY (`id_equipo_visitante`) REFERENCES `equipos` (`id`),
-  ADD CONSTRAINT `fk_id_idJornadaP` FOREIGN KEY (`id_jornada`) REFERENCES `jornadas_temporada` (`id`),
-  ADD CONSTRAINT `fk_id_idLiga` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`),
-  ADD CONSTRAINT `fk_id_idTemporadaP` FOREIGN KEY (`id_temporada`) REFERENCES `temporadas` (`id`);
+  ADD CONSTRAINT `fk_id_idJornadaP` FOREIGN KEY (`id_jornada`) REFERENCES `jornadas_temporada` (`id`);
 
 --
 -- Filtros para la tabla `patrocinadores`
@@ -591,12 +575,16 @@ ALTER TABLE `patrocinadores`
   ADD CONSTRAINT `fk_id_idImgPatrocinadores` FOREIGN KEY (`id_imagen`) REFERENCES `imagenes` (`id`);
 
 --
--- Filtros para la tabla `usuario_rol`
+-- Filtros para la tabla `temporadas`
 --
-ALTER TABLE `usuario_rol`
-  ADD CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`);
-COMMIT;
+ALTER TABLE `temporadas`
+  ADD CONSTRAINT `fk_id_idTempLiga` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`);
+
+--
+-- Filtros para la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `fk_id_idRoles` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

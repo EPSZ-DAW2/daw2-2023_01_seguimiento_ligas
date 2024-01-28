@@ -11,15 +11,13 @@ use Yii;
  * @property int $id_liga Identificador de la liga
  * @property string $nombre Nombre del equipo
  * @property string $descripcion Descripción general del equipo
- * @property int $id_imagen_escudo Identificador interno de la imagen del escudo
- * @property int $id_imagen Identificador interno de las imágenes
+ * @property int $id_escudo Identificador interno de la imagen del escudo
  * @property int $n_jugadores Número de jugadores que componen el equipo
  *
  * @property EquiposPatrocinadores[] $equiposPatrocinadores
+ * @property Imagenes $escudo
  * @property EstadisticasEquipo[] $estadisticasEquipos
  * @property EstadisticasJugador[] $estadisticasJugadors
- * @property Imagenes $imagen
- * @property Imagenes $imagenEscudo
  * @property Jugadores[] $jugadores
  * @property Ligas $liga
  * @property PartidosJornada[] $partidosJornadas
@@ -41,13 +39,12 @@ class Equipos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_liga', 'nombre', 'descripcion', 'id_imagen_escudo', 'id_imagen', 'n_jugadores'], 'required'],
-            [['id_liga', 'id_imagen_escudo', 'id_imagen', 'n_jugadores'], 'integer'],
+            [['id_liga', 'nombre', 'descripcion', 'id_escudo', 'n_jugadores'], 'required'],
+            [['id_liga', 'id_escudo', 'n_jugadores'], 'integer'],
             [['nombre'], 'string', 'max' => 100],
             [['descripcion'], 'string', 'max' => 200],
             [['id_liga'], 'exist', 'skipOnError' => true, 'targetClass' => Ligas::class, 'targetAttribute' => ['id_liga' => 'id']],
-            [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id']],
-            [['id_imagen_escudo'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen_escudo' => 'id']],
+            [['id_escudo'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_escudo' => 'id']],
         ];
     }
 
@@ -61,8 +58,7 @@ class Equipos extends \yii\db\ActiveRecord
             'id_liga' => 'Id Liga',
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
-            'id_imagen_escudo' => 'Id Imagen Escudo',
-            'id_imagen' => 'Id Imagen',
+            'id_escudo' => 'Id Escudo',
             'n_jugadores' => 'N Jugadores',
         ];
     }
@@ -75,6 +71,16 @@ class Equipos extends \yii\db\ActiveRecord
     public function getEquiposPatrocinadores()
     {
         return $this->hasMany(EquiposPatrocinadores::class, ['id_equipo' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Escudo]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEscudo()
+    {
+        return $this->hasOne(Imagenes::class, ['id' => 'id_escudo']);
     }
 
     /**
@@ -104,17 +110,7 @@ class Equipos extends \yii\db\ActiveRecord
      */
     public function getImagen()
     {
-        return $this->hasOne(Imagenes::class, ['id' => 'id_imagen']);
-    }
-
-    /**
-     * Gets query for [[ImagenEscudo]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getImagenEscudo()
-    {
-        return $this->hasOne(Imagenes::class, ['id' => 'id_imagen_escudo']);
+        return $this->hasOne(Imagenes::class, ['id' => 'id_escudo']);
     }
 
     /**

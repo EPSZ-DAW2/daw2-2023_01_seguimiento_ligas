@@ -6,12 +6,19 @@ use yii\helpers\Html;
 /** @var app\models\Jugadores $model */
 
 $this->title = 'Crear Jugadores';
-$this->params['breadcrumbs'][] = ['label' => 'Jugadores', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="jugadores-create">
+//$this->params['breadcrumbs'][] = ['label' => 'Jugadores', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
+// Registrar el archivo CSS
+$this->registerCssFile('@web/css/jugadores.css');
+
+?>
+<div class="marco">
+
+    <h2><?= Html::encode($this->title) ?></h2>
+
+    <p class="PaginaDeInicio">Por favor rellene los campos para la creacción de un jugador:</p>
 
     <?= $this->render('_form', [
         'model' => $model,
