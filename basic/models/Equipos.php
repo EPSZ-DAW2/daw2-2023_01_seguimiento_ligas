@@ -15,10 +15,9 @@ use Yii;
  * @property int $n_jugadores Número de jugadores que componen el equipo
  *
  * @property EquiposPatrocinadores[] $equiposPatrocinadores
+ * @property Imagenes $escudo
  * @property EstadisticasEquipo[] $estadisticasEquipos
  * @property EstadisticasJugador[] $estadisticasJugadors
- * @property Imagenes $imagen
- * @property Imagenes $imagenEscudo
  * @property Jugadores[] $jugadores
  * @property Ligas $liga
  * @property PartidosJornada[] $partidosJornadas
@@ -26,8 +25,6 @@ use Yii;
  */
 class Equipos extends \yii\db\ActiveRecord
 {
-    public $id_escudo;
-
     /**
      * {@inheritdoc}
      */
@@ -47,7 +44,7 @@ class Equipos extends \yii\db\ActiveRecord
             [['nombre'], 'string', 'max' => 100],
             [['descripcion'], 'string', 'max' => 200],
             [['id_liga'], 'exist', 'skipOnError' => true, 'targetClass' => Ligas::class, 'targetAttribute' => ['id_liga' => 'id']],
-            [['id_escudo'], 'integer'],
+            [['id_escudo'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_escudo' => 'id']],
         ];
     }
 
@@ -61,7 +58,7 @@ class Equipos extends \yii\db\ActiveRecord
             'id_liga' => 'Id Liga',
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
-            'id_escudo' => 'Id Imagen Escudo',
+            'id_escudo' => 'Id Escudo',
             'n_jugadores' => 'N Jugadores',
         ];
     }
@@ -74,6 +71,16 @@ class Equipos extends \yii\db\ActiveRecord
     public function getEquiposPatrocinadores()
     {
         return $this->hasMany(EquiposPatrocinadores::class, ['id_equipo' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Escudo]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEscudo()
+    {
+        return $this->hasOne(Imagenes::class, ['id' => 'id_escudo']);
     }
 
     /**
@@ -97,11 +104,11 @@ class Equipos extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[ImagenEscudo]].
+     * Gets query for [[Imagen]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getImagenEscudo()
+    public function getImagen()
     {
         return $this->hasOne(Imagenes::class, ['id' => 'id_escudo']);
     }

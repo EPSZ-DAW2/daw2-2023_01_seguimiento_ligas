@@ -68,7 +68,7 @@ class Imagenes extends \yii\db\ActiveRecord
      */
     public function getEquipos()
     {
-        return $this->hasMany(Equipos::class, ['id_imagen' => 'id']);
+        return $this->hasMany(Equipos::class, ['id_escudo' => 'id']);
     }
 
     /**
@@ -124,17 +124,27 @@ class Imagenes extends \yii\db\ActiveRecord
     public function saveImagen()
     {
         if ($this->validate()) {
-            $path = Yii::getAlias('@app/web/images/');
-
+            $path = 'images/';  // Carpeta dentro de "web/" donde se guardarán las imágenes
+            
             $imageName = $this->imagenFile->baseName . '.' . $this->imagenFile->extension;
-            $this->imagenFile->saveAs($path . $imageName);
+            $fullPath = Yii::getAlias('@app/web/' . $path) . $imageName;
 
-            // Guardar la ruta o el nombre del archivo en la base de datos
-            $this->foto = $path . $imageName;
+            // Verificar si la imagen ya existe en la carpeta
+            if (file_exists($fullPath)) {
+                // La imagen ya existe, puedes manejar este caso como desees
+                Yii::$app->session->setFlash('error', 'La imagen ya existe.');
+                return false;
+            }
 
-            return true;
+            $this->imagenFile->saveAs(Yii::getAlias('@app/web/' . $path) . $imageName);
+
+            // Guardar el nombre de la imagen en la base de datos
+            $this->foto = $imageName;
+    
+            return $this->save();
         } else {
             return false;
         }
     }
+    
 }
