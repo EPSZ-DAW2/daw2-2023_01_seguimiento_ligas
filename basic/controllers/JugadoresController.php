@@ -29,7 +29,7 @@ class JugadoresController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
+    
     public function actionCreate()
     {
         $model = new Jugadores();

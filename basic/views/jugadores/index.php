@@ -121,32 +121,18 @@ use yii\helpers\Html;
     <div>
         <h2>Tabla de Jugadores</h2>
 
-    <table class="tabla">
-        <thead class="cabecera filas">
-            <tr>
-                <th>Nombre</th>
-                <th>Posición</th>
-                <th>Descripción</th>
-                <th>Altura</th>
-                <th>Peso</th>
-                <th>Nacionalidad</th>
-                <th>Equipo</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($jugadores as $jugador): ?>
-                <tr class="filas">
-                    <td class="filas"><?php echo $jugador['nombre']; ?></td>
-                    <td class="filas"><?php echo $jugador['posicion']; ?></td>
-                    <td class="filas"><?php echo $jugador['descripcion']; ?></td>
-                    <td class="filas"><?php echo $jugador['altura']; ?></td>
-                    <td class="filas"><?php echo $jugador['peso']; ?></td>
-                    <td class="filas"><?php echo $jugador['nacionalidad']; ?></td>
-                    <td class="filas"><?php echo $jugador['id_equipo']; ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                'nombre',
+                'posicion',
+                'descripcion',
+                'altura',
+                'peso',
+                'nacionalidad',
+                'equipo.nombre', // Accede al nombre del equipo a través de la relación
+            ],
+        ]); ?>
     <br>
 
 </body>
