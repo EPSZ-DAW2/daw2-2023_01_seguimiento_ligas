@@ -11,10 +11,20 @@ $this->title = $model->username;
 //$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="usuarios-view">
 
-    <h1 class="PaginaDeInicio"><?= Html::encode($this->title) ?></h1>
 
+<div class="contenido-cabecera">
+
+    <h1>DATOS DE USUSARIO: <?= Html::encode($this->title) ?></h1>
+
+</div>
+
+
+<div id="contenedor-principal">
+
+    <div class="marco">
+
+    <p class="PaginaDeInicio">Tabla con tus datos de usuario:</p>
     <?= DetailView::widget([
     'model' => $model,
     'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
@@ -30,16 +40,18 @@ $this->title = $model->username;
 ]) ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Actualizar contenido'), ['update', 'id' => $model->id], ['class' => 'botonInicioSesion']) ?>
+        <?= Html::a(Yii::t('app', 'Actualizar contenido'), ['update', 'id' => $model->id], ['class' => 'botonFormulario']) ?>
         <?= Html::a(Yii::t('app', 'Borrar cuenta'), ['delete', 'id' => $model->id], [
-            'class' => 'botonInicioSesion',
+            'class' => 'botonFormulario',
             'data' => [
                 'confirm' => Yii::t('app', '¿Estas seguro que quieres eliminar la cuenta?'),
                 'method' => 'post',
             ],
         ]) ?>
-        <!--<?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonInicioSesion']) ?>-->
+        <!--<?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>-->
 
 
     </p>
+
+        </div>
 </div>

@@ -12,29 +12,38 @@ use yii\helpers\ArrayHelper;
 $this->title = Yii::t('app', 'Login');
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div id="contenedor-principal">
 
-    <h1 class="PaginaDeInicio"><?= Html::encode($this->title) ?></h1>
-    <br>
-    <div class="marco">
-    <p class="PaginaDeInicio"><?= Yii::t('app', 'Por favor, rellene los siguientes campos para iniciar sesión:') ?></p>
-    
-    <?php $form = ActiveForm::begin([
-    'id' => 'login-form',
-    'enableAjaxValidation' => false,
-    'enableClientValidation' => true, // Cambiar a true para habilitar la validación del cliente
-]); ?>
+<div class="contenido-cabecera">
 
-    <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el usuario', 'class' => 'campo']) ?>
-    <br>
-    <?= $form->field($model, 'password', ['options' => ['class' => 'campoTitulo']])->passwordInput(['maxlength' => true, 'placeholder' => 'Ingrese la contraseña', 'class' => 'campo']) ?>
+    <h1>INICIO DE SESIÓN</h1>
 
-
-    </div>
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'botonInicioSesion']) ?>
-    </div>
-    <?php ActiveForm::end(); ?>
 </div>
 
+<div id="contenedor-principal">
 
+    <div class="marco">
+        <?php $form = ActiveForm::begin([
+            'id' => 'login-form',
+            'enableAjaxValidation' => false,
+            'enableClientValidation' => true, // Cambiar a true para habilitar la validación del cliente
+        ]); ?>
+
+        <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el usuario', 'class' => 'campo']) ?>
+        <br>
+        <?= $form->field($model, 'password', ['options' => ['class' => 'campoTitulo']])->passwordInput(['maxlength' => true, 'placeholder' => 'Ingrese la contraseña', 'class' => 'campo']) ?>
+        <br>
+        <p>¿No tienes una cuenta? Regístrate <a href="<?= Yii::$app->urlManager->createUrl(['/usuarios/create']) ?>">aquí</a></p>
+
+        <?= Html::submitButton(Yii::t('app', 'Iniciar'), ['class' => 'botonFormulario']) ?>
+
+        <?php ActiveForm::end(); ?>
+
+        <!-- Muestra los mensajes de error con la clase "error-message" -->
+        <?php foreach (Yii::$app->session->getAllFlashes() as $key => $message) { ?>
+            <div class="<?= $key === 'error' ? 'help-block' : '' ?>"><?= $message ?></div>
+        <?php } ?>
+
+
+    </div>
+
+</div>

@@ -9,9 +9,16 @@ $this->title = Yii::t('app', 'Registro nuevo cliente');
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Usuarios'), 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuarios-create">
 
-    <h1 class="PaginaDeInicio"><?= Html::encode($this->title) ?></h1>
+<div class="contenido-cabecera">
+
+<h1>REGISTRO DE USUARIOS</h1>
+
+</div>
+
+<div  id="contenedor-principal">
+
+
     <br>
 
     <?= $this->render('_form', [

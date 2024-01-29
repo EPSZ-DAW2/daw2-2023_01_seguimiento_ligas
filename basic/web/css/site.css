@@ -84,23 +84,51 @@ a.desc:after {
 }
 
 
-/*ESTILO PARA LA PAGINA DE INICIO*/
+/*ESTILO PARA NUESTRA WEB*/
+
+.contenido-cabecera {
+    background-color: RED; 
+    padding: 20px;
+    width: 100%;
+    height: 20%;
+    position: fixed;
+    top: 50PX;
+    left: 0;
+    z-index: 1000; /* Asegura que el encabezado esté sobre otros elementos */
+
+}
+
+.contenido-cabecera h1 {
+    color: white;
+    font-size: 40px;
+    font-family: 'Verdana', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 55%; /* Ajusta la posición vertical según sea necesario */
+    left: 50%; /* Centra el texto horizontalmente */
+    transform: translate(-50%, -50%); /* Centra el texto correctamente */
+    white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+    overflow: hidden; /* Oculta el texto que sobresale del contenedor */
+    text-overflow: ellipsis; /* Añade puntos suspensivos (...) si el texto se corta */
+
+}
+
 h1.PaginaDeInicio {
   font-weight: bold;
-  color: red;
-  font-size: 90px; /* Puedes ajustar el tamaño según tus preferencias */
+  color: white;
+  font-size: px; /* Puedes ajustar el tamaño según tus preferencias */
   text-align: center;
 }
 
 h2 {
     font-weight: bold;
-    color: rgb(34, 6, 220);
+    color: black;
     font-size: 90px; /* Puedes ajustar el tamaño según tus preferencias */
     text-align: center;
   }
 
 body {
-  background-image: url('../ImagenesVideos/fondoPaginaDeInicio.jpg');
+  background-image: url('../ImagenesVideos/fondoPaginaDeInicio2.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -123,54 +151,70 @@ p.subrayado {
 
 
 .marco {
-    background-color: rgba(255, 255, 255, 0.8); /* Ajusta el último valor (0.8) para la transparencia */
+    background-color: #cfe2f3; /* Azul claro */
     padding: 20px; /* Ajusta el espacio alrededor del contenido del marco */
     border: 2px solid #ccc; /* Ajusta el estilo del borde según tus preferencias */
     border-radius: 10px; /* Ajusta la curvatura de las esquinas según tus preferencias */
     display: inline-block; /* Hace que el div sea del tamaño del contenido */
+    margin-top: 120px; /* Ajusta el valor según sea necesario */
+
   }
   
   /* Añade un contenedor principal para centrar el div */
-  #contenedor-principal {
+#contenedor-principal {
     text-align: center;
     margin: 20px auto; /* Ajusta el espacio alrededor del contenedor principal y centra en la página */
   }
+
+    /* Añade un contenedor principal para centrar el div */
+#contenedor-izquierda {
+    text-align: center;
+    margin: 20px auto; /* Ajusta el espacio alrededor del contenedor principal y centra en la página */
+}
+
+#contenedor-izquierda > * {
+    margin-left: 0; /* Establece el margen izquierdo a 0 para pegar los elementos a la izquierda */
+}
   
+.botones-Linea {
+    text-align: center; /* Alinea los botones al centro */
+}
 
 a.boton {
-  display: block; /* Cambié a block para que ocupe todo el ancho disponible */
-  width: 200px; /* Ajusta el ancho según tus necesidades */
-  margin: 20px auto; /* Ajusta el espacio alrededor y centra en la página */
-  padding: 10px 20px;
-  background-color: #fff;
-  color: #333;
-  text-decoration: none;
-  border: 2px solid #fff;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center; /* Centra el texto dentro del botón */
-}
+    display: inline-block; /* Muestra los botones en línea */
+    margin: 0 10px; /* Ajusta el margen entre los botones según sea necesario */
+    padding: 10px 20px; /* Ajusta el espacio interno del botón según sea necesario */
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center; /* Centra el texto dentro del botón */
+    border: 2px solid #000; /* Borde negro */
+  }
 
 a.boton:hover {
   background-color: #ddd;
 }
 
 /* Estilos para el botón con la clase 'botonInicioSesion' */
-.botonInicioSesion {
-    display: block;
-    width: 200px;
-    margin: 20px auto;
-    padding: 10px 20px;
-	background-color: #fff;
-	color: #333;
-	text-decoration: none;
-	border: 2px solid #fff;
-	border-radius: 5px;
-	font-weight: bold;
-	text-align: center; /* Centra el texto dentro del botón */
+.botonFormulario {
+    display: inline-block; /* Muestra los botones en línea */
+    margin: 0 10px; /* Ajusta el margen entre los botones según sea necesario */
+    padding: 10px 20px; /* Ajusta el espacio interno del botón según sea necesario */
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center; /* Centra el texto dentro del botón */
+    border: 2px solid #000; /* Borde negro */
+
 }
 
-.botonInicioSesion:hover {
+.botonFormularion:hover {
     background-color: #ddd;
 }
 
@@ -187,7 +231,7 @@ a.boton:hover {
     text-align: center;
     margin: auto; /* Asegura que el campo esté centrado horizontalmente */
     display: block; /* Evita que el margen automático cause problemas en algunos contextos */
-    width: 250px; /* Ajusta el valor según tus preferencias */
+    width: 450px; /* Ajusta el valor según tus preferencias */
     
 
 }
@@ -196,6 +240,12 @@ a.boton:hover {
     color: red; /* Establece el color rojo para los mensajes de error */
     margin-top: 5px; /* Ajusta el espacio superior para separar el mensaje del campo */
 }
+
+.error-message {
+    font-weight: bold;
+    color: red;
+}
+
 
 
 .liga-container {
