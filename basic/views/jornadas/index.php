@@ -41,10 +41,12 @@ echo GridView::widget([
                 //return $partidoVisitante ? $partidoVisitante->nombre_equipo : 'N/A';
             },
         ],
+        //funciones del gestor
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => '{view} {update} {delete}',
         ],
+
     ],
 ]);
 

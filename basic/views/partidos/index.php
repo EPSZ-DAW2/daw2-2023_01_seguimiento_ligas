@@ -8,4 +8,4 @@
     </div>
 <?php endforeach; ?>
 
-<?= \yii\helpers\Html::a('Nuevo Partdio', ['partidos/create'], ['class' => 'botonInicioSesion']) ?>
+<?= \yii\helpers\Html::a('Nuevo Partido', ['partidos/create'], ['class' => 'botonInicioSesion']) ?>

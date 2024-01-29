@@ -23,6 +23,11 @@ use Yii;
  */
 class PartidosJornada extends \yii\db\ActiveRecord
 {
+    //almacena temporalmente la liga seleccionada
+    public $id_liga_seleccionada;
+    public $id_temporada_seleccionada;
+    public $id_jornada_seleccionada;
+
     /**
      * {@inheritdoc}
      */

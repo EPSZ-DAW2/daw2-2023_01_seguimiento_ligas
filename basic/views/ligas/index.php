@@ -11,7 +11,7 @@ use app\models\LigasSearch;
 if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3)) {    
     foreach ($ligas as $liga): ?>
     <div class="liga-container">
-        <a href="<?= Yii::$app->urlManager->createUrl(['equipos/index', 'ligaId' => $liga->id]) ?>">
+        <a href="<?= Yii::$app->urlManager->createUrl(['equipos/ver-por-liga', 'ligaId' => $liga->id]) ?>">
             <div class="liga-content">
                 <h2><?= $liga->nombre ?></h2>
             </div>
