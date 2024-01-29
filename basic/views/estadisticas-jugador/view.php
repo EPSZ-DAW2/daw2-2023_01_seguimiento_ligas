@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Jugadores $model */
+/** @var app\models\EstadisticasJugador $model */
 
-$this->title = $model->nombre;
-$this->params['breadcrumbs'][] = ['label' => 'Jugadores', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Estadisticas Jugadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="jugadores-view">
+<div class="estadisticas-jugador-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -24,23 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-
-        <?= Html::a('Ver Estadísticas', ['estadisticas-jugador/view', 'id' => $model->estadisticasJugador ? $model->estadisticasJugador->id : null], ['class' => 'btn btn-info']) ?>
-
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
+            'id_temporada',
             'id_equipo',
-            'nombre',
-            'descripcion',
-            'id_imagen',
-            'posicion',
-            'altura',
-            'peso',
-            'nacionalidad',
+            'id_jugador',
+            'partidos_jugados',
+            'puntos',
+            'rebotes',
+            'asistencias',
         ],
     ]) ?>
 

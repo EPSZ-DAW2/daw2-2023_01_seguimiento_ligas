@@ -44,6 +44,8 @@ class Jugadores extends \yii\db\ActiveRecord
             //[['nombre'], 'required', 'message' => 'Es obligatorio introducir un nombre.'],
             [['id_equipo', 'id_imagen'], 'integer'],
             [['altura', 'peso'], 'number'],
+            [['altura'], 'required', 'message' => 'Es obligatorio introducir la altura del jugador'],
+            [['peso'], 'required', 'message' => 'Es obligatorio introducir la altura del jugador'],
             [['nombre', 'posicion', 'nacionalidad'], 'string', 'max' => 50],
             [['descripcion'], 'string', 'max' => 255],
             [['id_equipo'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo' => 'id'], 'message' => 'El id_equipo introducido no existe. Introduzca un id equipo válido.'],
@@ -92,9 +94,9 @@ class Jugadores extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEstadisticasJugadors()
+    public function getEstadisticasJugador()
     {
-        return $this->hasMany(EstadisticasJugador::class, ['id_jugador' => 'id']);
+        return $this->hasOne(EstadisticasJugador::class, ['id_jugador' => 'id']);
     }
 
     /**
@@ -105,5 +107,14 @@ class Jugadores extends \yii\db\ActiveRecord
     public function getImagen()
     {
         return $this->hasOne(Imagenes::class, ['id' => 'id_imagen']);
+    }
+
+    public static function getNacionalidadesList()
+    {
+        $filePath = "C:/xampp/htdocs/daw2-2023_01_seguimiento_ligas/proyecto/nacionalidades.txt";
+
+        $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        $nacionalidades = array_combine($lines, $lines);
+        return $nacionalidades;
     }
 }

@@ -91,4 +91,4 @@ class ImagenesController extends Controller
     }
 
 }
-
+?>

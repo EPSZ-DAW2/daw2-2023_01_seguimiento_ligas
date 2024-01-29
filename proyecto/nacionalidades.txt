@@ -1,0 +1,200 @@
+Afganistán
+Albania
+Argelia
+Andorra
+Angola
+Antigua y Barbuda
+Argentina
+Armenia
+Australia
+Austria
+Azerbaiyán
+Las Bahamas
+Baréin
+Bangladesh
+Barbados
+Belarús
+Bélgica
+Belice
+Benín
+Bután
+Bolivia
+Bosnia y Herzegovina
+Botsuana
+Brasil
+Brunéi
+Bulgaria
+Burkina Faso
+Birmania
+Burundi
+Cabo Verde
+Camboya
+Camerún
+Canadá
+República Centroafricana
+Chad
+Chile
+China
+Colombia
+Comoras
+República Democrática del Congo
+Costa Rica
+Croacia
+Cuba
+Chipre
+República Checa
+Dinamarca
+Yibuti
+Dominica
+República Dominicana
+Timor Oriental
+Ecuador
+Egipto
+El Salvador
+Guinea Ecuatorial
+Eritrea
+Eslovaquia
+Eslovenia
+España
+Estonia
+Etiopía
+Fiji
+Finlandia
+Francia
+Gabón
+Gambia
+Georgia
+Alemania
+Ghana
+Gibraltar
+Grecia
+Guatemala
+Guinea
+Guinea-Bissau
+Guayana
+Haití
+Honduras
+Hungría
+Islandia
+India
+Indonesia
+Irán
+Irak
+Irlanda
+Israel
+Italia
+Costa de Marfil
+Jamaica
+Japón
+Jordania
+Kazajstán
+Kenia
+Kiribati
+Corea del Norte
+Corea del Sur
+Kuwait
+Kirguistán
+Laos
+Letonia
+Líbano
+Lesoto
+Liberia
+Libia
+Liechtenstein
+Lituania
+Luxemburgo
+Macedonia
+Madagascarí
+Malaui
+Malasia
+Maldivas
+Mali
+Malta
+Islas Marshall
+Martinica
+Mauritania
+Islas Mauricio
+México
+Estados Federados de Micronesia
+Moldavia
+Mónaco
+Mongolia
+Montenegro
+Marruecos
+Mozambique
+Namibia
+Nauru
+Nepal
+Países Bajos
+Nueva Zelanda
+Nicaragua
+Níger
+Nigeria
+Islas Marianas del Norte
+Noruega
+Omán
+Pakistán
+Palau
+Palestina
+Panamá
+Papúa Nueva Guinea
+Paraguay
+Perú
+Filipinas
+Polonia
+Portuga
+Puerto Rico
+Catar
+Rumania
+Rusia
+Ruanda
+San Cristóbal y Nieves
+Santa Lucía
+San Vicente y las Granadinas
+Samoa
+San Marino
+Santo Tomé y Príncipe
+Arabia Saudita
+Senegal
+Serbia
+Seychelles
+Sierra Leona
+Singapur
+Islas Salomón
+Somalia	somalí
+Sudáfrica
+Sudán del Sur
+España
+Sri Lanka
+Sudán
+Surinam
+Suazilandia
+Suecia
+Suiza
+Siria
+Tayikistán
+Tanzania
+Tailandia
+Timor-Leste
+Togo
+Tokelau
+Tonga
+Trinidad y Tobago
+Túnez
+Turquía
+Turkmenistán
+Tuvalu
+Uganda
+Ucrania
+Emiratos Árabes Unidos
+Reino Unido
+Estados Unidos de America
+Uruguay
+Uzbekistán
+Vanuatu
+Ciudad del Vaticano
+Venezolanas
+Vietnam
+Yemen
+Zambia
+Zimbabue
