@@ -47,7 +47,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function rules()
     {
         return [
-            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia','id_rol','username'], 'required'],
+            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia','id_rol','username'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['auth_key', 'reg_token'], 'safe'],
             [['nombre', 'apellido1', 'apellido2', 'email', 'provincia','username'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 255],
