@@ -3,15 +3,19 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Partidos;
-use yii\web\Controller;
+use app\models\PartidosJornada;
+use app\models\JornadasTemporada;
+use app\models\Equipos;
+use app\models\Temporadas;
 
-class PartidosController extends Controller
+class PartidosController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        // Obtén todos los equipos desde la base de datos
-        $partidos = Partidos::find()->all();
+        $this->view->title = 'ArosInsider - Partidos';
+        
+        // Obtén todos los partidos desde la base de datos
+        $partidos= PartidosJornada::find()->all();
 
         // Renderiza la vista y pasa los equipos como parámetro
         return $this->render('index', [
@@ -21,39 +25,46 @@ class PartidosController extends Controller
 
     public function actionCreate()
     {
-        $model = new Partidos();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        $model = new PartidosJornada();
 
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
-    
     public function actionUpdate()
     {
         return $this->render('update');
     }
 
-    public function actionView($id)
+    public function actionView()
     {
-        $model = $this->findModel($id);
-    
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        return $this->render('view');
     }
-    
-    protected function findModel($id)
+
+    public function actionCargarTemporadas($id_liga)
     {
-        if (($model = Partidos::findOne($id)) !== null) {
-            return $model;
+        $temporadas = Temporadas::find()->where(['id_liga' => $id_liga])->all();
+    
+        if ($temporadas) {
+            return $this->renderAjax('_dropdown_temporadas', [
+                'temporadas' => $temporadas,
+            ]);
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            return 'No se encontraron temporadas para la liga seleccionada.';
         }
-    }
+    }    
+
+    public function actionCargarJornadas($id_temporada)
+    {
+        $jornadas = JornadasTemporada::find()->where(['id_temporada' => $id_temporada])->all();
+    
+        if ($jornadas) {
+            return $this->renderAjax('_dropdown_jornadas', [
+                'jornadas' => $jornadas,
+            ]);
+        } else {
+            return 'No se encontraron jornadas para la temporada seleccionada.';
+        }
+    }  
 }
-?>

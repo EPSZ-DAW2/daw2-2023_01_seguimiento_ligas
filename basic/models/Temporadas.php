@@ -33,8 +33,10 @@ class Temporadas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['fecha_inicial', 'fecha_final', 'id_liga'], 'required'],
             [['fecha_inicial', 'fecha_final'], 'safe'],
             [['texto_de_titulo'], 'string', 'max' => 50],
+            [['id_liga'], 'integer'],
         ];
     }
 
@@ -45,9 +47,10 @@ class Temporadas extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'texto_de_titulo' => 'Texto De Titulo',
-            'fecha_inicial' => 'Fecha Inicial',
-            'fecha_final' => 'Fecha Final',
+            'id_liga' => 'Liga a la que pertenece',
+            'texto_de_titulo' => 'Nombre de la Temporada',
+            'fecha_inicial' => 'Inicio de la Temporada',
+            'fecha_final' => 'Fin de la Temporada',
         ];
     }
 

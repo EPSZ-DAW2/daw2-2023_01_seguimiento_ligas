@@ -1,45 +1,9 @@
 <?php
-
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-
 /** @var yii\web\View $this */
-/** @var app\models\Partidos $model */
-
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Partidos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
-<div class="partidos-view">
+<h1>partidos/view</h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'id_liga',
-            'id_temporada',
-            'id_jornada',
-            'id_equipo_local',
-            'id_equipo_visitante',
-            'horario',
-            'lugar',
-            'resultado_local',
-            'resultado_visitante',
-        ],
-    ]) ?>
-
-</div>
+<p>
+    You may change the content of this page by modifying
+    the file <code><?= __FILE__; ?></code>.
+</p>
