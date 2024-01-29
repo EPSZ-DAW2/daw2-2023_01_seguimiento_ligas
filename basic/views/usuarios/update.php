@@ -16,7 +16,7 @@ $this->title = Yii::t('app', 'Modificación de datos de {name}', [
 
     <h1 class="PaginaDeInicio"><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?= $this->render('_formUpdate', [
         'model' => $model,
     ]) ?>
 

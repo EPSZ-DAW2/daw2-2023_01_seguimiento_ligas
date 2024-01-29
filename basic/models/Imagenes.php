@@ -123,17 +123,19 @@ class Imagenes extends \yii\db\ActiveRecord
 
     public function saveImagen()
     {
-        if ($this->validate()) {
+        if ($this->validate() && $this->imagenFile !== null) {
             $path = 'images/';  // Carpeta dentro de "web/" donde se guardarán las imágenes
-            
-            $imageName = $this->imagenFile->baseName . '.' . $this->imagenFile->extension;
+    
+            // Genera un nombre único para la imagen para evitar conflictos de nombres
+            $imageName = $this->imagenFile->basename . '.' . $this->imagenFile->extension;
             $fullPath = Yii::getAlias('@app/web/' . $path) . $imageName;
-
+    
             // Verificar si la imagen ya existe en la carpeta
             if (file_exists($fullPath)) {
-                // La imagen ya existe, puedes manejar este caso como desees
-                Yii::$app->session->setFlash('error', 'La imagen ya existe.');
-                return false;
+                // La imagen ya existe la sustituimos por la nueva
+                unlink($fullPath);
+                
+                
             }
 
             $this->imagenFile->saveAs(Yii::getAlias('@app/web/' . $path) . $imageName);
@@ -143,8 +145,11 @@ class Imagenes extends \yii\db\ActiveRecord
     
             return $this->save();
         } else {
+            Yii::$app->session->setFlash('error', 'Debes seleccionar una imagen.');
             return false;
         }
     }
+    
+    
     
 }

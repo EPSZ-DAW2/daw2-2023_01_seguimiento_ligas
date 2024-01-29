@@ -60,6 +60,10 @@ class UsuariosController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    public function actionExito()
+{
+    return $this->render('exito'); 
+}
 
     /**
      * Creates a new Usuarios model.
@@ -74,16 +78,15 @@ class UsuariosController extends Controller
             if ($model->load($this->request->post())) {
                 
                 $model->password = Yii::$app->security->generatePasswordHash($model->password);
-    
                 if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                   
+                   return $this->redirect(['exito']);
                 }
             }
         } else {
             $model->loadDefaultValues();
         }
     
-        $model->password='';
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -100,15 +103,23 @@ class UsuariosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+    
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            // Generar el hash de la contraseña solo si se proporciona una nueva contraseña
+            if (!empty($model->password)) {
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
+            }
+    
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
+    
         return $this->render('update', [
             'model' => $model,
         ]);
     }
+    
 
     /**
      * Deletes an existing Usuarios model.
@@ -121,7 +132,13 @@ class UsuariosController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+     
+        if (Yii::$app->user->identity->id_rol == 1) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->redirect(['site/home']);
+        }
+       
     }
 
     /**

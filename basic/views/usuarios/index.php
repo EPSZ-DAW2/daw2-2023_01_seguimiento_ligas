@@ -32,59 +32,23 @@ $this->title = Yii::t('app', 'Usuarios');
         [
             'class' => 'yii\grid\SerialColumn'],
 
-        [
-            'attribute' => 'id',
-            'contentOptions' => ['style' => 'font-weight: bold; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'], // Centrar la cabecera
+            'id',
+            'nombre:ntext',
+            'apellido1:ntext',
+            'apellido2:ntext',
+            'email:ntext',
+            'password:ntext',
+            'provincia:ntext',
+            'username:ntext',
+            'id_rol:ntext',
+            
+            [
+                'class' => ActionColumn::className(),
+                'urlCreator' => function ($action, Usuarios $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'id' => $model->id]);
+                 }
+            ],
         ],
-        [
-            'attribute' => 'nombre',
-            'contentOptions' => ['style' => 'font-weight: bold; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'], // Centrar la cabecera
-        ],
-        [
-            'attribute' => 'apellido1',
-            'contentOptions' => ['style' => 'font-weight: bold; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'], // Centrar la cabecera
-        ],
-        [
-            'attribute' => 'apellido2',
-            'contentOptions' => ['style' => 'font-weight: bold; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'], // Centrar la cabecera
-        ],
-        [
-            'attribute' => 'email',
-            'contentOptions' => ['style' => 'font-weight: bold; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'], // Centrar la cabecera
-        ],
-        [
-            'attribute' => 'password',
-            'contentOptions' => ['style' => 'font-weight: bold; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'], // Centrar la cabecera
-        ],
-        [
-            'attribute' => 'provincia',
-            'contentOptions' => ['style' => 'font-weight: bold; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'], // Centrar la cabecera
-        ],
-        [
-            'attribute' => 'username',
-            'contentOptions' => ['style' => 'font-weight: bold; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'], // Centrar la cabecera
-        ],
-        [
-            'attribute' => 'id_rol',
-            'contentOptions' => ['style' => 'font-weight: bold; text-align: center;'],
-            'headerOptions' => ['style' => 'text-align: center;'], // Centrar la cabecera
-        ],
-        [
-            'class' => ActionColumn::className(),
-            'urlCreator' => function ($action, Usuarios $model, $key, $index, $column) {
-                return Url::toRoute([$action, 'id' => $model->id]);
-            },
-            'contentOptions' => ['style' => 'font-weight: bold; color: red; text-align: center;'],
-        ],
-    ], 
     ]); ?>
 
     <?php Pjax::end(); ?>

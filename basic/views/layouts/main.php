@@ -48,7 +48,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Partidos', 'url' => ['/partidos/index']],
             ['label' => 'Jugadores', 'url' => ['/jugadores/index']],
             ['label' => 'Noticias', 'url' => ['/noticias/index']],
-            //['label' => 'Prueba', 'url' => ['/test/index']],
+            ['label' => 'E_Jugador', 'url' => ['/estadisticas-jugador/index']],
             //['label' => 'Usuarios', 'url' => ['/usuarios/index']],
         ]
     ]);
@@ -62,6 +62,27 @@ echo Nav::widget([
     ['label' => 'Datos usuario', 'url' => ['/usuarios/view', 'id' => Yii::$app->user->id]],
     ]
 ]);
+}
+//  si el rol del usuario es 1 (administrador)
+if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
+   
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav ml-auto'],
+        'items' => [
+            [
+                'label' => 'Administración',
+                'items' => [
+                    ['label' => 'Roles', 'url' => ['/roles/index']],
+                    ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+                    ['label' => 'Imagenes', 'url' => ['/imagenes/index']],
+                    ['label' => 'Ligas', 'url' => ['/ligasAdmin/index']],
+                    // Agrega más elementos desplegables aquí si es necesario
+                ],
+            ],
+        ],
+    ]);
+
+ 
 }
 
     echo Nav::widget([
