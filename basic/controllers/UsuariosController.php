@@ -86,7 +86,8 @@ class UsuariosController extends Controller
         } else {
             $model->loadDefaultValues();
         }
-    
+        
+        $model->password = ''; // Limpiar la contraseña por seguridad
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -175,7 +176,7 @@ class UsuariosController extends Controller
                     return $this->goBack();
                 } else {
                     // Si la autenticación falla, mostrar un mensaje de error
-                    Yii::$app->session->setFlash('error', 'Usuario o contraseña incorrectos. Vuelva a intentarlo porfavor.');
+                    Yii::$app->session->setFlash('error', 'Usuario o contraseña incorrectos. Vuelva a intentarlo.');
                 }
             }
         }

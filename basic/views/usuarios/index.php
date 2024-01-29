@@ -42,7 +42,6 @@ $this->title = Yii::t('app', 'Usuarios');
             'apellido1:ntext',
             'apellido2:ntext',
             'email:ntext',
-            'password:ntext',
             'provincia:ntext',
             'username:ntext',
             'id_rol:ntext',

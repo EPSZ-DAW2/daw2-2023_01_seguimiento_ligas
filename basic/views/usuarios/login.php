@@ -25,7 +25,7 @@ $this->title = Yii::t('app', 'Login');
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
             'enableAjaxValidation' => false,
-            'enableClientValidation' => true, // Cambiar a true para habilitar la validación del cliente
+            'enableClientValidation' => false, // Cambiar a true para habilitar la validación del cliente
         ]); ?>
 
         <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el usuario', 'class' => 'campo']) ?>
