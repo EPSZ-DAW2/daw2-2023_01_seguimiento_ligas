@@ -22,7 +22,7 @@ $this->registerCssFile('@web/css/equipos.css');
  
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'pais')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'pais')->textInput(['maxlength' => true]) ?>
     <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
 
     <div class="form-group">

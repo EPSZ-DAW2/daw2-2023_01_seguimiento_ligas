@@ -18,6 +18,7 @@ use app\models\Ligas;
 
     <?= $form->field($model, 'pais')->textInput(['maxlength' => true]) ?>
 
+
     <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
 
     <div class="form-group">

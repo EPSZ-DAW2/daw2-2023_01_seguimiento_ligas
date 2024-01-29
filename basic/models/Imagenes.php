@@ -131,9 +131,10 @@ class Imagenes extends \yii\db\ActiveRecord
 
             // Verificar si la imagen ya existe en la carpeta
             if (file_exists($fullPath)) {
-                // La imagen ya existe, puedes manejar este caso como desees
-                Yii::$app->session->setFlash('error', 'La imagen ya existe.');
-                return false;
+                // La imagen ya existe la sustituimos por la nueva
+                unlink($fullPath);
+                
+                
             }
 
             $this->imagenFile->saveAs(Yii::getAlias('@app/web/' . $path) . $imageName);
