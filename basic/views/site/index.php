@@ -13,20 +13,22 @@ $this->title = 'ArosInsider';
     </div>
 	
 	<div class="marco">
-	
-        <p class="PaginaDeInicio">BIENVENIDO A LA MEJOR WEB DE SEGUIMIENTO DE BASKET DEL MUNDO</p>
-        
-		<p class="PaginaDeInicio">ArosInsider es tu destino principal para el seguimiento en tiempo real de Múltiples ligas de baloncesto.
-		Sumérgete en el emocionante mundo del baloncesto con acceso a marcadores en vivo, estadísticas detalladas de equipos y jugadores, noticias exclusivas y mucho más.
-		Con nuestra plataforma intuitiva, Podrás explorar resultados de partidos, seguir el rendimiento de tus equipos y jugadores favoritos, y mantener un pulso constante
-		sobre las últimas actualizaciones en el mundo del baloncesto. Ya seas un seguidor apasionado, un aficionado casual o un ávido analista, ArosInsider te brinda la
-		experiencia definitiva de seguimiento de liga de baloncesto. ¡Suma canastas con nosotros y mantente en la cima del juego!</p>
+	    <p class="PaginaDeInicio">BIENVENIDO A LA MEJOR WEB DE SEGUIMIENTO DE BASKET DEL MUNDO</p>
+        <p class="PaginaDeInicio">ArosInsider es tu destino principal para el seguimiento en tiempo real de Múltiples ligas de baloncesto.</p>
+    </div>
 
+    <div class="marco">
+		<p>Sumérgete en el emocionante mundo del baloncesto con acceso a marcadores en vivo, estadísticas detalladas de equipos y jugadores, noticias exclusivas y mucho más.</p>
+		<p>Con nuestra plataforma intuitiva, podrás explorar resultados de partidos, seguir el rendimiento de tus equipos y jugadores favoritos, y mantener un pulso constante
+		sobre las últimas actualizaciones en el mundo del baloncesto.</p> 
+        <p>Ya seas un seguidor apasionado, un aficionado casual o un ávido analista, ArosInsider te brinda la
+		experiencia definitiva de seguimiento de liga de baloncesto.</p>
+        
+        <p class="PaginaDeInicio">¡Suma canastas con nosotros y mantente en la cima del juego!</p>
 	</div>
 	
 	<div>
-	
-		<p><a class="boton" href="<?= Yii::$app->urlManager->createUrl(['test/index']) ?>">Seleccion de ligas</a></p>
+		<p><a class="boton" href="<?= Yii::$app->urlManager->createUrl(['ligas/index']) ?>">Seleccion de ligas</a></p>
 	
 	</div>
 <!--

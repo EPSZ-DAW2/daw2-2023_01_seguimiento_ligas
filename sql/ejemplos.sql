@@ -134,6 +134,3 @@ SET @j5acb := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `partidos_jornada` (`id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`) VALUES 
 (@j5acb, @realmadrid, @granada, '2024-03-04 18:30:00', 'WiZink Center Madrid');
-
-INSERT IGNORE INTO `jugadores` (`id_equipo`, `nombre`, `descripcion`, `id_imagen`, `posicion`, `altura`, `peso`, `nacionalidad`) VALUES 
-(000001, 'paco lopez', 'un rumano que le pega patadas al balon', @id_liga, 'delantero pichichi', 1.20, 300, 'Rumano');
