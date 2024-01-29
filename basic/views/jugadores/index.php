@@ -1,6 +1,8 @@
 <?php
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\grid\ActionColumn;
+use yii\helpers\Url;
 ?>
 
 <!DOCTYPE html>
@@ -135,24 +137,10 @@ use yii\helpers\Html;
                     'label' => 'Equipo',
                 ],
                 [
-                    'class' => 'yii\grid\ActionColumn',
-                    'template' => '{view} {update} {delete}',
-                    'buttons' => [
-                        'view' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view', 'id' => $model->id]);
-                        },
-                        'update' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['update', 'id' => $model->id]);
-                        },
-                        'delete' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model->id], [
-                                'data' => [
-                                    'confirm' => '¿Estás seguro de que quieres eliminar este elemento?',
-                                    'method' => 'post',
-                                ],
-                            ]);
-                        },
-                    ],
+                    'class' => ActionColumn::className(),
+                    'urlCreator' => function ($action, app\models\Jugadores $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id' => $model->id]);
+                     }
                 ],
             ],
         ]); ?>
