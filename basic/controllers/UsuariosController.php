@@ -156,6 +156,9 @@ class UsuariosController extends Controller
                 // Validar y loguear al usuario
                 if ($model->login($model->username, $model->password)) {
                     return $this->goBack();
+                } else {
+                    // Si la autenticación falla, mostrar un mensaje de error
+                    Yii::$app->session->setFlash('error', 'Usuario o contraseña incorrectos. Vuelva a intentarlo porfavor.');
                 }
             }
         }

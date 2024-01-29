@@ -123,12 +123,19 @@ p.subrayado {
 
 
 .marco {
-  background-color: rgba(255, 255, 255, 0.8); /* Ajusta el último valor (0.8) para la transparencia */
-  padding: 20px; /* Ajusta el espacio alrededor del contenido del marco */
-  border: 2px solid #ccc; /* Ajusta el estilo del borde según tus preferencias */
-  border-radius: 10px; /* Ajusta la curvatura de las esquinas según tus preferencias */
-  margin: 20px auto; /* Ajusta el espacio alrededor del marco y centra en la página */
-}
+    background-color: rgba(255, 255, 255, 0.8); /* Ajusta el último valor (0.8) para la transparencia */
+    padding: 20px; /* Ajusta el espacio alrededor del contenido del marco */
+    border: 2px solid #ccc; /* Ajusta el estilo del borde según tus preferencias */
+    border-radius: 10px; /* Ajusta la curvatura de las esquinas según tus preferencias */
+    display: inline-block; /* Hace que el div sea del tamaño del contenido */
+  }
+  
+  /* Añade un contenedor principal para centrar el div */
+  #contenedor-principal {
+    text-align: center;
+    margin: 20px auto; /* Ajusta el espacio alrededor del contenedor principal y centra en la página */
+  }
+  
 
 a.boton {
   display: block; /* Cambié a block para que ocupe todo el ancho disponible */
@@ -167,10 +174,29 @@ a.boton:hover {
     background-color: #ddd;
 }
 
-
-.margenIzquierda {
-    padding-left: 2px;
+/* Estilo para las etiquetas con la clase 'campo-label' */
+.campoTitulo {
+    text-align: center;
+    display: block;
+    font-weight: bold;
 }
+
+.campo {
+
+    border: 1.5px solid black;
+    text-align: center;
+    margin: auto; /* Asegura que el campo esté centrado horizontalmente */
+    display: block; /* Evita que el margen automático cause problemas en algunos contextos */
+    width: 250px; /* Ajusta el valor según tus preferencias */
+    
+
+}
+
+.help-block {
+    color: red; /* Establece el color rojo para los mensajes de error */
+    margin-top: 5px; /* Ajusta el espacio superior para separar el mensaje del campo */
+}
+
 
 .liga-container {
     background-color: rgba(152, 196, 240, 0.8); /* Color con opacidad */

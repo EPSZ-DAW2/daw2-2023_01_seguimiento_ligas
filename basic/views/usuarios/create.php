@@ -12,6 +12,7 @@ $this->title = Yii::t('app', 'Registro nuevo cliente');
 <div class="usuarios-create">
 
     <h1 class="PaginaDeInicio"><?= Html::encode($this->title) ?></h1>
+    <br>
 
     <?= $this->render('_form', [
         'model' => $model,

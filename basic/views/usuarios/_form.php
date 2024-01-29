@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="usuarios-form">
+<div id="contenedor-principal">
 
 <?php $form = ActiveForm::begin([
     'id' => 'usuarios-form',
@@ -16,16 +16,25 @@ use yii\widgets\ActiveForm;
     'enableClientValidation' => false,
 ]); ?>
 
-    
+
 <div class="marco">
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'apellido1')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'apellido2')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true, 'required' => true]) ?>
-    <?= $form->field($model, 'provincia')->textInput() ?>
-    <?= $form->field($model, 'id_rol')->hiddenInput(['value' => 1])->label(false) ?>
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+
+    <!--<p class="PaginaDeInicio"><?= Yii::t('app', 'Por favor, rellene los siguientes campos para registrarte en nuestra web:') ?></p>-->
+    <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el Nombre', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'apellido1', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el primer apellido', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'apellido2', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el segundo apellido', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'email', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el E-mail', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'password', ['options' => ['class' => 'campoTitulo']])->passwordInput(['maxlength' => true, 'required' => true, 'placeholder' => 'Ingrese la contraseña', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'provincia', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese su provincia', 'class' => 'campo']) ?>
+
+    <?= $form->field($model, 'id_rol', ['options' => ['class' => 'campoTitulo']])->hiddenInput(['value' => 1])->label(false) ?>
+    <br>
+    <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre de usuario', 'class' => 'campo']) ?>
 
 </div>
     <div class="form-group">
