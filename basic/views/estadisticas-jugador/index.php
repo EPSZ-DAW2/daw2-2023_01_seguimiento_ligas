@@ -1,3 +1,10 @@
+<?php
+use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\grid\ActionColumn;
+use yii\helpers\Url;
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,39 +19,30 @@
 
     <h2>Tabla de Estadísticas de Jugadores</h2>
 
-    <table class="tabla">
-        <thead class="cabecera filas">
-            <tr>
-                <th>ID Temporada</th>
-                <th>ID Equipo</th>
-                <th>ID Jugador</th>
-                <th>Partidos Jugados</th>
-                <th>Puntos</th>
-                <th>Rebotes</th>
-                <th>Asistencias</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($estadisticasJugadores as $estadistica): ?>
-            <tr class="filas">
-                <td class="filas"><?= $estadistica->jugador->nombre ?></td>
-                <td class="filas"><?= $estadistica->equipo->nombre ?></td>
-                <td class="filas"><?= $estadistica->temporada->texto_de_titulo ?></td>
-                <td class="filas"><?= $estadistica->partidos_jugados ?></td>
-                <td class="filas"><?= $estadistica->puntos ?></td>
-                <td class="filas"><?= $estadistica->rebotes ?></td>
-                <td class="filas"><?= $estadistica->asistencias ?></td>
-                <td class="filas">
-                    <!-- Botones de Acciones -->
-                    <?= \yii\helpers\Html::a('Editar', ['update', 'id' => $estadistica->id], ['class' => 'btn btn-primary']) ?>
-                    <?= \yii\helpers\Html::a('Ver', ['view', 'id' => $estadistica->id], ['class' => 'btn btn-info']) ?>
-                    <?= \yii\helpers\Html::a('Eliminar', ['delete', 'id' => $estadistica->id], ['class' => 'btn btn-danger', 'data' => ['confirm' => '¿Estás seguro de que deseas eliminar esta estadística?']]) ?>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+    <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                [
+                    'attribute' => 'jugador.nombre', // Obtener el nombre del jugador
+                    'label' => 'Nombre',
+                ],
+                [
+                    'attribute' => 'temporada.texto_de_titulo', // Obtener el título de la temporada
+                    'label' => 'Temporada',
+                ],
+                'partidos_jugados',
+                'puntos',
+                'rebotes',
+                'asistencias',
+                [
+                    'class' => ActionColumn::className(),
+                    'urlCreator' => function ($action, app\models\EstadisticasJugador $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id' => $model->id]);
+                     }
+                ],
+            ],
+        ]); 
+        ?>
     <br>
 
 </body>

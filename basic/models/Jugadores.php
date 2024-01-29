@@ -43,7 +43,7 @@ class Jugadores extends \yii\db\ActiveRecord
             //[['id_equipo', 'id_imagen'], 'required'],
             //[['nombre'], 'required', 'message' => 'Es obligatorio introducir un nombre.'],
             [['id_equipo', 'id_imagen'], 'integer'],
-            [['altura', 'peso'], 'number'],
+            [['peso'], 'number'],
             [['altura'], 'required', 'message' => 'Es obligatorio introducir la altura del jugador'],
             [['peso'], 'required', 'message' => 'Es obligatorio introducir la altura del jugador'],
             [['nombre', 'posicion', 'nacionalidad'], 'string', 'max' => 50],
@@ -117,4 +117,21 @@ class Jugadores extends \yii\db\ActiveRecord
         $nacionalidades = array_combine($lines, $lines);
         return $nacionalidades;
     }
+
+    public function beforeSaveAltura($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            // Convertir la altura solo si está en centímetros
+            if (strpos($this->altura, '.') === false && strpos($this->altura, ',') === false) {
+                // La altura no tiene puntos ni comas, asumir que está en centímetros
+                $altura = floatval($this->altura) / 100; // Convertir centímetros a metros
+                $this->altura = number_format($altura, 2, '.', ''); // Formatear a dos decimales, usando punto como separador decimal
+            } else {
+                // La altura ya está en metros, asegurarse de que use el formato correcto (con punto como separador decimal)
+                $this->altura = str_replace(',', '.', $this->altura); // Reemplazar comas por puntos
+            }
+            return true;
+        }
+        return false;
+    } 
 }

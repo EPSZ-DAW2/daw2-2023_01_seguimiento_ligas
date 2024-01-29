@@ -86,10 +86,7 @@ class JugadoresController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model === null) {
-            throw new NotFoundHttpException('El jugador solicitado no existe.');
-        }
+        $imagenModel = new Imagenes();
 
         if($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -97,6 +94,7 @@ class JugadoresController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'imagenModel' => $imagenModel,
         ]);
     }
 
