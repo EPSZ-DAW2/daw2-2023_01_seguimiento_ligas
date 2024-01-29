@@ -34,7 +34,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'peso')->textInput() ?>
 
-    <?= $form->field($model, 'nacionalidad')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nacionalidad')->dropDownList(
+    \app\models\Jugadores::getNacionalidadesList(),
+    ['prompt' => 'Selecciona una nacionalidad']
+    ) ?>
+
+    <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
