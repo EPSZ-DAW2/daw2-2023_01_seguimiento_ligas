@@ -157,6 +157,7 @@ use yii\helpers\Html;
             ],
         ]); ?>
     <br>
+    <?= \yii\helpers\Html::a('Registrar Jugador', ['jugadores/create'], ['class' => 'botonInicioSesion']) ?>
 
 </body>
 </html>
