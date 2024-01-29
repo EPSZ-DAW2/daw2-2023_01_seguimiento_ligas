@@ -22,6 +22,7 @@ $this->registerCssFile('@web/css/jugadores.css');
 
     <?= $this->render('_form', [
         'model' => $model,
+        'imagenModel' => $imagenModel,
     ]) ?>
 
 </div>
