@@ -63,6 +63,27 @@ echo Nav::widget([
     ]
 ]);
 }
+//  si el rol del usuario es 1 (administrador)
+if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
+   
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav ml-auto'],
+        'items' => [
+            [
+                'label' => 'Administración',
+                'items' => [
+                    ['label' => 'Roles', 'url' => ['/roles/index']],
+                    ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+                    ['label' => 'Imagenes', 'url' => ['/imagenes/index']],
+                    ['label' => 'Ligas', 'url' => ['/ligasAdmin/index']],
+                    // Agrega más elementos desplegables aquí si es necesario
+                ],
+            ],
+        ],
+    ]);
+
+ 
+}
 
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav', 'style' => 'margin-left: auto;'],

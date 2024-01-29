@@ -132,25 +132,18 @@ class Imagenes extends \yii\db\ActiveRecord
     
             // Verificar si la imagen ya existe en la carpeta
             if (file_exists($fullPath)) {
-                // La imagen ya existe, puedes manejar este caso como desees
-                Yii::$app->session->setFlash('error', 'La imagen ya existe.');
-                return false;
+                // La imagen ya existe la sustituimos por la nueva
+                unlink($fullPath);
+                
+                
             }
+
+            $this->imagenFile->saveAs(Yii::getAlias('@app/web/' . $path) . $imageName);
+
+            // Guardar el nombre de la imagen en la base de datos
+            $this->foto = $imageName;
     
-            // Intenta guardar la imagen en el directorio especificado
-            if ($this->imagenFile->saveAs($fullPath)) {
-                // La imagen se guardó correctamente, actualiza el atributo 'foto' en la base de datos
-                $this->foto = $path . $imageName;
-                if ($this->save(false)) { // Guarda el registro de la imagen en la base de datos sin validar
-                    return true;
-                } else {
-                    Yii::$app->session->setFlash('error', 'Error al guardar la información de la imagen en la base de datos.');
-                    return false;
-                }
-            } else {
-                Yii::$app->session->setFlash('error', 'Error al guardar la imagen en el servidor.');
-                return false;
-            }
+            return $this->save();
         } else {
             Yii::$app->session->setFlash('error', 'Debes seleccionar una imagen.');
             return false;
