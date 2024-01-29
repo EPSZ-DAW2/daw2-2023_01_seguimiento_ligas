@@ -130,7 +130,30 @@ use yii\helpers\Html;
                 'altura',
                 'peso',
                 'nacionalidad',
-                'equipo.nombre', // Accede al nombre del equipo a través de la relación
+                [
+                    'attribute' => 'equipo.nombre',
+                    'label' => 'Equipo',
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{view} {update} {delete}',
+                    'buttons' => [
+                        'view' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view', 'id' => $model->id]);
+                        },
+                        'update' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['update', 'id' => $model->id]);
+                        },
+                        'delete' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model->id], [
+                                'data' => [
+                                    'confirm' => '¿Estás seguro de que quieres eliminar este elemento?',
+                                    'method' => 'post',
+                                ],
+                            ]);
+                        },
+                    ],
+                ],
             ],
         ]); ?>
     <br>
