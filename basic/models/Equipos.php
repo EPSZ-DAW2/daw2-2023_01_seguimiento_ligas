@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id Identificador interno del equipo
  * @property int $id_liga Identificador de la liga
+ * @property int $id_temporada Identificador de la temporada
  * @property string $nombre Nombre del equipo
  * @property string $descripcion Descripción general del equipo
  * @property int $id_escudo Identificador interno de la imagen del escudo
@@ -20,11 +21,14 @@ use Yii;
  * @property EstadisticasJugador[] $estadisticasJugadors
  * @property Jugadores[] $jugadores
  * @property Ligas $liga
+ * @property Temporadas $temporada
  * @property PartidosJornada[] $partidosJornadas
  * @property PartidosJornada[] $partidosJornadas0
  */
 class Equipos extends \yii\db\ActiveRecord
 {
+    public $id_temporada_seleccionada;
+
     /**
      * {@inheritdoc}
      */
@@ -39,11 +43,12 @@ class Equipos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_liga', 'nombre', 'descripcion', 'id_escudo', 'n_jugadores'], 'required'],
-            [['id_liga', 'id_escudo', 'n_jugadores'], 'integer'],
+            [['id_liga', 'id_temporada', 'nombre', 'descripcion', 'id_escudo', 'n_jugadores'], 'required'],
+            [['id_liga', 'id_temporada', 'id_escudo', 'n_jugadores'], 'integer'],
             [['nombre'], 'string', 'max' => 100],
             [['descripcion'], 'string', 'max' => 200],
             [['id_liga'], 'exist', 'skipOnError' => true, 'targetClass' => Ligas::class, 'targetAttribute' => ['id_liga' => 'id']],
+            [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
             [['id_escudo'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_escudo' => 'id']],
         ];
     }
@@ -55,7 +60,8 @@ class Equipos extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_liga' => 'Id Liga',
+            'id_liga' => 'ID Liga',
+            'id_temporada' => 'ID Temporada',
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
             'id_escudo' => 'Id Escudo',
@@ -131,6 +137,16 @@ class Equipos extends \yii\db\ActiveRecord
     public function getLiga()
     {
         return $this->hasOne(Ligas::class, ['id' => 'id_liga']);
+    }
+
+    /**
+     * Gets query for [[Temporada]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTemporada()
+    {
+        return $this->hasOne(Temporadas::class, ['id' => 'id_temporada']);
     }
 
     /**

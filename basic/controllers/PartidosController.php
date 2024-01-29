@@ -4,6 +4,9 @@ namespace app\controllers;
 
 use Yii;
 use app\models\PartidosJornada;
+use app\models\JornadasTemporada;
+use app\models\Equipos;
+use app\models\Temporadas;
 
 class PartidosController extends \yii\web\Controller
 {
@@ -22,7 +25,11 @@ class PartidosController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        return $this->render('create');
+        $model = new PartidosJornada();
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     public function actionUpdate()
@@ -35,4 +42,29 @@ class PartidosController extends \yii\web\Controller
         return $this->render('view');
     }
 
+    public function actionCargarTemporadas($id_liga)
+    {
+        $temporadas = Temporadas::find()->where(['id_liga' => $id_liga])->all();
+    
+        if ($temporadas) {
+            return $this->renderAjax('_dropdown_temporadas', [
+                'temporadas' => $temporadas,
+            ]);
+        } else {
+            return 'No se encontraron temporadas para la liga seleccionada.';
+        }
+    }    
+
+    public function actionCargarJornadas($id_temporada)
+    {
+        $jornadas = JornadasTemporada::find()->where(['id_temporada' => $id_temporada])->all();
+    
+        if ($jornadas) {
+            return $this->renderAjax('_dropdown_jornadas', [
+                'jornadas' => $jornadas,
+            ]);
+        } else {
+            return 'No se encontraron jornadas para la temporada seleccionada.';
+        }
+    }  
 }
