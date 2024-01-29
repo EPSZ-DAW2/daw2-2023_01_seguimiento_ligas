@@ -111,7 +111,7 @@ class Jugadores extends \yii\db\ActiveRecord
 
     public static function getNacionalidadesList()
     {
-        $filePath = "C:/xampp/htdocs/daw2-2023_01_seguimiento_ligas/proyecto/nacionalidades.txt";
+        $filePath = Yii::getAlias('@app/web/datos/nacionalidades.txt');
 
         $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         $nacionalidades = array_combine($lines, $lines);
