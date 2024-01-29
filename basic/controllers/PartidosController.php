@@ -10,22 +10,34 @@ use app\models\Temporadas;
 
 class PartidosController extends \yii\web\Controller
 {
-    public function actionIndex()
+    public function actionIndex($jornadaID = null)
     {
-        $this->view->title = 'ArosInsider - Partidos';
-        
-        // Obtén todos los partidos desde la base de datos
-        $partidos= PartidosJornada::find()->all();
+        // Filtrar partidos si se proporciona el jornadaID
+        $query = PartidosJornada::find();
+        if ($jornadaID !== null) {
+            $query->where(['id_jornada' => $jornadaID]);
+        }
 
-        // Renderiza la vista y pasa los equipos como parámetro
+        $partidos = $query->all();
+
         return $this->render('index', [
             'partidos' => $partidos,
         ]);
     }
 
-    public function actionCreate()
+
+    public function actionCreate($jornadaID = null)
     {
         $model = new PartidosJornada();
+
+        if ($jornadaID !== null) {
+            $model->id_jornada = $jornadaID;
+        }
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // Éxito al guardar el partido, puedes redirigir o hacer lo que necesites
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
 
         return $this->render('create', [
             'model' => $model,
