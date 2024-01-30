@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+use yii\helpers\Html;
 
 $this->title = 'ArosInsider';
 ?>
@@ -26,6 +27,7 @@ $this->title = 'ArosInsider';
 
         <h2>Contenido:</h2>
         <br>
+
         <div class="botones-Linea">
         <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['ligas/index']) ?>">LIGAS</a>
         <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['temporadas/index']) ?>">TEMPORADAS</a>
@@ -36,7 +38,6 @@ $this->title = 'ArosInsider';
         <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['estadisticas-jugador/index']) ?>">E_JUGADOR</a>
 
         </div>
-        
     </div>
 	<div>
 	
