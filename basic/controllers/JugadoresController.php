@@ -7,26 +7,42 @@ use app\models\Jugadores;
 use app\models\EstadisticasJugador;
 use app\models\Imagenes;
 use app\models\Temporadas;
+use app\models\Ligas;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
-
 
 class JugadoresController extends Controller
 {
     public function actionIndex()
     {
-        // Configura el proveedor de datos con paginación
+        // Obtiene el ID de la liga seleccionada
+        $ligaId = Yii::$app->request->get('ligaId');
+    
+        // Consulta base de jugadores
+        $query = Jugadores::find()->with('equipo');
+    
+        // Si se ha seleccionado una liga, filtra los jugadores por esa liga
+        if ($ligaId !== null) {
+            $query->leftJoin('equipos', 'jugadores.id_equipo = equipos.id')
+                ->andWhere(['equipos.id_liga' => $ligaId]);
+        }
+    
+        // Configura el proveedor de datos con la consulta de jugadores
         $dataProvider = new ActiveDataProvider([
-            'query' => Jugadores::find()->with('equipo'),
+            'query' => $query,
             'pagination' => [
                 'pageSize' => 12, // Define el número de jugadores por página
             ],
         ]);
     
-        // Renderiza la vista y pasa el proveedor de datos como parámetro
+        // Obtiene la lista de ligas para el desplegable
+        $ligas = Ligas::find()->all();
+    
+        // Renderiza la vista y pasa el proveedor de datos y la lista de ligas como parámetros
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'ligas' => $ligas,
         ]);
     }
     
