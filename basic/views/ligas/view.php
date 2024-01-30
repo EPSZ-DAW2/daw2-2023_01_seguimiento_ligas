@@ -7,27 +7,25 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Ligas */
 
 $this->title = $model->nombre;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Ligas'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Ligas'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="ligas-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="contenido-cabecera">
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Actualizar Liga'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Borrar Liga'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', '¿Estás seguro de que quieres eliminar este elemento?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <h1>DATOS DE LA LIGA: <?= Html::encode($this->title) ?></h1>
+
+</div>
+<div id="contenedor-principal">
+
+    <div class="marco">
+    <p class="PaginaDeInicio">Tabla con los datos de la liga <?= Html::encode($this->title) ?>:</p>
 
     <?= DetailView::widget([
         'model' => $model,
+        'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
+        'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
         'attributes' => [
             'id',
             'nombre',
@@ -35,5 +33,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_imagen',
         ],
     ]) ?>
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Actualizar Liga'), ['update', 'id' => $model->id], ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Borrar Liga'), ['delete', 'id' => $model->id], [
+            'class' => 'botonFormulario',
+            'data' => [
+                'confirm' => Yii::t('app', '¿Estás seguro de que quieres eliminar este elemento?'),
+                'method' => 'post',
+            ],
+        ]) ?>
+        <!--<?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>-->
+    </p>
 
 </div>

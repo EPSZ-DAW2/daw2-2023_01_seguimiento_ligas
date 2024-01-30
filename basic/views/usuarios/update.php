@@ -12,9 +12,14 @@ $this->title = Yii::t('app', 'Modificación de datos de {name}', [
 //$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 //$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="usuarios-update">
 
-    <h1 class="PaginaDeInicio"><?= Html::encode($this->title) ?></h1>
+<div class="contenido-cabecera">
+
+<h1><?= Html::encode($this->title) ?></h1>
+
+</div>
+
+<div id="contenedor-principal">
 
     <?= $this->render('_formUpdate', [
         'model' => $model,

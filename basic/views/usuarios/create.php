@@ -18,9 +18,6 @@ $this->title = Yii::t('app', 'Registro nuevo cliente');
 
 <div  id="contenedor-principal">
 
-
-    <br>
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

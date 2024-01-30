@@ -59,6 +59,10 @@ $this->title = Yii::t('app', 'Usuarios');
 
     <p>
         <?= Html::a(Yii::t('app', 'Registro nuevo cliente'), ['create'], ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Ir a Inicio'), Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+        
+
+
     </p>
     </div>
 

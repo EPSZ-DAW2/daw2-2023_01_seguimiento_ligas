@@ -24,7 +24,7 @@ $this->title = $model->username;
 
     <div class="marco">
 
-    <p class="PaginaDeInicio">Tabla con tus datos de usuario:</p>
+    <p class="PaginaDeInicio">Tabla con los datos de usuario:</p>
     <?= DetailView::widget([
     'model' => $model,
     'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
@@ -48,7 +48,8 @@ $this->title = $model->username;
                 'method' => 'post',
             ],
         ]) ?>
-        <!--<?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>-->
+       <?= Html::a(Yii::t('app', 'Ir a Inicio'), Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+
 
 
     </p>

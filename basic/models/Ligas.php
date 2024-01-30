@@ -32,9 +32,10 @@ class Ligas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'pais', 'id_imagen'], 'required'],
+            [['nombre', 'pais', 'id_imagen'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_imagen'], 'integer'],
             [['nombre', 'pais'], 'string', 'max' => 50],
+            [['nombre'], 'unique', 'message' => 'La liga "{value}" ya existe.'],
             [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id']],
         ];
     }
