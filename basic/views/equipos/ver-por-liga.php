@@ -1,6 +1,10 @@
-<div class="contenido-cabecera">
+<?php
+use yii\helpers\Html; 
+?>  
 
-<h1>LIGA: ..</h1>
+<div class="contenido-cabecera">  
+    
+<h1>LIGA <?= Html::encode($liga->nombre) ?></h1>  
 
 </div>
 

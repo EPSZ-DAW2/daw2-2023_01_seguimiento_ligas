@@ -118,6 +118,7 @@ a.desc:after {
     border-radius: 10%;
     display: inline-block;
     margin-top: 10%;
+    overflow: hidden; /* Evita que el contenido desborde el div */
 }
 
 h1.PaginaDeInicio {
@@ -312,8 +313,7 @@ a.boton:hover {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center; /* Centra la imagen horizontal y verticalmente */
-    margin-left: 10px; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
-    margin-right: 10px; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
+    margin: 0% 3%
 }
 
 .liga-image2 {
@@ -322,7 +322,7 @@ a.boton:hover {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center; /* Centra la imagen horizontal y verticalmente */
-    margin: 0 35%; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
+    margin: 0% 36.5%; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
 }
 
 
@@ -334,4 +334,20 @@ a.boton:hover {
     display: inline-block;
     margin-right: 5px; /* Ajusta el margen según tus preferencias */
     margin-top: 10%;
+}
+
+.contenedor-imagenes {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las imágenes se coloquen debajo si no hay suficiente espacio en línea */
+    
+}
+
+.imagenPrincipal {
+    width: 20%;
+    height: auto;
+    object-fit: cover;
+    margin-right: 5%;
+    margin-left: 7%;
+    margin-bottom: 5%; /* Agrega un margen inferior entre las imágenes */
+    border: 2px solid #000;
 }
