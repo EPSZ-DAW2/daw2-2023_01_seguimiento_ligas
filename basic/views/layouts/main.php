@@ -75,7 +75,7 @@ if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
                     ['label' => 'Roles', 'url' => ['/roles/index']],
                     ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
                     ['label' => 'Imagenes', 'url' => ['/imagenes/index']],
-                    ['label' => 'Ligas', 'url' => ['/ligasAdmin/index']],
+                    ['label' => 'Ligas', 'url' => ['/ligas/index']],
                     // Agrega más elementos desplegables aquí si es necesario
                 ],
             ],
