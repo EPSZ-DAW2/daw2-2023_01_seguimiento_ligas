@@ -142,6 +142,8 @@ body {
   background-attachment: fixed ;
 }
 
+
+
 p.PaginaDeInicio {
   font-weight: bold;
   color: black;
@@ -244,6 +246,51 @@ a.boton:hover {
 }
 
 
+/* Estilo para la tabla */
+.tabla {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Estilo para las celdas de la tabla */
+.tabla th, .tabla td {
+    border: 1px solid #000; /* Cambiado a negro */
+    padding: 8px;
+    text-align: center; /* Centrar el contenido */
+}
+
+/* Estilo para la cabecera de la tabla */
+.tabla th {
+    background-color: #f2f2f2;
+}
+
+
+/* Nueva clase para botones pequeños */
+.botonPequeño {
+    display: inline-block;
+    margin-right: 5px; /* Ajusta el margen según tus preferencias */
+    padding: 5px 10px; /* Ajusta el espacio interno del botón pequeño según sea necesario */
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center; /* Centra el texto dentro del botón pequeño */
+    border: 2px solid #000; /* Borde negro */
+}
+
+/* Estilo adicional para resaltar en hover */
+.botonPequeño:hover {
+    background-color: #ddd;
+}
+
+
+
+/* Estilo para el contenedor principal de las ligas */
+.contenedor-ligas {
+    text-align: center; /* Centra los elementos hijos */
+}
 
 .liga-container {
     background-color: rgba(152, 196, 240, 0.8); /* Color con opacidad */
@@ -262,8 +309,29 @@ a.boton:hover {
 .liga-image {
     width: 100px; /* Ajusta el ancho según tus necesidades */
     height: 100px; /* Ajusta la altura según tus necesidades */
-    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente el contenedor */
+    background-size: contain;
     background-repeat: no-repeat;
+    background-position: center; /* Centra la imagen horizontal y verticalmente */
     margin-left: 10px; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
     margin-right: 10px; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
+}
+
+.liga-image2 {
+    width: 100px; /* Ajusta el ancho según tus necesidades */
+    height: 100px; /* Ajusta la altura según tus necesidades */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; /* Centra la imagen horizontal y verticalmente */
+    margin: 0 35%; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
+}
+
+
+.marco2 {
+    background-color: #cfe2f3;
+    padding: 2%;
+    border: 2px solid #ccc;
+    border-radius: 10%;
+    display: inline-block;
+    margin-right: 5px; /* Ajusta el margen según tus preferencias */
+    margin-top: 10%;
 }
