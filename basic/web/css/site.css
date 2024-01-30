@@ -338,8 +338,7 @@ a.boton:hover {
 
 .contenedor-imagenes {
     display: flex;
-    flex-wrap: wrap; /* Permite que las imágenes se coloquen debajo si no hay suficiente espacio en línea */
-    
+    flex-wrap: wrap;
 }
 
 .imagenPrincipal {
@@ -348,6 +347,18 @@ a.boton:hover {
     object-fit: cover;
     margin-right: 5%;
     margin-left: 7%;
-    margin-bottom: 5%; /* Agrega un margen inferior entre las imágenes */
+    margin-bottom: 5%;
     border: 2px solid #000;
+}
+
+.enlace-imagen {
+    text-decoration: none;
+    display: block;
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente el área del enlace */
+    width: 20%; /* Ajusta según sea necesario */
+    height: 100px; /* Ajusta según sea necesario */
+    border: 2px solid #000;
+    margin-right: 5%;
+    margin-left: 7%;
+    margin-bottom: 5%;
 }

@@ -37,6 +37,7 @@ $this->title = 'ArosInsider';
         <?php echo Html::img('@web/ImagenesVideos/estadisitcas.jpg', ['class' => 'imagenPrincipal',  'title' => 'Estadisticas de jugadores']); ?>
         <?php echo Html::img('@web/ImagenesVideos/calendario.jpg', ['class' => 'imagenPrincipal',  'title' => 'Partidos de las temporadas']); ?>
         <?php echo Html::img('@web/ImagenesVideos/noticia.png', ['class' => 'imagenPrincipal',  'title' => 'Todas las noticias de relacionadas del basket']); ?>
+
         </div>
 
 
