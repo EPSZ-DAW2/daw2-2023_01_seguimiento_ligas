@@ -8,17 +8,15 @@ use yii\widgets\Pjax;
 use app\models\LigasSearch;
 
 
-if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3)) {    
-    foreach ($ligas as $liga): ?>
+if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3)) {
+   foreach ($ligas as $liga): ?>
     <div class="contenido-cabecera">
 
     <h1>LIGAS:</h1>
 
     </div>
 
-    <div id="contenedor-principal">
-
-    <div class="marco" style="display: inline-block; margin-right: 10px;">
+    <div class="marco2">
         <a href="<?= Yii::$app->urlManager->createUrl(['equipos/ver-por-liga', 'ligaId' => $liga->id]) ?>">
             <div class="liga-content">
                 <h2><?= $liga->nombre ?></h2>
@@ -26,9 +24,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             <div class="liga-image" style="background-image: url('<?= Yii::getAlias('@web/images/' . $liga->imagen->foto) ?>');"></div>
         </a>
     </div>
-    </div>
 <?php endforeach; ?>
-
 <?php } else { ?>
 
 <?php

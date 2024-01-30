@@ -10,14 +10,21 @@
 </head>
 <body>
 
-    <h2>Tabla de Estadísticas de Jugadores</h2>
+<div class="contenido-cabecera">
 
+    <h1>ESTADISTICA DE JUGADORES</h1>
+
+</div>
+
+<div id="contenedor-principal">
+
+    <div class="marco">
     <table class="tabla">
         <thead class="cabecera filas">
             <tr>
-                <th>ID Temporada</th>
-                <th>ID Equipo</th>
                 <th>ID Jugador</th>
+                <th>ID Equipo</th>
+                <th>ID Temporada</th>
                 <th>Partidos Jugados</th>
                 <th>Puntos</th>
                 <th>Rebotes</th>
@@ -37,15 +44,16 @@
                 <td class="filas"><?= $estadistica->asistencias ?></td>
                 <td class="filas">
                     <!-- Botones de Acciones -->
-                    <?= \yii\helpers\Html::a('Editar', ['update', 'id' => $estadistica->id], ['class' => 'btn btn-primary']) ?>
-                    <?= \yii\helpers\Html::a('Ver', ['view', 'id' => $estadistica->id], ['class' => 'btn btn-info']) ?>
-                    <?= \yii\helpers\Html::a('Eliminar', ['delete', 'id' => $estadistica->id], ['class' => 'btn btn-danger', 'data' => ['confirm' => '¿Estás seguro de que deseas eliminar esta estadística?']]) ?>
+                    <?= \yii\helpers\Html::a('Editar', ['update', 'id' => $estadistica->id], ['class' => 'botonPequeño']) ?>
+                    <?= \yii\helpers\Html::a('Ver', ['view', 'id' => $estadistica->id], ['class' => 'botonPequeño']) ?>
+                    <?= \yii\helpers\Html::a('Eliminar', ['delete', 'id' => $estadistica->id], ['class' => 'botonPequeño', 'data' => ['confirm' => '¿Estás seguro de que deseas eliminar esta estadística?']]) ?>
                 </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
-    <br>
+    </div>
+</div>
 
 </body>
 </html>
