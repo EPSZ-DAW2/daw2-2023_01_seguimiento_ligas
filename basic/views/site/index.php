@@ -2,6 +2,8 @@
 
 /** @var yii\web\View $this */
 use yii\helpers\Html;
+$this->registerCssFile('@web/css/site.css');
+
 
 $this->title = 'ArosInsider';
 ?>
@@ -27,7 +29,18 @@ $this->title = 'ArosInsider';
 
         <h2>Contenido:</h2>
         <br>
+        
+        <div class="contenedor-imagenes">
+        <?php echo Html::img('@web/ImagenesVideos/ligas.jpg', ['class' => 'imagenPrincipal', 'title' => 'Ligas de Baloncesto del mundo']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/equipos.jpg', ['class' => 'imagenPrincipal', 'title' => 'equipos de baloncesto']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/jugadores.jpg', ['class' => 'imagenPrincipal',  'title' => 'Jugadores de baloncesto']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/estadisitcas.jpg', ['class' => 'imagenPrincipal',  'title' => 'Estadisticas de jugadores']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/calendario.jpg', ['class' => 'imagenPrincipal',  'title' => 'Partidos de las temporadas']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/noticia.png', ['class' => 'imagenPrincipal',  'title' => 'Todas las noticias de relacionadas del basket']); ?>
+        </div>
 
+
+        <!--
         <div class="botones-Linea">
         <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['ligas/index']) ?>">LIGAS</a>
         <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['temporadas/index']) ?>">TEMPORADAS</a>
@@ -38,6 +51,7 @@ $this->title = 'ArosInsider';
         <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['estadisticas-jugador/index']) ?>">E_JUGADOR</a>
 
         </div>
+        -->
     </div>
 	<div>
 	
