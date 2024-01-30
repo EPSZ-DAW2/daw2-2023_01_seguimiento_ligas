@@ -34,7 +34,10 @@ $this->title = Yii::t('app', 'Login');
         <br>
         <p>¿No tienes una cuenta? Regístrate <a href="<?= Yii::$app->urlManager->createUrl(['/usuarios/create']) ?>">aquí</a></p>
 
-        <?= Html::submitButton(Yii::t('app', 'Iniciar'), ['class' => 'botonFormulario']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Iniciar Sesion'), ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Ir a Inicio'), Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+
+
 
         <?php ActiveForm::end(); ?>
 

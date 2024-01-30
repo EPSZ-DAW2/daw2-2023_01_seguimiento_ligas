@@ -10,20 +10,18 @@ use app\models\Ligas;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="ligas-form">
+<div class="marco">
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'pais', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo']) ?>
+    <br>
 
-    <?= $form->field($model, 'pais')->textInput(['maxlength' => true]) ?>
-
-
-    <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
-    </div>
+    <?= Html::submitButton('Guardar', ['class' => 'botonFormulario']) ?>
 
     <?php ActiveForm::end(); ?>
 

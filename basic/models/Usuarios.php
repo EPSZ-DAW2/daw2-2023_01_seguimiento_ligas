@@ -54,7 +54,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             [['email'], 'unique'],
             [['email'], 'email'],
             [['id_rol'], 'integer'],
-            [['username'], 'unique'],
+            [['username'], 'unique', 'message' => 'Nombre de usuario "{value}" ya existe. Por favor, elige otro.'],
             [['auth_key'], 'string', 'max' => 200], 
             [['reg_token'], 'string', 'max' => 200],
           

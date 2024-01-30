@@ -87,30 +87,37 @@ a.desc:after {
 /*ESTILO PARA NUESTRA WEB*/
 
 .contenido-cabecera {
-    background-color: RED; 
-    padding: 20px;
+    background-color: red;
+    padding: 0%;
     width: 100%;
     height: 20%;
     position: fixed;
-    top: 50PX;
+    top: 0%;
     left: 0;
-    z-index: 1000; /* Asegura que el encabezado esté sobre otros elementos */
-
+    z-index: 1000;
 }
 
 .contenido-cabecera h1 {
     color: white;
-    font-size: 40px;
+    font-size: 250%;
     font-family: 'Verdana', sans-serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     position: absolute;
-    top: 55%; /* Ajusta la posición vertical según sea necesario */
-    left: 50%; /* Centra el texto horizontalmente */
-    transform: translate(-50%, -50%); /* Centra el texto correctamente */
-    white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
-    overflow: hidden; /* Oculta el texto que sobresale del contenedor */
-    text-overflow: ellipsis; /* Añade puntos suspensivos (...) si el texto se corta */
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
+.marco {
+    background-color: #cfe2f3;
+    padding: 2%;
+    border: 2px solid #ccc;
+    border-radius: 10%;
+    display: inline-block;
+    margin-top: 10%;
 }
 
 h1.PaginaDeInicio {
@@ -149,16 +156,6 @@ p.subrayado {
   font-size: 16px; /* Puedes ajustar el tamaño según tus preferencias */
 }
 
-
-.marco {
-    background-color: #cfe2f3; /* Azul claro */
-    padding: 20px; /* Ajusta el espacio alrededor del contenido del marco */
-    border: 2px solid #ccc; /* Ajusta el estilo del borde según tus preferencias */
-    border-radius: 10px; /* Ajusta la curvatura de las esquinas según tus preferencias */
-    display: inline-block; /* Hace que el div sea del tamaño del contenido */
-    margin-top: 120px; /* Ajusta el valor según sea necesario */
-
-  }
   
   /* Añade un contenedor principal para centrar el div */
 #contenedor-principal {
