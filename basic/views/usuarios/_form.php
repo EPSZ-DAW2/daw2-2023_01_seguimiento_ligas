@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="usuarios-form">
+<div class="marco">
 
 <?php $form = ActiveForm::begin([
     'id' => 'usuarios-form',
@@ -17,21 +17,30 @@ use yii\widgets\ActiveForm;
 ]); ?>
 
     
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'apellido1')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'apellido2')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true, 'required' => true]) ?>
-    <?= $form->field($model, 'provincia')->textInput() ?>
+    <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'apellido1', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el primer apellido', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'apellido2', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el segundo apellido', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'email', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el correo electronico', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'password', ['options' => ['class' => 'campoTitulo']])->passwordInput(['maxlength' => true, 'placeholder' => 'Ingrese la contraseña', 'class' => 'campo', 'required' => true]) ?>
+    <br>
+    <?= $form->field($model, 'provincia', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingresela provincia', 'class' => 'campo']) ?>
+    <br>
     <?= $form->field($model, 'id_rol')->hiddenInput(['value' => 6])->label(false) ?>
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre de usuario', 'class' => 'campo']) ?>
+    <br>
+
+    <p>¿Ya tienes una cuenta? Inicia sesión <a href="<?= Yii::$app->urlManager->createUrl(['/usuarios/login']) ?>">aquí</a></p>
+    <br>
+    <?= Html::submitButton(Yii::t('app', 'Registrar'), ['class' => 'botonFormulario']) ?>
+    <?= Html::a(Yii::t('app', 'Ir a Inicio'), Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
 
 
-
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'btn btn-success']) ?>
-    </div>
+</div>
 
 <?php ActiveForm::end(); ?>
 

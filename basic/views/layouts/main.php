@@ -103,6 +103,8 @@ if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
     ]);
     NavBar::end();
     ?>
+
+
 </header>
 
 <main id="main" class="flex-shrink-0" role="main">
@@ -114,16 +116,16 @@ if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
         <?= $content ?>
     </div>
 </main>
-<!--
+
 <footer id="footer" class="mt-auto py-3 bg-light">
     <div class="container">
         <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; Escuela Politécnica Superior de Zamora <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+            <div class="col-md-6 text-center text-md-start">&copy; <?= date('Y') ?> ArosInsider - Tu fuente de información sobre baloncesto</div>
+            <div class="col-md-6 text-center text-md-end">Desarrollado con <a href="https://www.yiiframework.com/" target="_blank">Yii Framework</a></div>
         </div>
     </div>
 </footer>
--->
+
 <?php $this->endBody() ?>
 </body>
 </html>

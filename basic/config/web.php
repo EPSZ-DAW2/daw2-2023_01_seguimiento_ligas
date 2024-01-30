@@ -46,13 +46,16 @@ $config = [
         ],
         'db' => $db,
         
-        /*'urlManager' => [
+        
+        'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
                 'equipos/create' => 'equipos/create',
+                'partidos/<action:\w+>' => 'partidos/<action>',
+                'equipos/ver-por-liga/<id:\d+>' => 'equipos/ver-por-liga',
             ],
-        ],*/
+        ],
 
         /*
         'urlManager' => [

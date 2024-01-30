@@ -27,7 +27,7 @@ class LoginForm extends Model
     {
         return [
 			// username and password are both required with custom error messages
-			[['email'], 'required', 'message' => 'Por favor, ingrese su correo electronico.'],
+			[['username'], 'required', 'message' => 'Este Campo es.'],
 			[['password'], 'required', 'message' => 'Por favor, ingrese su contraseña.'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],

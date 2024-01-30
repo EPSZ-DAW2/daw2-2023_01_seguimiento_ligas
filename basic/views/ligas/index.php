@@ -8,10 +8,16 @@ use yii\widgets\Pjax;
 use app\models\LigasSearch;
 
 
-if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3)) {    
-    foreach ($ligas as $liga): ?>
-    <div class="liga-container">
-        <a href="<?= Yii::$app->urlManager->createUrl(['equipos/index', 'ligaId' => $liga->id]) ?>">
+if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3)) {
+   foreach ($ligas as $liga): ?>
+    <div class="contenido-cabecera">
+
+    <h1>LIGAS:</h1>
+
+    </div>
+
+    <div class="marco2">
+        <a href="<?= Yii::$app->urlManager->createUrl(['equipos/ver-por-liga', 'ligaId' => $liga->id]) ?>">
             <div class="liga-content">
                 <h2><?= $liga->nombre ?></h2>
             </div>
@@ -19,7 +25,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         </a>
     </div>
 <?php endforeach; ?>
-
 <?php } else { ?>
 
 <?php
@@ -29,22 +34,30 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 /* @var $searchModel app\models\LigasSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $this->title = Yii::t('app', 'Ligas');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="ligas-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="contenido-cabecera">
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Crear Nueva Liga'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <h1>LIGAS:</h1>
+
+</div>
+
+
+<div  id="contenedor-principal">
+
+
+    <div class="marco">
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
+    <p class="PaginaDeInicio">Listado de Ligas:</p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+        'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -65,13 +78,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Ligas $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                }
+                },
+                
             ],
         ],
     ]); ?>
 
+
     <?php Pjax::end(); ?>
 
+        <?= Html::a(Yii::t('app', 'Crear Nueva Liga'), ['create'], ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Ir a Inicio'), Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+
+    </div>
 </div>
 
 

@@ -66,6 +66,7 @@ CREATE TABLE `comentarios` (
 CREATE TABLE `equipos` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno del equipo',
   `id_liga` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador de la liga',
+  `id_temporada` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador de la temporada',
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del equipo',
   `descripcion` varchar(200) NOT NULL COMMENT 'Descripción general del equipo',
   `id_escudo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen del escudo',
@@ -293,6 +294,7 @@ ALTER TABLE `comentarios`
 ALTER TABLE `equipos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_liga` (`id_liga`),
+  ADD KEY `fk_idTemporada` (`id_temporada`),
   ADD KEY `fk_id_idImagenL` (`id_escudo`);
 
 --
@@ -510,6 +512,7 @@ ALTER TABLE `comentarios`
 --
 ALTER TABLE `equipos`
   ADD CONSTRAINT `equipos_ibfk_1` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`),
+  ADD CONSTRAINT `fk_idTemporada` FOREIGN KEY (`id_temporada`) REFERENCES `temporadas` (`id`),
   ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_escudo`) REFERENCES `imagenes` (`id`);
 
 --

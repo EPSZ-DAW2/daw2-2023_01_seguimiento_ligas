@@ -55,6 +55,16 @@ class Temporadas extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Liga]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLiga()
+    {
+        return $this->hasOne(Ligas::class, ['id' => 'id_liga']);
+    }
+    
+    /**
      * Gets query for [[EstadisticasEquipos]].
      *
      * @return \yii\db\ActiveQuery

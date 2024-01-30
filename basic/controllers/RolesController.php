@@ -3,19 +3,19 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Roles;
-use app\models\RolesSearch;
+use app\models\Usuarios;
+use app\models\UsuariosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * RolesController implements the CRUD actions for Roles model.
+ * UsuariosController implements the CRUD actions for Usuarios model.
  */
-class RolesController extends Controller
+class UsuariosController extends Controller
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function behaviors()
     {
@@ -33,14 +33,14 @@ class RolesController extends Controller
     }
 
     /**
-     * Lists all Roles models.
+     * Lists all Usuarios models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new RolesSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new UsuariosSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -49,8 +49,7 @@ class RolesController extends Controller
     }
 
     /**
-     * Displays a single Roles model.
-     *
+     * Displays a single Usuarios model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,32 +60,43 @@ class RolesController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    public function actionExito()
+{
+    return $this->render('exito'); 
+}
 
     /**
-     * Creates a new Roles model.
-     *
+     * Creates a new Usuarios model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     *
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Roles();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = new Usuarios();
+    
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
+                if ($model->save()) {
+                   
+                   return $this->redirect(['exito']);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
         }
-
+        
+        $model->password = ''; // Limpiar la contraseña por seguridad
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+    
 
     /**
-     * Updates an existing Roles model.
-     *
+     * Updates an existing Usuarios model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     *
      * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
@@ -94,21 +104,27 @@ class RolesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+    
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            // Generar el hash de la contraseña solo si se proporciona una nueva contraseña
+            if (!empty($model->password)) {
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
+            }
+    
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
+    
         return $this->render('update', [
             'model' => $model,
         ]);
     }
+    
 
     /**
-     * Deletes an existing Roles model.
-     *
+     * Deletes an existing Usuarios model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
      * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
@@ -117,24 +133,57 @@ class RolesController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+     
+        if (Yii::$app->user->identity->id_rol == 1) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->redirect(['site/home']);
+        }
+       
     }
 
     /**
-     * Finds the Roles model based on its primary key value.
-     *
+     * Finds the Usuarios model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     *
      * @param int $id ID
-     * @return Roles the loaded model
+     * @return Usuarios the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Roles::findOne(['id' => $id])) !== null) {
+        if (($model = Usuarios::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'La pagina no esta disponible.'));
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+    
+
+    public function actionLogin()
+    {
+        $model = new Usuarios();
+    
+        // Si el usuario está logueado, redirigir a la página de inicio
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+    
+        if ($this->request->isPost) {
+            // Cargar datos del formulario en el modelo
+            if ($model->load($this->request->post())) {
+                // Validar y loguear al usuario
+                if ($model->login($model->username, $model->password)) {
+                    return $this->goBack();
+                }
+            }
+        }
+    
+        // Si no está logueado, redirigir a la página de login
+        $model->password = ''; // Limpiar la contraseña por seguridad
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+    
+
 }
