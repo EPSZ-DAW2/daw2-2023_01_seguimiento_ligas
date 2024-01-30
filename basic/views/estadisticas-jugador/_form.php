@@ -9,30 +9,31 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<div class="estadisticas-jugador-form">
+<div class="marco">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_temporada')->textInput() ?>
-
-    <?= $form->field($model, 'id_equipo')->dropDownList(
+    <?= $form->field($model, 'id_temporada', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'id_equipo', ['options' => ['class' => 'campoTitulo']])->dropDownList(
         \yii\helpers\ArrayHelper::map(\app\models\Equipos::find()->all(), 'id', 'nombre'),
-        ['prompt' => 'Selecciona un equipo']
+        ['prompt' => 'Selecciona un equipo', 'class' => 'campo']
     ) ?>
+    <br>
+    <?= $form->field($model, 'id_jugador', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo','readonly' => true]) ?>
+    <br>
+    <?= $form->field($model, 'partidos_jugados', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'puntos', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'rebotes', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'asistencias', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    
+    <?= Html::submitButton('Guardar', ['class' => 'botonFormulario']) ?>
+    <?= Html::a(Yii::t('app', 'Tabla de estadisticas'), ['estadisticas-jugador/index'], ['class' => 'botonFormulario']) ?>
 
-    <?= $form->field($model, 'id_jugador')->textInput() ?>
-
-    <?= $form->field($model, 'partidos_jugados')->textInput() ?>
-
-    <?= $form->field($model, 'puntos')->textInput() ?>
-
-    <?= $form->field($model, 'rebotes')->textInput() ?>
-
-    <?= $form->field($model, 'asistencias')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
-    </div>
 
     <?php ActiveForm::end(); ?>
 
