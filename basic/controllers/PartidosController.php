@@ -23,6 +23,24 @@ class PartidosController extends \yii\web\Controller
         ]);
     }
 
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
+    
+    protected function findModel($id)
+    {
+        if (($model = PartidosJornada::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('El partido solicitado no existe.');
+        }
+    }
+
     public function actionCreate()
     {
         $model = new PartidosJornada();
@@ -35,11 +53,6 @@ class PartidosController extends \yii\web\Controller
     public function actionUpdate()
     {
         return $this->render('update');
-    }
-
-    public function actionView()
-    {
-        return $this->render('view');
     }
 
     public function actionCargarTemporadas($id_liga)
