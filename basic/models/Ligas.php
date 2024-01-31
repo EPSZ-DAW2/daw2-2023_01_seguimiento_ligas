@@ -9,8 +9,10 @@ use Yii;
  *
  * @property int $id Identificador interno de la liga
  * @property string $nombre Nombre común de la liga
+ * @property string $descripcion descripción de la liga
  * @property string $pais País en el que acontece la liga
  * @property int $id_imagen
+ * @property string $video Video de la liga
  *
  * @property Equipos[] $equipos
  * @property Imagenes $imagen
@@ -32,11 +34,14 @@ class Ligas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'pais', 'id_imagen'], 'required', 'message' => 'Este campo es obligatorio.'],
+            [['nombre', 'pais','descripcion', 'id_imagen'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_imagen'], 'integer'],
             [['nombre', 'pais'], 'string', 'max' => 50],
             [['nombre'], 'unique', 'message' => 'La liga "{value}" ya existe.'],
             [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id']],
+            [['video'], 'string', 'max' => 255],
+            [['descripcion'], 'string', 'max' => 500],
+            [['video'], 'url', 'message' => 'El formato de la URL no es válido.'],
         ];
     }
 
@@ -48,8 +53,10 @@ class Ligas extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
+            'descripcion' => 'Descripción',
             'pais' => 'Pais',
             'id_imagen' => 'Id Imagen',
+            'video' => 'Video',
         ];
     }
 
@@ -81,5 +88,20 @@ class Ligas extends \yii\db\ActiveRecord
     public function getPartidosJornadas()
     {
         return $this->hasMany(PartidosJornada::class, ['id_liga' => 'id']);
+    }
+
+    public function getPartidos()
+    {
+        return $this->hasMany(Partidos::class, ['id' => 'id_partido'])->viaTable('partidos_jornada', ['id_liga' => 'id']);
+    }
+
+    public function getTemporadas()
+    {
+        return $this->hasMany(Temporadas::class, ['id' => 'id_temporada'])->viaTable('partidos_jornada', ['id_liga' => 'id']);
+    }
+
+    public function getJornadas()
+    {
+        return $this->hasMany(Jornadas::class, ['id' => 'id_jornada'])->viaTable('partidos_jornada', ['id_liga' => 'id']);
     }
 }

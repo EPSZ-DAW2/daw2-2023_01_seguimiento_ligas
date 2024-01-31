@@ -20,6 +20,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         <a href="<?= Yii::$app->urlManager->createUrl(['equipos/ver-por-liga', 'ligaId' => $liga->id]) ?>">
             <div class="liga-content">
                 <h2><?= $liga->nombre ?></h2>
+                <p><?= $liga->descripcion ?><p>
+                <p><?= $liga->pais ?><p>
+                    
             </div>
             <div class="liga-image" style="background-image: url('<?= Yii::getAlias('@web/images/' . $liga->imagen->foto) ?>');"></div>
         </a>
@@ -72,7 +75,9 @@ $this->title = Yii::t('app', 'Ligas');
                 },
             ],
             'nombre:ntext',
+            'descripcion:ntext',
             'pais:ntext',
+            'video:ntext',
 
             [
                 'class' => ActionColumn::className(),
