@@ -16,9 +16,13 @@ use app\models\Ligas;
 
     <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
+    <?= $form->field($model, 'descripcion', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
     <?= $form->field($model, 'pais', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
     <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'video', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
 
     <?= Html::submitButton('Guardar', ['class' => 'botonFormulario']) ?>

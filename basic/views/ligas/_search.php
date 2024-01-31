@@ -17,7 +17,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre') ?>
 
+    <?= $form->field($model, 'descripcion') ?>
+
     <?= $form->field($model, 'pais') ?>
+
+
 
     <div class="form-group">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-primary']) ?>

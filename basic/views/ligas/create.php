@@ -26,9 +26,13 @@ $this->title = 'Crear Liga';
 
         <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre de la liga', 'class' => 'campo']) ?>
         <br>
+        <?= $form->field($model, 'descripcion', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese la descripción de la liga', 'class' => 'campo']) ?>
+        <br>
         <?= $form->field($model, 'pais', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el pais al que pertenezca la liga', 'class' => 'campo']) ?>
         <br>
         <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo']) ?>
+        <br>
+        <?= $form->field($model, 'video', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el video de la liga', 'class' => 'campo']) ?>
         <br>
         <?= Html::submitButton(Yii::t('app', 'Añadir Liga'), ['class' => 'botonFormularion']) ?>
         <?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
