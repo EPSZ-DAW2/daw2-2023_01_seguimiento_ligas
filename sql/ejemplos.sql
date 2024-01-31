@@ -30,13 +30,13 @@ SET @imagen_acb := LAST_INSERT_ID();
 
 
 -- INSERTAMOS LAS LIGAS NBA Y ACB
-INSERT IGNORE INTO `ligas` (`nombre`, `pais`, `id_imagen`) VALUES
-('Liga NBA', 'USA', @imagen_nba);
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`) VALUES
+('Liga NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba);
 
 SET @id_nba := LAST_INSERT_ID();
 
-INSERT IGNORE INTO `ligas` (`nombre`, `pais`, `id_imagen`) VALUES
-('Liga ACB', 'España', @imagen_acb);
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`) VALUES
+('Liga ACB', 'Liga Española, ahora llamada Endesa por patrocionio', 'España', @imagen_acb);
 
 SET @id_acb := LAST_INSERT_ID();
 

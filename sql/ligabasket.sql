@@ -70,7 +70,8 @@ CREATE TABLE `equipos` (
   `nombre` varchar(100) NOT NULL COMMENT 'Nombre del equipo',
   `descripcion` varchar(200) NOT NULL COMMENT 'Descripción general del equipo',
   `id_escudo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen del escudo',
-  `n_jugadores` int(2) NOT NULL COMMENT 'Número de jugadores que componen el equipo'
+  `n_jugadores` int(2) NOT NULL COMMENT 'Número de jugadores que componen el equipo',
+  `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -138,7 +139,8 @@ CREATE TABLE `jornadas_temporada` (
   `id_temporada` int(6) UNSIGNED ZEROFILL NOT NULL,
   `numero` int(6) NOT NULL COMMENT 'Número de la jornada',
   `fecha_inicio` date NOT NULL,
-  `fecha_final` date NOT NULL
+  `fecha_final` date NOT NULL,
+  `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -156,7 +158,8 @@ CREATE TABLE `jugadores` (
   `posicion` varchar(50) DEFAULT NULL,
   `altura` double DEFAULT NULL,
   `peso` double DEFAULT NULL,
-  `nacionalidad` varchar(50) DEFAULT NULL
+  `nacionalidad` varchar(50) DEFAULT NULL,
+  `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -168,8 +171,10 @@ CREATE TABLE `jugadores` (
 CREATE TABLE `ligas` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la liga',
   `nombre` varchar(50) NOT NULL COMMENT 'Nombre común de la liga',
+  `descripcion` varchar(255) NOT NULL COMMENT 'Descripción de la liga',
   `pais` varchar(50) NOT NULL COMMENT 'País en el que acontece la liga',
-  `id_imagen` int(6) UNSIGNED ZEROFILL NOT NULL
+  `id_imagen` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
