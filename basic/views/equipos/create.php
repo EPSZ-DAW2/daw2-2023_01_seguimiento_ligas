@@ -14,20 +14,26 @@ $this->title = 'Crear Equipo';
 //$this->params['breadcrumbs'][] = $this->title;
 
 // Registrar el archivo CSS
-$this->registerCssFile('@web/css/equipos.css');
+//$this->registerCssFile('@web/css/equipos.css');
 ?>
+
+<div class="contenido-cabecera">  
+    
+<h1>CREACIÓN DE EQUIPOS</h1>  
+
+</div>
+
+<div id="contenedor-principal">
+
 <div class="marco">
 
-    <h2 class="equipos_presentacion"><?= Html::encode($this->title) ?></h2>
-
     <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de un equipo:</p>
-
 
     <?php $form = ActiveForm::begin([
         'options' => ['enctype' => 'multipart/form-data'],
     ]); ?>
 
-    <?= $form->field($model, 'id_liga')->dropDownList(
+    <?= $form->field($model, 'id_liga', ['options' => ['class' => 'campoTitulo']])->dropDownList(
         ArrayHelper::map(Ligas::find()->all(), 'id', 'nombre'),
         [
             'prompt' => 'Seleccionar Liga',
@@ -35,7 +41,7 @@ $this->registerCssFile('@web/css/equipos.css');
         ]
     ) ?>
 
-    <?= $form->field($model, 'id_temporada')->dropDownList(
+    <?= $form->field($model, 'id_temporada', ['options' => ['class' => 'campoTitulo']])->dropDownList(
         [], // Este dropdown se llenará dinámicamente
         [
             'prompt' => 'Seleccionar Temporada',
@@ -43,11 +49,11 @@ $this->registerCssFile('@web/css/equipos.css');
         ]
     )->label('Temporadas') ?>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
-    <?= $form->field($model, 'n_jugadores')->hiddenInput(['value' => 0])->label(false) ?>
+    <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'descripcion', ['options' => ['class' => 'campoTitulo']])->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'n_jugadores', ['options' => ['class' => 'campoTitulo']])->hiddenInput(['value' => 0])->label(false) ?>
     <br>
-    <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
+    <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Añadir Equipo', ['class' => 'botonInicioSesion']) ?>

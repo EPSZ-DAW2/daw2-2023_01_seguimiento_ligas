@@ -9,7 +9,7 @@ use app\models\Roles; // Asegúrate de importar el modelo Roles
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="usuarios-form">
+<div class="marco">
 
 <?php $form = ActiveForm::begin([
     'id' => 'usuarios-form',
@@ -17,23 +17,29 @@ use app\models\Roles; // Asegúrate de importar el modelo Roles
     'enableClientValidation' => false,
 ]); ?>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'apellido1')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'apellido2')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'provincia')->textInput() ?>
-
-    <?= $form->field($model, 'id_rol')->dropDownList(
+    <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'apellido1', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'apellido2', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'email', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'password', ['options' => ['class' => 'campoTitulo']])->passwordInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'provincia', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'id_rol', ['options' => ['class' => 'campoTitulo']])->dropDownList(
         Roles::find()->select(['nombre', 'id'])->indexBy('id')->column(),
         ['prompt' => 'Seleccionar Rol']
     )->label('Rol') ?>
+    <br>
+    <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'botonFormulario']) ?>
+    <?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
 
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'btn btn-success']) ?>
-    </div>
 
 <?php ActiveForm::end(); ?>
 

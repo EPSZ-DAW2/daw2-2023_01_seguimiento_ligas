@@ -90,5 +90,15 @@ class ImagenesController extends Controller
         ]);
     }
 
+    public function actionIndex()
+    {
+        $searchModel = new ImagenesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'imagenModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 }
 ?>

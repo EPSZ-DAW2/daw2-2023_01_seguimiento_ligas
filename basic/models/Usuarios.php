@@ -47,14 +47,15 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function rules()
     {
         return [
-            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia','id_rol','username'], 'required'],
+            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia','id_rol','username'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['auth_key', 'reg_token'], 'safe'],
             [['nombre', 'apellido1', 'apellido2', 'email', 'provincia','username'], 'string', 'max' => 50],
-            [['password'], 'string', 'max' => 255],
+            [['password'], 'string', 'max' => 255, 'min' => 6, 'tooShort' => 'La contraseña debe tener al menos 6 caracteres.'],
+            [['password'], 'match', 'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]*$/', 'message' => 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula y un número.'],
             [['email'], 'unique'],
             [['email'], 'email'],
             [['id_rol'], 'integer'],
-            [['username'], 'unique'],
+            [['username'], 'unique', 'message' => 'Nombre de usuario "{value}" ya existe. Por favor, elige otro.'],
             [['auth_key'], 'string', 'max' => 200], 
             [['reg_token'], 'string', 'max' => 200],
           

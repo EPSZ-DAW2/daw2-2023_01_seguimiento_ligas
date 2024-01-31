@@ -12,7 +12,7 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
 
-'name' => 'ArosInsider',  // Nombre de la apicación
+    'name' => 'ArosInsider',  // Nombre de la apicación
 
     'components' => [
         'request' => [
@@ -45,6 +45,7 @@ $config = [
             ],
         ],
         'db' => $db,
+        
         
         'urlManager' => [
             'enablePrettyUrl' => true,

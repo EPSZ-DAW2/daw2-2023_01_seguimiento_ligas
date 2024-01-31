@@ -11,24 +11,31 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Usuarios');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuarios-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="contenido-cabecera">
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Registro nuevo cliente'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <h1>USUARIOS DEL SISTEMA:</h1>
+
+</div>
+
+<div id="contenedor-izquierda">
+
+    <div class="marco">
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    
+    
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    'dataProvider' => $dataProvider,
+    'filterModel' => $searchModel,
+    'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+    'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
+    'columns' => [
+        [
+            'class' => 'yii\grid\SerialColumn'],
 
             'id',
             'nombre:ntext',
@@ -49,5 +56,15 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?php Pjax::end(); ?>
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Registro nuevo cliente'), ['create'], ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Ir a Inicio'), Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+        
+
+
+    </p>
+    </div>
+
 
 </div>

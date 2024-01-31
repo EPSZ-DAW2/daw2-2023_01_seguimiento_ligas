@@ -1,14 +1,19 @@
 <?php
 
 /** @var yii\web\View $this */
+use yii\helpers\Html;
+$this->registerCssFile('@web/css/site.css');
+
 
 $this->title = 'ArosInsider';
 ?>
-<div class="site-index">
 
-    <div>
 
-        <h1 class="PaginaDeInicio">ArosInsider</h1>
+<div>
+
+    <div class="contenido-cabecera">
+
+    <h1>AROSINSIDER</h1>
 
     </div>
 	
@@ -22,11 +27,35 @@ $this->title = 'ArosInsider';
 		sobre las últimas actualizaciones en el mundo del baloncesto. Ya seas un seguidor apasionado, un aficionado casual o un ávido analista, ArosInsider te brinda la
 		experiencia definitiva de seguimiento de liga de baloncesto. ¡Suma canastas con nosotros y mantente en la cima del juego!</p>
 
-	</div>
-	
+        <h2>Contenido:</h2>
+        <br>
+        
+        <div class="contenedor-imagenes">
+        <?php echo Html::img('@web/ImagenesVideos/ligas.jpg', ['class' => 'imagenPrincipal', 'title' => 'Ligas de Baloncesto del mundo']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/equipos.jpg', ['class' => 'imagenPrincipal', 'title' => 'equipos de baloncesto']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/jugadores.jpg', ['class' => 'imagenPrincipal',  'title' => 'Jugadores de baloncesto']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/estadisitcas.jpg', ['class' => 'imagenPrincipal',  'title' => 'Estadisticas de jugadores']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/calendario.jpg', ['class' => 'imagenPrincipal',  'title' => 'Partidos de las temporadas']); ?>
+        <?php echo Html::img('@web/ImagenesVideos/noticia.png', ['class' => 'imagenPrincipal',  'title' => 'Todas las noticias de relacionadas del basket']); ?>
+        </div>
+
+
+        <!--
+        <div class="botones-Linea">
+        <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['ligas/index']) ?>">LIGAS</a>
+        <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['temporadas/index']) ?>">TEMPORADAS</a>
+        <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['equipos/index']) ?>">EQUIPOS</a>
+        <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['partidos/index']) ?>">PARTIDOS</a>
+        <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['jugadores/index']) ?>">JUGADORES</a>
+        <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['noticias/index']) ?>">NOTICIAS</a>
+        <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['estadisticas-jugador/index']) ?>">E_JUGADOR</a>
+
+        </div>
+        -->
+    </div>
 	<div>
 	
-		<p><a class="boton" href="<?= Yii::$app->urlManager->createUrl(['test/index']) ?>">Seleccion de ligas</a></p>
+		
 	
 	</div>
 <!--

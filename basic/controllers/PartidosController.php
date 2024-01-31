@@ -10,14 +10,16 @@ use app\models\Temporadas;
 
 class PartidosController extends \yii\web\Controller
 {
-    public function actionIndex()
+    public function actionIndex($jornadaID = null)
     {
-        $this->view->title = 'ArosInsider - Partidos';
-        
-        // Obtén todos los partidos desde la base de datos
-        $partidos= PartidosJornada::find()->all();
+        // Filtrar partidos si se proporciona el jornadaID
+        $query = PartidosJornada::find();
+        if ($jornadaID !== null) {
+            $query->where(['id_jornada' => $jornadaID]);
+        }
 
-        // Renderiza la vista y pasa los equipos como parámetro
+        $partidos = $query->all();
+
         return $this->render('index', [
             'partidos' => $partidos,
         ]);
@@ -41,9 +43,26 @@ class PartidosController extends \yii\web\Controller
         }
     }
 
-    public function actionCreate()
+    public function actionCreate($jornadaID = null)
     {
         $model = new PartidosJornada();
+
+        if (Yii::$app->request->isPost) {
+
+            $model->load(Yii::$app->request->post());
+  
+            if ($model->save()) {
+                return $this->redirect(['partidos/index']);
+            } else {
+                print_r($model->errors);
+                // Muestra los errores de validación del modelo Equipos
+                Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
+
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }
 
         return $this->render('create', [
             'model' => $model,
@@ -57,7 +76,10 @@ class PartidosController extends \yii\web\Controller
 
     public function actionCargarTemporadas($id_liga)
     {
-        $temporadas = Temporadas::find()->where(['id_liga' => $id_liga])->all();
+        $temporadas = Temporadas::find()
+            ->where(['id_liga' => $id_liga])
+            ->andWhere(['>', 'fecha_final', date('Y-m-d')]) // Filtrar por temporadas actuales y futuras
+            ->all();
     
         if ($temporadas) {
             return $this->renderAjax('_dropdown_temporadas', [
@@ -70,7 +92,10 @@ class PartidosController extends \yii\web\Controller
 
     public function actionCargarJornadas($id_temporada)
     {
-        $jornadas = JornadasTemporada::find()->where(['id_temporada' => $id_temporada])->all();
+        $jornadas = JornadasTemporada::find()
+            ->where(['id_temporada' => $id_temporada])
+            ->andWhere(['>', 'fecha_inicio', date('Y-m-d')])
+            ->all();
     
         if ($jornadas) {
             return $this->renderAjax('_dropdown_jornadas', [

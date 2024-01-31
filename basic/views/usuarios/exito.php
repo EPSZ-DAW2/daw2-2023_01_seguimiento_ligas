@@ -5,14 +5,24 @@ use yii\helpers\Html;
 /* @var $model app\models\Usuarios */
 
 $this->title = Yii::t('app', 'Registro completado');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Usuarios'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Usuarios'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usuarios-exito">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="contenido-cabecera">
 
-    <p>Se ha completado el registro correctamente</p>
+<h1>REGISTRO COMPLETADO</h1>
+
+</div>
+<div id="contenedor-principal">
+
+    <div class="marco">
+
+    <p class="PaginaDeInicio">Se ha completado el registro correctamente</p>
+    <br>
+    <a class="boton" href="<?= Yii::$app->urlManager->createUrl(['site/index']) ?>">Continuar</a>
+
+    </div>
 
 </div>
 
