@@ -90,7 +90,7 @@ class EquiposController extends Controller
     {
         $temporadas = Temporadas::find()
             ->where(['id_liga' => $id_liga])
-            ->andWhere(['>=', 'fecha_inicial', date('Y-m-d')]) // Filtrar por temporadas actuales y futuras
+            ->andWhere(['>', 'fecha_inicial', date('Y-m-d')]) // Filtrar por temporadas futuras
             ->all();
 
         if ($temporadas) {
@@ -102,23 +102,17 @@ class EquiposController extends Controller
         }
     }
 
-    // Acción para ver solo los equipos de la liga seleccionada
-    public function actionVerPorLiga($ligaId)
+    // Acción para cargar los equipos por la temporada seleccionada
+    public function actionEquiposPorTemporada($id_temporada)
     {
-        $liga = Ligas::findOne($ligaId);
+        $equipos = Equipos::find()->where(['id_temporada' => $id_temporada])->all();
         
-        if ($liga) {
-            $equipos = Equipos::find()->where(['id_liga' => $ligaId])->all();
-    
-            return $this->render('ver-por-liga', [
-                'liga' => $liga,
+        if ($equipos) {
+            return $this->renderAjax('_dropdown_equipos', [
                 'equipos' => $equipos,
             ]);
         } else {
-            // Manejo para el caso en que no se encuentra la liga
-            throw new \yii\web\NotFoundHttpException("La liga con ID $ligaId no fue encontrada.");
+            return 'No se encontraron equipos para la temporada seleccionada.';
         }
     }
-
-
 }
