@@ -29,8 +29,10 @@ $this->title = $model->nombre;
         'attributes' => [
             'id',
             'nombre',
+            'descripcion',
             'pais',
             'id_imagen',
+            'video',
         ],
     ]) ?>
 

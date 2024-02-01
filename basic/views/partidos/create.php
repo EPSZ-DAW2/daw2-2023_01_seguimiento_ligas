@@ -3,6 +3,7 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\jui\DatePicker;
 use yii\helpers\ArrayHelper;
 use app\models\Ligas;
 use app\models\Equipos;
@@ -47,13 +48,39 @@ $this->registerCssFile('@web/css/equipos.css');
         ]
     )->label('Temporadas') ?>
 
-    <?= $form->field($model, 'id_jornada_seleccionada')->dropDownList(
+    <?= $form->field($model, 'id_jornada')->dropDownList(
         [], // Este dropdown se llenará dinámicamente
         [
             'prompt' => 'Seleccionar Jornada',
             'id' => 'jornada-dropdown', // ID para el dropdown de jornadas
         ]
-    )->label('Jornadas') ?>
+    )->label('Jornadas') ?>    
+
+    <?= $form->field($model, 'id_equipo_local')->dropDownList(
+    [], // Este dropdown se llenará dinámicamente
+    [
+        'prompt' => 'Seleccionar Equipo',
+        'id' => 'equipo-local-dropdown', // ID para el dropdown de equipos
+    ]
+    )->label('Equipos Locales') ?>
+
+    <?= $form->field($model, 'id_equipo_visitante')->dropDownList(
+    [], // Este dropdown se llenará dinámicamente
+    [
+        'prompt' => 'Seleccionar Equipo',
+        'id' => 'equipo-dropdown',
+    ]
+    )->label('Equipos Visitantes') ?>
+
+    <?= $form->field($model, 'horario')->textInput(['type' => 'datetime-local', 'class' => 'form-control'])->label('Horario') ?>
+
+    <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese la ubicación...']) ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Añadir Partido', ['class' => 'botonInicioSesion']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 
 <?php 
     $script = <<< JS
@@ -80,14 +107,6 @@ $this->registerCssFile('@web/css/equipos.css');
 
                 if (ligaId) {
                     cargarDropdown('cargar-temporadas', 'temporada-dropdown', {id_liga: ligaId});
-                    cargarEquipos(); // Llama a la nueva función para cargar equipos
-
-                    // Cargar automáticamente las jornadas solo si hay una temporada seleccionada
-                    if (temporadaId) {
-                        cargarJornadas();
-                    } else {
-                        $('#jornada-dropdown').html('<option value="">Seleccionar Jornada</option>');
-                    }
                 } else {
                     $('#temporada-dropdown').html('<option value="">Seleccionar Temporada</option>');
                     $('#equipo-local-dropdown').html('<option value="">Seleccionar Equipo</option>');
@@ -98,83 +117,38 @@ $this->registerCssFile('@web/css/equipos.css');
 
             // Evento al cambiar la temporada
             $('#temporada-dropdown').on('change', function(){
-                cargarJornadas();
+                var temporadaId = $(this).val();
+
+                if (temporadaId) {
+                    cargarDropdown('cargar-jornadas', 'jornada-dropdown', {id_temporada: temporadaId});
+                    cargarDropdown('../equipos/equipos-por-temporada', 'equipo-local-dropdown', {id_temporada: temporadaId});
+                } else {
+                    $('#jornada-dropdown').html('<option value="">Seleccionar Jornada</option>');
+                    $('#equipo-local-dropdown').html('<option value="">Seleccionar Equipo</option>');
+                    $('#equipo-visitante-dropdown').html('<option value="">Seleccionar Equipo Visitante</option>');
+                }
             });
 
-            // Evento al cambiar los equipos
+            
+            // Evento al cambiar el equipo local
             $('#equipo-local-dropdown').on('change', function() {
-                cargarEquipos();
+                var temporadaId = $('#temporada-dropdown').val();
+                var equipoId = $(this).val();
 
-                // Obtener el equipo local seleccionado
-                var equipoLocalSeleccionado = $('#equipo-local-dropdown').val();
-                
-                // Filtrar los equipos visitantes para excluir el equipo local seleccionado
-                var equiposVisitantes = $('#equipo-visitante-dropdown option').filter(function() {
-                    return $(this).val() !== equipoLocalSeleccionado;
-                }).clone();
-                
-                // Actualizar el dropdown de equipos visitantes con la nueva lista
-                $('#equipo-visitante-dropdown').html('<option value="">Seleccionar Equipo Visitante</option>').append(equiposVisitantes);
+                if (equipoId) {
+                    cargarDropdown('../equipos/equipos-por-temporada', 'equipo-dropdown', {id_temporada: temporadaId, excludeId: equipoId});
+                } else {
+                    $('#equipo-local-dropdown').html('<option value="">Seleccionar Equipo</option>');
+                    $('#equipo-visitante-dropdown').html('<option value="">Seleccionar Equipo Visitante</option>');
+                }
             });
-
+            
         });
-
-        // Función para cargar equipos
-        function cargarEquipos() {
-            var ligaId = $('#liga-dropdown').val();
-            if (ligaId) {
-                cargarDropdown('../equipos/equipos-por-liga', 'equipo-local-dropdown', {id_liga: ligaId});
-                cargarDropdown('../equipos/equipos-por-liga', 'equipo-visitante-dropdown', {id_liga: ligaId});
-
-                var equipoLocalSeleccionado = $('#equipo-local-dropdown').val();
-                console.log('Equipo Local Seleccionado:', equipoLocalSeleccionado);
-
-                cargarDropdown('../equipos/equipos-por-liga', 'equipo-visitante-dropdown', {id_liga: ligaId, excludeId: equipoLocalSeleccionado});
-            } else {
-                $('#equipo-local-dropdown').html('<option value="">Seleccionar Equipo</option>');
-                $('#equipo-visitante-dropdown').html('<option value="">Seleccionar Equipo Visitante</option>');
-            }
-        }
-
-        // Función para cargar jornadas
-        function cargarJornadas() {
-            var temporadaId = $('#temporada-dropdown').val();
-            if (temporadaId) {
-                cargarDropdown('cargar-jornadas', 'jornada-dropdown', {id_temporada: temporadaId});
-            } else {
-                $('#jornada-dropdown').html('<option value="">Seleccionar Jornada</option>');
-            }
-        }
     JS;
 
     // Registrar el script en la vista
     $this->registerJs($script);
 ?>
-
-
-    
-
-    <?= $form->field($model, 'id_equipo_local')->dropDownList(
-    [], // Este dropdown se llenará dinámicamente
-    [
-        'prompt' => 'Seleccionar Equipo Local',
-        'id' => 'equipo-local-dropdown', // ID para el dropdown de equipos
-    ]
-    )->label('Equipos Locales') ?>
-
-    <?= $form->field($model, 'id_equipo_visitante')->dropDownList(
-    [], // Este dropdown se llenará dinámicamente
-    [
-        'prompt' => 'Seleccionar Equipo Visitante',
-        'id' => 'equipo-visitante-dropdown',
-    ]
-    )->label('Equipos Visitantes') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Añadir Partido', ['class' => 'botonInicioSesion']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
 
 </div>
 

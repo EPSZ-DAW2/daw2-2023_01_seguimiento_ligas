@@ -25,18 +25,43 @@ class PartidosController extends \yii\web\Controller
         ]);
     }
 
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
+    
+    protected function findModel($id)
+    {
+        if (($model = PartidosJornada::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('El partido solicitado no existe.');
+        }
+    }
 
     public function actionCreate($jornadaID = null)
     {
         $model = new PartidosJornada();
 
-        if ($jornadaID !== null) {
-            $model->id_jornada = $jornadaID;
-        }
-        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            // Éxito al guardar el partido, puedes redirigir o hacer lo que necesites
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isPost) {
+
+            $model->load(Yii::$app->request->post());
+  
+            if ($model->save()) {
+                return $this->redirect(['partidos/index']);
+            } else {
+                print_r($model->errors);
+                // Muestra los errores de validación del modelo Equipos
+                Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
+
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
 
         return $this->render('create', [
@@ -49,14 +74,12 @@ class PartidosController extends \yii\web\Controller
         return $this->render('update');
     }
 
-    public function actionView()
-    {
-        return $this->render('view');
-    }
-
     public function actionCargarTemporadas($id_liga)
     {
-        $temporadas = Temporadas::find()->where(['id_liga' => $id_liga])->all();
+        $temporadas = Temporadas::find()
+            ->where(['id_liga' => $id_liga])
+            ->andWhere(['>', 'fecha_final', date('Y-m-d')]) // Filtrar por temporadas actuales y futuras
+            ->all();
     
         if ($temporadas) {
             return $this->renderAjax('_dropdown_temporadas', [
@@ -69,7 +92,10 @@ class PartidosController extends \yii\web\Controller
 
     public function actionCargarJornadas($id_temporada)
     {
-        $jornadas = JornadasTemporada::find()->where(['id_temporada' => $id_temporada])->all();
+        $jornadas = JornadasTemporada::find()
+            ->where(['id_temporada' => $id_temporada])
+            ->andWhere(['>', 'fecha_inicio', date('Y-m-d')])
+            ->all();
     
         if ($jornadas) {
             return $this->renderAjax('_dropdown_jornadas', [

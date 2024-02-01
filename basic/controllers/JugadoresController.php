@@ -86,6 +86,8 @@ class JugadoresController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $imagenModel =  Imagenes::findOne($model->id_imagen);
+
 
         if ($model === null) {
             throw new NotFoundHttpException('El jugador solicitado no existe.');
@@ -97,6 +99,7 @@ class JugadoresController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'imagenModel' => $imagenModel,
         ]);
     }
 

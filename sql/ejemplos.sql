@@ -30,13 +30,13 @@ SET @imagen_acb := LAST_INSERT_ID();
 
 
 -- INSERTAMOS LAS LIGAS NBA Y ACB
-INSERT IGNORE INTO `ligas` (`nombre`, `pais`, `id_imagen`) VALUES
-('Liga NBA', 'USA', @imagen_nba);
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`) VALUES
+('Liga NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba);
 
 SET @id_nba := LAST_INSERT_ID();
 
-INSERT IGNORE INTO `ligas` (`nombre`, `pais`, `id_imagen`) VALUES
-('Liga ACB', 'España', @imagen_acb);
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`) VALUES
+('Liga ACB', 'Liga Española, ahora llamada Endesa por patrocionio', 'España', @imagen_acb);
 
 SET @id_acb := LAST_INSERT_ID();
 
@@ -106,12 +106,12 @@ INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`
 SET @lakers:= LAST_INSERT_ID();
 
 INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
-(@id_acb, @temporada_nba23, 'Real Madrid Baloncesto', 'Equipo de 1931 apodado los Blancos', @escudo_realmadrid, 14);
+(@id_acb, @temporada_acb23, 'Real Madrid Baloncesto', 'Equipo de 1931 apodado los Blancos', @escudo_realmadrid, 14);
 
 SET @realmadrid:= LAST_INSERT_ID();
 
 INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
-(@id_acb, @temporada_nba23, 'Fundación CB Granada', 'Fundado en 2012 con presente y mucho futuro', @escudo_granada, 11);
+(@id_acb, @temporada_acb23, 'Fundación CB Granada', 'Fundado en 2012 con presente y mucho futuro', @escudo_granada, 11);
 
 SET @granada:= LAST_INSERT_ID();
 
@@ -126,7 +126,9 @@ INSERT IGNORE INTO `jornadas_temporada` (`id_temporada`, `numero`, `fecha_inicio
 (@temporada_acb23, 2, '2023-09-27', '2023-10-04'),
 (@temporada_acb23, 3, '2023-09-30', '2023-10-11'),
 (@temporada_acb23, 4, '2023-10-07', '2023-10-08'),
-(@temporada_acb23, 5, '2023-10-14', '2023-10-15');
+(@temporada_acb23, 5, '2023-10-14', '2023-10-15'),
+(@temporada_acb23, 21, '2024-02-03', '2023-02-04'),
+(@temporada_acb23, 22, '2024-02-10', '2023-02-11');
 
 SET @j5acb := LAST_INSERT_ID();
 
