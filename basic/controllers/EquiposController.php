@@ -76,13 +76,18 @@ class EquiposController extends Controller
         return $this->render('view');
     }
 
-    public function actionEquiposPorLiga($id_liga)
+    public function actionVerPorLiga($ligaId)
     {
-        $equipos = Equipos::find()->where(['id_liga' => $id_liga])->all();
+        $equipos = Equipos::find()->where(['id_liga' => $ligaId])->all();
 
-        return $this->renderAjax('_dropdown_equipos', [
-            'equipos' => $equipos,
-        ]);
+        if ($equipos) {
+            return $this->renderAjax('ver-por-liga', [
+                'equipos' => $equipos,
+                'liga' => $ligaId,
+            ]);
+        } else {
+            return 'No se encontraron equipos para la temporada seleccionada.';
+        }
     }
 
     // Acción para cargar las temporadas futuras a la fecha en el formulario de crear equipo

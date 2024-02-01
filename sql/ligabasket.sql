@@ -266,7 +266,8 @@ CREATE TABLE `usuarios` (
   `password` varchar(255) NOT NULL,
   `provincia` varchar(50) NOT NULL,
   `id_rol` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `username` varchar(50) NOT NULL
+  `username` varchar(50) NOT NULL,
+  `foto` varchar(255) DEFAULT NULL COMMENT 'foto que sube un usuario, por ejemplo la de perfil' 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
