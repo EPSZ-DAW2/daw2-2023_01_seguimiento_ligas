@@ -124,9 +124,11 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         <div>
             <h2>Tabla de Jugadores</h2>
             <?php
-            // Generar el formulario para seleccionar la liga
+            // Generar el formulario para seleccionar la liga y el equipo
             echo Html::beginForm(['jugadores/index'], 'get');
-            echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
+
+            echo Html::dropDownList('ligaId', $ligaId, ['' => 'Mostrar todos'] + \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
+
             echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
             echo Html::endForm();
             ?>
@@ -277,16 +279,29 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         <div>
             <h2>Tabla de Jugadores</h2>
             <?php
-            // Generar el formulario para seleccionar la liga
+            // Generar el formulario para seleccionar la liga y el equipo
             echo Html::beginForm(['jugadores/index'], 'get');
+            // Desplegable para seleccionar una liga
             echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
+            // Botón de filtrar
             echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
+            
             echo Html::endForm();
-            ?>
+        ?>
     
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
+                    [
+                'attribute' => 'imagen',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::tag('div', '', [
+                        'class' => 'liga-image',
+                        'style' => 'background-image: url("' . Yii::getAlias('@web/images/' . $model->imagen->foto) . '");',
+                    ]);
+                },
+            ],
                     'nombre',
                     'posicion',
                     'descripcion',

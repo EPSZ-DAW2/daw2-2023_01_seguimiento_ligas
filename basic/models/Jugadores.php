@@ -43,7 +43,7 @@ class Jugadores extends \yii\db\ActiveRecord
             //[['id_equipo', 'id_imagen'], 'required'],
             //[['nombre'], 'required', 'message' => 'Es obligatorio introducir un nombre.'],
             [['id_equipo', 'id_imagen'], 'integer'],
-            [['peso'], 'number'],
+            [['altura', 'peso'], 'string'],
             [['altura'], 'required', 'message' => 'Es obligatorio introducir la altura del jugador'],
             [['peso'], 'required', 'message' => 'Es obligatorio introducir la altura del jugador'],
             [['nombre', 'posicion', 'nacionalidad'], 'string', 'max' => 50],
@@ -51,14 +51,6 @@ class Jugadores extends \yii\db\ActiveRecord
             [['id_equipo'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo' => 'id'], 'message' => 'El id_equipo introducido no existe. Introduzca un id equipo válido.'],
             [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id'],],
         ];
-    }
-
-    public function beforeValidate()
-    {
-        $this->altura = str_replace(',', '.', $this->altura);
-        $this->peso = str_replace(',', '.', $this->peso);
-
-        return parent::beforeValidate();
     }
 
     /**
@@ -117,21 +109,35 @@ class Jugadores extends \yii\db\ActiveRecord
         $nacionalidades = array_combine($lines, $lines);
         return $nacionalidades;
     }
-
-    public function beforeSaveAltura($insert)
+    
+    public function beforeValidate()
     {
-        if (parent::beforeSave($insert)) {
-            // Convertir la altura solo si está en centímetros
-            if (strpos($this->altura, '.') === false && strpos($this->altura, ',') === false) {
-                // La altura no tiene puntos ni comas, asumir que está en centímetros
-                $altura = floatval($this->altura) / 100; // Convertir centímetros a metros
-                $this->altura = number_format($altura, 2, '.', ''); // Formatear a dos decimales, usando punto como separador decimal
-            } else {
-                // La altura ya está en metros, asegurarse de que use el formato correcto (con punto como separador decimal)
-                $this->altura = str_replace(',', '.', $this->altura); // Reemplazar comas por puntos
-            }
-            return true;
+        // Validar longitud de la cadena altura
+        $alturaLength = strlen($this->altura);
+        if ($alturaLength !== 3 && $alturaLength !== 4) {
+            $this->addError('altura', 'La altura debe tener 3 o 4 caracteres.');
+            return false; // Devolver false para indicar que la validación falló
         }
-        return false;
-    } 
+    
+        // Reemplazar comas por puntos para asegurar formato numérico adecuado
+        $this->altura = str_replace(',', '.', $this->altura);
+    
+        // Convertir altura a formato numérico
+        $alturaNumerica = floatval($this->altura);
+    
+        // Validar que la altura sea mayor a 1.50
+        if ($alturaNumerica <= 1.50 || $alturaNumerica >2.50) {
+            $this->addError('altura', 'La altura debe ser mayor a 1.50m e inferior a 2.50m.');
+            return false; // Devolver false para indicar que la validación falló
+        }
+    
+        // Si la altura es de 3 caracteres, agregar el punto en el lugar adecuado
+        if ($alturaLength === 3) {
+            $this->altura = substr($this->altura, 0, 1) . '.' . substr($this->altura, 1);
+        }
+    
+        return parent::beforeValidate();
+    }
+      
+           
 }

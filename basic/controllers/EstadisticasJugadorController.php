@@ -6,23 +6,17 @@ use Yii;
 use app\models\EstadisticasJugador;
 use app\models\Jugadores;
 use yii\web\Controller;
-use yii\data\ActiveDataProvider;
 
 class EstadisticasJugadorController extends Controller
 {
     public function actionIndex()
     {
         // Configura el proveedor de datos con paginación
-        $dataProvider = new ActiveDataProvider([
-            'query' => EstadisticasJugador::find()->with('equipo'),
-            'pagination' => [
-                'pageSize' => 12, // Define el número de jugadores por página
-            ],
-        ]);
+        $estadisticasJugadores = EstadisticasJugador::find()->with(['equipo', 'jugador', 'temporada'])->all();
     
         // Renderiza la vista y pasa el proveedor de datos como parámetro
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'estadisticasJugadores' => $estadisticasJugadores,
         ]);
     }
 
