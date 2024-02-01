@@ -13,7 +13,10 @@ foreach ($temporadas as $temporada) {
 <div class="row">
     <?php foreach ($ligasTemporadas as $ligaId => $temporadasPorLiga): ?>
         <div class="col-md-6">
-            <h2><?= $temporadasPorLiga[0]->liga->nombre ?></h2>
+            <div class="marco2">
+                <h2><?= $temporadasPorLiga[0]->liga->nombre ?></h2>
+            </div>
+            <br>
             <?php foreach ($temporadasPorLiga as $temporada): ?>
                 <div class="marco">
                     <?= \yii\helpers\Html::a('<h3>' . $temporada->texto_de_titulo . '</h3>', ['jornadas/index', 'id' => $temporada->id]) ?>

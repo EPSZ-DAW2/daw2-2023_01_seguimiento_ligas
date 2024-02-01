@@ -36,7 +36,7 @@ INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`) VALUES
 SET @id_nba := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`) VALUES
-('Liga ACB', 'Liga Española, ahora llamada Endesa por patrocionio', 'España', @imagen_acb);
+('Liga ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb);
 
 SET @id_acb := LAST_INSERT_ID();
 
