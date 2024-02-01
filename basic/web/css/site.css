@@ -143,7 +143,13 @@ body {
   background-attachment: fixed ;
 }
 
+p.ejemplo1 {
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    font-size: 16px; /* Puedes ajustar el tamaño según tus preferencias */
 
+}
 
 p.PaginaDeInicio {
   font-weight: bold;
@@ -265,7 +271,6 @@ a.boton:hover {
     background-color: #f2f2f2;
 }
 
-
 /* Nueva clase para botones pequeños */
 .botonPequeño {
     display: inline-block;
@@ -339,6 +344,7 @@ a.boton:hover {
 .contenedor-imagenes {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .imagenPrincipal {
@@ -351,14 +357,8 @@ a.boton:hover {
     border: 2px solid #000;
 }
 
-.enlace-imagen {
-    text-decoration: none;
-    display: block;
-    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente el área del enlace */
-    width: 20%; /* Ajusta según sea necesario */
-    height: 100px; /* Ajusta según sea necesario */
-    border: 2px solid #000;
-    margin-right: 5%;
-    margin-left: 7%;
-    margin-bottom: 5%;
+.enlaces {
+    display: flex;
+    margin-top: 20px; /* Ajusta el margen superior según tus preferencias */
 }
+
