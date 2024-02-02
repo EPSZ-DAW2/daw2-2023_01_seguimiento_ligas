@@ -13,6 +13,7 @@ use yii\web\UploadedFile;
 
 class EquiposController extends Controller
 {
+
     public function actionIndex()
     {
         $this->view->title = 'ArosInsider - Equipos';
@@ -78,12 +79,15 @@ class EquiposController extends Controller
 
     public function actionVerPorLiga($ligaId)
     {
+        $this->view->title = 'ArosInsider - Equipos';
+        
+        $liga = Ligas::findOne($ligaId);
         $equipos = Equipos::find()->where(['id_liga' => $ligaId])->all();
 
         if ($equipos) {
-            return $this->renderAjax('ver-por-liga', [
+            return $this->render('ver-por-liga', [
                 'equipos' => $equipos,
-                'liga' => $ligaId,
+                'liga' => $liga,
             ]);
         } else {
             return 'No se encontraron equipos para la temporada seleccionada.';

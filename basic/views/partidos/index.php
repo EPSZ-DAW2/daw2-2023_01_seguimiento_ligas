@@ -1,9 +1,11 @@
 <?php $this->registerCssFile('@web/css/partidos.css'); ?>
 
+
 <?php foreach ($partidos as $partido): ?>
     <div class="marco">
         <h2><?= $partido->equipoLocal->nombre ?> - <?= $partido->equipoVisitante->nombre ?></h2>
         <p>Lugar: <?= $partido->lugar ?></p>
+        <p> Jornada id: <?= $partido->id_jornada ?> </p>
         <p><?= (new DateTime($partido->horario))->format('d/m/Y H:i:s') ?></p>
 
         <!-- Agregar el botón de detalles -->

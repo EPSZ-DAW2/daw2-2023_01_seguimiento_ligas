@@ -1,7 +1,7 @@
 <?php $this->registerCssFile('@web/css/equipos.css'); ?>
 
 <?php
-use yii\helpers\Html; 
+use yii\helpers\Html;
 ?> 
 
 <?php
@@ -15,13 +15,9 @@ foreach ($equipos as $equipo) {
 ?>
 
 <div class="contenido-cabecera">  
-    
-<h1>EQUIPOS</h1>  
-
+    <h1>EQUIPOS</h1>  
 </div>
-
-<!--<div class="contenedor-ligas"> !-->
-
+    
 <div class="row">
 <?php foreach ($EquiposLigas as $ligaId => $equiposPorLiga): ?>
     <div class="col-md-6">

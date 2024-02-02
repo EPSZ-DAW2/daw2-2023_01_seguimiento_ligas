@@ -3,6 +3,11 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+$this->params['breadcrumbs'][] = [
+    'label' => 'Temporadas',
+    'url' => ['temporadas/index'],
+];
+
 $this->title = 'Jornadas de ' . $temporada->texto_de_titulo;
 $this->params['breadcrumbs'][] = $this->title;
 

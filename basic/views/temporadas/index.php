@@ -1,5 +1,9 @@
 <?php $this->registerCssFile('@web/css/equipos.css'); ?>
 
+<div class="contenido-cabecera">  
+    <h1>TEMPORADAS</h1>  
+</div>
+
 <?php
 $ligasTemporadas = [];
 
