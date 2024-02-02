@@ -113,6 +113,11 @@ INSERT IGNORE INTO `imagenes` (`foto`) VALUES
 
 SET @escudo_hawks:= LAST_INSERT_ID();
 
+INSERT IGNORE INTO `imagenes` (`foto`) VALUES
+('bulls.png');
+
+SET @escudo_bulls:= LAST_INSERT_ID();
+
 -- ALGUNOS EQUIPOS DE LA NBA Y ACB
 
 INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
@@ -147,26 +152,24 @@ SET @granada:= LAST_INSERT_ID();
 
 -- ALGUNAS JORNADAS
 INSERT IGNORE INTO `jornadas_temporada` (`id_temporada`, `numero`, `fecha_inicio`, `fecha_final`) VALUES
-(@temporada_nba23, 1, '2023-10-24', '2023-10-29');
+(@temporada_nba23, 1, '2023-10-24', '2023-10-29'),
+(@temporada_nba23, 2, '2023-10-30', '2023-11-05'),
+(@temporada_nba23, 3, '2023-11-06', '2023-11-12'),
+(@temporada_nba23, 4, '2023-11-13', '2023-11-19'),
+(@temporada_nba23, 5, '2023-11-20', '2023-11-26');
 
 SET @j1nba := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `jornadas_temporada` (`id_temporada`, `numero`, `fecha_inicio`, `fecha_final`) VALUES
-(@temporada_nba23, 2, '2023-10-30', '2023-11-05'),
-(@temporada_nba23, 3, '2023-11-06', '2023-11-12'),
-(@temporada_nba23, 4, '2023-11-13', '2023-11-19'),
-(@temporada_nba23, 5, '2023-11-20', '2023-11-26'),
-(@temporada_acb23, 1, '2023-09-23', '2023-09-24');
-
-SET @j1acb := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `jornadas_temporada` (`id_temporada`, `numero`, `fecha_inicio`, `fecha_final`) VALUES
+(@temporada_acb23, 1, '2023-09-23', '2023-09-24'),
 (@temporada_acb23, 2, '2023-09-27', '2023-10-04'),
 (@temporada_acb23, 3, '2023-09-30', '2023-10-11'),
 (@temporada_acb23, 4, '2023-10-07', '2023-10-08'),
 (@temporada_acb23, 5, '2023-10-14', '2023-10-15'),
 (@temporada_acb23, 21, '2024-02-03', '2023-02-04'),
 (@temporada_acb23, 22, '2024-02-10', '2023-02-11');
+
+SET @j1acb := LAST_INSERT_ID();
 
 -- PARTIDOS DE EJEMPLO
 

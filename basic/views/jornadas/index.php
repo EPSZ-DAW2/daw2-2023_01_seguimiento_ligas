@@ -28,3 +28,5 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php endif; ?>
 
 </div>
+
+<?= Html::a('Nueva Jornada', ['jornadas/create', 'temporadaID' => $temporada->id], ['class' => 'botonFormulario']) ?>

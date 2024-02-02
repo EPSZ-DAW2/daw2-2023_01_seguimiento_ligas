@@ -7,13 +7,17 @@ use app\models\PartidosJornada;
 use app\models\JornadasTemporada;
 use app\models\Equipos;
 use app\models\Temporadas;
+use app\models\Ligas;
 
 class PartidosController extends \yii\web\Controller
 {
     public function actionIndex($jornadaID = null)
     {
+        $this->view->title = 'ArosInsider - Partidos';
+
         // Filtrar partidos si se proporciona el jornadaID
-        $query = PartidosJornada::find();
+        $query = PartidosJornada::find()->with('jornada.temporada');
+
         if ($jornadaID !== null) {
             $query->where(['id_jornada' => $jornadaID]);
         }
@@ -22,6 +26,7 @@ class PartidosController extends \yii\web\Controller
 
         return $this->render('index', [
             'partidos' => $partidos,
+            'jornadaID' => $jornadaID,
         ]);
     }
 
@@ -43,7 +48,7 @@ class PartidosController extends \yii\web\Controller
         }
     }
 
-    public function actionCreate($jornadaID = null)
+    public function actionCreate()
     {
         $model = new PartidosJornada();
 
@@ -68,6 +73,40 @@ class PartidosController extends \yii\web\Controller
             'model' => $model,
         ]);
     }
+
+    // Acción para crear un partido dentro de una jornada
+    public function actionCreateEnJornada($jornadaID)
+    {
+        $model = new PartidosJornada();
+        $model->id_jornada = $jornadaID;
+
+        $jornada = JornadasTemporada::find()->with('temporada.liga')->where(['id' => $jornadaID])->one();
+
+        if ($jornada && $jornada->temporada->liga) {
+            $ligas = $jornada->temporada->liga;
+            
+            $temporadaId = [$jornada->temporada->id];
+            
+            // Obtener la liga
+            $liga = [$jornada->temporada->liga->id => $jornada->temporada->liga->nombre];
+
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['partidos/index', 'jornadaID' => $jornadaID]);
+            }
+
+            return $this->render('create-en-jornada', [
+                'model' => $model,
+                'jornada' => $jornada,
+                'temporada' => $temporadaId,
+            ]);
+        
+        } else {
+            // Manejar el caso en el que no se cargaron las relaciones correctamente
+            throw new \yii\web\NotFoundHttpException('La jornada o la temporada no existe.');
+        }
+    }
+
 
     public function actionUpdate()
     {
