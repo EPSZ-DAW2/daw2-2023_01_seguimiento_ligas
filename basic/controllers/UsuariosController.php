@@ -5,7 +5,9 @@ namespace app\controllers;
 use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use app\models\Imagenes;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -73,25 +75,44 @@ class UsuariosController extends Controller
     public function actionCreate()
     {
         $model = new Usuarios();
+        $imagenModel = new Imagenes();
     
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                
-                $model->password = Yii::$app->security->generatePasswordHash($model->password);
-                if ($model->save()) {
-                   
-                   return $this->redirect(['exito']);
+            $model->load($this->request->post());
+            $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
+    
+            // Validar y guardar la imagen
+            if ($imagenModel->validate() && $imagenModel->saveImagen()) {
+                // Asignar el ID de la imagen al modelo de Usuarios después de guardarla
+                $model->id_imagen = $imagenModel->id;  // Asignar la instancia de UploadedFile al modelo Usuarios
+                if (!empty($model->password)) {
+                    $model->password = Yii::$app->security->generatePasswordHash($model->password);
                 }
+                // Guardar el modelo de Usuarios
+                if ($model->save()) {
+                    return $this->redirect(['exito']);
+                } else {
+                    print_r($model->errors);
+                    // Mostrar los errores de validación del modelo Usuarios
+                    Yii::$app->session->setFlash('error', 'Error al guardar el usuario.');
+    
+                    return $this->render('create', [
+                        'model' => $model,
+                        'imagenModel' => $imagenModel,
+                    ]);
+                }
+            } else {
+                // Mostrar los errores de validación de la imagen
+                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
-        } else {
-            $model->loadDefaultValues();
         }
-        
-        $model->password = ''; // Limpiar la contraseña por seguridad
+    
         return $this->render('create', [
             'model' => $model,
+            'imagenModel' => $imagenModel,
         ]);
     }
+    
     
 
     /**
@@ -104,20 +125,44 @@ class UsuariosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $imagenModel = new Imagenes();
     
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            // Generar el hash de la contraseña solo si se proporciona una nueva contraseña
-            if (!empty($model->password)) {
-                $model->password = Yii::$app->security->generatePasswordHash($model->password);
-            }
+        if ($this->request->isPost) {
+            $model->load($this->request->post());
+            $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
     
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            // Validar y guardar la imagen
+            if ($imagenModel->validate() && $imagenModel->saveImagen()) {
+                // Asignar el ID de la imagen al modelo de Usuarios después de guardarla
+                $model->id_imagen = $imagenModel->id;  // Asignar la instancia de UploadedFile al modelo Usuarios
+    
+                // Generar el hash de la contraseña solo si se proporciona una nueva contraseña
+                if (!empty($model->password)) {
+                    $model->password = Yii::$app->security->generatePasswordHash($model->password);
+                }
+    
+                // Guardar el modelo de Usuarios
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    print_r($model->errors);
+                    // Mostrar los errores de validación del modelo Usuarios
+                    Yii::$app->session->setFlash('error', 'Error al actualizar el usuario.');
+    
+                    return $this->render('update', [
+                        'model' => $model,
+                        'imagenModel' => $imagenModel,
+                    ]);
+                }
+            } else {
+                // Mostrar los errores de validación de la imagen
+                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
         }
     
         return $this->render('update', [
             'model' => $model,
+            'imagenModel' => $imagenModel,
         ]);
     }
     

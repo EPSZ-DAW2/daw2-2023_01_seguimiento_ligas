@@ -28,20 +28,33 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
+    'model' => $model,
+    'attributes' => [
+        'id',
+        'nombre:ntext',
+        'apellido1:ntext',
+        'apellido2:ntext',
+        'email:ntext',
+        'password:ntext',
+        'provincia:ntext',
+        'username:ntext',
+        [
+            'attribute' => 'id_imagen',
+            'format' => 'html',
+            'value' => function ($model) {
+                // Obtener el modelo de Imagenes asociado
+                $imagen = \app\models\Imagenes::findOne($model->id_imagen);
 
-            
-            'id',
-            'nombre:ntext',
-            'apellido1:ntext',
-            'apellido2:ntext',
-            'email:ntext',
-            'password:ntext',
-            'provincia:ntext',
-            'username:ntext',
+                // Comprobar si se encontró la imagen y si tiene un nombre de archivo
+                if ($imagen && $imagen->foto) {
+                    $urlImagen = Yii::getAlias('@web/images/') . $imagen->foto;
+                    return Html::img($urlImagen, ['alt' => 'Foto de usuario']);
+                }
 
+                return 'Sin foto';
+            },
         ],
-    ]) ?>
+    ],
+]) ?>
 
 </div>

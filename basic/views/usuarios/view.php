@@ -27,17 +27,33 @@ $this->title = $model->username;
     <p class="PaginaDeInicio">Tabla con los datos de usuario:</p>
     <?= DetailView::widget([
     'model' => $model,
-    'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
-    'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
     'attributes' => [
+        'id',
         'nombre:ntext',
         'apellido1:ntext',
         'apellido2:ntext',
         'email:ntext',
         'provincia:ntext',
         'username:ntext',
+        [
+            'attribute' => 'id_imagen',
+            'format' => 'html',
+            'value' => function ($model) {
+                // Obtener el modelo de Imagenes asociado
+                $imagen = \app\models\Imagenes::findOne($model->id_imagen);
+
+                // Comprobar si se encontró la imagen y si tiene un nombre de archivo
+                if ($imagen && $imagen->foto) {
+                    $urlImagen = Yii::getAlias('@web/images/') . $imagen->foto;
+                    return Html::img($urlImagen, ['alt' => 'Foto de usuario', 'style' => 'width: 60px; height: 60px;']);
+                }
+
+                return 'Sin foto';
+            },
+        ],
     ],
 ]) ?>
+
 
     <p>
         <?= Html::a(Yii::t('app', 'Actualizar contenido'), ['update', 'id' => $model->id], ['class' => 'botonFormulario']) ?>
