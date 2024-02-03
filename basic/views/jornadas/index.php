@@ -29,6 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
-<?php if (!Yii::$app->user->isGuest): ?>
+<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
     <?= Html::a('Nueva Jornada', ['jornadas/create', 'temporadaID' => $temporada->id], ['class' => 'botonFormulario']) ?>
 <?php endif ?>

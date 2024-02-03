@@ -30,6 +30,13 @@ class EquiposController extends Controller
 
     public function actionCreate()
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         $model = new Equipos();
         $imagenModel = new Imagenes();
 
@@ -70,6 +77,13 @@ class EquiposController extends Controller
 
     public function actionUpdate($id)
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         // Buscar el equipo por su ID
         $equipo = Equipos::findOne($id);
 
@@ -160,6 +174,13 @@ class EquiposController extends Controller
     // Acción para borrar un equipo
     public function actionDelete($id)
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         $equipo = Equipos::findOne($id);
 
         if ($equipo === null) {
@@ -186,6 +207,13 @@ class EquiposController extends Controller
     // Acción para copiar un equipo
     public function actionCopy($id)
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+        
         $equipoExistente = Equipos::findOne($id);
  
         if ($equipoExistente === null) {

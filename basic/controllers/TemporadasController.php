@@ -27,6 +27,13 @@ class TemporadasController extends \yii\web\Controller
 
     public function actionCreate()
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         $model = new Temporadas();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -62,6 +69,13 @@ class TemporadasController extends \yii\web\Controller
 
     public function actionUpdate($id)
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         // Buscar la temporada por su ID
         $temporada = Temporadas::findOne($id);
 
@@ -99,6 +113,13 @@ class TemporadasController extends \yii\web\Controller
     // Acción para borrar una temporada
     public function actionDelete($id)
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         $temporada = Temporadas::findOne($id);
 
         if ($temporada === null) {
@@ -137,6 +158,13 @@ class TemporadasController extends \yii\web\Controller
     // Acción para copiar una temporada y poder actualizar los equipos a una nueva sin problema
     public function actionCopy($id)
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+        
         $temporadaExistente = Temporadas::findOne($id);
 
         if ($temporadaExistente === null) {

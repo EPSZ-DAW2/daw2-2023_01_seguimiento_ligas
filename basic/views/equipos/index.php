@@ -32,7 +32,7 @@ foreach ($equipos as $equipo) {
                     <p><?= $equipo->descripcion ?><p>
                     <p><?= $equipo->temporada->texto_de_titulo ?><p>
 
-                    <?php if (!Yii::$app->user->isGuest): ?>
+                    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 5)): ?>
                         <?= Html::a('Ver Detalles', ['equipos/view', 'id' => $equipo->id], ['class' => 'btn btn-info']) ?>
                         <?= Html::a('Copiar Equipo', ['copy', 'id' => $equipo->id], ['class' => 'btn btn-success']) ?>
                     <?php endif ?>
@@ -45,6 +45,6 @@ foreach ($equipos as $equipo) {
     <?php endforeach; ?>
 </div>
 
-<?php if (!Yii::$app->user->isGuest): ?>
+<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 5)): ?>
     <?= Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'botonFormulario']) ?>
 <?php endif; ?>
