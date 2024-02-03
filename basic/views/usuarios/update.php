@@ -23,6 +23,7 @@ $this->title = Yii::t('app', 'Modificación de datos de {name}', [
 
     <?= $this->render('_formUpdate', [
         'model' => $model,
+        'imagenModel' => $imagenModel,
     ]) ?>
 
 </div>
