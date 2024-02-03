@@ -1,5 +1,6 @@
 <?php 
-use yii\helpers\Html; 
+use yii\helpers\Html;
+use app\models\Usuarios;
 ?>
 
 <?php $partidosFuturos = []; ?>
@@ -37,8 +38,10 @@ usort($partidosFuturos, function ($a, $b) {
         <p><?= $partido->jornada->temporada->texto_de_titulo ?> - Jornada <?= $partido->jornada->numero ?> </p> 
         <p><?= (new DateTime($partido->horario))->format('d/m/Y H:i:s') ?></p>
 
-        <!-- Agregar el botón de detalles -->
-        <?= \yii\helpers\Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'botonDetalles']) ?>
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <?= Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'btn btn-info']) ?>
+            <?= Html::a('Copiar Partido', ['copy', 'id' => $partido->id], ['class' => 'btn btn-success']) ?>
+        <?php endif ?>
     </div>
     <?php
     endfor;
@@ -46,9 +49,10 @@ usort($partidosFuturos, function ($a, $b) {
 
 <br><br><br><br>
 
-<?php if ($jornadaID !== null): ?>
-    <?= Html::a('Nuevo Partido en Jornada', ['partidos/create-en-jornada', 'jornadaID' => $jornadaID], ['class' => 'botonFormulario']) ?>
-<?php else: ?>
-    <?= Html::a('Nuevo Partido', ['partidos/create'], ['class' => 'botonFormulario']) ?>
+<?php if (!Yii::$app->user->isGuest): ?>
+    <?php if ($jornadaID !== null): ?>
+        <?= Html::a('Nuevo Partido en Jornada', ['partidos/create-en-jornada', 'jornadaID' => $jornadaID], ['class' => 'botonFormulario']) ?>
+    <?php else: ?>
+        <?= Html::a('Nuevo Partido', ['partidos/create'], ['class' => 'botonFormulario']) ?>
+    <?php endif; ?>
 <?php endif; ?>
-

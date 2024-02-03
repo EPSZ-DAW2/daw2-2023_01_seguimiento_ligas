@@ -31,6 +31,12 @@ foreach ($equipos as $equipo) {
                     <h2><?= $equipo->nombre ?></h2>
                     <p><?= $equipo->descripcion ?><p>
                     <p><?= $equipo->temporada->texto_de_titulo ?><p>
+
+                    <?php if (!Yii::$app->user->isGuest): ?>
+                        <?= Html::a('Ver Detalles', ['equipos/view', 'id' => $equipo->id], ['class' => 'btn btn-info']) ?>
+                        <?= Html::a('Copiar Equipo', ['copy', 'id' => $equipo->id], ['class' => 'btn btn-success']) ?>
+                    <?php endif ?>
+
                 </div>
                 <div class="liga-image2" style="background-image: url('<?= Yii::getAlias('@web/images/' . $equipo->imagen->foto) ?>');"></div>
             </div>
@@ -39,5 +45,6 @@ foreach ($equipos as $equipo) {
     <?php endforeach; ?>
 </div>
 
-
-<?= \yii\helpers\Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'botonFormulario']) ?>
+<?php if (!Yii::$app->user->isGuest): ?>
+    <?= Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'botonFormulario']) ?>
+<?php endif; ?>

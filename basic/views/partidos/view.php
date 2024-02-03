@@ -1,24 +1,28 @@
 <?php
-/** @var yii\web\View $this */
-/** @var app\models\Partido $model */ // Asegúrate de ajustar el namespace y el nombre del modelo
 
 use yii\helpers\Html;
 
-$this->title = 'Detalles del Partido';
+$this->title = 'Detalles del Partido: ' . $model->equipoLocal->nombre . ' vs ' . $model->equipoVisitante->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Partidos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-?>
 
-<div class="partido-view">
+?>
+<div class="marco">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <div class="marco">
-        <h2><?= Html::encode($model->equipoLocal->nombre) ?> - <?= Html::encode($model->equipoVisitante->nombre) ?></h2>
-        <p>Lugar: <?= Html::encode($model->lugar) ?></p>
-        <p><?= (new DateTime($model->horario))->format('d/m/Y H:i:s') ?></p>
-        <p>Resultado Local: <?= Html::encode($model->resultado_local) ?></p>
-        <p>Resultado Visitante: <?= Html::encode($model->resultado_visitante) ?></p>
-    </div>
+    <p>Lugar: <?= Html::encode($model->lugar) ?></p>
+    <p>Fecha y Hora: <?= (new DateTime($model->horario))->format('d/m/Y H:i:s') ?></p>
+    <p>Jornada: <?= Html::encode($model->jornada->numero) ?></p>
+    <p>Temporada: <?= Html::encode($model->jornada->temporada->texto_de_titulo) ?></p>
+
+    <?= Html::a('Actualizar Partido', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Eliminar Partido', ['delete', 'id' => $model->id], [
+        'class' => 'btn btn-danger',
+        'data' => [
+            'confirm' => '¿Estás seguro de que quieres eliminar este partido?',
+            'method' => 'post',
+        ],
+    ]) ?>
 
 </div>

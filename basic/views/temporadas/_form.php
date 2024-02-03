@@ -12,11 +12,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'texto_de_titulo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($temporada, 'texto_de_titulo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fecha_inicial')->textInput() ?>
+    <?= $form->field($temporada, 'fecha_inicial')->textInput() ?>
 
-    <?= $form->field($model, 'fecha_final')->textInput() ?>
+    <?= $form->field($temporada, 'fecha_final')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

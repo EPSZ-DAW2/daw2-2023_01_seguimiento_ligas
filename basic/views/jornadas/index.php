@@ -29,4 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
-<?= Html::a('Nueva Jornada', ['jornadas/create', 'temporadaID' => $temporada->id], ['class' => 'botonFormulario']) ?>
+<?php if (!Yii::$app->user->isGuest): ?>
+    <?= Html::a('Nueva Jornada', ['jornadas/create', 'temporadaID' => $temporada->id], ['class' => 'botonFormulario']) ?>
+<?php endif ?>

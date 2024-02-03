@@ -32,8 +32,15 @@ class PartidosController extends \yii\web\Controller
 
     public function actionView($id)
     {
-        $model = $this->findModel($id);
+        // Buscar el equipo por su ID
+        $model = PartidosJornada::findOne($id);
 
+        // Verificar si el equipo existe
+        if ($model === null) {
+            throw new NotFoundHttpException('El partido no fue encontrado.');
+        }
+
+        // Renderizar la vista de detalles del partido
         return $this->render('view', [
             'model' => $model,
         ]);
@@ -108,9 +115,29 @@ class PartidosController extends \yii\web\Controller
     }
 
 
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
-        return $this->render('update');
+       // Buscar el partido por su ID
+       $partido = PartidosJornada::findOne($id);
+
+       // Verificar si el partido existe
+       if ($partido === null) {
+           throw new NotFoundHttpException('El partido no fue encontrado.');
+       }
+
+       // Procesar el formulario cuando se envía
+       if (Yii::$app->request->isPost) {
+           // Cargar los datos del formulario en el modelo de partido
+           if ($partido->load(Yii::$app->request->post()) && $partido->save()) {
+               // Redirigir a la vista de detalles después de la actualización exitosa
+               return $this->redirect(['view', 'id' => $partido->id]);
+           }
+       }
+
+       // Renderizar la vista de actualización con el formulario y el modelo de partido
+       return $this->render('update', [
+           'partido' => $partido,
+       ]);
     }
 
     public function actionCargarTemporadas($id_liga)
@@ -144,4 +171,40 @@ class PartidosController extends \yii\web\Controller
             return 'No se encontraron jornadas para la temporada seleccionada.';
         }
     }  
+
+    // Acción para borrar un partido
+    public function actionDelete($id)
+    {
+        $partido = PartidosJornada::findOne($id);
+
+        if ($partido === null) {
+            throw new NotFoundHttpException('El partido no fue encontrado.');
+        }
+
+        $partido->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    // Acción para copiar un partido
+    public function actionCopy($id)
+    {
+        $partidoExistente = PartidosJornada::findOne($id);
+ 
+        if ($partidoExistente === null) {
+            throw new NotFoundHttpException('El partido no fue encontrado.');
+        }
+ 
+        // Crear una copia del partido
+        $nuevoPartido = new PartidosJornada();
+        $nuevoPartido->attributes = $partidoExistente->attributes;
+ 
+        // Asignar un nuevo identificador único al nuevo partido
+        $nuevoPartido->id = null;
+
+        $nuevoPartido->save();
+
+        // Redirigir a la página de partidos
+        return $this->redirect(['index', 'id' => $nuevoPartido->id]);
+    }
 }
