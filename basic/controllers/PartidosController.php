@@ -7,6 +7,7 @@ use app\models\PartidosJornada;
 use app\models\JornadasTemporada;
 use app\models\Equipos;
 use app\models\Temporadas;
+use app\models\Comentarios;
 
 class PartidosController extends \yii\web\Controller
 {
@@ -25,12 +26,20 @@ class PartidosController extends \yii\web\Controller
         ]);
     }
 
-    public function actionView($id)
+    public function actionView($id, $partidoID = null)
     {
         $model = $this->findModel($id);
+         // Filtrar comentarios si se proporciona el partidoID
+         $query = Comentarios::find();
+         if ($partidoID !== null) {
+             $query->where(['id_partido' => $partidoID]);
+         }
+ 
+         $comentarios = $query->all();
 
         return $this->render('view', [
             'model' => $model,
+            'comentarios' => $comentarios,
         ]);
     }
     
