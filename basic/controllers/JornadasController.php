@@ -40,6 +40,13 @@ class JornadasController extends \yii\web\Controller
 
     public function actionCreate($temporadaID)
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+        
         $model = new JornadasTemporada();
 
         $model->id_temporada = $temporadaID;

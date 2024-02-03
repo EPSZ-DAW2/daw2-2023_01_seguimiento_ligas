@@ -57,6 +57,13 @@ class PartidosController extends \yii\web\Controller
 
     public function actionCreate()
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         $model = new PartidosJornada();
 
         if (Yii::$app->request->isPost) {
@@ -117,27 +124,34 @@ class PartidosController extends \yii\web\Controller
 
     public function actionUpdate($id)
     {
-       // Buscar el partido por su ID
-       $partido = PartidosJornada::findOne($id);
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
 
-       // Verificar si el partido existe
-       if ($partido === null) {
-           throw new NotFoundHttpException('El partido no fue encontrado.');
-       }
+        // Buscar el partido por su ID
+        $partido = PartidosJornada::findOne($id);
 
-       // Procesar el formulario cuando se envía
-       if (Yii::$app->request->isPost) {
-           // Cargar los datos del formulario en el modelo de partido
-           if ($partido->load(Yii::$app->request->post()) && $partido->save()) {
-               // Redirigir a la vista de detalles después de la actualización exitosa
-               return $this->redirect(['view', 'id' => $partido->id]);
-           }
-       }
+        // Verificar si el partido existe
+        if ($partido === null) {
+            throw new NotFoundHttpException('El partido no fue encontrado.');
+        }
 
-       // Renderizar la vista de actualización con el formulario y el modelo de partido
-       return $this->render('update', [
-           'partido' => $partido,
-       ]);
+        // Procesar el formulario cuando se envía
+        if (Yii::$app->request->isPost) {
+            // Cargar los datos del formulario en el modelo de partido
+            if ($partido->load(Yii::$app->request->post()) && $partido->save()) {
+                // Redirigir a la vista de detalles después de la actualización exitosa
+                return $this->redirect(['view', 'id' => $partido->id]);
+            }
+        }
+
+        // Renderizar la vista de actualización con el formulario y el modelo de partido
+        return $this->render('update', [
+            'partido' => $partido,
+        ]);
     }
 
     public function actionCargarTemporadas($id_liga)
@@ -175,6 +189,13 @@ class PartidosController extends \yii\web\Controller
     // Acción para borrar un partido
     public function actionDelete($id)
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         $partido = PartidosJornada::findOne($id);
 
         if ($partido === null) {
@@ -189,6 +210,13 @@ class PartidosController extends \yii\web\Controller
     // Acción para copiar un partido
     public function actionCopy($id)
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+        
         $partidoExistente = PartidosJornada::findOne($id);
  
         if ($partidoExistente === null) {
