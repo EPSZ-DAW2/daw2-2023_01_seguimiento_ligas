@@ -169,7 +169,7 @@ class JugadoresController extends Controller
         $jugadores = Jugadores::find()->where(['id_equipo' => $equipoId])->all();
     
         if ($jugadores) {
-            return $this->render('ver-jugadores-equipo', [
+            return $this->render('ver-por-equipo', [
                 'jugadores' => $jugadores,
                 'equipo' => $equipo,
             ]);
