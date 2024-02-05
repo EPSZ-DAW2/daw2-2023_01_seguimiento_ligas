@@ -14,7 +14,7 @@ use app\models\Roles; // Asegúrate de importar el modelo Roles
 <?php $form = ActiveForm::begin([
     'id' => 'usuarios-form',
     'enableAjaxValidation' => false,
-    'enableClientValidation' => false,
+    'enableClientValidation' => true,
 ]); ?>
 
     <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
@@ -29,17 +29,21 @@ use app\models\Roles; // Asegúrate de importar el modelo Roles
     <br>
     <?= $form->field($model, 'provincia', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
-    <?= $form->field($model, 'id_rol', ['options' => ['class' => 'campoTitulo']])->dropDownList(
+    <?= $form->field($model, 'id_rol', ['options' => ['class' => 'campoTitulo']])
+    ->dropDownList(
         Roles::find()->select(['nombre', 'id'])->indexBy('id')->column(),
-        ['prompt' => 'Seleccionar Rol']
-    )->label('Rol') ?>
+        ['prompt' => 'Seleccionar Rol', 'class' => 'campo']
+    )
+    ->label('Rol') ?>
+
     <br>
     <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
     <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo']) ?>
     <br>
     <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'botonFormulario']) ?>
-    <?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+    <?= Html::a(Yii::t('app', 'Volver'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+
 
 
 

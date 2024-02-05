@@ -15,7 +15,7 @@ $this->title = $model->username;
 
 <div class="contenido-cabecera">
 
-    <h1>DATOS DE USUSARIO: <?= Html::encode($this->title) ?></h1>
+    <h1>DATOS DE USUSARIO <?= Html::encode($this->title) ?></h1>
 
 </div>
 
@@ -24,7 +24,7 @@ $this->title = $model->username;
 
     <div class="marco">
 
-    <p class="PaginaDeInicio">Tabla con los datos de usuario:</p>
+    <p class="PaginaDeInicio">Datos:</p>
     <?= DetailView::widget([
     'model' => $model,
     'attributes' => [
@@ -64,7 +64,8 @@ $this->title = $model->username;
                 'method' => 'post',
             ],
         ]) ?>
-       <?= Html::a(Yii::t('app', 'Ir a Inicio'), Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Volver'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+
 
 
 
