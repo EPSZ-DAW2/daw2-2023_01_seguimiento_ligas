@@ -11,12 +11,10 @@ class EstadisticasJugadorController extends Controller
 {
     public function actionIndex()
     {
-        // Obtén todas las estadísticas de jugadores desde la base de datos
-        $estadisticasJugadores = EstadisticasJugador::find()
-            ->with(['equipo', 'jugador', 'temporada'])
-            ->all();
-
-        // Renderiza la vista y pasa las estadísticas de jugadores como parámetro
+        // Configura el proveedor de datos con paginación
+        $estadisticasJugadores = EstadisticasJugador::find()->with(['equipo', 'jugador', 'temporada'])->all();
+    
+        // Renderiza la vista y pasa el proveedor de datos como parámetro
         return $this->render('index', [
             'estadisticasJugadores' => $estadisticasJugadores,
         ]);
