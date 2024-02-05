@@ -17,7 +17,7 @@ use yii\helpers\Html;
             <p><?= $equipo->descripcion ?></p>
             <p><?= $equipo->temporada->texto_de_titulo ?></p>
         </div>
-        <div class="liga-image2" style="background-image: url('<?= Yii::getAlias('@web/images/' . $equipo->imagen->foto) ?>');"></div>
+        <div class="liga-image" style="background-image: url('<?= Yii::getAlias('@web/images/' . $equipo->imagen->foto) ?>');"></div>
     </div>
 <?php endforeach; ?>
 
