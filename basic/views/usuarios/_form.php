@@ -33,6 +33,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre de usuario', 'class' => 'campo']) ?>
     <br>
+    <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo']) ?>
 
     <p>¿Ya tienes una cuenta? Inicia sesión <a href="<?= Yii::$app->urlManager->createUrl(['/usuarios/login']) ?>">aquí</a></p>
     <br>

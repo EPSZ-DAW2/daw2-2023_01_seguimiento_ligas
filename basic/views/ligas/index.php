@@ -12,7 +12,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
    foreach ($ligas as $liga): ?>
     <div class="contenido-cabecera">
 
-    <h1>LIGAS:</h1>
+    <h1>LIGAS</h1>
 
     </div>
 
@@ -42,7 +42,7 @@ $this->title = Yii::t('app', 'Ligas');
 
 <div class="contenido-cabecera">
 
-    <h1>LIGAS:</h1>
+    <h1>LIGAS</h1>
 
 </div>
 

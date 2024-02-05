@@ -20,6 +20,7 @@ $this->title = Yii::t('app', 'Registro nuevo cliente');
 
     <?= $this->render('_form', [
         'model' => $model,
+        'imagenModel' => $imagenModel,
     ]) ?>
 
 </div>

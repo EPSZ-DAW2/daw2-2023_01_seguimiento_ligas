@@ -1,6 +1,8 @@
 <?php
 
 namespace app\controllers;
+
+use Yii;
 use yii\data\ActiveDataProvider;
 use app\models\JornadasTemporada;
 use app\models\Temporadas;
@@ -36,9 +38,40 @@ class JornadasController extends \yii\web\Controller
     }
 
 
-    public function actionCreate()
+    public function actionCreate($temporadaID)
     {
-        return $this->render('create');
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+        
+        $model = new JornadasTemporada();
+
+        $model->id_temporada = $temporadaID;
+
+        if (Yii::$app->request->isPost) {
+
+            $model->load(Yii::$app->request->post());
+  
+            if ($model->save()) {
+                return $this->redirect(['jornadas/index', 'id' => $temporadaID]);
+            } else {
+                print_r($model->errors);
+                // Muestra los errores de validación del modelo Equipos
+                Yii::$app->session->setFlash('error', 'Error al guardar la jornada.');
+
+                return $this->render('create', [
+                    'model' => $model,
+                    'temporadaID' => $temporadaID,
+                ]);
+            }
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     public function actionUpdate()

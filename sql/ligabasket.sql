@@ -266,7 +266,8 @@ CREATE TABLE `usuarios` (
   `password` varchar(255) NOT NULL,
   `provincia` varchar(50) NOT NULL,
   `id_rol` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `username` varchar(50) NOT NULL
+  `username` varchar(50) NOT NULL,
+  `id_imagen` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Foto del usuario (la de perfil)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -396,7 +397,8 @@ ALTER TABLE `temporadas`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_id_idRoles` (`id_rol`);
+  ADD KEY `fk_id_idRoles` (`id_rol`),
+  ADD KEY `fk_id_idImagenU` (`id_imagen`);
 
 
 --
@@ -592,7 +594,8 @@ ALTER TABLE `temporadas`
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD CONSTRAINT `fk_id_idRoles` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`);
+  ADD CONSTRAINT `fk_id_idRoles` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`),
+  ADD CONSTRAINT `fk_id_idImagenU` FOREIGN KEY (`id_imagen`) REFERENCES `imagenes` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

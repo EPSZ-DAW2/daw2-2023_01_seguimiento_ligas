@@ -36,6 +36,8 @@ use app\models\Roles; // Asegúrate de importar el modelo Roles
     <br>
     <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
+    <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo']) ?>
+    <br>
     <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'botonFormulario']) ?>
     <?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
 

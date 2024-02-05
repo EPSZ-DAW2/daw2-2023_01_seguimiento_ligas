@@ -3,6 +3,11 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+$this->params['breadcrumbs'][] = [
+    'label' => 'Temporadas',
+    'url' => ['temporadas/index'],
+];
+
 $this->title = 'Jornadas de ' . $temporada->texto_de_titulo;
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -23,3 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php endif; ?>
 
 </div>
+
+<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
+    <?= Html::a('Nueva Jornada', ['jornadas/create', 'temporadaID' => $temporada->id], ['class' => 'botonFormulario']) ?>
+<?php endif ?>
