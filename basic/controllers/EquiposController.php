@@ -7,12 +7,14 @@ use app\models\Equipos;
 use app\models\Temporadas;
 use app\models\Ligas;
 use app\models\Imagenes;
+use app\models\PartidosJornada;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 
 
 class EquiposController extends Controller
 {
+
     public function actionIndex()
     {
         $this->view->title = 'ArosInsider - Equipos';
@@ -28,6 +30,13 @@ class EquiposController extends Controller
 
     public function actionCreate()
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         $model = new Equipos();
         $imagenModel = new Imagenes();
 
@@ -66,23 +75,69 @@ class EquiposController extends Controller
     }
 
 
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
-        return $this->render('update');
-    }
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
 
-    public function actionView()
-    {
-        return $this->render('view');
-    }
+        // Buscar el equipo por su ID
+        $equipo = Equipos::findOne($id);
 
-    public function actionEquiposPorLiga($id_liga)
-    {
-        $equipos = Equipos::find()->where(['id_liga' => $id_liga])->all();
+        // Verificar si el equipo existe
+        if ($equipo === null) {
+            throw new NotFoundHttpException('El equipo no fue encontrado.');
+        }
 
-        return $this->renderAjax('_dropdown_equipos', [
-            'equipos' => $equipos,
+        // Procesar el formulario cuando se envía
+        if (Yii::$app->request->isPost) {
+            // Cargar los datos del formulario en el modelo de equipo
+            if ($equipo->load(Yii::$app->request->post()) && $equipo->save()) {
+                // Redirigir a la vista de detalles después de la actualización exitosa
+                return $this->redirect(['view', 'id' => $equipo->id]);
+            }
+        }
+
+        // Renderizar la vista de actualización con el formulario y el modelo de equipo
+        return $this->render('update', [
+            'equipo' => $equipo,
         ]);
+    }
+
+    public function actionView($id)
+    {
+        // Buscar el equipo por su ID
+        $equipo = Equipos::findOne($id);
+
+        // Verificar si el equipo existe
+        if ($equipo === null) {
+            throw new NotFoundHttpException('El equipo no fue encontrado.');
+        }
+
+        // Renderizar la vista de detalles del equipo
+        return $this->render('view', [
+            'equipo' => $equipo,
+        ]);
+    }
+
+    public function actionVerPorLiga($ligaId)
+    {
+        $this->view->title = 'ArosInsider - Equipos';
+        
+        $liga = Ligas::findOne($ligaId);
+        $equipos = Equipos::find()->where(['id_liga' => $ligaId])->all();
+
+        if ($equipos) {
+            return $this->render('ver-por-liga', [
+                'equipos' => $equipos,
+                'liga' => $liga,
+            ]);
+        } else {
+            return 'No se encontraron equipos para la temporada seleccionada.';
+        }
     }
 
     // Acción para cargar las temporadas futuras a la fecha en el formulario de crear equipo
@@ -90,7 +145,7 @@ class EquiposController extends Controller
     {
         $temporadas = Temporadas::find()
             ->where(['id_liga' => $id_liga])
-            ->andWhere(['>=', 'fecha_inicial', date('Y-m-d')]) // Filtrar por temporadas actuales y futuras
+            ->andWhere(['>', 'fecha_inicial', date('Y-m-d')]) // Filtrar por temporadas futuras
             ->all();
 
         if ($temporadas) {
@@ -102,23 +157,79 @@ class EquiposController extends Controller
         }
     }
 
-    // Acción para ver solo los equipos de la liga seleccionada
-    public function actionVerPorLiga($ligaId)
+    // Acción para cargar los equipos por la temporada seleccionada
+    public function actionEquiposPorTemporada($id_temporada)
     {
-        $liga = Ligas::findOne($ligaId);
+        $equipos = Equipos::find()->where(['id_temporada' => $id_temporada])->all();
         
-        if ($liga) {
-            $equipos = Equipos::find()->where(['id_liga' => $ligaId])->all();
-    
-            return $this->render('ver-por-liga', [
-                'liga' => $liga,
+        if ($equipos) {
+            return $this->renderAjax('_dropdown_equipos', [
                 'equipos' => $equipos,
             ]);
         } else {
-            // Manejo para el caso en que no se encuentra la liga
-            throw new \yii\web\NotFoundHttpException("La liga con ID $ligaId no fue encontrada.");
+            return 'No se encontraron equipos para la temporada seleccionada.';
         }
     }
 
+    // Acción para borrar un equipo
+    public function actionDelete($id)
+    {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
 
+        $equipo = Equipos::findOne($id);
+
+        if ($equipo === null) {
+            throw new NotFoundHttpException('El equipo no fue encontrado.');
+        }
+
+        // Obtener los partidos asociados al equipo (local o visitante)
+        $partidosLocal = PartidosJornada::find()->where(['id_equipo_local' => $equipo->id])->all();
+        $partidosVisitante = PartidosJornada::find()->where(['id_equipo_visitante' => $equipo->id])->all();
+
+        $partidos = array_merge($partidosLocal, $partidosVisitante);
+
+
+        // Eliminar los partidos asociados
+        foreach ($partidos as $partido) {
+            $partido->delete();
+        }
+        
+        $equipo->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    // Acción para copiar un equipo
+    public function actionCopy($id)
+    {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+        
+        $equipoExistente = Equipos::findOne($id);
+ 
+        if ($equipoExistente === null) {
+            throw new NotFoundHttpException('El equipo no fue encontrado.');
+        }
+ 
+        // Crear una copia del equipo
+        $nuevoEquipo = new Equipos();
+        $nuevoEquipo->attributes = $equipoExistente->attributes;
+ 
+        // Asignar un nuevo identificador único al nuevo equipo
+        $nuevoEquipo->id = null;
+
+        $nuevoEquipo->save();
+
+        // Redirigir a la página de equipos
+        return $this->redirect(['index', 'id' => $nuevoEquipo->id]);
+    }
 }

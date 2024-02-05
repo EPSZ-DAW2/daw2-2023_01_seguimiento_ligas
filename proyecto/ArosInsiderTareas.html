@@ -1,0 +1,458 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Proyecto en Grupo - Analisis Inicial de Funciones y Tareas</title>
+</head>
+<body class="papel" style="background-color:#ddedeb;">
+<style>
+
+table.tabla tbody td { text-align:center;}
+table.tabla tbody td:first-child { text-align:justify}
+</style>
+<div class="bloque" style="font-family:arial;font-size:1.25em;text-align:justify;border:1.5mm solid #1dbfc4;margin:0.25em;padding:1em;">
+
+<div class="titulo titulo0" style="margin:5mm;font-size:4.0em;font-weight:bold;color:#7ba7a8">ArosInsider</div>
+<div class="titulo titulo1" style="margin:5mm;font-size:2.0em;font-weight:bold">Proyecto en Grupo</div>
+<div class="titulo titulo2" style="margin:5mm;font-size:1.5em;font-weight:bold">Analisis Inicial de Funciones y Tareas</div>
+
+<br>
+&nbsp;&nbsp;&nbsp;De los requisitos iniciales planteados, se extraen una
+serie de funciones básicas a implementar, además de una serie de tareas
+adicionales a desarrollar dentro del sistema.
+<br>
+<br>
+
+<hr>
+
+<div class="titulo titulo3" style="margin:0.5em 0;padding:0.5em;font-size:1.0em;font-weight:bold;background-color:#6ff5f7">Roles / Perfiles:</div>
+<div style="text-align:justify;margin:0em">
+<ul>
+<li>
+<strong>Usuarios Administradores del sitio/aplicación (administrador): </strong>Actúan como gestores del sitio y la aplicación en general.
+</li>
+<li>
+<strong>Usuarios Moderadores de opiniones/comentarios del sitio (moderador): </strong>
+Actúan como revisores y controladores según las áreas/ciudades/provincias de las ligas deportivas.
+
+</li>
+<li>
+<strong>Usuarios Gestores de ligas deportivas en el sitio (gestor ligas): </strong>Actúan en nombre de una o varias ligas como sus gestores.
+
+</li>
+<li>
+<strong>Usuarios Patrocinadores/Anunciantes en las ligas y/o del sitio (patrocinador): </strong>Actúan como representantes de empresas anunciantes y patrocinadoras.
+</li>
+<li>
+  <strong>Usuarios Gestores de Equipos: </strong>Actúan como gestores/representantes de un equipo o club deportivo.
+  </li>
+<li>
+<strong>Usuarios Clientes del sitio (cliente): </strong>Actúan como clientes o usuarios normales del sitio.
+</li>
+<li>
+  <strong>Usuarios invitados (invitado): </strong>Pueden navegar por las partes públicas sin necesidad de iniciar sesión
+</li>
+</ul>
+</div>
+
+<hr>
+
+<div class="titulo titulo3" style="margin:0.5em 0;padding:0.5em;font-size:1.0em;font-weight:bold;background-color:#60B0D0">Responsabilidades Generales:</div>
+<div style="text-align:justify;margin:0em">
+
+Responsable del Proyecto: Marcos Castro Aragón<br>
+Responsable de la Base de Datos: David Pérez Esteban<br>
+Responsable del Diseño: Jorge Abella Cabezas<br>
+
+<div class="titulo titulo3" style="margin:0.5em 0;padding:0.5em;font-size:1.0em;font-weight:bold;background-color:#60B0D0">Funcionalidades de Gestión Interna:</div>
+<div style="text-align:justify;margin:0em">
+
+<table class="tabla" border="1" style="background-color:#C0E0F0;border:4px ridge #70D0F0;border-collapse:collapse;font-size:1.0em;">
+<thead style="background-color:#60B0D0">
+<tr>
+<th style="width:73em;padding-left:2.5em;">Páginas y Partes Privadas</th>
+<th style="width:3em;">G1</th>
+<th style="width:3em;">G2</th>
+<th style="width:3em;">G3</th>
+<th style="width:3em;">G4</th>
+<th style="width:3em;">G5</th>
+<th style="width:3em;">G6</th>
+<th style="width:3em;">G7</th>
+</tr>
+</thead>
+<tbody>
+
+<tr><td style="padding-left:2em;">Plantilla principal de gestión</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Panel de administrador</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Panel de moderador</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de Usuarios.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista de roles</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Asignación de Roles a los usuarios (sistema RBAC)</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Gestión de registro de nuevos usuarios</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Gestión de moderadores y administradores</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de usuarios bloqueados</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de ligas.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado de ligas</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Información de ligas</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de la liga</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de Videos</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento Equipos.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado equipos</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:4em;">Mantenimiento de contenido (imágenes/videos)</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+
+
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento Jugadores.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado jugadores</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:4em;">Mantenimiento de contenido (imágenes/videos)</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento jornadas.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado jornadas</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Mantenimiento de contenido (imágenes/videos)</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento temporadas.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado temporadas</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:4em;">Mantenimiento de contenido (imágenes/videos)</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento partidos.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado partidos</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:4em;">Mantenimiento de contenido (imágenes/videos)</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento comentarios partidos.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado comentarios partidos</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:4em;">Mantenimiento de contenido (imágenes/videos)</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento noticias.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado noticias</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:4em;">Mantenimiento de contenido (imágenes/videos)</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento patrocinadores.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista y filtrado patrocinadores</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:4em;">Mantenimiento de contenido (imágenes/videos)</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de registros/log.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista de tipos de log</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Limpieza de registros antiguos</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de configuraciones.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Paginas: Mantenimiento de copias de seguridad.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Lista de copias realizadas</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Realización de copias</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+
+</tbody>
+</table>
+</div>
+
+<div class="titulo titulo3" style="margin:0.5em 0;padding:0.5em;font-size:1.0em;font-weight:bold;background-color:#60C060">Funcionalidades del Portal Web:</div>
+<div style="text-align:justify;margin:0em">
+
+<table class="tabla" border="1" style="background-color:#C0F0B0;border:4px ridge #70F070;border-collapse:collapse;font-size:1.0em;">
+<thead style="background-color:#60C060">
+<tr>
+<th style="width:73em;padding-left:2.5em;">Páginas y Partes Públicas</th>
+<th style="width:3em;">W1</th>
+<th style="width:3em;">W2</th>
+<th style="width:3em;">W3</th>
+<th style="width:3em;">W4</th>
+<th style="width:3em;">W5</th>
+<th style="width:3em;">W6</th>
+<th style="width:3em;">W7</th>
+</tr>
+</thead>
+<tbody>
+
+<tr><td style="padding-left:2em;">Plantilla Principal:</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Composición de la plantilla pública del portal contemplando las piezas que se mostrarán en la misma.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: botón para registro e inicio de sesión.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: barra de navegación con botones que redirigen a las demás paginas principales.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Pie de página.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Ligas (público)</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Pieza/vista: Presentación del Ligas: muestra las ligas que hay en la página.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: "Botones" para consultar los datos de cada liga.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Pieza/vista: Página para consultar los datos de una liga.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Parte en la que se muestra una lista con los equipos que participan en la liga.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Ligas (privado)</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Pieza/vista: Presentación del Ligas: muestra las ligas que hay en la página.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: botón para redireccionar a la vista de creación. {ficha reserva}</td>
+  <td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+  </tr>
+<tr><td style="padding-left:4em;">Pieza/vista: formulario para la creación de ligas, edición y eliminación de ligas.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Jugadores</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Formulario para registrar un jugador.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Vista de jugadores gestionados. {Ficha jugador}</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Editar perfil jugador</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar información del jugador.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar fotos del jugador</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+
+
+<tr><td style="padding-left:2em;">Página: Registro Usuarios</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Clientes.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Moderador .</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Gestor ligas/equipos.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Patrocinador/Anunciante.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Inicio de Sesión</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Control de intentos fallidos.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: comentarios</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:4em;">Parte: Realización de comentario.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+
+<tr><td style="padding-left:2em;">Página: Perfil de usuario</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Vista de información.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar datos.</td>
+<td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Equipos</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Vista de información.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar datos.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Copia.</td>
+  <td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Jornadas</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Vista de información.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar datos.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Copia.</td>
+  <td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Temporadas</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Vista de información.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar datos.</td>
+<td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Copia.</td>
+  <td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Partidos</td>
+  <td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+  </tr>
+  <tr><td style="padding-left:4em;">Parte: Vista de información.</td>
+  <td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+  </tr>
+  <tr><td style="padding-left:4em;">Parte: Editar datos.</td>
+  <td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Copia.</td>
+  <td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+<tr><td style="padding-left:2em;">Página: Noticias</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Vista de información.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+<tr><td style="padding-left:4em;">Parte: Editar datos.</td>
+<td>&nbsp;</td><td>&nbsp;</td><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+</tr>
+
+
+
+</tbody>
+</table>
+</div>
+
+<hr>
+
+<div style="text-align:justify;margin:0em;background-color:#F0F080">
+<hr>
+
+<div style="padding:0 0.5em;">
+<span style="padding-left:2em;">*** Los grupos que se formen deberán  
+diseñar, implementar y documentar al menos dos de los bloques trabajo, 
+uno de tareas privadas o "Funcionalidades de Gestión Interna" de código 
+"Gx" y otro de tareas públicas o "Funcionalidades del Portal Web" de 
+código "Wx", de entre las indicadas anteriormente.</span>
+<br>
+<span style="padding-left:2em;">*** Una combinación de bloques de trabajo más o menos apropiada para esta aplicación es:</span>
+<br>
+<span style="padding-left:4em;">(G1,W1), (G2,W2), (G3, W3)</span>
+<br>
+</div>
+
+<hr>
+</div>
+
+</div></body></html>

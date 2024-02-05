@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
 
-$this->title = Yii::t('app', 'Modificación de datos de {name}', [
+$this->title = Yii::t('app', 'MODIFICACIÓN DE DATOS DE {name}', [
     'name' => $model->nombre,
 ]);
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Usuarios'), 'url' => ['index']];
@@ -23,6 +23,7 @@ $this->title = Yii::t('app', 'Modificación de datos de {name}', [
 
     <?= $this->render('_formUpdate', [
         'model' => $model,
+        'imagenModel' => $imagenModel,
     ]) ?>
 
 </div>

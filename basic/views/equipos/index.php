@@ -1,14 +1,50 @@
 <?php $this->registerCssFile('@web/css/equipos.css'); ?>
 
-<?php foreach ($equipos as $equipo): ?>
-    <div class="liga-container">
-        <div class="liga-content">
-        <h2><?= $equipo->nombre ?></h2>
-        <p><?= $equipo->descripcion ?><p>
-        <p><?= $equipo->temporada->texto_de_titulo ?><p>
-        </div>
-        <div class="liga-image" style="background-image: url('<?= Yii::getAlias('@web/images/' . $equipo->imagen->foto) ?>');"></div>
-    </div>
-<?php endforeach; ?>
+<?php
+use yii\helpers\Html;
+?> 
 
-<?= \yii\helpers\Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'botonInicioSesion']) ?>
+<?php
+$EquiposLigas = [];
+
+// Organizar equipos por ligas
+foreach ($equipos as $equipo) {
+    $ligaId = $equipo->liga->id;
+    $EquiposLigas[$ligaId][] = $equipo;
+}
+?>
+
+<div class="contenido-cabecera">  
+    <h1>EQUIPOS</h1>  
+</div>
+    
+<div class="row">
+<?php foreach ($EquiposLigas as $ligaId => $equiposPorLiga): ?>
+    <div class="col-md-6">
+        <div class="marco2">
+            <h2><?= $equiposPorLiga[0]->liga->nombre ?></h2>
+        </div>
+        <br>
+        <?php foreach ($equiposPorLiga as $equipo): ?>
+            <div class="marco2">
+                <div class="liga-content">
+                    <h2><?= $equipo->nombre ?></h2>
+                    <p><?= $equipo->descripcion ?><p>
+                    <p><?= $equipo->temporada->texto_de_titulo ?><p>
+
+                    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 5)): ?>
+                        <?= Html::a('Ver Detalles', ['equipos/view', 'id' => $equipo->id], ['class' => 'btn btn-info']) ?>
+                        <?= Html::a('Copiar Equipo', ['copy', 'id' => $equipo->id], ['class' => 'btn btn-success']) ?>
+                    <?php endif ?>
+
+                </div>
+                <div class="liga-image2" style="background-image: url('<?= Yii::getAlias('@web/images/' . $equipo->imagen->foto) ?>');"></div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php endforeach; ?>
+</div>
+
+<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 5)): ?>
+    <?= Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'botonFormulario']) ?>
+<?php endif; ?>

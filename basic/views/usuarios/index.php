@@ -16,7 +16,7 @@ $this->title = Yii::t('app', 'Usuarios');
 
 <div class="contenido-cabecera">
 
-    <h1>USUARIOS DEL SISTEMA:</h1>
+    <h1>USUARIOS DEL SISTEMA</h1>
 
 </div>
 
@@ -45,6 +45,22 @@ $this->title = Yii::t('app', 'Usuarios');
             'provincia:ntext',
             'username:ntext',
             'id_rol:ntext',
+            [
+                'attribute' => 'id_imagen',
+                'format' => 'html',
+                'value' => function ($model) {
+                    // Obtener el modelo de Imagenes asociado
+                    $imagen = \app\models\Imagenes::findOne($model->id_imagen);
+    
+                    // Comprobar si se encontró la imagen y si tiene un nombre de archivo
+                    if ($imagen && $imagen->foto) {
+                        $urlImagen = Yii::getAlias('@web/images/') . $imagen->foto;
+                        return Html::img($urlImagen, ['alt' => 'Foto de usuario', 'style' => 'width: 60px; height: 60px;']);
+                    }
+    
+                    return 'Sin foto';
+                },
+            ],
             
             [
                 'class' => ActionColumn::className(),

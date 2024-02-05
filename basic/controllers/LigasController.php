@@ -47,15 +47,15 @@ class LigasController extends Controller
 
             // Validar y guardar la imagen
             if ($imagenModel->validate() && $imagenModel->saveImagen()) {
-                // Asigna el ID de la imagen al modelo de Equipos después de guardarla
+                // Asigna el ID de la imagen al modelo de ligas después de guardarla
                 $model->id_imagen = $imagenModel->id;
 
-                // Guarda el modelo de Equipos
+                // Guarda el modelo de ligas
                 if ($model->save()) {
                     return $this->redirect(['ligas/index']);
                 } else {
                     print_r($model->errors);
-                    // Muestra los errores de validación del modelo Equipos
+                    // Muestra los errores de validación del modelo ligas
                     Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
                     
                     return $this->render('create', [

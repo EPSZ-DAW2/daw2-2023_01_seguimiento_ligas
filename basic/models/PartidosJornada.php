@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\validators\DateTimeValidator;
 
 /**
  * This is the model class for table "partidos_jornada".
@@ -49,6 +50,7 @@ class PartidosJornada extends \yii\db\ActiveRecord
             [['id_equipo_local'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo_local' => 'id']],
             [['id_equipo_visitante'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo_visitante' => 'id']],
             [['id_jornada'], 'exist', 'skipOnError' => true, 'targetClass' => JornadasTemporada::class, 'targetAttribute' => ['id_jornada' => 'id']],
+            //['horario', 'datetime', 'format' => 'php:Y-m-d\TH:i', 'min' => date('Y-m-d\TH:i'), 'tooSmall' => 'Selecciona una fecha y hora futura.'],
         ];
     }
 

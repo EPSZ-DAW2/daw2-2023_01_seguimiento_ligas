@@ -118,6 +118,7 @@ a.desc:after {
     border-radius: 10%;
     display: inline-block;
     margin-top: 10%;
+    overflow: hidden; /* Evita que el contenido desborde el div */
 }
 
 h1.PaginaDeInicio {
@@ -141,8 +142,6 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed ;
 }
-
-
 
 p.PaginaDeInicio {
   font-weight: bold;
@@ -264,7 +263,6 @@ a.boton:hover {
     background-color: #f2f2f2;
 }
 
-
 /* Nueva clase para botones pequeños */
 .botonPequeño {
     display: inline-block;
@@ -306,32 +304,114 @@ a.boton:hover {
     flex: 1; /* Hace que este div ocupe el espacio restante */
 }
 
-.liga-image {
-    width: 100px; /* Ajusta el ancho según tus necesidades */
-    height: 100px; /* Ajusta la altura según tus necesidades */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center; /* Centra la imagen horizontal y verticalmente */
-    margin-left: 10px; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
-    margin-right: 10px; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
-}
-
-.liga-image2 {
-    width: 100px; /* Ajusta el ancho según tus necesidades */
-    height: 100px; /* Ajusta la altura según tus necesidades */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center; /* Centra la imagen horizontal y verticalmente */
-    margin: 0 35%; /* Ajusta el margen entre el texto y la imagen según tus necesidades */
-}
-
-
 .marco2 {
     background-color: #cfe2f3;
     padding: 2%;
     border: 2px solid #ccc;
     border-radius: 10%;
     display: inline-block;
-    margin-right: 5px; /* Ajusta el margen según tus preferencias */
+    margin-right: 5px;
     margin-top: 10%;
+    text-align: center; /* Centra el contenido del contenedor */
+}
+
+.marco2 a {
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    color: #000;
+    font-weight: bold;
+}
+
+.marco2 a:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+
+.liga-image {
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 auto; /* Ajusta el margen para centrar horizontalmente */
+    border: 2px solid #000; /* Borde negro para resaltar */
+}
+
+
+
+.contenedor-imagenes {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2%;
+}
+
+.imagenPrincipal {
+    width: 20%;
+    height: auto;
+    object-fit: cover;
+    margin-right: 5%;
+    margin-left: 7%;
+    margin-bottom: 1%;
+    border: 2px solid #000;
+}
+
+.enlaces {
+    display: flex;
+
+}
+
+/* Estilos para los enlaces */
+.enlaces a {
+    display: inline-block;
+    margin-right: 26.6%;
+    margin-bottom: 3%;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold; /* Puedes ajustar según tus preferencias */
+}
+
+/* Estilos adicionales solo para el primer enlace */
+.enlaces a:first-child {
+    margin-left: 15%; /* Ajusta el margen solo para el primer enlace */
+}
+
+/* Estilos adicionales solo para el último enlace */
+.enlaces a:last-child {
+    margin-left: -1.4%; /* Ajusta el margen solo para el primer enlace */
+}
+
+/* Cambia el color del texto al pasar el mouse sobre los enlaces */
+.enlaces a:hover {
+    color: #ff0000; /* Rojo al pasar el ratón */
+}
+
+
+.enlaces1 {
+    display: flex;
+
+}
+/* Estilos para los enlaces */
+.enlaces1 a {
+    display: inline-block;
+    margin-right: 24%;
+    margin-bottom: 3%;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold; /* Puedes ajustar según tus preferencias */
+}
+
+/* Estilos adicionales solo para el primer enlace */
+.enlaces1 a:first-child {
+    margin-left: 13%; /* Ajusta el margen solo para el primer enlace */
+}
+
+/* Estilos adicionales solo para el último enlace */
+.enlaces1 a:last-child {
+    margin-left: 0.5%; /* Ajusta el margen solo para el primer enlace */
+}
+
+/* Cambia el color del texto al pasar el mouse sobre los enlaces */
+.enlaces1 a:hover {
+    color: #ff0000; /* Rojo al pasar el ratón */
+
 }

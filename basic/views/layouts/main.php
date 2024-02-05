@@ -52,17 +52,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             //['label' => 'Usuarios', 'url' => ['/usuarios/index']],
         ]
     ]);
-    // Agrega el elemento condicional solo si el usuario no es un invitado
-if (!Yii::$app->user->isGuest) {
-
-
-echo Nav::widget([
-    'options' => ['class' => 'navbar-nav'],
-    'items' => [
-    ['label' => 'Datos usuario', 'url' => ['/usuarios/view', 'id' => Yii::$app->user->id]],
-    ]
-]);
-}
 //  si el rol del usuario es 1 (administrador)
 if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
    
@@ -75,7 +64,7 @@ if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
                     ['label' => 'Roles', 'url' => ['/roles/index']],
                     ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
                     ['label' => 'Imagenes', 'url' => ['/imagenes/index']],
-                    ['label' => 'Ligas', 'url' => ['/ligasAdmin/index']],
+                    ['label' => 'Ligas', 'url' => ['/ligas/index']],
                     // Agrega más elementos desplegables aquí si es necesario
                 ],
             ],
@@ -85,24 +74,32 @@ if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
  
 }
 
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav', 'style' => 'margin-left: auto;'],
-        'items' => [
-            ['label' => 'Registro', 'url' => ['/usuarios/create'], 'visible' => Yii::$app->user->isGuest],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Iniciar sesión', 'url' => ['/usuarios/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
-    ]);
-    NavBar::end();
-    ?>
+echo Nav::widget([
+    'options' => ['class' => 'navbar-nav', 'style' => 'margin-left: auto;'],
+    'items' => [
+        ['label' => 'Registro', 'url' => ['/usuarios/create'], 'visible' => Yii::$app->user->isGuest],
+        Yii::$app->user->isGuest
+            ? ['label' => 'Iniciar sesión', 'url' => ['/usuarios/login']]
+            : [
+                'label' => '' . Yii::$app->user->identity->username . '',
+                'items' => [
+                    ['label' => 'Datos usuario', 'url' => ['/usuarios/view', 'id' => Yii::$app->user->id]],
+                    ['label' => 'Cerrar sesión', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post'],
+                    
+                ],
+            ],
+        ],
+    ],    
+]);
+
+//solo se muestra la foto del usuario si esta logueado
+if (!Yii::$app->user->isGuest) {
+    echo Html::img('@web/images/' . Yii::$app->user->identity->imagen->foto, ['alt' => 'Foto de usuario', 'style' => 'width: 30px; height: 30px; margin-left: 0%;']);
+}
+NavBar::end();
+?>
+
+
 
 
 </header>

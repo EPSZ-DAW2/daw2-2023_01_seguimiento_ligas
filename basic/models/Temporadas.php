@@ -63,7 +63,7 @@ class Temporadas extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Ligas::class, ['id' => 'id_liga']);
     }
-    
+
     /**
      * Gets query for [[EstadisticasEquipos]].
      *

@@ -5,7 +5,9 @@ namespace app\controllers;
 use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use app\models\Imagenes;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -73,25 +75,52 @@ class UsuariosController extends Controller
     public function actionCreate()
     {
         $model = new Usuarios();
+        $imagenModel = new Imagenes();
     
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                
-                $model->password = Yii::$app->security->generatePasswordHash($model->password);
-                if ($model->save()) {
-                   
-                   return $this->redirect(['exito']);
+            $model->load($this->request->post());
+            $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
+    
+            // Validar y guardar la imagen solo si se proporciona un archivo
+            if (empty($imagenModel->imagenFile)) {
+                $imagenModel->addError('imagenFile', 'La imagen es un campo obligatorio.');
+            } elseif ($imagenModel->validate() && $imagenModel->saveImagen()) {
+                // Asignar el ID de la imagen al modelo de Usuarios después de guardarla
+                $model->id_imagen = $imagenModel->id;
+    
+                if (!empty($model->password)) {
+                    $model->password = Yii::$app->security->generatePasswordHash($model->password);
                 }
+
+                // Validar si el nombre de usuario ya existe
+                $existingUser = Usuarios::findOne(['username' => $model->username]);
+                if ($existingUser) {
+                $model->password = ''; // Dejar el campo de contraseña en blanco
+                }
+
+                // Validar si el correo electrónico ya existe
+                $existingUser = Usuarios::findOne(['email' => $model->email]);
+                if ($existingUser) {
+                 $model->password = ''; // Dejar el campo de contraseña en blanco
+                }
+    
+                if ($model->save()) {
+                    return $this->redirect(['exito']);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Error al guardar el usuario.');
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
-        } else {
-            $model->loadDefaultValues();
         }
-        
-        $model->password = ''; // Limpiar la contraseña por seguridad
+    
         return $this->render('create', [
             'model' => $model,
+            'imagenModel' => $imagenModel,
         ]);
     }
+    
+    
     
 
     /**
@@ -104,20 +133,48 @@ class UsuariosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $imagenModel = new Imagenes();
     
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            // Generar el hash de la contraseña solo si se proporciona una nueva contraseña
-            if (!empty($model->password)) {
-                $model->password = Yii::$app->security->generatePasswordHash($model->password);
-            }
+        if ($this->request->isPost) {
+            $model->load($this->request->post());
+            $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
     
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            // Validar y guardar la imagen solo si se proporciona un archivo
+            if (empty($imagenModel->imagenFile)) {
+                $imagenModel->addError('imagenFile', 'La imagen es un campo obligatorio.');
+            } elseif ($imagenModel->validate() && $imagenModel->saveImagen()) {
+                // Asignar el ID de la imagen al modelo de Usuarios después de guardarla
+                $model->id_imagen = $imagenModel->id;
+    
+                if (!empty($model->password)) {
+                    $model->password = Yii::$app->security->generatePasswordHash($model->password);
+                }
+
+                // Validar si el nombre de usuario ya existe, pero no para el mismo usuario
+                $existingUser = Usuarios::findOne(['username' => $model->username]);
+                if ($existingUser && $existingUser->id != $model->id) {
+                    $model->password = ''; // Dejar el campo de contraseña en blanco
+                }
+
+                // Validar si el correo electrónico ya existe, pero no para el mismo usuario
+                $existingUser = Usuarios::findOne(['email' => $model->email]);
+                if ($existingUser && $existingUser->id != $model->id) {
+                    $model->password = ''; // Dejar el campo de contraseña en blanco
+                }
+    
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Error al actualizar el usuario.');
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
         }
     
         return $this->render('update', [
             'model' => $model,
+            'imagenModel' => $imagenModel,
         ]);
     }
     
