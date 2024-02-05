@@ -160,4 +160,22 @@ class JugadoresController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionVerJugadoresEquipo($equipoId)
+    {
+        $this->view->title = 'ArosInsider - Jugadores del Equipo';
+        
+        $equipo = Equipos::findOne($equipoId);
+        $jugadores = Jugadores::find()->where(['id_equipo' => $equipoId])->all();
+    
+        if ($jugadores) {
+            return $this->render('ver-por-equipo', [
+                'jugadores' => $jugadores,
+                'equipo' => $equipo,
+            ]);
+        } else {
+            return 'No se encontraron jugadores para el equipo seleccionado.';
+        }
+    }
+    
 }

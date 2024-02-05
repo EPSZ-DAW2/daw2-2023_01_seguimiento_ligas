@@ -146,7 +146,13 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                             ]);
                         },
                     ],
-                    'nombre',
+                    [
+                        'attribute' => 'nombre',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return Html::a($model->nombre, ['jugadores/view', 'id' => $model->id]);
+                        },
+                    ],
                     'posicion',
                     'descripcion',
                     'altura',
@@ -156,16 +162,10 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                         'attribute' => 'equipo.nombre',
                         'label' => 'Equipo',
                     ],
-                    [
-                        'class' => ActionColumn::className(),
-                        'urlCreator' => function ($action, app\models\Jugadores $model, $key, $index, $column) {
-                            return Url::toRoute([$action, 'id' => $model->id]);
-                         }
-                    ],
                 ],
             ]); ?>
         <br>
-    
+
     </body>
     </html>
 
@@ -284,7 +284,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ?>
             </div>
         </div>
-    
+
         <!-- Sección de Tabla de Jugadores -->
         <div>
             <h2>Tabla de Jugadores</h2>
@@ -312,7 +312,13 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     ]);
                 },
             ],
-                    'nombre',
+            [
+                'attribute' => 'nombre',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a($model->nombre, ['jugadores/view', 'id' => $model->id]);
+                },
+            ],
                     'posicion',
                     'descripcion',
                     'altura',
@@ -322,12 +328,14 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                         'attribute' => 'equipo.nombre',
                         'label' => 'Equipo',
                     ],
+                    'video',
                     [
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, app\models\Jugadores $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id' => $model->id]);
                          }
                     ],
+
                 ],
             ]); ?>
         <br>
