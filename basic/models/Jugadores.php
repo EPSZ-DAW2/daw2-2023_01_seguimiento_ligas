@@ -16,6 +16,7 @@ use Yii;
  * @property float|null $altura
  * @property float|null $peso
  * @property string|null $nacionalidad
+ * @property string $video Video de la liga
  *
  * @property Equipos $equipo
  * @property EstadisticasJugador[] $estadisticasJugadors
@@ -50,6 +51,8 @@ class Jugadores extends \yii\db\ActiveRecord
             [['descripcion'], 'string', 'max' => 255],
             [['id_equipo'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo' => 'id'], 'message' => 'El id_equipo introducido no existe. Introduzca un id equipo válido.'],
             [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id'],],
+            [['video'], 'url', 'message' => 'El formato de la URL no es válido.'],
+            [['video'], 'string', 'max' => 255],
 
             [['altura'], 'validateAltura'],
             [['peso'], 'validatePeso'],
@@ -71,6 +74,7 @@ class Jugadores extends \yii\db\ActiveRecord
             'altura' => 'Altura',
             'peso' => 'Peso',
             'nacionalidad' => 'Nacionalidad',
+            'video'=> 'Video',
         ];
     }
 
