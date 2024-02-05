@@ -29,14 +29,30 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </p>
 
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            [
+                'attribute' => 'id_imagen',
+                'format' => 'html',
+                'value' => function ($model) {
+                    // Obtener el modelo de Imagenes asociado
+                    $imagen = \app\models\Imagenes::findOne($model->id_imagen);
+    
+                    // Comprobar si se encontró la imagen y si tiene un nombre de archivo
+                    if ($imagen && $imagen->foto) {
+                        $urlImagen = Yii::getAlias('@web/images/') . $imagen->foto;
+                        return Html::img($urlImagen, ['alt' => 'Foto de jugador', 'style' => 'width: 60px; height: 60px;']);
+                    }
+    
+                    return 'Sin foto';
+                },
+            ],
             'id',
             'id_equipo',
             'nombre',
             'descripcion',
-            'id_imagen',
             'posicion',
             'altura',
             'peso',
