@@ -10,6 +10,7 @@ use app\models\Imagenes;
 use app\models\PartidosJornada;
 use yii\web\Controller;
 use yii\web\UploadedFile;
+use yii\db\Expression;
 
 
 class EquiposController extends Controller
@@ -231,5 +232,23 @@ class EquiposController extends Controller
 
         // Redirigir a la página de equipos
         return $this->redirect(['index', 'id' => $nuevoEquipo->id]);
+    }
+
+    public function actionVista($id)
+    {
+        // Obtener últimos resultados
+        $ultimosResultados = PartidosJornada::find()
+        ->where(['<', 'horario', new Expression('NOW()')])
+        ->orderBy(['horario' => SORT_DESC])
+        ->limit(5)
+        ->all();
+
+        // Obtener próximos partidos
+        $proximosPartidos = PartidosJornada::find()
+        ->where(['>=', 'horario', new Expression('NOW()')])
+        ->orderBy(['horario' => SORT_ASC])
+        ->limit(5)
+        ->all();
+
     }
 }

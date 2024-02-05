@@ -36,15 +36,10 @@ class Partidos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            // Todos los campos son requeridos
             [['id_liga', 'id_temporada', 'id_jornada', 'id_equipo_local', 'id_equipo_visitante'], 'required'],
-            // Horario debe ser una fecha válida
             ['horario', 'date', 'format' => 'yyyy-MM-dd HH:mm:ss'],
-            // lugar debe ser una cadena
             ['lugar', 'string', 'max' => 255],
-            // resultado_local y resultado_visitante deben ser números enteros
             [['resultado_local', 'resultado_visitante'], 'integer'],
-            // buscamos el id de los campos en la base de datos
             [['id_liga'], 'exist', 'skipOnError' => true, 'targetClass' => Ligas::class, 'targetAttribute' => ['id_liga' => 'id']],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
             [['id_jornada'], 'exist', 'skipOnError' => true, 'targetClass' => Jornadas::class, 'targetAttribute' => ['id_jornada' => 'id']],
