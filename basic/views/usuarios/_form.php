@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin([
     'id' => 'usuarios-form',
     'enableAjaxValidation' => false,
-    'enableClientValidation' => false,
+    'enableClientValidation' => true,
 ]); ?>
 
     
@@ -34,7 +34,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre de usuario', 'class' => 'campo']) ?>
     <br>
     <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo']) ?>
-
+    <br>
     <p>¿Ya tienes una cuenta? Inicia sesión <a href="<?= Yii::$app->urlManager->createUrl(['/usuarios/login']) ?>">aquí</a></p>
     <br>
     <?= Html::submitButton(Yii::t('app', 'Registrar'), ['class' => 'botonFormulario']) ?>

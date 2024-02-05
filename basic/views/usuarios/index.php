@@ -16,7 +16,7 @@ $this->title = Yii::t('app', 'Usuarios');
 
 <div class="contenido-cabecera">
 
-    <h1>USUARIOS DEL SISTEMA:</h1>
+    <h1>USUARIOS DEL SISTEMA</h1>
 
 </div>
 

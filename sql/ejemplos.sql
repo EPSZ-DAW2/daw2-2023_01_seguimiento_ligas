@@ -14,12 +14,12 @@ SET @imagen_perfil := LAST_INSERT_ID();
 
 -- INSERTAMOS USUARIOS DE EJEMPLO
 INSERT IGNORE INTO `usuarios` (`nombre`, `apellido1`, `apellido2`, `email`, `password`, `provincia`, `id_rol`, `username`, `id_imagen`) VALUES
-('Marcos', 'Castro', 'Aragón', 'admin@email.com', '$2y$13$hIBQhF4QT5UjttiN83N3dOvYyD3knhnsbtCjgHSx86gzBrA4CFZRu', 'Zamora', 1, 'admin', @imagen_perfil),
-('Iago', 'Gasamans', 'Losada', 'mod@email.com', '$2y$13$hIBQhF4QT5UjttiN83N3dOvYyD3knhnsbtCjgHSx86gzBrA4CFZRu', 'Zamora', 2, 'moderador', @imagen_perfil),
-('Jorge', 'Abella', 'Cabezas', 'gestorli@email.com', '$2y$13$hIBQhF4QT5UjttiN83N3dOvYyD3knhnsbtCjgHSx86gzBrA4CFZRu', 'León', 3, 'gestorligas', @imagen_perfil),
-('Álex', 'Alonso', 'Vicente', 'patrocinador@email.com', '$2y$13$hIBQhF4QT5UjttiN83N3dOvYyD3knhnsbtCjgHSx86gzBrA4CFZRu', 'Zamora', 4, 'patrocinador', @imagen_perfil),
-('David', 'Pérez', 'Esteban', 'gestoreq@email.com', '$2y$13$hIBQhF4QT5UjttiN83N3dOvYyD3knhnsbtCjgHSx86gzBrA4CFZRu', 'Zamora', 5, 'gestorequipos', @imagen_perfil),
-('Diego', 'Iglesias', 'Estevez', 'cliente@email.com', '$2y$13$hIBQhF4QT5UjttiN83N3dOvYyD3knhnsbtCjgHSx86gzBrA4CFZRu', 'Zamora', 6, 'cliente', @imagen_perfil);
+('Marcos', 'Castro', 'Aragón', 'admin@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 1, 'admin', @imagen_perfil),
+('Iago', 'Gasamans', 'Losada', 'mod@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 2, 'moderador', @imagen_perfil),
+('Jorge', 'Abella', 'Cabezas', 'gestorli@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'León', 3, 'gestorligas', @imagen_perfil),
+('Álex', 'Alonso', 'Vicente', 'patrocinador@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 4, 'patrocinador', @imagen_perfil),
+('David', 'Pérez', 'Esteban', 'gestoreq@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 5, 'gestorequipos', @imagen_perfil),
+('Diego', 'Iglesias', 'Estevez', 'cliente@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 6, 'cliente', @imagen_perfil);
 
 
 -- INSERTAMOS LAS IMAGENES DE LIGA NBA Y ACB
@@ -35,13 +35,13 @@ SET @imagen_acb := LAST_INSERT_ID();
 
 
 -- INSERTAMOS LAS LIGAS NBA Y ACB
-INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`) VALUES
-('Liga NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba);
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`) VALUES
+('Liga NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba, 'https://www.youtube.com/embed/uUwb0x_AdL8?si=LIxT8Qet6JkIjksZ');
 
 SET @id_nba := LAST_INSERT_ID();
 
-INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`) VALUES
-('Liga ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb);
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`) VALUES
+('Liga ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb, 'https://www.youtube.com/embed/NQp5KW7rZ9k?si=iiWyQfFnMQf5EKWn');
 
 SET @id_acb := LAST_INSERT_ID();
 
