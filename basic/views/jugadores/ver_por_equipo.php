@@ -8,6 +8,10 @@
             <div class="jugador-content">
                 <h2><?= $jugador->nombre ?></h2>
                 <p><?= $jugador->descripcion ?></p>
+                <p><?= $jugador->nacionalidad ?></p>
+                <p><?= $jugador->posicion ?></p>
+                <p><?= $jugador->altura ?></p>
+                <p><?= $jugador->peso ?></p>
                 <!-- Aquí puedes mostrar más detalles del jugador si lo deseas -->
             </div>
             <!-- Puedes mostrar la imagen del jugador si está disponible -->
