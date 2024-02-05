@@ -136,10 +136,12 @@ class JugadoresController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $imagenModel = ($model->imagen) ? $model->imagen : new Imagenes();
     
         $model->load('estadisticasJugador');
         return $this->render('view', [
             'model' => $model,
+            'imagenModel' => $imagenModel,
         ]);
     }
 

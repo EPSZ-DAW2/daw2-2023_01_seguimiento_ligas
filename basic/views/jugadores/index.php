@@ -136,6 +136,16 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
+                    [
+                        'attribute' => 'imagen',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return Html::tag('div', '', [
+                                'class' => 'liga-image',
+                                'style' => 'background-image: url("' . Yii::getAlias('@web/images/' . $model->imagen->foto) . '");',
+                            ]);
+                        },
+                    ],
                     'nombre',
                     'posicion',
                     'descripcion',
