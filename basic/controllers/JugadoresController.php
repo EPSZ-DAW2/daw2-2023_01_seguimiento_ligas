@@ -6,6 +6,7 @@ use Yii;
 use app\models\Jugadores;
 use app\models\EstadisticasJugador;
 use app\models\Imagenes;
+use app\models\Equipos;
 use app\models\Temporadas;
 use app\models\Ligas;
 use yii\web\Controller;
@@ -161,12 +162,12 @@ class JugadoresController extends Controller
         }
     }
 
-    public function actionVerJugadoresEquipo($equipoId)
+    public function actionVerPorEquipo($id)
     {
         $this->view->title = 'ArosInsider - Jugadores del Equipo';
         
-        $equipo = Equipos::findOne($equipoId);
-        $jugadores = Jugadores::find()->where(['id_equipo' => $equipoId])->all();
+        $equipo = Equipos::findOne($id);
+        $jugadores = Jugadores::find()->where(['id_equipo' => $id])->all();
     
         if ($jugadores) {
             return $this->render('ver-por-equipo', [

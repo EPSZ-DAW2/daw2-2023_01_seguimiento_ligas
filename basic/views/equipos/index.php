@@ -28,10 +28,10 @@ foreach ($equipos as $equipo) {
         <?php foreach ($equiposPorLiga as $equipo): ?>
             <div class="marco2">
                 <div class="liga-content">
-                    <h2><?= $equipo->nombre ?></h2>
+                    <h2><?= \yii\helpers\Html::a($equipo->nombre, ['jugadores/ver-por-equipo', 'id' => $equipo->id]) ?></h2>
                     <p><?= $equipo->descripcion ?><p>
                     <p><?= $equipo->temporada->texto_de_titulo ?><p>
-
+                        
                     <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 5)): ?>
                         <?= Html::a('Ver Detalles', ['equipos/view', 'id' => $equipo->id], ['class' => 'btn btn-info']) ?>
                         <?= Html::a('Copiar Equipo', ['copy', 'id' => $equipo->id], ['class' => 'btn btn-success']) ?>
