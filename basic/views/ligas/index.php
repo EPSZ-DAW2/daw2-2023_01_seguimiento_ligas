@@ -12,20 +12,26 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
    foreach ($ligas as $liga): ?>
     <div class="contenido-cabecera">
 
-    <h1>LIGAS:</h1>
+    <h1>LIGAS</h1>
 
     </div>
 
+    <div id="contenedor-principal">
     <div class="marco2">
-        <a href="<?= Yii::$app->urlManager->createUrl(['equipos/ver-por-liga', 'ligaId' => $liga->id]) ?>">
             <div class="liga-content">
-                <h2><?= $liga->nombre ?></h2>
-                <p><?= $liga->descripcion ?><p>
-                <p><?= $liga->pais ?><p>
-                    
+                <a href="<?= Yii::$app->urlManager->createUrl(['equipos/ver-por-liga', 'ligaId' => $liga->id]) ?>">
+                    <h2><?= $liga->nombre ?></h2>
+                </a>
+                <p class="PaginaDeInicio"><?= $liga->descripcion ?><p>
+                <p class="PaginaDeInicio"><?= $liga->pais ?><p>
             </div>
             <div class="liga-image" style="background-image: url('<?= Yii::getAlias('@web/images/' . $liga->imagen->foto) ?>');"></div>
-        </a>
+            </br>
+        <iframe width="560" height="315" src="<?= Html::encode($liga->video) ?>"
+        title="YouTube video player" frameborder="0"
+        allowfullscreen></iframe>
+
+    </div>
     </div>
 <?php endforeach; ?>
 <?php } else { ?>
@@ -42,7 +48,7 @@ $this->title = Yii::t('app', 'Ligas');
 
 <div class="contenido-cabecera">
 
-    <h1>LIGAS:</h1>
+    <h1>LIGAS</h1>
 
 </div>
 

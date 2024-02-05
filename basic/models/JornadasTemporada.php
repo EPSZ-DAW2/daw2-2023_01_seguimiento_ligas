@@ -9,7 +9,10 @@ use Yii;
  *
  * @property int $id
  * @property int $id_temporada
- * @property string $fecha_jornada
+ * @property int $numero Número de la jornada
+ * @property string $fecha_inicio
+ * @property string $fecha_final
+ * @property string|null $video Vídeo promocional
  *
  * @property PartidosJornada[] $partidosJornadas
  * @property Temporadas $temporada
@@ -30,9 +33,10 @@ class JornadasTemporada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_temporada', ' numero', 'fecha_inicio', 'fecha_final'], 'required'],
+            [['id_temporada', 'numero', 'fecha_inicio', 'fecha_final'], 'required'],
             [['id_temporada', 'numero'], 'integer'],
             [['fecha_inicio', 'fecha_final'], 'safe'],
+            [['video'], 'string', 'max' => 255],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
         ];
     }
@@ -44,10 +48,11 @@ class JornadasTemporada extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_temporada' => 'ID Temporada',
-            'numero' => 'Número de jornada',
-            'fecha_inicio' => 'Inicio de la jornada',
-            'fecha_final' => 'Fin de la jornada',
+            'id_temporada' => 'Id Temporada',
+            'numero' => 'Numero',
+            'fecha_inicio' => 'Fecha Inicio',
+            'fecha_final' => 'Fecha Final',
+            'video' => 'Video',
         ];
     }
 

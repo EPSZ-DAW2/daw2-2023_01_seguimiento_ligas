@@ -17,6 +17,7 @@ use yii\helpers\ArrayHelper;
  * @property string $provincia
  * @property int $id_rol
  * @property string $username
+ * @property int $id_imagen
 
 
  */
@@ -47,14 +48,16 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function rules()
     {
         return [
-            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia','id_rol','username'], 'required', 'message' => 'Este campo es obligatorio.'],
+            [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia','id_rol','username','id_imagen'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['auth_key', 'reg_token'], 'safe'],
             [['nombre', 'apellido1', 'apellido2', 'email', 'provincia','username'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 255, 'min' => 6, 'tooShort' => 'La contraseña debe tener al menos 6 caracteres.'],
-            [['password'], 'match', 'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]*$/', 'message' => 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula y un número.'],
-            [['email'], 'unique'],
+           // [['password'], 'match', 'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]*$/', 'message' => 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula y un número.'],
+            [['email'], 'unique', 'message' => 'El correo electrónico ya está en uso. Por favor, elige otro.'],
             [['email'], 'email'],
             [['id_rol'], 'integer'],
+            [['id_imagen'], 'integer'],
+            [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id']],
             [['username'], 'unique', 'message' => 'Nombre de usuario "{value}" ya existe. Por favor, elige otro.'],
             [['auth_key'], 'string', 'max' => 200], 
             [['reg_token'], 'string', 'max' => 200],
@@ -77,6 +80,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             'provincia' => Yii::t('app', 'Provincia'),
             'id_rol' => Yii::t('app', 'Rol'),
             'username' => Yii::t('app', 'Nombre de usuario'),
+            'id_imagen' => Yii::t('app', 'Imagen'),
             'reg_token' => Yii::t('app', 'reg_token'),
             'auth_key' => Yii::t('app', 'auth_key'),
             
@@ -207,8 +211,17 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     return false;
 }
 
+
    
-   
+   /**
+     * Gets query for [[Imagen]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImagen()
+    {
+        return $this->hasOne(Imagenes::class, ['id' => 'id_imagen']);
+    }
 
 
 

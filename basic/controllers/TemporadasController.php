@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Temporadas;
 use app\models\Ligas;
+use app\models\Equipos;
+use app\models\JornadasTemporada;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -25,6 +27,13 @@ class TemporadasController extends \yii\web\Controller
 
     public function actionCreate()
     {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
         $model = new Temporadas();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -58,9 +67,36 @@ class TemporadasController extends \yii\web\Controller
         ]);
     }
 
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
-        return $this->render('update');
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
+        // Buscar la temporada por su ID
+        $temporada = Temporadas::findOne($id);
+
+        // Verificar si la temporada existe
+        if ($temporada === null) {
+            throw new NotFoundHttpException('La temporada no fue encontrada.');
+        }
+
+        // Procesar el formulario cuando se envía
+        if (Yii::$app->request->isPost) {
+            // Cargar los datos del formulario en el modelo de temporada
+            if ($temporada->load(Yii::$app->request->post()) && $temporada->save()) {
+                // Redirigir a la vista de detalles después de la actualización exitosa
+                return $this->redirect(['view', 'id' => $temporada->id]);
+            }
+        }
+
+        // Renderizar la vista de actualización con el formulario y el modelo de temporada
+        return $this->render('update', [
+            'temporada' => $temporada,
+        ]);
     }
 
     public function actionView($id)
@@ -74,6 +110,42 @@ class TemporadasController extends \yii\web\Controller
         ]);
     }
 
+    // Acción para borrar una temporada
+    public function actionDelete($id)
+    {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
+        $temporada = Temporadas::findOne($id);
+
+        if ($temporada === null) {
+            throw new NotFoundHttpException('La temporada no fue encontrada.');
+        }
+
+        // Se obtienen los partidos y jornadas asociados a esta temporada
+        $equipos = Equipos::find()->where(['id_temporada' => $temporada->id])->all();
+
+        // Eliminar los equipos asociados
+        foreach ($equipos as $equipo) {
+            $equipo->delete();
+        }
+        
+        $jornadas = JornadasTemporada::find()->where(['id_temporada' => $temporada->id])->all();
+
+        // Eliminar las jornadas asociadas
+        foreach ($jornadas as $jornada) {
+            $jornada->delete();
+        }
+
+        $temporada->delete();
+
+        return $this->redirect(['index']);
+    }
+
     protected function findModel($id)
     {
         if (($model = Temporadas::findOne($id)) !== null) {
@@ -82,4 +154,56 @@ class TemporadasController extends \yii\web\Controller
 
         throw new NotFoundHttpException('La página solicitada no existe.');
     }
+
+    // Acción para copiar una temporada y poder actualizar los equipos a una nueva sin problema
+    public function actionCopy($id)
+    {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+        
+        $temporadaExistente = Temporadas::findOne($id);
+
+        if ($temporadaExistente === null) {
+            throw new NotFoundHttpException('La temporada no fue encontrada.');
+        }
+
+        // Crear una copia de la temporada
+        $nuevaTemporada = new Temporadas();
+        $nuevaTemporada->attributes = $temporadaExistente->attributes;
+
+        // Asignar un nuevo identificador único a la nueva temporada
+        $nuevaTemporada->id = null;
+
+        $nuevaTemporada->save();
+
+        // Obtener todos los equipos asociados a la temporada existente
+        $equiposExistente = Equipos::find()->where(['id_temporada' => $temporadaExistente->id])->all();
+
+        // Crear y guardar copias de los equipos asociados a la nueva temporada
+        foreach ($equiposExistente as $equipoExistente) {
+            $nuevoEquipo = new Equipos();
+            $nuevoEquipo->attributes = $equipoExistente->attributes;
+            $nuevoEquipo->id_temporada = $nuevaTemporada->id; // Asignar la nueva temporada al equipo
+            $nuevoEquipo->save();
+        }
+
+        // Obtener todas las jornadas asociadas a la temporada existente
+        $jornadasExistente = JornadasTemporada::find()->where(['id_temporada' => $temporadaExistente->id])->all();
+
+        // Crear y guardar copias de las jornadas asociadas a la nueva temporada
+        foreach ($jornadasExistente as $jornadaExistente) {
+            $nuevaJornada = new JornadasTemporada();
+            $nuevaJornada->attributes = $jornadaExistente->attributes;
+            $nuevaJornada->id_temporada = $nuevaTemporada->id; // Asignar la nueva temporada a la jornada
+            $nuevaJornada->save();
+        }
+
+        // Redirigir a la página de temporadas
+        return $this->redirect(['index', 'id' => $nuevaTemporada->id]);
+    }
+
 }

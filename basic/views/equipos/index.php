@@ -1,7 +1,7 @@
 <?php $this->registerCssFile('@web/css/equipos.css'); ?>
 
 <?php
-use yii\helpers\Html; 
+use yii\helpers\Html;
 ?> 
 
 <?php
@@ -15,13 +15,9 @@ foreach ($equipos as $equipo) {
 ?>
 
 <div class="contenido-cabecera">  
-    
-<h1>EQUIPOS</h1>  
-
+    <h1>EQUIPOS</h1>  
 </div>
-
-<!--<div class="contenedor-ligas"> !-->
-
+    
 <div class="row">
 <?php foreach ($EquiposLigas as $ligaId => $equiposPorLiga): ?>
     <div class="col-md-6">
@@ -35,6 +31,12 @@ foreach ($equipos as $equipo) {
                     <h2><?= $equipo->nombre ?></h2>
                     <p><?= $equipo->descripcion ?><p>
                     <p><?= $equipo->temporada->texto_de_titulo ?><p>
+
+                    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 5)): ?>
+                        <?= Html::a('Ver Detalles', ['equipos/view', 'id' => $equipo->id], ['class' => 'btn btn-info']) ?>
+                        <?= Html::a('Copiar Equipo', ['copy', 'id' => $equipo->id], ['class' => 'btn btn-success']) ?>
+                    <?php endif ?>
+
                 </div>
                 <div class="liga-image2" style="background-image: url('<?= Yii::getAlias('@web/images/' . $equipo->imagen->foto) ?>');"></div>
             </div>
@@ -43,5 +45,6 @@ foreach ($equipos as $equipo) {
     <?php endforeach; ?>
 </div>
 
-
-<?= \yii\helpers\Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'botonFormulario']) ?>
+<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 5)): ?>
+    <?= Html::a('Crear Nuevo Equipo', ['equipos/create'], ['class' => 'botonFormulario']) ?>
+<?php endif; ?>
