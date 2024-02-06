@@ -120,6 +120,21 @@ CREATE TABLE `estadisticas_jugador` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `estadisticas_jugador_partido`
+--
+
+CREATE TABLE `estadisticas_jugador_partido` (
+  `id` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `id_jugador` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `id_partido` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `puntos` int(6) DEFAULT NULL,
+  `rebotes` int(6) DEFAULT NULL,
+  `asistencias` int(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `imagenes`
 --
 
@@ -328,6 +343,14 @@ ALTER TABLE `estadisticas_jugador`
   ADD KEY `fk_id_idEquipoEJ` (`id_equipo`);
 
 --
+-- Indices de la tabla `estadisticas_jugador_partido`
+--
+ALTER TABLE `estadisticas_jugador_partido`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_idJugadorP` (`id_jugador`),
+  ADD KEY `fk_id_idPartidoJ` (`id_partido`);
+
+--
 -- Indices de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
@@ -433,6 +456,12 @@ ALTER TABLE `estadisticas_equipo`
 -- AUTO_INCREMENT de la tabla `estadisticas_jugador`
 --
 ALTER TABLE `estadisticas_jugador`
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `estadisticas_jugador_partido`
+--
+ALTER TABLE `estadisticas_jugador_partido`
   MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
 
 --
@@ -543,6 +572,13 @@ ALTER TABLE `estadisticas_jugador`
   ADD CONSTRAINT `fk_id_idEquipoEJ` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`),
   ADD CONSTRAINT `fk_id_idJugador` FOREIGN KEY (`id_jugador`) REFERENCES `jugadores` (`id`),
   ADD CONSTRAINT `fk_id_idTemporadaJ` FOREIGN KEY (`id_temporada`) REFERENCES `temporadas` (`id`);
+
+--
+-- Filtros para la tabla `estadisticas_jugador_partido`
+--
+ALTER TABLE `estadisticas_jugador_partido`
+  ADD CONSTRAINT `fk_id_idJugadorP` FOREIGN KEY (`id_jugador`) REFERENCES `jugadores` (`id`),
+  ADD CONSTRAINT `fk_id_idPartidoJ` FOREIGN KEY (`id_partido`) REFERENCES `partidos_jornada` (`id`);
 
 --
 -- Filtros para la tabla `jornadas_temporada`

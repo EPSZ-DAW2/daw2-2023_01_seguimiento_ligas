@@ -25,7 +25,7 @@ foreach ($temporadas as $temporada) {
             <br>
             <?php foreach ($temporadasPorLiga as $temporada): ?>
                 <div class="marco">
-                    <?= \yii\helpers\Html::a('<h3>' . $temporada->texto_de_titulo . '</h3>', ['jornadas/index', 'id' => $temporada->id]) ?>
+                    <?= Html::a('<h3>' . $temporada->texto_de_titulo . '</h3>', ['jornadas/index', 'id' => $temporada->id]) ?>
 
                     <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
                         <?= Html::a('Ver Detalles', ['temporadas/view', 'id' => $temporada->id], ['class' => 'btn btn-info']) ?>

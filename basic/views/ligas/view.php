@@ -14,13 +14,13 @@ $this->title = $model->nombre;
 
 <div class="contenido-cabecera">
 
-    <h1>DATOS DE LA LIGA: <?= Html::encode($this->title) ?></h1>
+    <h1>DATOS DE LA LIGA <?= Html::encode($this->title) ?></h1>
 
 </div>
 <div id="contenedor-principal">
 
     <div class="marco">
-    <p class="PaginaDeInicio">Tabla con los datos de la liga <?= Html::encode($this->title) ?>:</p>
+    <p class="PaginaDeInicio">Datos de la liga <?= Html::encode($this->title) ?>:</p>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -45,7 +45,7 @@ $this->title = $model->nombre;
                 'method' => 'post',
             ],
         ]) ?>
-        <!--<?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>-->
+        <?= Html::a(Yii::t('app', 'Tabla de ligas'), ['ligas/index'], ['class' => 'botonFormulario']) ?>
     </p>
 
 </div>

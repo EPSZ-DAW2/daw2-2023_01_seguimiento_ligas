@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Jugadores;
 
 /** @var yii\web\View $this */
 /** @var app\models\Jugadores $model */
