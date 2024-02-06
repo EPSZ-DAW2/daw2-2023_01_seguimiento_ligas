@@ -242,4 +242,27 @@ class PartidosController extends \yii\web\Controller
         // Redirigir a la página de partidos
         return $this->redirect(['index', 'id' => $nuevoPartido->id]);
     }
+
+    public function actionAgregarComentario()
+    {
+        $nuevoComentarioModel = new \app\models\Comentarios();
+
+        if (Yii::$app->request->isPost) {
+            $nuevoComentarioModel->load(Yii::$app->request->post());
+
+            if ($nuevoComentarioModel->save()) {
+                // Éxito al guardar el comentario
+                Yii::$app->session->setFlash('success', 'Comentario agregado con éxito.');
+                return $this->redirect(['view', 'partidoID' => $nuevoComentarioModel->id_partido]);
+            } else {
+                // Error al guardar el comentario
+                Yii::$app->session->setFlash('error', 'Error al guardar el comentario.');
+            }
+        }
+
+        return $this->render('view', [
+            'model' => $nuevoComentarioModel, // Puedes necesitar pasar otros modelos o datos según tu lógica
+            'comentarios' => Comentarios::find()->where(['id_partido' => $partidoID])->all(),
+        ]);
+    }
 }

@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Detalles del Partido: ' . $model->equipoLocal->nombre . ' vs ' . $model->equipoVisitante->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Partidos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+?>
 
 <div class="partido-view">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -24,22 +25,28 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="marco">
     <?php if (!empty($comentarios)): ?>
         <?php foreach ($comentarios as $comentario): ?>
-            <div class="comentario">
-                <p><?= Html::encode($comentario->texto_comentario) ?></p>
-                <small>Por: <?= Html::encode($comentario->usuario->nombre) ?> el <?= Html::encode($comentario->fecha_hora) ?></small>
-            </div>
+            <?php if ($comentario->id_partido == $model->id): ?>
+                <div class="comentario">
+                    <p><?= Html::encode($comentario->texto_comentario) ?></p>
+                    <small>Por: <?= Html::encode($comentario->usuario->nombre) ?> el <?= Html::encode($comentario->fecha_hora) ?></small>
+                </div>
+            <?php endif; ?>
         <?php endforeach; ?>
     <?php else: ?>
         <p>No hay comentarios disponibles.</p>
     <?php endif; ?>
 
     <?php
-    $nuevoComentarioModel = new \app\models\Comentarios();
-    $form = ActiveForm::begin(); ?>
-    <?= $form->field($nuevoComentarioModel, 'texto_comentario')->textarea(['rows' => 4]) ?>
-    <div class="form-group">
-        <?= Html::submitButton('Agregar Comentario', ['class' => 'btn btn-success']) ?>
-    </div>
-    <?php ActiveForm::end(); ?>
+    if (!Yii::$app->user->isGuest) {
+        $nuevoComentarioModel = new \app\models\Comentarios();
+        $form = ActiveForm::begin(); ?>
+        <?= $form->field($nuevoComentarioModel, 'texto_comentario')->textarea(['rows' => 4]) ?>
+        <div class="form-group">
+            <?= Html::submitButton('Agregar Comentario', ['class' => 'btn btn-success']) ?>
+        </div>
+        <?php ActiveForm::end();
+    } else {
+        // Si el usuario no ha iniciado sesión, redirigirlo a la página de inicio de sesión
+        Yii::$app->session->setFlash('error', 'Debes iniciar sesión para escribir comentarios.');
+    }?>
 </div>
-

@@ -37,9 +37,9 @@ usort($partidosFuturos, function ($a, $b) {
         <p>Lugar: <?= $partido->lugar ?></p>
         <p><?= $partido->jornada->temporada->texto_de_titulo ?> - Jornada <?= $partido->jornada->numero ?> </p> 
         <p><?= (new DateTime($partido->horario))->format('d/m/Y H:i:s') ?></p>
+        <?= Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'btn btn-info']) ?>
 
         <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
-            <?= Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'btn btn-info']) ?>
             <?= Html::a('Copiar Partido', ['copy', 'id' => $partido->id], ['class' => 'btn btn-success']) ?>
         <?php endif ?>
     </div>
