@@ -15,7 +15,7 @@ $this->title = Yii::t('app', 'Actualizar liga: {name}', [
 
 <div class="contenido-cabecera">
 
-    <h1>MODIFICAR DATOS DE LA LIGA : <?= Html::encode($model->nombre) ?></h1>
+    <h1>MODIFICAR DATOS DE LA LIGA <?= Html::encode($model->nombre) ?></h1>
 
 </div>
 
