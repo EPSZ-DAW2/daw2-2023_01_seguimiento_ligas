@@ -14,7 +14,7 @@ $this->title = 'Crear Liga';
 
 <div class="contenido-cabecera">
 
-    <h1>CREACIÓN DE LIGAS:</h1>
+    <h1>CREADOR DE LIGAS</h1>
 
 </div>
 
@@ -30,7 +30,7 @@ $this->title = 'Crear Liga';
         <br>
         <?= $form->field($model, 'pais', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el pais al que pertenezca la liga', 'class' => 'campo']) ?>
         <br>
-        <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo']) ?>
+        <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo'])->label('Subir Imagen') ?>
         <br>
         <?= $form->field($model, 'video', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el video de la liga', 'class' => 'campo']) ?>
         <br>

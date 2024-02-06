@@ -173,8 +173,8 @@ SET @j1acb := LAST_INSERT_ID();
 
 -- PARTIDOS DE EJEMPLO
 
-INSERT IGNORE INTO `partidos_jornada` (`id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`) VALUES 
-(@j1acb, @realmadrid, @granada, '2024-03-04 18:30:00', 'WiZink Center Madrid');
+INSERT IGNORE INTO `partidos_jornada` (`id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`, `resultado_local`,`resultado_visitante`) VALUES 
+(@j1acb, @realmadrid, @granada, '2023-09-23 18:30:00', 'WiZink Center Madrid', 83, 76);
 
 INSERT IGNORE INTO `partidos_jornada` (`id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`) VALUES 
 (@j1nba, @bulls, @knicks, '2024-09-25 20:00:00', 'United Center, Chicago, Illniois');

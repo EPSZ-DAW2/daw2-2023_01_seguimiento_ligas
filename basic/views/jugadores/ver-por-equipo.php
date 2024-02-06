@@ -1,3 +1,7 @@
+<?php
+use yii\helpers\Html;
+?> 
+
 <div class="contenido-cabecera">
     <h1><?= Html::encode($equipo->nombre) ?></h1>
 </div>
