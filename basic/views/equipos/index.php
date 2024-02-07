@@ -28,7 +28,7 @@ foreach ($equipos as $equipo) {
         <?php foreach ($equiposPorLiga as $equipo): ?>
             <div class="marco2">
                 <div class="liga-content">
-                    <h2><?= Html::a($equipo->nombre, ['jugadores/ver-por-equipo', 'id' => $equipo->id]) ?></h2>
+                    <h2><?= Html::a($equipo->nombre, ['vista', 'id' => $equipo->id]) ?></h2>
                     <p><?= $equipo->descripcion ?><p>
                     <p><?= $equipo->temporada->texto_de_titulo ?><p>
                         
