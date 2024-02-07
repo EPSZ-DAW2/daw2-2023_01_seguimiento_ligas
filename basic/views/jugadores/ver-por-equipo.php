@@ -16,9 +16,7 @@ use yii\helpers\Html;
                 <p><?= Html::encode($jugador->posicion) ?></p>
                 <p><?= Html::encode($jugador->altura) ?></p>
                 <p><?= Html::encode($jugador->peso) ?></p>
-                <!-- Aquí puedes mostrar más detalles del jugador si lo deseas -->
             </div>
-            <!-- Puedes mostrar la imagen del jugador si está disponible -->
             <?php if ($jugador->imagen): ?>
                 <div class="jugador-image" style="background-image: url('<?= Yii::getAlias('@web/images/' . $jugador->imagen->foto) ?>');"></div>
             <?php endif; ?>

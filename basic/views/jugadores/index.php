@@ -1,8 +1,10 @@
 <?php
+use app\models\Usuarios;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5)) {
     ?>
@@ -11,11 +13,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
         <?php $this->registerCssFile('@web/css/site.css'); ?>
     
         <style>
-            /* Estilo para centrar los divs */
             .estadisticas-container {
                 text-align: center;
                 margin-bottom: 20px;
@@ -34,11 +34,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
     
         <div class="marco">
     
-        <!-- Sección de Estadísticas Destacadas -->
         <div class="estadisticas-container">
             <h2>Estadísticas Destacadas</h2>
     
-            <!-- Div izquierdo: Jugador con más puntos -->
             <div class="estadisticas-item">
                 <h3>Jugador con más puntos</h3>
                 <h4>
@@ -65,7 +63,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ?>
             </div>
     
-            <!-- Div centro: Jugador con más asistencias -->
             <div class="estadisticas-item">
                 <h3>Jugador con más asistencias</h3>
                 <h4>
@@ -92,7 +89,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ?>
             </div>
     
-            <!-- Div derecho: Jugador con más rebotes -->
             <div class="estadisticas-item">
                 <h3>Jugador con más rebotes</h3>
                 <h4>
@@ -120,21 +116,19 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             </div>
         </div>
     
-        <!-- Sección de Tabla de Jugadores -->
         <div>
             <h2>Tabla de Jugadores</h2>
             <?php
-            // Generar el formulario para seleccionar la liga y el equipo
             echo Html::beginForm(['jugadores/index'], 'get');
-
-            echo Html::dropDownList('ligaId', $ligaId, ['' => 'Mostrar todos'] + \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
-
+            echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
             echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
             echo Html::endForm();
             ?>
-    
+
+            <?php Pjax::begin(); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
                 'columns' => [
                     [
                         'attribute' => 'imagen',
@@ -152,6 +146,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                         'value' => function ($model) {
                             return Html::a($model->nombre, ['jugadores/view', 'id' => $model->id]);
                         },
+                        'filter' => Html::textInput('JugadoresSearch[nombre]', isset(Yii::$app->request->get('JugadoresSearch')['nombre']) ? Yii::$app->request->get('JugadoresSearch')['nombre'] : null, ['class' => 'form-control']),
                     ],
                     'posicion',
                     'descripcion',
@@ -161,9 +156,17 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     [
                         'attribute' => 'equipo.nombre',
                         'label' => 'Equipo',
-                    ],
+                        'value' => function ($model) {
+                            return $model->equipo->nombre; // Accede al nombre del equipo a través de la relación
+                        },
+                        'filter' => Html::textInput('JugadoresSearch[nombre_equipo]', isset(Yii::$app->request->get('JugadoresSearch')['nombre_equipo']) ? Yii::$app->request->get('JugadoresSearch')['nombre_equipo'] : null, ['class' => 'form-control']),
+                        'filterInputOptions' => ['placeholder' => 'Buscar por nombre de equipo'],
+                        'filterOptions' => ['class' => 'col-md-6'],
+                    ],                    
                 ],
             ]); ?>
+            <?php Pjax::end(); ?>
+
         <br>
 
     </body>
@@ -180,7 +183,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         <?php $this->registerCssFile('@web/css/site.css'); ?>
     
         <style>
-            /* Estilo para centrar los divs */
             .estadisticas-container {
                 text-align: center;
                 margin-bottom: 20px;
@@ -199,11 +201,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
     
         <div class="marco">
     
-        <!-- Sección de Estadísticas Destacadas -->
         <div class="estadisticas-container">
             <h2>Estadísticas Destacadas</h2>
     
-            <!-- Div izquierdo: Jugador con más puntos -->
             <div class="estadisticas-item">
                 <h3>Jugador con más puntos</h3>
                 <h4>
@@ -230,7 +230,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ?>
             </div>
     
-            <!-- Div centro: Jugador con más asistencias -->
             <div class="estadisticas-item">
                 <h3>Jugador con más asistencias</h3>
                 <h4>
@@ -257,7 +256,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ?>
             </div>
     
-            <!-- Div derecho: Jugador con más rebotes -->
             <div class="estadisticas-item">
                 <h3>Jugador con más rebotes</h3>
                 <h4>
@@ -285,19 +283,14 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             </div>
         </div>
 
-        <!-- Sección de Tabla de Jugadores -->
         <div>
             <h2>Tabla de Jugadores</h2>
             <?php
-            // Generar el formulario para seleccionar la liga y el equipo
             echo Html::beginForm(['jugadores/index'], 'get');
-            // Desplegable para seleccionar una liga
             echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
-            // Botón de filtrar
             echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
-            
             echo Html::endForm();
-        ?>
+            ?>
     
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,

@@ -30,8 +30,8 @@ use app\models\Equipos;
         }
         ?>
 
+        <?= Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'btn btn-info']) ?>
         <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
-            <?= Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'btn btn-info']) ?>
             <?= Html::a('Copiar Partido', ['copy', 'id' => $partido->id], ['class' => 'btn btn-success']) ?>
         <?php endif ?>
     </div>

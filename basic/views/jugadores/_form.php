@@ -11,7 +11,6 @@ use app\models\Jugadores;
 ?>
 
 <div>
-
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'id_equipo')->dropDownList(
@@ -37,7 +36,7 @@ use app\models\Jugadores;
 
     <?= $form->field($model, 'nacionalidad')->dropDownList(
     \app\models\Jugadores::getNacionalidadesList(),
-    ['prompt' => 'Selecciona una nacionalidad']
+    ['prompt' => 'Selecciona el país de origen']
     ) ?>
 
     <?= $form->field($imagenModel, 'imagenFile')->fileInput() ?>
