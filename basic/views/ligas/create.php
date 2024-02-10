@@ -22,7 +22,10 @@ $this->title = 'Crear Liga';
     <div class="marco">
         <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de una liga:</p>
 
-        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'],
+            'enableAjaxValidation' => false,
+            'enableClientValidation' => true,
+        ]); ?>
 
         <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre de la liga', 'class' => 'campo']) ?>
         <br>
@@ -34,9 +37,9 @@ $this->title = 'Crear Liga';
         <br>
         <?= $form->field($model, 'video', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el video de la liga', 'class' => 'campo']) ?>
         <br>
-        <?= Html::submitButton(Yii::t('app', 'Añadir Liga'), ['class' => 'botonFormularion']) ?>
-        <?= Html::a(Yii::t('app', 'Atras'), Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
-        <?= Html::a(Yii::t('app', 'Ir a Inicio'), Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+
+        <?= Html::submitButton('Añadir Liga', ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Tabla de Ligas'), ['ligas/index'], ['class' => 'botonFormulario']) ?>
 
         <?php ActiveForm::end(); ?>
     </div>

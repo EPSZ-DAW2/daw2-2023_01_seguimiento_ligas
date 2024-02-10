@@ -16,28 +16,27 @@ foreach ($temporadas as $temporada) {
 }
 ?>
 
-<div class="row">
+<div id="contenedor-principal">
     <?php foreach ($ligasTemporadas as $ligaId => $temporadasPorLiga): ?>
-        <div class="col-md-6">
-            <div class="marco2">
-                <h2><?= $temporadasPorLiga[0]->liga->nombre ?></h2>
-            </div>
+        <div class="marco2">
+            <h2><?= $temporadasPorLiga[0]->liga->nombre ?></h2>
             <br>
             <?php foreach ($temporadasPorLiga as $temporada): ?>
-                <div class="marco">
-                    <?= Html::a('<h3>' . $temporada->texto_de_titulo . '</h3>', ['jornadas/index', 'id' => $temporada->id]) ?>
-
-                    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
-                        <?= Html::a('Ver Detalles', ['temporadas/view', 'id' => $temporada->id], ['class' => 'btn btn-info']) ?>
-                        <?= Html::a('Copiar Temporada', ['copy', 'id' => $temporada->id], ['class' => 'btn btn-success']) ?>
-                    <?php endif ?>
-
-                </div>
+                <br>
+                <p><?= Html::a($temporada->texto_de_titulo, ['jornadas/index', 'id' => $temporada->id]) ?></p>
+                
+                <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
+                    <?= Html::a('Ver Detalles', ['temporadas/view', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
+                    <?= Html::a('Copiar Temporada', ['copy', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
+                    <br>
+                <?php endif ?>
             <?php endforeach; ?>
         </div>
     <?php endforeach; ?>
-</div>
 
-<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
-    <?= \yii\helpers\Html::a('Añadir Temporada', ['temporadas/create'], ['class' => 'botonFormulario']) ?>
-<?php endif ?>
+    <div style="text-align: center; margin-top: 20px;">
+        <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
+            <?= Html::a('Añadir Temporada', ['temporadas/create'], ['class' => 'botonFormulario']) ?>
+        <?php endif ?>
+    </div>
+</div>

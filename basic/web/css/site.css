@@ -322,9 +322,10 @@ a.boton:hover {
 }
 
 .marco2 a:hover {
-    text-decoration: none;
-    color: #000;
+
+    color: red; /* Cambia el color del texto a rojo cuando el cursor está encima del enlace */
 }
+
 
 
 .liga-image {
