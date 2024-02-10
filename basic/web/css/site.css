@@ -416,3 +416,54 @@ a.boton:hover {
     color: #ff0000; /* Rojo al pasar el ratón */
 
 }
+
+/* Estilo para cada cuadro que contiene una liga y sus equipos */
+.liga-container2 {
+    background-color: rgba(152, 196, 240, 0.8); /* Color con opacidad */
+    padding: 10px; /* Añade un relleno al contenedor según tus necesidades */
+    border-radius: 8px; /* Añade bordes redondeados al contenedor */
+    margin: 10px auto; /* Centra horizontalmente el contenedor */
+}
+
+/* Estilo para el título de la liga */
+.liga-title2 {
+    font-size: 24px; /* Tamaño de fuente del título */
+    margin-bottom: 10px; /* Espacio entre el título y los equipos */
+}
+
+/* Estilo para la fila que contiene los equipos */
+.liga-equipos2 {
+    display: flex; /* Usa flexbox para alinear los equipos en una fila */
+    flex-wrap: wrap; /* Permite que los equipos se envuelvan a la siguiente línea si no hay suficiente espacio */
+    justify-content: center; /* Centra los equipos horizontalmente */
+}
+
+/* Estilo para cada equipo */
+.equipo-container2 {
+    width: 200px; /* Ancho del contenedor del equipo */
+    margin: 10px; /* Espacio entre los equipos */
+    text-align: center; /* Centra el contenido del equipo */
+}
+
+.tituloNegro {
+    color: white; /* Color del texto */
+    background-color: black; /* Color de fondo */
+    padding: 10px; /* Ajuste de relleno */
+    text-align: center; /* Centrar el texto */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-top: 3%;
+}
+
+#botonArriba {
+    margin-top: 10%; /* Ajusta el margen superior según sea necesario */
+    margin-bottom: 7%;
+}
+
+.enlace-equipo {
+    color: black; /* Color de texto negro */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+.enlace-equipo:hover {
+    color: red; /* Color de texto rojo al pasar el mouse */
+}
