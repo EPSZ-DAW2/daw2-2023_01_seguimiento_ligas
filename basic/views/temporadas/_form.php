@@ -19,9 +19,9 @@ $this->title =  $temporada->texto_de_titulo;
 
     <?= $form->field($temporada, 'texto_de_titulo', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
-    <?= $form->field($temporada, 'fecha_inicial', ['options' => ['class' => 'campoTitulo']])->textInput(['class' => 'campo']) ?>
+    <?= $form->field($temporada, 'fecha_inicial', ['options' => ['class' => 'campoTitulo']])->textInput(['class' => 'campo'])?>
     <br>
-    <?= $form->field($temporada, 'fecha_final', ['options' => ['class' => 'campoTitulo']])->textInput(['class' => 'campo']) ?>
+    <?= $form->field($temporada, 'fecha_final', ['options' => ['class' => 'campoTitulo']])->textInput(['class' => 'campo'])->label(false)->error() ?>
     <br>
 
     <p>

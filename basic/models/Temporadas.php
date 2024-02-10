@@ -37,11 +37,27 @@ class Temporadas extends \yii\db\ActiveRecord
             [['fecha_inicial', 'fecha_final'], 'safe'],
             [['texto_de_titulo'], 'string', 'max' => 50],
             [['id_liga'], 'integer'],
-            [['texto_de_titulo'], 'unique', 'targetAttribute' => ['texto_de_titulo', 'id_liga'], 'message' => 'Este título ya está siendo utilizado para esta liga.']
+            [['texto_de_titulo'], 'unique', 'targetAttribute' => ['texto_de_titulo', 'id_liga'], 'message' => 'Este título ya está siendo utilizado para esta liga.'],
+            [['fecha_inicial', 'fecha_final'], 'validateFecha'], // Agrega la validación de fechas
         ];
     }
+    public function validateFecha($attribute, $params)
+    {
+        if ($this->fecha_inicial >= $this->fecha_final) {
+            $this->addError('fecha_final', 'La fecha final debe ser posterior a la fecha inicial.');
+        }
     
-
+        $fechaInicio = strtotime($this->fecha_inicial);
+        $fechaFin = strtotime($this->fecha_final);
+    
+        $duracionMinima = 2 * 7 * 24 * 60 * 60; // 2 semanas en segundos
+    
+        if ($fechaFin - $fechaInicio < $duracionMinima) {
+            $this->addError('fecha_final', 'La temporada debe tener una duración mínima de 2 semanas.');
+        }
+    }
+    
+    
     /**
      * {@inheritdoc}
      */
