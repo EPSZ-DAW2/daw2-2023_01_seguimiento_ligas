@@ -27,9 +27,9 @@ class Roles extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre'], 'required'],
+            [['nombre'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['nombre'], 'string', 'max' => 50],
-            [['nombre'], 'unique'],
+            [['nombre'], 'unique','message' => 'El rol "{value}" ya existe. Por favor, cree un rol que no exista.'],
         ];
     }
 

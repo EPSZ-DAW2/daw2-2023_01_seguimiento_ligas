@@ -129,7 +129,8 @@ CREATE TABLE `estadisticas_jugador_partido` (
   `id_partido` int(6) UNSIGNED ZEROFILL NOT NULL,
   `puntos` int(6) DEFAULT NULL,
   `rebotes` int(6) DEFAULT NULL,
-  `asistencias` int(6) DEFAULT NULL
+  `asistencias` int(6) DEFAULT NULL,
+  `minutos` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

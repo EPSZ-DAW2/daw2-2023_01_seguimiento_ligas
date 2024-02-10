@@ -8,19 +8,20 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="roles-form">
+<div class="marco">
 
 <?php $form = ActiveForm::begin([
     'id' => 'roles-form',
     'enableAjaxValidation' => false,
-    'enableClientValidation' => false,
+    'enableClientValidation' => true,
 ]); ?>
 
     
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'btn btn-success']) ?>
+    <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre del nuevo rol', 'class' => 'campo']) ?>
+    <br>
+    <div>
+        <?= Html::submitButton(Yii::t('app', 'Enviar'), ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Tabla de Roles'), ['roles/index'], ['class' => 'botonFormulario']) ?>
     </div>
 
 <?php ActiveForm::end(); ?>

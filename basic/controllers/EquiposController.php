@@ -8,6 +8,7 @@ use app\models\Temporadas;
 use app\models\Ligas;
 use app\models\Imagenes;
 use app\models\PartidosJornada;
+use app\models\Jugadores;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\db\Expression;
@@ -223,10 +224,18 @@ class EquiposController extends Controller
  
         // Crear una copia del equipo
         $nuevoEquipo = new Equipos();
-        $nuevoEquipo->attributes = $equipoExistente->attributes;
- 
+
+        $nuevoEquipo->nombre = $equipoExistente->nombre . ' (copia)';
+
         // Asignar un nuevo identificador único al nuevo equipo
         $nuevoEquipo->id = null;
+
+        // Se copia el resto de campos menos el nombre
+        foreach ($equipoExistente->attributes as $attribute => $value) {
+            if ($attribute !== 'id' && $attribute !== 'nombre') {
+                $nuevoEquipo->$attribute = $value;
+            }
+        }
 
         $nuevoEquipo->save();
 
@@ -236,9 +245,17 @@ class EquiposController extends Controller
 
     public function actionVista($id)
     {
+        $this->view->title = 'ArosInsider - Equipos';
+
+        $equipo = Equipos::findOne($id);
+
         // Obtener últimos resultados
         $ultimosResultados = PartidosJornada::find()
         ->where(['<', 'horario', new Expression('NOW()')])
+        ->andWhere(['or',
+            ['id_equipo_local' => $id],
+            ['id_equipo_visitante' => $id],
+        ])
         ->orderBy(['horario' => SORT_DESC])
         ->limit(5)
         ->all();
@@ -246,9 +263,32 @@ class EquiposController extends Controller
         // Obtener próximos partidos
         $proximosPartidos = PartidosJornada::find()
         ->where(['>=', 'horario', new Expression('NOW()')])
+        ->andWhere(['or',
+            ['id_equipo_local' => $id],
+            ['id_equipo_visitante' => $id],
+        ])
         ->orderBy(['horario' => SORT_ASC])
         ->limit(5)
         ->all();
 
+        // Obtener los jugadores del equipo que tengan más puntos en las estadísticas de jugador
+        $jugadoresDestacados = Jugadores::find()
+        ->leftJoin('estadisticas_jugador', 'jugadores.id = estadisticas_jugador.id_jugador')
+        ->where(['estadisticas_jugador.id_equipo' => $id]) // Filtrar por el ID del equipo
+        ->orderBy(['estadisticas_jugador.puntos' => SORT_DESC])
+        ->limit(5)
+        ->all();
+
+
+
+
+        return $this->render('vista', [
+            'equipo' => $equipo,
+            'ultimosResultados' => $ultimosResultados,
+            'proximosPartidos' => $proximosPartidos,
+            'jugadoresDestacados' => $jugadoresDestacados,
+        ]);
+
     }
+    
 }
