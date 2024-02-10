@@ -33,12 +33,14 @@ class Temporadas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fecha_inicial', 'fecha_final', 'id_liga'], 'required'],
+            [['fecha_inicial', 'fecha_final', 'id_liga', 'texto_de_titulo'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['fecha_inicial', 'fecha_final'], 'safe'],
             [['texto_de_titulo'], 'string', 'max' => 50],
             [['id_liga'], 'integer'],
+            [['texto_de_titulo'], 'unique', 'targetAttribute' => ['texto_de_titulo', 'id_liga'], 'message' => 'Este título ya está siendo utilizado para esta liga.']
         ];
     }
+    
 
     /**
      * {@inheritdoc}

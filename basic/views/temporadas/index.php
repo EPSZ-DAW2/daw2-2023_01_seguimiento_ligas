@@ -22,11 +22,13 @@ foreach ($temporadas as $temporada) {
             <h2><?= $temporadasPorLiga[0]->liga->nombre ?></h2>
             <br>
             <?php foreach ($temporadasPorLiga as $temporada): ?>
+                <br>
                 <p><?= Html::a($temporada->texto_de_titulo, ['jornadas/index', 'id' => $temporada->id]) ?></p>
                 
                 <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
-                    <?= Html::a('Ver Detalles', ['temporadas/view', 'id' => $temporada->id], ['class' => 'botonFormulario', 'style' => 'margin-bottom: 10px;']) ?>
-                    <?= Html::a('Copiar Temporada', ['copy', 'id' => $temporada->id], ['class' => 'botonFormulario', 'style' => 'margin-bottom: 10px;']) ?>
+                    <?= Html::a('Ver Detalles', ['temporadas/view', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
+                    <?= Html::a('Copiar Temporada', ['copy', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
+                    <br>
                 <?php endif ?>
             <?php endforeach; ?>
         </div>

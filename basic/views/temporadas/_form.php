@@ -3,24 +3,32 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+
+$this->title =  $temporada->texto_de_titulo;
 /** @var yii\web\View $this */
 /** @var app\models\Temporadas $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="temporadas-form">
+<div class="marco">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <p class="PaginaDeInicio">Datos de <?= Html::encode($this->title) ?></p>
 
-    <?= $form->field($temporada, 'texto_de_titulo')->textInput(['maxlength' => true]) ?>
+    <?php $form = ActiveForm::begin(['enableAjaxValidation' => false,
+        'enableClientValidation' => true,]); ?>
 
-    <?= $form->field($temporada, 'fecha_inicial')->textInput() ?>
+    <?= $form->field($temporada, 'texto_de_titulo', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($temporada, 'fecha_inicial', ['options' => ['class' => 'campoTitulo']])->textInput(['class' => 'campo']) ?>
+    <br>
+    <?= $form->field($temporada, 'fecha_final', ['options' => ['class' => 'campoTitulo']])->textInput(['class' => 'campo']) ?>
+    <br>
 
-    <?= $form->field($temporada, 'fecha_final')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
+    <p>
+        <?= Html::submitButton('Modificar', ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Atras'), ['temporadas/view', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Tabla de temporadas'), ['temporadas/index'], ['class' => 'botonFormulario']) ?>
+    </p>
 
     <?php ActiveForm::end(); ?>
 
