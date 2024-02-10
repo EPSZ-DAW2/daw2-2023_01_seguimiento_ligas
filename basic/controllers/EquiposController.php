@@ -224,10 +224,18 @@ class EquiposController extends Controller
  
         // Crear una copia del equipo
         $nuevoEquipo = new Equipos();
-        $nuevoEquipo->attributes = $equipoExistente->attributes;
- 
+
+        $nuevoEquipo->nombre = $equipoExistente->nombre . ' (copia)';
+
         // Asignar un nuevo identificador único al nuevo equipo
         $nuevoEquipo->id = null;
+
+        // Se copia el resto de campos menos el nombre
+        foreach ($equipoExistente->attributes as $attribute => $value) {
+            if ($attribute !== 'id' && $attribute !== 'nombre') {
+                $nuevoEquipo->$attribute = $value;
+            }
+        }
 
         $nuevoEquipo->save();
 

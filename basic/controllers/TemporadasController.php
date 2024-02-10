@@ -173,7 +173,15 @@ class TemporadasController extends \yii\web\Controller
 
         // Crear una copia de la temporada
         $nuevaTemporada = new Temporadas();
-        $nuevaTemporada->attributes = $temporadaExistente->attributes;
+
+        $nuevaTemporada->texto_de_titulo = $temporadaExistente->texto_de_titulo . ' (copia)';
+
+        // Se copia el resto de campos menos el nombre
+        foreach ($temporadaExistente->attributes as $attribute => $value) {
+            if ($attribute !== 'id' && $attribute !== 'texto_de_titulo') {
+                $nuevaTemporada->$attribute = $value;
+            }
+        }
 
         // Asignar un nuevo identificador único a la nueva temporada
         $nuevaTemporada->id = null;
