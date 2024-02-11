@@ -24,9 +24,12 @@ class EquiposController extends Controller
         // Obtén todos los equipos desde la base de datos
         $equipos = Equipos::find()->all();
 
+        $ligas = Ligas::find()->all();
+
         // Renderiza la vista y pasa los equipos como parámetro
         return $this->render('index', [
             'equipos' => $equipos,
+            'ligas' => $ligas,
         ]);
     }
 

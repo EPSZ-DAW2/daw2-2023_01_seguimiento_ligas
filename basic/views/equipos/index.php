@@ -1,5 +1,3 @@
-<?php $this->registerCssFile('@web/css/equipos.css'); ?>
-
 <?php
 use yii\helpers\Html;
 ?> 

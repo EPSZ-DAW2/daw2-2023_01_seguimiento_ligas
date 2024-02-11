@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\validators\DateValidator;
 
 /**
  * This is the model class for table "jornadas_temporada".
@@ -35,9 +36,10 @@ class JornadasTemporada extends \yii\db\ActiveRecord
         return [
             [['id_temporada', 'numero', 'fecha_inicio', 'fecha_final'], 'required'],
             [['id_temporada', 'numero'], 'integer'],
-            [['fecha_inicio', 'fecha_final'], 'safe'],
+            [['fecha_inicio', 'fecha_final'], 'required'],
             [['video'], 'string', 'max' => 255],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
+            ['fecha_final', 'validarFecha'],
         ];
     }
 
@@ -74,5 +76,22 @@ class JornadasTemporada extends \yii\db\ActiveRecord
     public function getTemporada()
     {
         return $this->hasOne(Temporadas::class, ['id' => 'id_temporada']);
+    }
+
+    // Función para validar que la fecha final de la jornada sea posterior a la de inicio
+    public function validarFecha($attribute, $params)
+    {
+        $fechaInicial = $this->fecha_inicio;
+        $fechaFinal = $this->fecha_final;
+
+        // Validar que las fechas sean del tipo correcto
+        if (!strtotime($this->fecha_inicio) || !strtotime($this->fecha_final)) {
+            $this->addError($attribute, 'Las fechas no son válidas.');
+            return;
+        }
+
+        if (strtotime($fechaFinal) < strtotime($fechaInicial)) {
+            $this->addError($attribute, 'La fecha final debe ser posterior a la fecha inicial.');
+        }
     }
 }
