@@ -127,6 +127,7 @@ CREATE TABLE `estadisticas_jugador_partido` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_jugador` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_partido` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `id_equipo` int(6) UNSIGNED ZEROFILL NOT NULL,
   `puntos` int(6) DEFAULT NULL,
   `rebotes` int(6) DEFAULT NULL,
   `asistencias` int(6) DEFAULT NULL,
@@ -349,7 +350,8 @@ ALTER TABLE `estadisticas_jugador`
 ALTER TABLE `estadisticas_jugador_partido`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_id_idJugadorP` (`id_jugador`),
-  ADD KEY `fk_id_idPartidoJ` (`id_partido`);
+  ADD KEY `fk_id_idPartidoJ` (`id_partido`),
+  ADD KEY `fk_id_idEquipoE` (`id_equipo`);
 
 --
 -- Indices de la tabla `imagenes`
@@ -579,7 +581,8 @@ ALTER TABLE `estadisticas_jugador`
 --
 ALTER TABLE `estadisticas_jugador_partido`
   ADD CONSTRAINT `fk_id_idJugadorP` FOREIGN KEY (`id_jugador`) REFERENCES `jugadores` (`id`),
-  ADD CONSTRAINT `fk_id_idPartidoJ` FOREIGN KEY (`id_partido`) REFERENCES `partidos_jornada` (`id`);
+  ADD CONSTRAINT `fk_id_idPartidoJ` FOREIGN KEY (`id_partido`) REFERENCES `partidos_jornada` (`id`),
+  ADD CONSTRAINT `fk_id_idEquipoE` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`);
 
 --
 -- Filtros para la tabla `jornadas_temporada`
