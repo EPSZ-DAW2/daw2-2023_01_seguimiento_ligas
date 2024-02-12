@@ -10,7 +10,6 @@ $this->title = 'Crear Jugadores';
 //$this->params['breadcrumbs'][] = $this->title;
 
 
-// Registrar el archivo CSS
 $this->registerCssFile('@web/css/jugadores.css');
 
 ?>
@@ -18,7 +17,7 @@ $this->registerCssFile('@web/css/jugadores.css');
 
     <h2><?= Html::encode($this->title) ?></h2>
 
-    <p class="PaginaDeInicio">Por favor rellene los campos para la creacción de un jugador:</p>
+    <p class="PaginaDeInicio">Introduzca los datos del jugador:</p>
 
     <?= $this->render('_form', [
         'model' => $model,
