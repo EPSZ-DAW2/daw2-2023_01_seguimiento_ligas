@@ -9,7 +9,7 @@ use yii\helpers\Html;
 
 <h2>Últimos Resultados</h2>
 <?php foreach ($ultimosResultados as $resultado): ?>
-    <div class="marco">
+    <div class="marco2">
         <h4><?= Html::a($resultado->equipoLocal->nombre, ['equipos/vista', 'id' => $resultado->equipoLocal->id]) ?> - <?= Html::a($resultado->equipoVisitante->nombre, ['equipos/vista', 'id' => $resultado->equipoVisitante->id]) ?></h4>
         <p> <?= $resultado->lugar; ?> : <?= date('d-m-Y H:i', strtotime($resultado->horario)); ?></p>
         <p>Resultado: <?= $resultado->resultado_local; ?> - <?= $resultado->resultado_visitante; ?></p>
