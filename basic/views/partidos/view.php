@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Detalles del Partido: ' . $model->equipoLocal->nombre . ' vs ' . $model->equipoVisitante->nombre;
+$this->title = $model->equipoLocal->nombre . ' vs ' . $model->equipoVisitante->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Partidos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
