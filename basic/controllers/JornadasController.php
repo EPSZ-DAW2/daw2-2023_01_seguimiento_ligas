@@ -48,7 +48,7 @@ class JornadasController extends \yii\web\Controller
             } else {
                 print_r($model->errors);
                 // Muestra los errores de validación del modelo Equipos
-                Yii::$app->session->setFlash('error', 'Error al guardar la jornada.');
+    
 
                 return $this->render('create', [
                     'model' => $model,

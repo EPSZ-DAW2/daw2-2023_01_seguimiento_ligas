@@ -34,8 +34,9 @@ class JornadasTemporada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_temporada', 'numero', 'fecha_inicio', 'fecha_final'], 'required'],
+            [['id_temporada', 'numero', 'fecha_inicio', 'fecha_final'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_temporada', 'numero'], 'integer'],
+            ['numero', 'unique', 'targetAttribute' => ['numero', 'id_temporada'], 'message' => 'Ya existe una jornada con este número para esta temporada.'],
             [['fecha_inicio', 'fecha_final'], 'required'],
             [['video'], 'string', 'max' => 255],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
