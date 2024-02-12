@@ -12,9 +12,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_jugador')->textInput() ?>
+    <?= $form->field($model, 'id_partido')->hiddenInput(['value' => $idPartido])->label(false) ?>
 
-    <?= $form->field($model, 'id_partido')->textInput() ?>
+    <?= $form->field($model, 'id_jugador')->dropDownList($jugadores, ['prompt' => 'Seleccionar Jugador']) ?>
+
+    <?= $form->field($model, 'id_equipo')->hiddenInput(['value' => $idEquipo])->label(false) ?>
+
+    <?= $form->field($model, 'minutos')->textInput() ?>
 
     <?= $form->field($model, 'puntos')->textInput() ?>
 
@@ -23,11 +27,12 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'asistencias')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+
 
 

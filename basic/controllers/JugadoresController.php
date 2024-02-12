@@ -33,15 +33,15 @@ class JugadoresController extends Controller
         }
     
         $ligas = Ligas::find()->all();
-        
+    
+        // Renderiza la vista y pasa los datos necesarios
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'ligas' => $ligas,
             'ligaId' => $ligaId,
             'searchModel' => $searchModel,
         ]);
-    }
-    
+    }    
     
     public function actionCreate()
     {

@@ -110,6 +110,17 @@ class Equipos extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[EstadisticasJugadorPartido]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEstadisticasJugadorPartido()
+    {
+        // Relación entre equipos y estadísticas de jugador partido
+        return $this->hasMany(EstadisticasJugadorPartido::class, ['id_equipo' => 'id']);
+    }
+
+    /**
      * Gets query for [[Imagen]].
      *
      * @return \yii\db\ActiveQuery
