@@ -7,34 +7,46 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Equipos */
 
 $this->title = $equipo->nombre;
-$this->params['breadcrumbs'][] = ['label' => 'Equipos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => 'Equipos', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="marco2">
-<div class="equipos-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Editar', ['update', 'id' => $equipo->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Eliminar', ['delete', 'id' => $equipo->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => '¿Estás seguro de que deseas eliminar este equipo?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $equipo,
-        'attributes' => [
-            'id',
-            'nombre',
-            'descripcion',
-            // ... otras propiedades del equipo
-        ],
-    ]) ?>
+<div class="contenido-cabecera">  
+    
+    <h1>DATOS DE <?= $equipo->nombre; ?></h1>  
 
 </div>
+
+<div id="contenedor-principal">
+
+
+    <div class="marco">
+
+        <p class="PaginaDeInicio">Datos:</p>
+
+        <?= DetailView::widget([
+            'model' => $equipo,
+            'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
+            'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
+            'attributes' => [
+                'id',
+                'nombre',
+                'descripcion',
+                // ... otras propiedades del equipo
+            ],
+        ]) ?>
+
+        <p>
+            <?= Html::a('Editar', ['update', 'id' => $equipo->id], ['class' => 'botonFormulario']) ?>
+            <?= Html::a('Eliminar', ['delete', 'id' => $equipo->id], [
+                'class' => 'botonFormulario',
+                'data' => [
+                    'confirm' => '¿Estás seguro de que deseas eliminar este equipo?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+            <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>
+        </p>
+    </div>
 </div>

@@ -24,9 +24,12 @@ class EquiposController extends Controller
         // Obtén todos los equipos desde la base de datos
         $equipos = Equipos::find()->all();
 
+        $ligas = Ligas::find()->all();
+
         // Renderiza la vista y pasa los equipos como parámetro
         return $this->render('index', [
             'equipos' => $equipos,
+            'ligas' => $ligas,
         ]);
     }
 
@@ -46,8 +49,10 @@ class EquiposController extends Controller
             $model->load(Yii::$app->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
 
+            if (empty($imagenModel->imagenFile)) {
+                $imagenModel->addError('imagenFile', 'La imagen es un campo obligatorio.');
             // Validar y guardar la imagen
-            if ($imagenModel->validate() && $imagenModel->saveImagen()) {
+            } elseif($imagenModel->validate() && $imagenModel->saveImagen()) {
                 // Asigna el ID de la imagen al modelo de Equipos después de guardarla
                 $model->id_escudo = $imagenModel->id;
 
@@ -57,7 +62,7 @@ class EquiposController extends Controller
                 } else {
                     print_r($model->errors);
                     // Muestra los errores de validación del modelo Equipos
-                    Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
+                    //Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
                     
                     return $this->render('create', [
                         'model' => $model,

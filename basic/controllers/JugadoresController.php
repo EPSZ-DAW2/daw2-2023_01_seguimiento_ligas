@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Jugadores;
+use app\models\JugadoresSearch;
 use app\models\EstadisticasJugador;
 use app\models\Imagenes;
 use app\models\Equipos;
@@ -17,37 +18,30 @@ class JugadoresController extends Controller
 {
     public function actionIndex()
     {
-        // Obtiene el ID de la liga seleccionada
+        $searchModel = new JugadoresSearch();
         $ligaId = Yii::$app->request->get('ligaId');
         
-        // Consulta base de jugadores
-        $query = Jugadores::find()->with('equipo');
+        // Aplicar condiciones de búsqueda si se envían parámetros
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-        // Si se ha seleccionado una liga válida, filtra los jugadores por esa liga
+        // Agregar condiciones adicionales si se especifica la liga
         if (!empty($ligaId) && $ligaId != -1) {
+            $query = $dataProvider->query;
             $query->leftJoin('equipos', 'jugadores.id_equipo = equipos.id')
                 ->andWhere(['equipos.id_liga' => $ligaId]);
+            $dataProvider->query = $query;
         }
-        
-        // Configura el proveedor de datos con la consulta de jugadores
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 12, // Define el número de jugadores por página
-            ],
-        ]);
-        
-        // Obtiene la lista de ligas para el desplegable
+    
         $ligas = Ligas::find()->all();
-        
-        // Renderiza la vista y pasa el proveedor de datos y la lista de ligas como parámetros
+    
+        // Renderiza la vista y pasa los datos necesarios
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'ligas' => $ligas,
-            'ligaId' => $ligaId, // Pasa el ID de la liga seleccionada a la vista
+            'ligaId' => $ligaId,
+            'searchModel' => $searchModel,
         ]);
-    }
-     
+    }    
     
     public function actionCreate()
     {
@@ -58,17 +52,15 @@ class JugadoresController extends Controller
             $model->load(Yii::$app->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
 
-            // Validar y guardar la imagen
-            if ($imagenModel->validate() && $imagenModel->saveImagen()) {
-                // Asigna el ID de la imagen al modelo de Equipos después de guardarla
+            if (empty($imagenModel->imagenFile)) {
+                $imagenModel->addError('imagenFile', 'La imagen es un campo obligatorio.');
+            } elseif ($imagenModel->validate() && $imagenModel->saveImagen()) {
                 $model->id_imagen = $imagenModel->id;
 
-                // Guarda el modelo de Equipos
                 if ($model->save()) {
 
                     $estadisticasJugador = new EstadisticasJugador();
 
-                    // Asigna los valores predeterminados
                     $estadisticasJugador->id_temporada = Temporadas::find()->orderBy(['id' => SORT_DESC])->one()->id;
                     $estadisticasJugador->id_equipo = $model->id_equipo;
                     $estadisticasJugador->id_jugador = $model->id;
@@ -77,13 +69,11 @@ class JugadoresController extends Controller
                     $estadisticasJugador->rebotes = 0;
                     $estadisticasJugador->asistencias = 0;
 
-                    // Guarda la nueva entrada en estadisticas_jugador
                     $estadisticasJugador->save();
                     return $this->redirect(['jugadores/index']);
                 } else {
                     print_r($model->errors);
-                    // Muestra los errores de validación del modelo Equipos
-                    Yii::$app->session->setFlash('error', 'Error al guardar el jugador.');
+                    //Yii::$app->session->setFlash('error', 'Error al guardar el jugador.');
                     
                     return $this->render('create', [
                         'model' => $model,
@@ -91,7 +81,6 @@ class JugadoresController extends Controller
                     ]);
                 }
             } else {
-                // Muestra los errores de validación de la imagen
                 Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
         }
@@ -111,19 +100,15 @@ class JugadoresController extends Controller
             $model->load(Yii::$app->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
     
-            // Validar y guardar la imagen
             if ($imagenModel->validate() && $imagenModel->saveImagen()) {
-                // Asigna el ID de la imagen al modelo de Ligas después de guardarla
                 $model->id_imagen = $imagenModel->id;
     
-                // Guarda el modelo de Ligas
                 if ($model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 } else {
                     Yii::$app->session->setFlash('error', 'Error al guardar la liga.');
                 }
             } else {
-                // Muestra los errores de validación de la imagen
                 Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
         }
@@ -169,14 +154,10 @@ class JugadoresController extends Controller
         $equipo = Equipos::findOne($id);
         $jugadores = Jugadores::find()->where(['id_equipo' => $id])->all();
     
-        if ($jugadores) {
-            return $this->render('ver-por-equipo', [
-                'jugadores' => $jugadores,
-                'equipo' => $equipo,
-            ]);
-        } else {
-            return 'No se encontraron jugadores para el equipo seleccionado.';
-        }
-    }
-    
+        return $this->render('ver-por-equipo', [
+            'jugadores' => $jugadores,
+            'equipo' => $equipo,
+        ]);
+    } 
+
 }

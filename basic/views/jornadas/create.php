@@ -10,35 +10,49 @@ use yii\helpers\ArrayHelper;
 
 <?php $this->title = 'Crear Jornada'; ?>
 
-<div class="marco">
 
-    <h2 class="equipos_presentacion"><?= Html::encode($this->title) ?></h2>
+<div class="contenido-cabecera">
 
-    <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de una jornada:</p>
+    <h1><?= Html::encode($this->title) ?></h1>
+
+</div>
 
 
-    <?php $form = ActiveForm::begin([
-        'options' => ['enctype' => 'multipart/form-data'],
-    ]); ?>
+<div id="contenedor-principal">
 
-    <?= $form->field($model, 'numero', ['options' => ['class' => 'campoTitulo']])->textInput([
-        'maxlength' => true,
-        'type' => 'number', // Establecer el tipo como "number"
-        'pattern' => '[0-9]*', // Expresión regular para aceptar solo números
-    ]) ?>
+    <div class="marco">
 
-    <?= $form->field($model, 'fecha_inicio')->widget(\yii\jui\DatePicker::class, [
-        'dateFormat' => 'yyyy-MM-dd',
-        'options' => ['class' => 'form-control'],
-    ]) ?>
+        <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de una jornada:</p>
 
-    <?= $form->field($model, 'fecha_final')->widget(\yii\jui\DatePicker::class, [
-        'dateFormat' => 'yyyy-MM-dd',
-        'options' => ['class' => 'form-control'],
-    ]) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Añadir Jornada', ['class' => 'botonInicioSesion']) ?>
+        <?php $form = ActiveForm::begin([
+            'options' => ['enctype' => 'multipart/form-data'],
+            'enableAjaxValidation' => false,
+            'enableClientValidation' => true,
+        ]); ?>
+
+        <?= $form->field($model, 'numero', ['options' => ['class' => 'campoTitulo']])->textInput([
+            'maxlength' => true,
+            'placeholder' => 'Ingrese el numero de la temporada',
+            'type' => 'number', // Establecer el tipo como "number"
+            'pattern' => '[0-9]*', // Expresión regular para aceptar solo números
+            'class' => 'campo',
+        ]) ?>
+        <br>
+        <?= $form->field($model, 'fecha_inicio', ['options' => ['class' => 'campoTitulo']])->widget(\yii\jui\DatePicker::class, [
+            'dateFormat' => 'yyyy-MM-dd',
+            'options' => ['class' => 'campo', 'placeholder' => 'Año-Mes-Dias'],
+        ]) ?>
+        <br>
+        <?= $form->field($model, 'fecha_final', ['options' => ['class' => 'campoTitulo']])->widget(\yii\jui\DatePicker::class, [
+            'dateFormat' => 'yyyy-MM-dd',
+            'options' => ['class' => 'campo', 'placeholder' => 'Año-Mes-Dias'],
+        ]) ?>
+        <br>
+
+        <p>    
+        <?= Html::submitButton('Añadir Jornada', ['class' => 'botonFormulario']) ?>
+        </p>
+        <?php ActiveForm::end(); ?>
     </div>
-
-    <?php ActiveForm::end(); ?>
+</div>

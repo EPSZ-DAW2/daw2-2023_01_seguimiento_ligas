@@ -8,6 +8,8 @@ use app\models\JornadasTemporada;
 use app\models\Equipos;
 use app\models\Temporadas;
 use app\models\Comentarios;
+use app\models\Ligas;
+use yii\data\ActiveDataProvider;
 
 class PartidosController extends \yii\web\Controller
 {
@@ -45,13 +47,23 @@ class PartidosController extends \yii\web\Controller
         if ($model === null) {
             throw new NotFoundHttpException('El partido no fue encontrado.');
         }
-
+    
+        // Obtener las estadísticas de los jugadores del equipo local y visitante
+        $dataProviderLocal = new ActiveDataProvider([
+            'query' => $model->equipoLocal->getEstadisticasJugadorPartido(),
+        ]);
+        
+        $dataProviderVisitante = new ActiveDataProvider([
+            'query' => $model->equipoVisitante->getEstadisticasJugadorPartido(),
+        ]);        
+    
         // Renderizar la vista de detalles del partido
         return $this->render('view', [
             'model' => $model,
             'comentarios' => $comentarios,
         ]);
     }
+    
     
     protected function findModel($id)
     {
@@ -271,12 +283,17 @@ class PartidosController extends \yii\web\Controller
         return $this->redirect(['view', 'id_partido' => $id_partido]);
     }
 
-    public function actionEliminar($id)
+    public function actionAddStats($idPartido, $idEquipo)
     {
-        $comentario = Comentarios::findOne($id);
-        if ($comentario !== null) {
-            $comentario->delete();
-        }
-        return $this->redirect(['view']);
+        $model = new EstadisticasJugadorPartido();
+        $model->id_partido = $idPartido;
+    
+        // Aquí deberías obtener la lista de jugadores del equipo en función del $idEquipo
+    
+        return $this->render('form', [
+            'model' => $model,
+            'idPartido' => $idPartido,
+            'jugadores' => [], // Pasa aquí la lista de jugadores
+        ]);
     }
 }

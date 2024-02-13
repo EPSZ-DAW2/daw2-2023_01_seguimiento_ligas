@@ -12,7 +12,7 @@ use app\models\Equipos;
 
 <?php foreach ($partidos as $partido): ?>
     <div class="marco2">
-        <h2><?= Html::a($partido->equipoLocal->nombre, ['equipos/vista', 'id' => $partido->equipoLocal->id]) ?> - <?= Html::a($partido->equipoVisitante->nombre, ['equipos/view', 'id' => $partido->equipoVisitante->id]) ?></h2>
+        <h2><?= Html::a($partido->equipoLocal->nombre, ['equipos/vista', 'id' => $partido->equipoLocal->id]) ?> - <?= Html::a($partido->equipoVisitante->nombre, ['equipos/vista', 'id' => $partido->equipoVisitante->id]) ?></h2>
         <p>Lugar: <?= $partido->lugar ?></p>
         <p><?= $partido->jornada->temporada->texto_de_titulo ?> - Jornada <?= $partido->jornada->numero ?> </p> 
         <p><?= (new DateTime($partido->horario))->format('d/m/Y H:i:s') ?></p>
@@ -31,6 +31,7 @@ use app\models\Equipos;
         }
         ?>
 
+        <?= Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'btn btn-info']) ?>
         <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
             <?= Html::a('Copiar Partido', ['copy', 'id' => $partido->id], ['class' => 'btn btn-success']) ?>
         <?php endif ?>

@@ -43,9 +43,10 @@ class Equipos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_liga', 'id_temporada', 'nombre', 'descripcion', 'id_escudo', 'n_jugadores'], 'required'],
+            [['id_liga', 'id_temporada', 'nombre', 'descripcion', 'id_escudo', 'n_jugadores'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_liga', 'id_temporada', 'id_escudo', 'n_jugadores'], 'integer'],
             [['nombre'], 'string', 'max' => 100],
+            [['nombre'], 'unique', 'message' => 'Este equipo "{value}" ya esta creado.'],
             [['descripcion'], 'string', 'max' => 200],
             [['id_liga'], 'exist', 'skipOnError' => true, 'targetClass' => Ligas::class, 'targetAttribute' => ['id_liga' => 'id']],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
@@ -107,6 +108,17 @@ class Equipos extends \yii\db\ActiveRecord
     public function getEstadisticasJugadors()
     {
         return $this->hasMany(EstadisticasJugador::class, ['id_equipo' => 'id']);
+    }
+
+    /**
+     * Gets query for [[EstadisticasJugadorPartido]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEstadisticasJugadorPartido()
+    {
+        // Relación entre equipos y estadísticas de jugador partido
+        return $this->hasMany(EstadisticasJugadorPartido::class, ['id_equipo' => 'id']);
     }
 
     /**

@@ -467,3 +467,31 @@ a.boton:hover {
 .enlace-equipo:hover {
     color: red; /* Color de texto rojo al pasar el mouse */
 }
+
+
+/* Estilo para cada cuadro que contiene una liga y sus equipos */
+.liga-container3 {
+    background-color: rgba(152, 196, 240, 0.8); /* Color con opacidad */
+    padding: 10px; /* Añade un relleno al contenedor según tus necesidades */
+    border-radius: 8px; /* Añade bordes redondeados al contenedor */
+    margin-top: 8%; /* Centra horizontalmente el contenedor */
+}
+
+.estadisticas-container {
+    display: flex;
+}
+
+.estadistica {
+    flex: 1;
+    border: 1px solid black;
+    padding: 0.5%; /* Ajusta el padding según sea necesario */
+    margin: 1%;
+}
+
+.estadistica h3 {
+    color: red;
+}
+
+.estadistica p {
+    font-weight: bold;
+}
