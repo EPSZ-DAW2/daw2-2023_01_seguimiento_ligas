@@ -6,17 +6,26 @@ use yii\helpers\Html;
 /** @var app\models\Jugadores $model */
 
 $this->title = 'Modificar Jugadores: ' . $model->nombre;
-$this->params['breadcrumbs'][] = ['label' => 'Jugadores', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->nombre, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Modificar';
+//$this->params['breadcrumbs'][] = ['label' => 'Jugadores', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => $model->nombre, 'url' => ['view', 'id' => $model->id]];
+//$this->params['breadcrumbs'][] = 'Modificar';
 ?>
-<div class="jugadores-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="contenido-cabecera">
+
+    <h1>MODIFICAR DATOS DE <?= Html::encode($model->nombre) ?></h1>
+
+</div>
+
+
+<div id="contenedor-principal">
+
+    <div class="marco">
 
     <?= $this->render('_form', [
         'model' => $model,
         'imagenModel' => $imagenModel,
     ]) ?>
 
+    </div>
 </div>

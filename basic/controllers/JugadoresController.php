@@ -52,7 +52,9 @@ class JugadoresController extends Controller
             $model->load(Yii::$app->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
 
-            if ($imagenModel->validate() && $imagenModel->saveImagen()) {
+            if (empty($imagenModel->imagenFile)) {
+                $imagenModel->addError('imagenFile', 'La imagen es un campo obligatorio.');
+            } elseif ($imagenModel->validate() && $imagenModel->saveImagen()) {
                 $model->id_imagen = $imagenModel->id;
 
                 if ($model->save()) {
@@ -71,7 +73,7 @@ class JugadoresController extends Controller
                     return $this->redirect(['jugadores/index']);
                 } else {
                     print_r($model->errors);
-                    Yii::$app->session->setFlash('error', 'Error al guardar el jugador.');
+                    //Yii::$app->session->setFlash('error', 'Error al guardar el jugador.');
                     
                     return $this->render('create', [
                         'model' => $model,
