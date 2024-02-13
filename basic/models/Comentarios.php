@@ -38,7 +38,7 @@ class Comentarios extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_partido', 'id_usuario', 'fecha_hora', 'texto_comentario','id_comentario_padre'], 'required'],
+            [['id_partido', 'id_usuario', 'fecha_hora', 'texto_comentario'], 'required'],
             [['id_partido', 'id_usuario', 'id_comentario_padre', 'num_denuncias'], 'integer'],
             [['fecha_hora', 'fecha_hora_bloqueo'], 'safe'],
             [['texto_comentario'], 'string', 'max' => 255],

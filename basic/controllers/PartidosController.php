@@ -243,26 +243,40 @@ class PartidosController extends \yii\web\Controller
         return $this->redirect(['index', 'id' => $nuevoPartido->id]);
     }
 
-    public function actionAgregarComentario()
+    public function actionAgregarComentario($id_partido)
     {
-        $nuevoComentarioModel = new \app\models\Comentarios();
-
-        if (Yii::$app->request->isPost) {
-            $nuevoComentarioModel->load(Yii::$app->request->post());
-
-            if ($nuevoComentarioModel->save()) {
-                // Éxito al guardar el comentario
-                Yii::$app->session->setFlash('success', 'Comentario agregado con éxito.');
-                return $this->redirect(['view', 'partidoID' => $nuevoComentarioModel->id_partido]);
-            } else {
-                // Error al guardar el comentario
-                Yii::$app->session->setFlash('error', 'Error al guardar el comentario.');
-            }
+        // Verifica si el usuario está autenticado
+        if (Yii::$app->user->isGuest) {
+            // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+            Yii::$app->session->setFlash('error', 'Debes iniciar sesión para escribir comentarios.');
+            return $this->redirect(['site/login']); // Ajusta la URL según la tuya
         }
 
-        return $this->render('view', [
-            'model' => $nuevoComentarioModel, // Puedes necesitar pasar otros modelos o datos según tu lógica
-            'comentarios' => Comentarios::find()->where(['id_partido' => $partidoID])->all(),
-        ]);
+        // Crea un nuevo modelo de Comentarios
+        $nuevoComentarioModel = new Comentarios();
+
+        // Asigna los valores del comentario
+        $nuevoComentarioModel->id_partido = $id_partido;
+        $nuevoComentarioModel->id_usuario = Yii::$app->user->id; // Asigna el ID del usuario actual
+        $nuevoComentarioModel->fecha_hora = date('Y-m-d H:i:s'); // Asigna la fecha y hora actual
+
+        // Guarda el comentario en la base de datos
+        if ($nuevoComentarioModel->save()) {
+            Yii::$app->session->setFlash('success', '¡Comentario agregado exitosamente!');
+        } else {
+            Yii::$app->session->setFlash('error', 'Hubo un error al guardar el comentario.');
+        }
+
+        // Redirige al usuario de vuelta a la página de comentarios
+        return $this->redirect(['view', 'id_partido' => $id_partido]);
+    }
+
+    public function actionEliminar($id)
+    {
+        $comentario = Comentarios::findOne($id);
+        if ($comentario !== null) {
+            $comentario->delete();
+        }
+        return $this->redirect(['view']);
     }
 }
