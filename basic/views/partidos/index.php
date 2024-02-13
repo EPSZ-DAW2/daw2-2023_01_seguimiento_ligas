@@ -16,7 +16,6 @@ use app\models\Equipos;
         <p>Lugar: <?= $partido->lugar ?></p>
         <p><?= $partido->jornada->temporada->texto_de_titulo ?> - Jornada <?= $partido->jornada->numero ?> </p> 
         <p><?= (new DateTime($partido->horario))->format('d/m/Y H:i:s') ?></p>
-        <?= Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'btn btn-info']) ?>
 
         <?php
         // Obtener la fecha actual

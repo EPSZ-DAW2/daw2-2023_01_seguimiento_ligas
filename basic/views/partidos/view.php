@@ -16,8 +16,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Partidos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="partidos-jornada-view">
-
-<div class="partido-view">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= DetailView::widget([
