@@ -9,19 +9,25 @@ $this->title = 'Crear Jugadores';
 //$this->params['breadcrumbs'][] = ['label' => 'Jugadores', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 
-
-$this->registerCssFile('@web/css/jugadores.css');
-
 ?>
-<div class="marco">
 
-    <h2><?= Html::encode($this->title) ?></h2>
+<div class="contenido-cabecera">
 
-    <p class="PaginaDeInicio">Introduzca los datos del jugador:</p>
+    <h1>CREADOR DE JUGADORES</h1>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-        'imagenModel' => $imagenModel,
-    ]) ?>
+</div>
 
+<div  id="contenedor-principal">
+    <div class="marco">
+
+        <h2><?= Html::encode($this->title) ?></h2>
+
+        <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de un jugador::</p>
+
+        <?= $this->render('_form', [
+            'model' => $model,
+            'imagenModel' => $imagenModel,
+        ]) ?>
+
+    </div>
 </div>

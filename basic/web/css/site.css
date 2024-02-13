@@ -476,3 +476,22 @@ a.boton:hover {
     border-radius: 8px; /* Añade bordes redondeados al contenedor */
     margin-top: 8%; /* Centra horizontalmente el contenedor */
 }
+
+.estadisticas-container {
+    display: flex;
+}
+
+.estadistica {
+    flex: 1;
+    border: 1px solid black;
+    padding: 0.5%; /* Ajusta el padding según sea necesario */
+    margin: 1%;
+}
+
+.estadistica h3 {
+    color: red;
+}
+
+.estadistica p {
+    font-weight: bold;
+}

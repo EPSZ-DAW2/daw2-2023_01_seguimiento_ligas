@@ -40,13 +40,12 @@ class Jugadores extends \yii\db\ActiveRecord
         return [
 
             [['id_equipo', 'nombre', 'descripcion', 'id_imagen', 'posicion', 'altura', 'peso', 'nacionalidad'], 'required', 'message' => 'Este campo es obligatorio'],
-            //[['id_equipo', 'id_imagen'], 'required'],
-            //[['nombre'], 'required', 'message' => 'Es obligatorio introducir un nombre.'],
             [['id_equipo', 'id_imagen'], 'integer'],
             [['altura', 'peso'], 'string'],
             [['altura'], 'required', 'message' => 'Es obligatorio introducir la altura del jugador'],
             [['peso'], 'required', 'message' => 'Es obligatorio introducir la altura del jugador'],
             [['nombre', 'posicion', 'nacionalidad'], 'string', 'max' => 50],
+            [['nombre'], 'unique', 'message' => 'El nombre "{value}" ya existe.'],
             [['descripcion'], 'string', 'max' => 255],
             [['id_equipo'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo' => 'id'], 'message' => 'El id_equipo introducido no existe. Introduzca un id equipo válido.'],
             [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id'],],
