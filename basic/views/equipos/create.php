@@ -69,7 +69,7 @@ $this->title = 'Crear Equipo';
 
     <?php
     $usuarios = Usuarios::find()
-    ->where(['id_rol' => 5])
+    ->where(['id_rol' => 6])
     ->all();
 
     // Convertir los usuarios en un array asociativo para usarlo en el dropdown

@@ -154,6 +154,7 @@ class JornadasController extends \yii\web\Controller
     }
 
     // Acción para copiar una jornada
+    /*
     public function actionCopy($id)
     {
         if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
@@ -187,5 +188,6 @@ class JornadasController extends \yii\web\Controller
         // Redirigir a la página de jornadas
         return $this->redirect(['index', 'id' => $nuevaJornada->id_temporada]);
     }
+    */
 
 }

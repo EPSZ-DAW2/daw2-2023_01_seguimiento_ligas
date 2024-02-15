@@ -46,7 +46,7 @@ class Equipos extends \yii\db\ActiveRecord
             [['id_liga', 'id_temporada', 'nombre', 'descripcion', 'id_escudo', 'n_jugadores'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_liga', 'id_temporada', 'id_escudo', 'n_jugadores', 'gestor_eq'], 'integer'],
             [['nombre'], 'string', 'max' => 100],
-            [['nombre'], 'unique', 'message' => 'Este equipo "{value}" ya esta creado.'],
+            //[['nombre'], 'unique', 'message' => 'Este equipo "{value}" ya esta creado.'],
             [['descripcion'], 'string', 'max' => 200],
             [['id_liga'], 'exist', 'skipOnError' => true, 'targetClass' => Ligas::class, 'targetAttribute' => ['id_liga' => 'id']],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],

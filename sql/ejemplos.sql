@@ -49,42 +49,42 @@ SET @id_acb := LAST_INSERT_ID();
 
 -- TEMPORADAS 2023-24 DE LAS LIGAS NBA Y ACB
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'Liga NBA 2024-25', '2024-10-20', '2025-04-20');
+(@id_nba, 'NBA 2024-25', '2024-10-20', '2025-04-20');
 
 SET @temporada_nba24 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'Liga NBA 2023-24', '2023-10-24', '2024-04-14');
+(@id_nba, 'NBA 2023-24', '2023-10-24', '2024-04-14');
 
 SET @temporada_nba23 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'Liga NBA 2022-23', '2022-10-18', '2023-04-09');
+(@id_nba, 'NBA 2022-23', '2022-10-18', '2023-04-09');
 
 SET @temporada_nba21 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'Liga NBA 2021-22', '2021-10-19', '2022-04-10');
+(@id_nba, 'NBA 2021-22', '2021-10-19', '2022-04-10');
 
 SET @temporada_nba21 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'Liga ACB 2024-25', '2024-09-14', '2025-06-13');
+(@id_acb, 'ACB 2024-25', '2024-09-14', '2025-06-13');
 
 SET @temporada_acb24 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'Liga ACB 2023-24', '2023-09-23', '2024-06-24');
+(@id_acb, 'ACB 2023-24', '2023-09-23', '2024-06-24');
 
 SET @temporada_acb23 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'Liga ACB 2022-23', '2022-09-17', '2023-06-22');
+(@id_acb, 'ACB 2022-23', '2022-09-17', '2023-06-22');
 
 SET @temporada_acb22 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'Liga ACB 2021-22', '2021-09-18', '2022-06-19');
+(@id_acb, 'ACB 2021-22', '2021-09-18', '2022-06-19');
 
 SET @temporada_acb21 := LAST_INSERT_ID();
 

@@ -34,7 +34,7 @@ foreach ($equipos as $equipo) {
                     <h2><?= Html::a($equipo->nombre, ['vista', 'id' => $equipo->id], ['class' => 'enlace-equipo']) ?></h2>
                         <p class="PaginaDeInicio"><?= $equipo->descripcion ?></p>
                         <p class="PaginaDeInicio"><?= $equipo->temporada->texto_de_titulo ?></p>
-                        <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 6)): ?>
+                        <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 6)): ?>
                             <?= Html::a('Ver Detalles', ['equipos/view', 'id' => $equipo->id], ['class' => 'botonFormulario']) ?>
                             <?= Html::a('Copiar Equipo', ['copy', 'id' => $equipo->id], ['class' => 'botonFormulario']) ?>
                         <?php endif ?>

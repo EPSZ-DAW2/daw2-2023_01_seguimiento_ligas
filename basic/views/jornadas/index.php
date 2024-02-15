@@ -34,7 +34,6 @@ $this->title = 'Jornadas de ' . $temporada->texto_de_titulo;
             
             <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
                 <?= Html::a('Ver Detalles', ['jornadas/view', 'id' => $jornada->id], ['class' => 'botonFormulario']) ?>
-                <?= Html::a('Copiar Jornada', ['copy', 'id' => $jornada->id], ['class' => 'botonFormulario']) ?>
             <?php endif ?>
 
             <hr>
