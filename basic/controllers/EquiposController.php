@@ -81,6 +81,64 @@ class EquiposController extends Controller
         ]);
     }
 
+    public function actionCreateEnTemporada($temporadaID)
+    {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 6))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
+        }
+
+        $model = new Equipos();
+
+        $model->id_temporada = $temporadaID;
+
+        $liga = Ligas::find()->where(['id' => $temporadaID])->one();
+
+        if($liga)
+        {
+            $model->id_liga = $liga->id;
+        }
+
+        $imagenModel = new Imagenes();
+
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
+
+            if (empty($imagenModel->imagenFile)) {
+                $imagenModel->addError('imagenFile', 'La imagen es un campo obligatorio.');
+            // Validar y guardar la imagen
+            } elseif($imagenModel->validate() && $imagenModel->saveImagen()) {
+                // Asigna el ID de la imagen al modelo de Equipos después de guardarla
+                $model->id_escudo = $imagenModel->id;
+
+                // Guarda el modelo de Equipos
+                if ($model->save()) {
+                    return $this->redirect(['equipos/index']);
+                } else {
+                    print_r($model->errors);
+                    // Muestra los errores de validación del modelo Equipos
+                    //Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
+                    
+                    return $this->render('create', [
+                        'model' => $model,
+                        'imagenModel' => $imagenModel,
+                    ]);
+                }
+            } else {
+                // Muestra los errores de validación de la imagen
+                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
+            }
+        }
+
+        return $this->render('create-en-temporada', [
+            'model' => $model,
+            'imagenModel' => $imagenModel,
+        ]);
+    }
+
 
     public function actionUpdate($id)
     {
@@ -145,6 +203,20 @@ class EquiposController extends Controller
         } else {
             return 'No se encontraron equipos para la temporada seleccionada.';
         }
+    }
+
+    // Acción para ver los partidos por liga
+    public function actionVerPorTemporada($id)
+    {
+        $this->view->title = 'ArosInsider - Equipos';
+        
+        $temporada = Temporadas::findOne($id);
+        $equipos = Equipos::find()->where(['id_temporada' => $id])->all();
+
+        return $this->render('ver-por-temporada', [
+            'equipos' => $equipos,
+            'temporada' => $temporada
+        ]);
     }
 
     // Acción para cargar las temporadas futuras a la fecha en el formulario de crear equipo

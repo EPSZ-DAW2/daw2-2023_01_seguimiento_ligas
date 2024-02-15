@@ -25,6 +25,7 @@ foreach ($temporadas as $temporada) {
                 <br>
                 <p><?= Html::a($temporada->texto_de_titulo, ['jornadas/index', 'id' => $temporada->id]) ?></p>
                 
+                <?= Html::a('Ver Equipos', ['equipos/ver-por-temporada', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
                 <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
                     <?= Html::a('Ver Detalles', ['temporadas/view', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
                     <br>
