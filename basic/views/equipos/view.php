@@ -31,9 +31,26 @@ $this->title = $equipo->nombre;
             'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
             'attributes' => [
                 'id',
+                [
+                    'attribute' => 'Liga',
+                    'value' => function ($model) {
+                        return $model->liga->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'Temporada',
+                    'value' => function ($model) {
+                        return $model->temporada->texto_de_titulo;
+                    }
+                ],
                 'nombre',
                 'descripcion',
-                // ... otras propiedades del equipo
+                [
+                    'attribute' => 'Gestor del Equipo',
+                    'value' => function ($model) {
+                        return $model->usuario ? $model->usuario->nombre : null;
+                    }
+                ],
             ],
         ]) ?>
 

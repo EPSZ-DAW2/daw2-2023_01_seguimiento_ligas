@@ -41,6 +41,8 @@ class JornadasTemporada extends \yii\db\ActiveRecord
             [['video'], 'string', 'max' => 255],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
             ['fecha_final', 'validarFecha'],
+            ['fecha_inicio', 'validarFechaTemporada'],
+            ['fecha_final', 'validarFechaTemporada'],
         ];
     }
 
@@ -93,6 +95,21 @@ class JornadasTemporada extends \yii\db\ActiveRecord
 
         if (strtotime($fechaFinal) < strtotime($fechaInicial)) {
             $this->addError($attribute, 'La fecha final debe ser posterior a la fecha inicial.');
+        }
+    }
+
+    // Función para validar que las fechas de incio y fin estén dentro de la temporada
+    public function validarFechaTemporada($attribute, $params)
+    {
+        $temporada = $this->temporada;
+
+        if ($temporada !== null) {
+            $fechaInicioTemporada = new \DateTime($temporada->fecha_inicial);
+            $fechaFinTemporada = new \DateTime($temporada->fecha_final);
+            $fechaInicioJornada = new \DateTime($this->$attribute);
+            if ($fechaInicioJornada < $fechaInicioTemporada || $fechaInicioJornada > $fechaFinTemporada) {
+                $this->addError($attribute, 'La fecha de la jornada debe estar dentro del rango de la temporada.');
+            }
         }
     }
 }

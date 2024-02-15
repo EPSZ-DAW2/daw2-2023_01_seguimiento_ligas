@@ -44,13 +44,14 @@ class Equipos extends \yii\db\ActiveRecord
     {
         return [
             [['id_liga', 'id_temporada', 'nombre', 'descripcion', 'id_escudo', 'n_jugadores'], 'required', 'message' => 'Este campo es obligatorio.'],
-            [['id_liga', 'id_temporada', 'id_escudo', 'n_jugadores'], 'integer'],
+            [['id_liga', 'id_temporada', 'id_escudo', 'n_jugadores', 'gestor_eq'], 'integer'],
             [['nombre'], 'string', 'max' => 100],
             [['nombre'], 'unique', 'message' => 'Este equipo "{value}" ya esta creado.'],
             [['descripcion'], 'string', 'max' => 200],
             [['id_liga'], 'exist', 'skipOnError' => true, 'targetClass' => Ligas::class, 'targetAttribute' => ['id_liga' => 'id']],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
             [['id_escudo'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_escudo' => 'id']],
+            [['gestor_eq'], 'exist', 'targetClass' => Usuarios::class, 'targetAttribute' => 'id', 'skipOnEmpty' => true],
         ];
     }
 
@@ -66,7 +67,8 @@ class Equipos extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
             'id_escudo' => 'Id Escudo',
-            'n_jugadores' => 'N Jugadores',
+            'n_jugadores' => 'Numero Jugadores',
+            'gestor_eq' => 'Gestor del Equipo'
         ];
     }
 
@@ -166,18 +168,28 @@ class Equipos extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPartidosJornadas()
+    public function getPartidosLocales()
     {
         return $this->hasMany(PartidosJornada::class, ['id_equipo_local' => 'id']);
     }
 
     /**
-     * Gets query for [[PartidosJornadas0]].
+     * Gets query for [[PartidosJornadas]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPartidosJornadas0()
+    public function getPartidosVisitantes()
     {
         return $this->hasMany(PartidosJornada::class, ['id_equipo_visitante' => 'id']);
+    }
+
+        /**
+     * Gets query for [[Usuario]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsuario()
+    {
+        return $this->hasOne(Usuarios::class, ['id' => 'gestor_eq']);
     }
 }

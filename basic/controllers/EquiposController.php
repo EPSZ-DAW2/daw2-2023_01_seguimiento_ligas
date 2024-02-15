@@ -164,6 +164,22 @@ class EquiposController extends Controller
         }
     }
 
+    // Acción para cargar las temporadas en la vista de actualizar un equipo
+    public function actionCargarTemporadasUpdate($id_liga)
+    {
+        $temporadas = Temporadas::find()
+            ->where(['id_liga' => $id_liga])
+            ->all();
+
+        if ($temporadas) {
+            return $this->renderAjax('_dropdown_temporadas', [
+                'temporadas' => $temporadas,
+            ]);
+        } else {
+            return 'No se encontraron temporadas para la liga seleccionada.';
+        }
+    }
+
     // Acción para cargar los equipos por la temporada seleccionada
     public function actionEquiposPorTemporada($id_temporada)
     {
@@ -243,6 +259,30 @@ class EquiposController extends Controller
         }
 
         $nuevoEquipo->save();
+
+        // Copiar los partidos asociados al equipo
+        $partidos = PartidosJornada::find()
+        ->where(['or', ['id_equipo_local' => $equipoExistente->id], ['id_equipo_visitante' => $equipoExistente->id]])
+        ->all();
+    
+
+        foreach ($partidos as $partido) {
+
+            $nuevoPartido = new PartidosJornada();
+
+            $nuevoPartido->attributes = $partido->attributes;
+
+            if ($partido->id_equipo_local === $equipoExistente->id) {
+                $nuevoPartido->id_equipo_local = $nuevoEquipo->id;
+            }
+
+
+            if ($partido->id_equipo_visitante === $equipoExistente->id) {
+                $nuevoPartido->id_equipo_visitante = $nuevoEquipo->id;
+            }
+
+            $nuevoPartido->save();
+        }
 
         // Redirigir a la página de equipos
         return $this->redirect(['index', 'id' => $nuevoEquipo->id]);

@@ -71,6 +71,7 @@ CREATE TABLE `equipos` (
   `descripcion` varchar(200) NOT NULL COMMENT 'Descripción general del equipo',
   `id_escudo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen del escudo',
   `n_jugadores` int(2) NOT NULL COMMENT 'Número de jugadores que componen el equipo',
+  `gestor_eq` int(6) UNSIGNED ZEROFILL NULL COMMENT 'Gestor único del equipo',
   `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -318,7 +319,8 @@ ALTER TABLE `equipos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_liga` (`id_liga`),
   ADD KEY `fk_idTemporada` (`id_temporada`),
-  ADD KEY `fk_id_idImagenL` (`id_escudo`);
+  ADD KEY `fk_id_idImagenL` (`id_escudo`),
+  ADD KEY `fk_gestor_eq` (`gestor_eq`);
 
 --
 -- Indices de la tabla `equipos_patrocinadores`
@@ -552,7 +554,8 @@ ALTER TABLE `comentarios`
 ALTER TABLE `equipos`
   ADD CONSTRAINT `equipos_ibfk_1` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`),
   ADD CONSTRAINT `fk_idTemporada` FOREIGN KEY (`id_temporada`) REFERENCES `temporadas` (`id`),
-  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_escudo`) REFERENCES `imagenes` (`id`);
+  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_escudo`) REFERENCES `imagenes` (`id`),
+  ADD CONSTRAINT `fk_gestor_eq` FOREIGN KEY (`gestor_eq`) REFERENCES `usuarios` (`id`);
 
 --
 -- Filtros para la tabla `equipos_patrocinadores`
