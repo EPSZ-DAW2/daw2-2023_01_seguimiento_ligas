@@ -1,5 +1,6 @@
 -- INSERTAMOS LOS ROLES
 INSERT IGNORE INTO `roles` (`nombre`) VALUES
+('Superadministrador'),
 ('Administrador'),
 ('Moderador'),
 ('GestorLigas'),
@@ -14,12 +15,13 @@ SET @imagen_perfil := LAST_INSERT_ID();
 
 -- INSERTAMOS USUARIOS DE EJEMPLO
 INSERT IGNORE INTO `usuarios` (`nombre`, `apellido1`, `apellido2`, `email`, `password`, `provincia`, `id_rol`, `username`, `id_imagen`) VALUES
-('Marcos', 'Castro', 'Aragón', 'admin@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 1, 'admin', @imagen_perfil),
-('Iago', 'Gasamans', 'Losada', 'mod@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 2, 'moderador', @imagen_perfil),
-('Jorge', 'Abella', 'Cabezas', 'gestorli@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'León', 3, 'gestorligas', @imagen_perfil),
-('Álex', 'Alonso', 'Vicente', 'patrocinador@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 4, 'patrocinador', @imagen_perfil),
-('David', 'Pérez', 'Esteban', 'gestoreq@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 5, 'gestorequipos', @imagen_perfil),
-('Diego', 'Iglesias', 'Estevez', 'cliente@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 6, 'cliente', @imagen_perfil);
+('Administrador Supremo', 'superadmin', 'superadmin', 'superadmin@usal.es', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 1, 'superadmin', @imagen_perfil),
+('Marcos', 'Castro', 'Aragón', 'admin@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 2, 'admin', @imagen_perfil),
+('Iago', 'Gasamans', 'Losada', 'mod@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 3, 'moderador', @imagen_perfil),
+('Jorge', 'Abella', 'Cabezas', 'gestorli@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'León', 4, 'gestorligas', @imagen_perfil),
+('Álex', 'Alonso', 'Vicente', 'patrocinador@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 5, 'patrocinador', @imagen_perfil),
+('David', 'Pérez', 'Esteban', 'gestoreq@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 6, 'gestorequipos', @imagen_perfil),
+('Diego', 'Iglesias', 'Estevez', 'cliente@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 7, 'cliente', @imagen_perfil);
 
 
 -- INSERTAMOS LAS IMAGENES DE LIGA NBA Y ACB

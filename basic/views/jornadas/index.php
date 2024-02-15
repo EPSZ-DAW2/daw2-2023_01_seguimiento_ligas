@@ -32,7 +32,7 @@ $this->title = 'Jornadas de ' . $temporada->texto_de_titulo;
             ?>
             <p><a href="<?= Yii::$app->urlManager->createUrl(['/partidos', 'jornadaID' => $jornada->id]) ?>"> Jornada <?= $jornada->numero ?> </a> <br> <?= $fechaInicio ?> - <?= $fechaFinal ?> <br></p>
             
-            <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
+            <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
                 <?= Html::a('Ver Detalles', ['jornadas/view', 'id' => $jornada->id], ['class' => 'botonFormulario']) ?>
                 <?= Html::a('Copiar Jornada', ['copy', 'id' => $jornada->id], ['class' => 'botonFormulario']) ?>
             <?php endif ?>
@@ -42,7 +42,7 @@ $this->title = 'Jornadas de ' . $temporada->texto_de_titulo;
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
+    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
     <?= Html::a('Nueva Jornada', ['jornadas/create', 'temporadaID' => $temporada->id], ['class' => 'botonFormulario']) ?>
     <?php endif ?>
 
