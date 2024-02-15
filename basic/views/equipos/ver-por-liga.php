@@ -1,5 +1,28 @@
 <?php
 use yii\helpers\Html;
+use app\models\Temporadas;
+use app\models\Equipos;
+use yii\db\Expression;
+?>
+
+<?php
+$EquiposLigas = [];
+
+// Consulta para obtener los equipos de la temporada actual
+$fechaActual = date('Y-m-d');
+$subquery = Temporadas::find()
+    ->select('id')
+    ->where(new Expression(':fechaActual BETWEEN fecha_inicial AND fecha_final', [':fechaActual' => $fechaActual]));
+
+$query = Equipos::find()
+    ->where(['id_temporada' => $subquery])
+    ->with('liga', 'imagen');
+
+// Organizar equipos por ligas
+foreach ($query->each() as $equipo) {
+    $ligaId = $equipo->liga->id;
+    $EquiposLigas[$ligaId][] = $equipo;
+}
 ?>
 
 <div class="contenido-cabecera">
@@ -13,7 +36,7 @@ use yii\helpers\Html;
 <?php foreach ($equipos as $equipo): ?>
     <div class="marco2">
         <div class="liga-content">
-            <h2><?= $equipo->nombre ?></h2>
+            <h2><?= Html::a($equipo->nombre, ['vista', 'id' => $equipo->id], ['class' => 'enlace-equipo']) ?></h2>
             <p><?= $equipo->descripcion ?></p>
             <p><?= $equipo->temporada->texto_de_titulo ?></p>
         </div>

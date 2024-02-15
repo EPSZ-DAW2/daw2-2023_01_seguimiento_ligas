@@ -213,32 +213,28 @@ class TemporadasController extends \yii\web\Controller
             $nuevaJornada->id = null;
             
             $nuevaJornada->save();
-
-            foreach ($jornadaExistente->partidosJornadas as $partidoExistente) {
-                $nuevoPartido = new PartidosJornada();
-                $nuevoPartido->attributes = $partidoExistente->attributes;
-                
-                // Obtener el equipo local del partido anterior
-                $equipoLocalAnterior = Equipos::findOne($partidoExistente->id_equipo_local);
-
-                $equipoVisitanteAnterior = Equipos::findOne($partidoExistente->id_equipo_visitante);
-
-                // Buscar el equipo correspondiente en la nueva temporada con el mismo nombre
-                $nuevoEquipoLocal = Equipos::findOne(['nombre' => $equipoLocalAnterior->nombre, 'id_temporada' => $nuevaTemporada->id]);
-
-                $nuevoEquipoVisitante = Equipos::findOne(['nombre' => $equipoVisitanteAnterior->nombre, 'id_temporada' => $nuevaTemporada->id]);
-                
-                $nuevoPartido->id_equipo_local = $nuevoEquipoLocal->id;
-                $nuevoPartido->id_equipo_visitante = $nuevoEquipoVisitante->id;
-
             
-                // Asignar la nueva jornada al partido
-                $nuevoPartido->id_jornada = $nuevaJornada->id; 
-                $nuevoPartido->id = null;
-
-                $nuevoPartido->save();
-            }
-        }
+                foreach ($jornadaExistente->partidosJornadas as $partidoExistente) {
+                    $nuevoPartido = new PartidosJornada();
+                    
+                    // Copiar los atributos manualmente
+                    $nuevoPartido->attributes = $partidoExistente->attributes;
+            
+                    $equipoLocalAnterior = Equipos::findOne($partidoExistente->id_equipo_local);
+                    $equipoVisitanteAnterior = Equipos::findOne($partidoExistente->id_equipo_visitante);
+            
+                    $nuevoEquipoLocal = Equipos::findOne(['nombre' => $equipoLocalAnterior->nombre, 'id_temporada' => $nuevaTemporada->id]);
+                    $nuevoEquipoVisitante = Equipos::findOne(['nombre' => $equipoVisitanteAnterior->nombre, 'id_temporada' => $nuevaTemporada->id]);
+                    
+                    $nuevoPartido->id_equipo_local = $nuevoEquipoLocal->id;
+                    $nuevoPartido->id_equipo_visitante = $nuevoEquipoVisitante->id;
+                    $nuevoPartido->id_jornada = $nuevaJornada->id; 
+                    $nuevoPartido->id = null;
+            
+                    $nuevoPartido->save();
+                }
+            }            
+            
 
         // Redirigir a la página de temporadas
         return $this->redirect(['index']);

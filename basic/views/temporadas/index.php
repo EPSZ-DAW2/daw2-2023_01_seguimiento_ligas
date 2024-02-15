@@ -27,7 +27,6 @@ foreach ($temporadas as $temporada) {
                 
                 <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
                     <?= Html::a('Ver Detalles', ['temporadas/view', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
-                    <?= Html::a('Copiar Temporada', ['copy', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
                     <br>
                 <?php endif ?>
             <?php endforeach; ?>
