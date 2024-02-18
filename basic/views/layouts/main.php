@@ -53,7 +53,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         ]
     ]);
 //  si el rol del usuario es 1 (administrador)
-if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) {
+if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2)) {
    
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav ml-auto'],
