@@ -40,7 +40,7 @@ class LigasController extends Controller
     {
         $model = new Ligas();
         $imagenModel = new Imagenes();
-
+        
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
@@ -48,9 +48,17 @@ class LigasController extends Controller
             // Validar y guardar la imagen
             if ($imagenModel->validate() && $imagenModel->saveImagen()) {
                 
+        
+            // Validar y guardar la imagen solo si se proporciona un archivo
+            if (empty($imagenModel->imagenFile)) {
+                $imagenModel->addError('imagenFile', 'La imagen es un campo obligatorio.');
+            } elseif ($imagenModel->validate() && $imagenModel->saveImagen()) {
+                // Asignar el ID de la imagen al modelo de ligas después de guardarla
                 $model->id_imagen = $imagenModel->id;
 
                
+        
+                // Guarda el modelo de ligas
                 if ($model->save()) {
                     return $this->redirect(['ligas/index']);
                 } else {
@@ -58,6 +66,7 @@ class LigasController extends Controller
                     
                     Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
                     
+                    print_r($model->errors); // Muestra los errores de validación del modelo ligas
                     return $this->render('create', [
                         'model' => $model,
                         'imagenModel' => $imagenModel,
@@ -68,19 +77,18 @@ class LigasController extends Controller
                 Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
         }
-
+        
         return $this->render('create', [
             'model' => $model,
             'imagenModel' => $imagenModel,
         ]);
     }
-
     
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
         $imagenModel = ($model->imagen) ? $model->imagen : new Imagenes();
-    
+        
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
@@ -93,8 +101,6 @@ class LigasController extends Controller
                
                 if ($model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    Yii::$app->session->setFlash('error', 'Error al guardar la liga.');
                 }
             } else {
               
@@ -107,6 +113,8 @@ class LigasController extends Controller
             'imagenModel' => $imagenModel,
         ]);
     }
+    
+
 
 public function actionDelete($id)
 {

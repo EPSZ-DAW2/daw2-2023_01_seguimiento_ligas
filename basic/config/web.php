@@ -48,7 +48,7 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -56,19 +56,9 @@ $config = [
                 'equipos/create' => 'equipos/create',
                 'partidos/<action:\w+>' => 'partidos/<action>',
                 'equipos/ver-por-liga/<id:\d+>' => 'equipos/ver-por-liga',
+                //'jornadas/index/<id_temporada:\d+>' => 'jornadas-temporada/index',
             ],
         ],
-
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                'jornadas/index/<id_temporada:\d+>' => 'jornadas-temporada/index',
-                // Otras reglas de URL según sea necesario
-            ],
-        ],
-        */
     ],
     'params' => $params,
 ];

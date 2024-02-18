@@ -8,6 +8,7 @@ use app\models\JornadasTemporada;
 use app\models\Equipos;
 use app\models\Temporadas;
 use app\models\Ligas;
+use yii\data\ActiveDataProvider;
 
 class PartidosController extends \yii\web\Controller
 {
@@ -32,19 +33,31 @@ class PartidosController extends \yii\web\Controller
 
     public function actionView($id)
     {
-        // Buscar el equipo por su ID
+        // Buscar el partido por su ID
         $model = PartidosJornada::findOne($id);
-
-        // Verificar si el equipo existe
+    
+        // Verificar si el partido existe
         if ($model === null) {
             throw new NotFoundHttpException('El partido no fue encontrado.');
         }
-
+    
+        // Obtener las estadísticas de los jugadores del equipo local y visitante
+        $dataProviderLocal = new ActiveDataProvider([
+            'query' => $model->equipoLocal->getEstadisticasJugadorPartido(),
+        ]);
+        
+        $dataProviderVisitante = new ActiveDataProvider([
+            'query' => $model->equipoVisitante->getEstadisticasJugadorPartido(),
+        ]);        
+    
         // Renderizar la vista de detalles del partido
         return $this->render('view', [
             'model' => $model,
+            'dataProviderLocal' => $dataProviderLocal,
+            'dataProviderVisitante' => $dataProviderVisitante,
         ]);
     }
+    
     
     protected function findModel($id)
     {
@@ -57,7 +70,7 @@ class PartidosController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
         {
             // Usuario no autenticado o no tiene el rol adecuado
             Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
@@ -124,7 +137,7 @@ class PartidosController extends \yii\web\Controller
 
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
         {
             // Usuario no autenticado o no tiene el rol adecuado
             Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
@@ -189,7 +202,7 @@ class PartidosController extends \yii\web\Controller
     // Acción para borrar un partido
     public function actionDelete($id)
     {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
         {
             // Usuario no autenticado o no tiene el rol adecuado
             Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
@@ -210,7 +223,7 @@ class PartidosController extends \yii\web\Controller
     // Acción para copiar un partido
     public function actionCopy($id)
     {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
         {
             // Usuario no autenticado o no tiene el rol adecuado
             Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
@@ -235,4 +248,20 @@ class PartidosController extends \yii\web\Controller
         // Redirigir a la página de partidos
         return $this->redirect(['index', 'id' => $nuevoPartido->id]);
     }
+
+    public function actionAddStats($idPartido, $idEquipo)
+    {
+        $model = new EstadisticasJugadorPartido();
+        $model->id_partido = $idPartido;
+    
+        // Aquí deberías obtener la lista de jugadores del equipo en función del $idEquipo
+    
+        return $this->render('form', [
+            'model' => $model,
+            'idPartido' => $idPartido,
+            'jugadores' => [], // Pasa aquí la lista de jugadores
+        ]);
+    }
+    
+
 }

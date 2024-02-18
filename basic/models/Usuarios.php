@@ -51,7 +51,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             [['nombre', 'apellido1', 'apellido2', 'email', 'password', 'provincia','id_rol','username','id_imagen'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['auth_key', 'reg_token'], 'safe'],
             [['nombre', 'apellido1', 'apellido2', 'email', 'provincia','username'], 'string', 'max' => 50],
-            [['password'], 'string', 'max' => 255, 'min' => 6, 'tooShort' => 'La contraseña debe tener al menos 6 caracteres.'],
+            [['password'], 'string', 'max' => 255, 'min' => 6, 'tooShort' => 'Contraseña no valida.'],
            // [['password'], 'match', 'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]*$/', 'message' => 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula y un número.'],
             [['email'], 'unique', 'message' => 'El correo electrónico ya está en uso. Por favor, elige otro.'],
             [['email'], 'email'],
@@ -210,7 +210,6 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
 
     return false;
 }
-
 
    
    /**

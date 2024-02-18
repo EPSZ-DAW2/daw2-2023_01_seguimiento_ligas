@@ -34,7 +34,7 @@ class Ligas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'pais','descripcion', 'id_imagen'], 'required', 'message' => 'Este campo es obligatorio.'],
+            [['nombre', 'pais', 'descripcion', 'id_imagen', 'video'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_imagen'], 'integer'],
             [['nombre', 'pais'], 'string', 'max' => 50],
             [['nombre'], 'unique', 'message' => 'La liga "{value}" ya existe.'],
@@ -44,6 +44,7 @@ class Ligas extends \yii\db\ActiveRecord
             [['video'], 'url', 'message' => 'El formato de la URL no es válido.'],
         ];
     }
+    
 
     /**
      * {@inheritdoc}

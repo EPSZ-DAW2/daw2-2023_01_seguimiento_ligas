@@ -1,173 +1,96 @@
 <?php
+use app\models\Usuarios;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
-if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5)) {
+if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 6)) {
     ?>
     <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-        <?php $this->registerCssFile('@web/css/site.css'); ?>
-    
-        <style>
-            /* Estilo para centrar los divs */
-            .estadisticas-container {
-                text-align: center;
-                margin-bottom: 20px;
-            }
-    
-            .estadisticas-item {
-                display: inline-block;
-                width: 30%;
-                text-align: left;
-            }
-        </style>
-    
-        <title>Tabla de Jugadores</title>
-    </head>
-    <body>
-    
-        <div class="marco">
-    
-        <!-- Sección de Estadísticas Destacadas -->
-        <div class="estadisticas-container">
-            <h2>Estadísticas Destacadas</h2>
-    
-            <!-- Div izquierdo: Jugador con más puntos -->
-            <div class="estadisticas-item">
-                <h3>Jugador con más puntos</h3>
-                <h4>
-                <?php
-                    $jugadorMasPuntos = \app\models\EstadisticasJugador::find()
-                        ->orderBy(['puntos' => SORT_DESC])
-                        ->one();
-    
-                    echo $jugadorMasPuntos ? "{$jugadorMasPuntos->jugador->nombre} - Puntos: {$jugadorMasPuntos->puntos}" : 'Sin datos';
-                ?>
-                </h4>
-                <?php
-                if($jugadorMasPuntos) {
-                    $siguientesPuntos = \app\models\EstadisticasJugador::find()
-                    ->where(['not', ['id' => $jugadorMasPuntos->id]])
-                    ->orderBy(['puntos' => SORT_DESC])
-                    ->limit(2)
-                    ->all();
-            
-                    foreach ($siguientesPuntos as $jugadorPuntos) {
-                        echo "<p class='nombre-secundario'>{$jugadorPuntos->jugador->nombre}</p>";
-                    }
-                }
-                ?>
-            </div>
-    
-            <!-- Div centro: Jugador con más asistencias -->
-            <div class="estadisticas-item">
-                <h3>Jugador con más asistencias</h3>
-                <h4>
-                <?php
-                    $jugadorMasAsistencias = \app\models\EstadisticasJugador::find()
-                        ->orderBy(['asistencias' => SORT_DESC])
-                        ->one();
-    
-                    echo $jugadorMasAsistencias ? "{$jugadorMasAsistencias->jugador->nombre} - Asistencias: {$jugadorMasAsistencias->asistencias}" : 'Sin datos';
-                ?>
-                </h4>
-                <?php
-                if($jugadorMasAsistencias) {
-                    $siguientesAsistencias = \app\models\EstadisticasJugador::find()
-                    ->where(['not', ['id' => $jugadorMasAsistencias->id]])
-                    ->orderBy(['asistencias' => SORT_DESC])
-                    ->limit(2)
-                    ->all();
-            
-                    foreach ($siguientesAsistencias as $jugadorAsistencias) {
-                        echo "<p class='nombre-secundario'>{$jugadorAsistencias->jugador->nombre}</p>";
-                    }
-                }
-                ?>
-            </div>
-    
-            <!-- Div derecho: Jugador con más rebotes -->
-            <div class="estadisticas-item">
-                <h3>Jugador con más rebotes</h3>
-                <h4>
-                <?php
-                    $jugadorMasRebotes = \app\models\EstadisticasJugador::find()
-                        ->orderBy(['rebotes' => SORT_DESC])
-                        ->one();
-    
-                    echo $jugadorMasRebotes ? "{$jugadorMasRebotes->jugador->nombre} - Rebotes: {$jugadorMasRebotes->rebotes}" : 'Sin datos';
-                ?>
-                </h4>
-                <?php
-                if($jugadorMasRebotes) {
-                    $siguientesRebotes = \app\models\EstadisticasJugador::find()
-                    ->where(['not', ['id' => $jugadorMasRebotes->id]])
-                    ->orderBy(['rebotes' => SORT_DESC])
-                    ->limit(2)
-                    ->all();
-            
-                    foreach ($siguientesRebotes as $jugadorRebotes) {
-                        echo "<p class='nombre-secundario'>{$jugadorRebotes->jugador->nombre}</p>";
-                    }
-                }
-                ?>
-            </div>
-        </div>
-    
-        <!-- Sección de Tabla de Jugadores -->
-        <div>
-            <h2>Tabla de Jugadores</h2>
-            <?php
-            // Generar el formulario para seleccionar la liga y el equipo
-            echo Html::beginForm(['jugadores/index'], 'get');
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Jugadores</title>
+</head>
+<body>
 
-            echo Html::dropDownList('ligaId', $ligaId, ['' => 'Mostrar todos'] + \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
+<div class="contenido-cabecera">
 
-            echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
-            echo Html::endForm();
-            ?>
-    
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => [
-                    [
-                        'attribute' => 'imagen',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            return Html::tag('div', '', [
-                                'class' => 'liga-image',
-                                'style' => 'background-image: url("' . Yii::getAlias('@web/images/' . $model->imagen->foto) . '");',
-                            ]);
-                        },
-                    ],
-                    'nombre',
-                    'posicion',
-                    'descripcion',
-                    'altura',
-                    'peso',
-                    'nacionalidad',
-                    [
-                        'attribute' => 'equipo.nombre',
-                        'label' => 'Equipo',
-                    ],
-                    [
-                        'class' => ActionColumn::className(),
-                        'urlCreator' => function ($action, app\models\Jugadores $model, $key, $index, $column) {
-                            return Url::toRoute([$action, 'id' => $model->id]);
-                         }
-                    ],
-                ],
-            ]); ?>
+<h1>JUGADORES</h1>
+
+</div>
+
+
+    <div  id="contenedor-principal">
+
+
+    <div class="marco">
+
+        <p class="PaginaDeInicio">Listado de jugadores</p>
+        <?php
+        echo Html::beginForm(['jugadores/index'], 'get');
+        echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']); 
+        ?>
+        <br><br>
+        <?php
+        echo Html::submitButton('Filtrar', ['class' => 'botonFormulario']);
+        echo Html::endForm();
+        ?>
         <br>
-    
-    </body>
-    </html>
+        <?php Pjax::begin(); ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+            'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
+            'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
+            'columns' => [
+                [
+                    'attribute' => 'imagen',
+                    'format' => 'html',
+                    'value' => function ($model) {
+                        return Html::tag('div', '', [
+                            'class' => 'liga-image',
+                            'style' => 'background-image: url("' . Yii::getAlias('@web/images/' . $model->imagen->foto) . '");',
+                        ]);
+                    },
+                ],
+                [
+                    'attribute' => 'nombre',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        return Html::a($model->nombre, ['jugadores/view', 'id' => $model->id], ['class' => 'enlace-equipo']);
+                    },
+                    'filter' => Html::textInput('JugadoresSearch[nombre]', isset(Yii::$app->request->get('JugadoresSearch')['nombre']) ? Yii::$app->request->get('JugadoresSearch')['nombre'] : null, ['class' => 'form-control']),
+                ],
+                'posicion',
+                'descripcion',
+                'altura',
+                'peso',
+                'nacionalidad',
+                [
+                    'attribute' => 'equipo.nombre',
+                    'label' => 'Equipo',
+                    'value' => function ($model) {
+                        return $model->equipo->nombre; // Accede al nombre del equipo a través de la relación
+                    },
+                    'filter' => Html::textInput('JugadoresSearch[nombre_equipo]', isset(Yii::$app->request->get('JugadoresSearch')['nombre_equipo']) ? Yii::$app->request->get('JugadoresSearch')['nombre_equipo'] : null, ['class' => 'form-control']),
+                    'filterInputOptions' => ['placeholder' => 'Buscar por nombre de equipo'],
+                    'filterOptions' => ['class' => 'col-md-6'],
+                ],                    
+            ],
+        ]); ?>
+        <?php Pjax::end(); ?>
+    </div>
+
+
+    </div>
+</body>
+</html>
+
 
 <?php
     } else { ?>
@@ -175,132 +98,39 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
     <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-        <?php $this->registerCssFile('@web/css/site.css'); ?>
-    
-        <style>
-            /* Estilo para centrar los divs */
-            .estadisticas-container {
-                text-align: center;
-                margin-bottom: 20px;
-            }
-    
-            .estadisticas-item {
-                display: inline-block;
-                width: 30%;
-                text-align: left;
-            }
-        </style>
-    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">   
         <title>Tabla de Jugadores</title>
     </head>
     <body>
+
+    <div class="contenido-cabecera">
+
+        <h1>JUGADORES</h1>
+
+        </div>
+
+
+    <div  id="contenedor-principal">
     
         <div class="marco">
-    
-        <!-- Sección de Estadísticas Destacadas -->
-        <div class="estadisticas-container">
-            <h2>Estadísticas Destacadas</h2>
-    
-            <!-- Div izquierdo: Jugador con más puntos -->
-            <div class="estadisticas-item">
-                <h3>Jugador con más puntos</h3>
-                <h4>
-                <?php
-                    $jugadorMasPuntos = \app\models\EstadisticasJugador::find()
-                        ->orderBy(['puntos' => SORT_DESC])
-                        ->one();
-    
-                    echo $jugadorMasPuntos ? "{$jugadorMasPuntos->jugador->nombre} - Puntos: {$jugadorMasPuntos->puntos}" : 'Sin datos';
-                ?>
-                </h4>
-                <?php
-                if($jugadorMasPuntos) {
-                    $siguientesPuntos = \app\models\EstadisticasJugador::find()
-                    ->where(['not', ['id' => $jugadorMasPuntos->id]])
-                    ->orderBy(['puntos' => SORT_DESC])
-                    ->limit(2)
-                    ->all();
-            
-                    foreach ($siguientesPuntos as $jugadorPuntos) {
-                        echo "<p class='nombre-secundario'>{$jugadorPuntos->jugador->nombre}</p>";
-                    }
-                }
-                ?>
-            </div>
-    
-            <!-- Div centro: Jugador con más asistencias -->
-            <div class="estadisticas-item">
-                <h3>Jugador con más asistencias</h3>
-                <h4>
-                <?php
-                    $jugadorMasAsistencias = \app\models\EstadisticasJugador::find()
-                        ->orderBy(['asistencias' => SORT_DESC])
-                        ->one();
-    
-                    echo $jugadorMasAsistencias ? "{$jugadorMasAsistencias->jugador->nombre} - Asistencias: {$jugadorMasAsistencias->asistencias}" : 'Sin datos';
-                ?>
-                </h4>
-                <?php
-                if($jugadorMasAsistencias) {
-                    $siguientesAsistencias = \app\models\EstadisticasJugador::find()
-                    ->where(['not', ['id' => $jugadorMasAsistencias->id]])
-                    ->orderBy(['asistencias' => SORT_DESC])
-                    ->limit(2)
-                    ->all();
-            
-                    foreach ($siguientesAsistencias as $jugadorAsistencias) {
-                        echo "<p class='nombre-secundario'>{$jugadorAsistencias->jugador->nombre}</p>";
-                    }
-                }
-                ?>
-            </div>
-    
-            <!-- Div derecho: Jugador con más rebotes -->
-            <div class="estadisticas-item">
-                <h3>Jugador con más rebotes</h3>
-                <h4>
-                <?php
-                    $jugadorMasRebotes = \app\models\EstadisticasJugador::find()
-                        ->orderBy(['rebotes' => SORT_DESC])
-                        ->one();
-    
-                    echo $jugadorMasRebotes ? "{$jugadorMasRebotes->jugador->nombre} - Rebotes: {$jugadorMasRebotes->rebotes}" : 'Sin datos';
-                ?>
-                </h4>
-                <?php
-                if($jugadorMasRebotes) {
-                    $siguientesRebotes = \app\models\EstadisticasJugador::find()
-                    ->where(['not', ['id' => $jugadorMasRebotes->id]])
-                    ->orderBy(['rebotes' => SORT_DESC])
-                    ->limit(2)
-                    ->all();
-            
-                    foreach ($siguientesRebotes as $jugadorRebotes) {
-                        echo "<p class='nombre-secundario'>{$jugadorRebotes->jugador->nombre}</p>";
-                    }
-                }
-                ?>
-            </div>
-        </div>
-    
-        <!-- Sección de Tabla de Jugadores -->
-        <div>
-            <h2>Tabla de Jugadores</h2>
+
+        <p class="PaginaDeInicio">Listado de jugadores</p>
+        
             <?php
-            // Generar el formulario para seleccionar la liga y el equipo
             echo Html::beginForm(['jugadores/index'], 'get');
-            // Desplegable para seleccionar una liga
             echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
-            // Botón de filtrar
-            echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
-            
+            ?>
+            <br><br>
+            <?php
+            echo Html::submitButton('Filtrar', ['class' => 'botonFormulario']);
             echo Html::endForm();
-        ?>
-    
+            ?>
+            <br>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
+                'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
                 'columns' => [
                     [
                 'attribute' => 'imagen',
@@ -312,7 +142,13 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     ]);
                 },
             ],
-                    'nombre',
+            [
+                'attribute' => 'nombre',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a($model->nombre, ['jugadores/view', 'id' => $model->id]);
+                },
+            ],
                     'posicion',
                     'descripcion',
                     'altura',
@@ -322,16 +158,18 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                         'attribute' => 'equipo.nombre',
                         'label' => 'Equipo',
                     ],
+                    'video',
                     [
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, app\models\Jugadores $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id' => $model->id]);
                          }
                     ],
+
                 ],
             ]); ?>
         <br>
-        <?= \yii\helpers\Html::a('Registrar Jugador', ['jugadores/create'], ['class' => 'botonInicioSesion']) ?>
+        <?= \yii\helpers\Html::a('Registrar Jugador', ['jugadores/create'], ['class' => 'botonFormulario']) ?>
     
     </body>
     </html>

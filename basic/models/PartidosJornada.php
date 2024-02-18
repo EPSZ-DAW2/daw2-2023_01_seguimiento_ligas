@@ -50,7 +50,7 @@ class PartidosJornada extends \yii\db\ActiveRecord
             [['id_equipo_local'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo_local' => 'id']],
             [['id_equipo_visitante'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo_visitante' => 'id']],
             [['id_jornada'], 'exist', 'skipOnError' => true, 'targetClass' => JornadasTemporada::class, 'targetAttribute' => ['id_jornada' => 'id']],
-            //['horario', 'datetime', 'format' => 'php:Y-m-d\TH:i', 'min' => date('Y-m-d\TH:i'), 'tooSmall' => 'Selecciona una fecha y hora futura.'],
+            ['horario', 'validarHorarioEnJornada'],
         ];
     }
 
@@ -109,5 +109,19 @@ class PartidosJornada extends \yii\db\ActiveRecord
     public function getJornada()
     {
         return $this->hasOne(JornadasTemporada::class, ['id' => 'id_jornada']);
+    }
+
+    // Función para validar que un horario de un partido esté dentro de la jornada a la que pertenece
+    public function validarHorarioEnJornada($attribute, $params)
+    {
+        $horario = $this->horario;
+
+        // Obtener la jornada correspondiente al partido
+        $jornada = $this->jornada;
+
+        // Verificar si el horario está dentro del rango de fechas de la jornada
+        if (strtotime($horario) < strtotime($jornada->fecha_inicio) || strtotime($horario) > strtotime($jornada->fecha_final)) {
+            $this->addError($attribute, 'El horario del partido debe estar dentro del rango de fechas de la jornada.');
+        }
     }
 }

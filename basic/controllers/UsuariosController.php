@@ -194,7 +194,7 @@ class UsuariosController extends Controller
         if (Yii::$app->user->identity->id_rol == 1) {
             return $this->redirect(['index']);
         } else {
-            return $this->redirect(['site/home']);
+            return $this->redirect(['site/index']);
         }
        
     }

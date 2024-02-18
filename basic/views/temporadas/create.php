@@ -11,38 +11,54 @@ use app\models\Ligas;
 $this->title = 'Crear Temporada';
 
 // Registrar el archivo CSS
-$this->registerCssFile('@web/css/equipos.css');
+//$this->registerCssFile('@web/css/equipos.css');
 
-$this->params['breadcrumbs'][] = ['label' => 'Temporadas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => 'Temporadas', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="marco">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="contenido-cabecera">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <h1>CREADOR DE TEMPORADAS</h1>
 
-    <?= $form->field($model, 'id_liga')->dropDownList(
-        ArrayHelper::map(Ligas::find()->all(), 'id', 'nombre'),
-        ['prompt' => 'Seleccionar Liga']
-    ) ?>
+</div>
 
-    <?= $form->field($model, 'texto_de_titulo')->textInput(['maxlength' => true]) ?>
+<div  id="contenedor-principal">
 
-    <?= $form->field($model, 'fecha_inicial')->widget(\yii\jui\DatePicker::class, [
+    <div class="marco">
+       
+        <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de una temporada:</p>
+
+        <?php $form = ActiveForm::begin([
+            'enableAjaxValidation' => false,
+            'enableClientValidation' => true,
+        ]); ?>
+
+
+        <?= $form->field($model, 'id_liga', ['options' => ['class' => 'campoTitulo']])->dropDownList(
+            ArrayHelper::map(Ligas::find()->all(), 'id', 'nombre'),
+            ['prompt' => 'Seleccionar Liga', 'class' => 'campo']
+        ) ?>
+        <br>
+        <?= $form->field($model, 'texto_de_titulo', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre de la temporada', 'class' => 'campo']) ?>
+        <br>
+        <?= $form->field($model, 'fecha_inicial', ['options' => ['class' => 'campoTitulo']])->widget(\yii\jui\DatePicker::class, [
         'dateFormat' => 'yyyy-MM-dd',
-        'options' => ['class' => 'form-control'],
-    ]) ?>
+        'options' => ['class' => 'campo', 'placeholder' => 'Año-Mes-Dias']
+        ]) ?>
+        <br>
+        <?= $form->field($model, 'fecha_final', ['options' => ['class' => 'campoTitulo']])->widget(\yii\jui\DatePicker::class, [
+            'dateFormat' => 'yyyy-MM-dd',
+            'options' => ['class' => 'campo', 'placeholder' => 'Año-Mes-Dias'],
+        ]) ?>
+        <br>
 
-    <?= $form->field($model, 'fecha_final')->widget(\yii\jui\DatePicker::class, [
-        'dateFormat' => 'yyyy-MM-dd',
-        'options' => ['class' => 'form-control'],
-    ]) ?>
-    <br>
-    <div class="form-group">
-        <?= Html::submitButton('Crear', ['class' => 'btn btn-success']) ?>
+        <p>
+            <?= Html::submitButton('Crear', ['class' => 'botonFormulario']) ?>
+            <?= Html::a(Yii::t('app', 'Tabla de temporadas'), ['temporadas/index'], ['class' => 'botonFormulario']) ?>
+        </p>
+
+        <?php ActiveForm::end(); ?>
+
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>

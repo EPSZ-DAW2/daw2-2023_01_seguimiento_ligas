@@ -71,6 +71,7 @@ CREATE TABLE `equipos` (
   `descripcion` varchar(200) NOT NULL COMMENT 'Descripción general del equipo',
   `id_escudo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen del escudo',
   `n_jugadores` int(2) NOT NULL COMMENT 'Número de jugadores que componen el equipo',
+  `gestor_eq` int(6) UNSIGNED ZEROFILL NULL COMMENT 'Gestor único del equipo',
   `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -116,6 +117,23 @@ CREATE TABLE `estadisticas_jugador` (
   `rebotes` int(6) DEFAULT NULL,
   `asistencias` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estadisticas_jugador_partido`
+--
+
+CREATE TABLE `estadisticas_jugador_partido` (
+  `id` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `id_jugador` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `id_partido` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `id_equipo` int(6) UNSIGNED ZEROFILL NOT NULL,
+  `puntos` int(6) DEFAULT NULL,
+  `rebotes` int(6) DEFAULT NULL,
+  `asistencias` int(6) DEFAULT NULL,
+  `minutos` int(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -301,7 +319,8 @@ ALTER TABLE `equipos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_liga` (`id_liga`),
   ADD KEY `fk_idTemporada` (`id_temporada`),
-  ADD KEY `fk_id_idImagenL` (`id_escudo`);
+  ADD KEY `fk_id_idImagenL` (`id_escudo`),
+  ADD KEY `fk_gestor_eq` (`gestor_eq`);
 
 --
 -- Indices de la tabla `equipos_patrocinadores`
@@ -326,6 +345,15 @@ ALTER TABLE `estadisticas_jugador`
   ADD KEY `fk_id_idTemporadaJ` (`id_temporada`),
   ADD KEY `fk_id_idJugador` (`id_jugador`),
   ADD KEY `fk_id_idEquipoEJ` (`id_equipo`);
+
+--
+-- Indices de la tabla `estadisticas_jugador_partido`
+--
+ALTER TABLE `estadisticas_jugador_partido`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_idJugadorP` (`id_jugador`),
+  ADD KEY `fk_id_idPartidoJ` (`id_partido`),
+  ADD KEY `fk_id_idEquipoE` (`id_equipo`);
 
 --
 -- Indices de la tabla `imagenes`
@@ -436,6 +464,12 @@ ALTER TABLE `estadisticas_jugador`
   MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `estadisticas_jugador_partido`
+--
+ALTER TABLE `estadisticas_jugador_partido`
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
@@ -520,7 +554,8 @@ ALTER TABLE `comentarios`
 ALTER TABLE `equipos`
   ADD CONSTRAINT `equipos_ibfk_1` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`),
   ADD CONSTRAINT `fk_idTemporada` FOREIGN KEY (`id_temporada`) REFERENCES `temporadas` (`id`),
-  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_escudo`) REFERENCES `imagenes` (`id`);
+  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_escudo`) REFERENCES `imagenes` (`id`),
+  ADD CONSTRAINT `fk_gestor_eq` FOREIGN KEY (`gestor_eq`) REFERENCES `usuarios` (`id`);
 
 --
 -- Filtros para la tabla `equipos_patrocinadores`
@@ -543,6 +578,14 @@ ALTER TABLE `estadisticas_jugador`
   ADD CONSTRAINT `fk_id_idEquipoEJ` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`),
   ADD CONSTRAINT `fk_id_idJugador` FOREIGN KEY (`id_jugador`) REFERENCES `jugadores` (`id`),
   ADD CONSTRAINT `fk_id_idTemporadaJ` FOREIGN KEY (`id_temporada`) REFERENCES `temporadas` (`id`);
+
+--
+-- Filtros para la tabla `estadisticas_jugador_partido`
+--
+ALTER TABLE `estadisticas_jugador_partido`
+  ADD CONSTRAINT `fk_id_idJugadorP` FOREIGN KEY (`id_jugador`) REFERENCES `jugadores` (`id`),
+  ADD CONSTRAINT `fk_id_idPartidoJ` FOREIGN KEY (`id_partido`) REFERENCES `partidos_jornada` (`id`),
+  ADD CONSTRAINT `fk_id_idEquipoE` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`);
 
 --
 -- Filtros para la tabla `jornadas_temporada`

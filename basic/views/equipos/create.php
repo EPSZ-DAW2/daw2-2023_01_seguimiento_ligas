@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Ligas;
+use app\models\Usuarios;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Equipos */
@@ -31,33 +32,60 @@ $this->title = 'Crear Equipo';
 
     <?php $form = ActiveForm::begin([
         'options' => ['enctype' => 'multipart/form-data'],
+        'enableAjaxValidation' => false,
+        'enableClientValidation' => true,
     ]); ?>
+
 
     <?= $form->field($model, 'id_liga', ['options' => ['class' => 'campoTitulo']])->dropDownList(
         ArrayHelper::map(Ligas::find()->all(), 'id', 'nombre'),
         [
             'prompt' => 'Seleccionar Liga',
             'id' => 'liga-dropdown', // ID para el dropdown de ligas
+            'class' => 'campo',
         ]
     ) ?>
+
+    <br>
 
     <?= $form->field($model, 'id_temporada', ['options' => ['class' => 'campoTitulo']])->dropDownList(
         [], // Este dropdown se llenará dinámicamente
         [
             'prompt' => 'Seleccionar Temporada',
             'id' => 'temporada-dropdown', // ID para el dropdown de temporadas
+            'class' => 'campo',
         ]
     )->label('Temporadas') ?>
 
-    <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'descripcion', ['options' => ['class' => 'campoTitulo']])->textarea(['rows' => 6]) ?>
+    <br>
+    <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre de la liga', 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'descripcion', ['options' => ['class' => 'campoTitulo']])->textarea(['rows' => 6, 'placeholder' => 'Ingrese el nombre de la liga', 'class' => 'campo']) ?>
+    <br>
     <?= $form->field($model, 'n_jugadores', ['options' => ['class' => 'campoTitulo']])->hiddenInput(['value' => 0])->label(false) ?>
     <br>
-    <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput() ?>
+    <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo'])->label('Subir Imagen') ?>
+    <br>
 
-    <div class="form-group">
-        <?= Html::submitButton('Añadir Equipo', ['class' => 'botonInicioSesion']) ?>
-    </div>
+    <?php
+    $usuarios = Usuarios::find()
+    ->where(['id_rol' => 6])
+    ->all();
+
+    // Convertir los usuarios en un array asociativo para usarlo en el dropdown
+    $usuariosDropdown = ArrayHelper::map($usuarios, 'id', 'nombre');
+    
+    ?>
+
+    <?= $form->field($model, 'gestor_eq')->dropDownList(
+        $usuariosDropdown,
+        ['prompt' => 'Selecciona un gestor']
+    )->label('Gestor del equipo (opcional)') ?>
+
+    <p>
+        <?= Html::submitButton('Añadir Equipo', ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>
+    </p>
 
     <?php ActiveForm::end(); ?>
 
