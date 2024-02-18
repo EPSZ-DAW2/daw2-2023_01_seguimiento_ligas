@@ -81,27 +81,27 @@ class UsuariosController extends Controller
             $model->load($this->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
     
-            // Validar y guardar la imagen solo si se proporciona un archivo
+      
             if (empty($imagenModel->imagenFile)) {
                 $imagenModel->addError('imagenFile', 'La imagen es un campo obligatorio.');
             } elseif ($imagenModel->validate() && $imagenModel->saveImagen()) {
-                // Asignar el ID de la imagen al modelo de Usuarios después de guardarla
+             
                 $model->id_imagen = $imagenModel->id;
     
                 if (!empty($model->password)) {
                     $model->password = Yii::$app->security->generatePasswordHash($model->password);
                 }
 
-                // Validar si el nombre de usuario ya existe
+        
                 $existingUser = Usuarios::findOne(['username' => $model->username]);
                 if ($existingUser) {
-                $model->password = ''; // Dejar el campo de contraseña en blanco
+                $model->password = ''; 
                 }
 
                 // Validar si el correo electrónico ya existe
                 $existingUser = Usuarios::findOne(['email' => $model->email]);
                 if ($existingUser) {
-                 $model->password = ''; // Dejar el campo de contraseña en blanco
+                 $model->password = ''; 
                 }
     
                 if ($model->save()) {
@@ -139,27 +139,27 @@ class UsuariosController extends Controller
             $model->load($this->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
     
-            // Validar y guardar la imagen solo si se proporciona un archivo
+          
             if (empty($imagenModel->imagenFile)) {
                 $imagenModel->addError('imagenFile', 'La imagen es un campo obligatorio.');
             } elseif ($imagenModel->validate() && $imagenModel->saveImagen()) {
-                // Asignar el ID de la imagen al modelo de Usuarios después de guardarla
+               
                 $model->id_imagen = $imagenModel->id;
     
-                if (!empty($model->password)) {
+                if (!empty($model->password)&& $model->password != $model->getOldAttribute('password')) {
                     $model->password = Yii::$app->security->generatePasswordHash($model->password);
                 }
 
-                // Validar si el nombre de usuario ya existe, pero no para el mismo usuario
+                
                 $existingUser = Usuarios::findOne(['username' => $model->username]);
                 if ($existingUser && $existingUser->id != $model->id) {
-                    $model->password = ''; // Dejar el campo de contraseña en blanco
+                    $model->password = ''; 
                 }
 
-                // Validar si el correo electrónico ya existe, pero no para el mismo usuario
+              
                 $existingUser = Usuarios::findOne(['email' => $model->email]);
                 if ($existingUser && $existingUser->id != $model->id) {
-                    $model->password = ''; // Dejar el campo de contraseña en blanco
+                    $model->password = ''; 
                 }
     
                 if ($model->save()) {
@@ -220,26 +220,26 @@ class UsuariosController extends Controller
     {
         $model = new Usuarios();
     
-        // Si el usuario está logueado, redirigir a la página de inicio
+        
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
     
         if ($this->request->isPost) {
-            // Cargar datos del formulario en el modelo
+            
             if ($model->load($this->request->post())) {
-                // Validar y loguear al usuario
+              
                 if ($model->login($model->username, $model->password)) {
                     return $this->goBack();
                 } else {
-                    // Si la autenticación falla, mostrar un mensaje de error
+                  
                     Yii::$app->session->setFlash('error', 'Usuario o contraseña incorrectos. Vuelva a intentarlo.');
                 }
             }
         }
     
-        // Si no está logueado, redirigir a la página de login
-        $model->password = ''; // Limpiar la contraseña por seguridad
+       
+        $model->password = ''; 
         return $this->render('login', [
             'model' => $model,
         ]);
