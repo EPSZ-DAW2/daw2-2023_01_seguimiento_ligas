@@ -83,6 +83,7 @@ class LigasController extends Controller
             'imagenModel' => $imagenModel,
         ]);
     }
+}
     
     public function actionUpdate($id)
     {
