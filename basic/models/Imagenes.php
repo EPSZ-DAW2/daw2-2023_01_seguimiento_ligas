@@ -124,15 +124,15 @@ class Imagenes extends \yii\db\ActiveRecord
     public function saveImagen()
     {
         if ($this->validate() && $this->imagenFile !== null) {
-            $path = 'images/';  // Carpeta dentro de "web/" donde se guardarán las imágenes
+            $path = 'images/';  
     
-            // Genera un nombre único para la imagen para evitar conflictos de nombres
+         
             $imageName = $this->imagenFile->basename . '.' . $this->imagenFile->extension;
             $fullPath = Yii::getAlias('@app/web/' . $path) . $imageName;
     
-            // Verificar si la imagen ya existe en la carpeta
+        
             if (file_exists($fullPath)) {
-                // La imagen ya existe la sustituimos por la nueva
+    
                 unlink($fullPath);
                 
                 
@@ -140,7 +140,7 @@ class Imagenes extends \yii\db\ActiveRecord
 
             $this->imagenFile->saveAs(Yii::getAlias('@app/web/' . $path) . $imageName);
 
-            // Guardar el nombre de la imagen en la base de datos
+           
             $this->foto = $imageName;
     
             return $this->save();
