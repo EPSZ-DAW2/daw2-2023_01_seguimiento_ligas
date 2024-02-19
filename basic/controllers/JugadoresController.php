@@ -27,8 +27,8 @@ class JugadoresController extends Controller
         // Agregar condiciones adicionales si se especifica la liga
         if (!empty($ligaId) && $ligaId != -1) {
             $query = $dataProvider->query;
-            $query->leftJoin('equipos', 'jugadores.id_equipo = equipos.id')
-                ->andWhere(['equipos.id_liga' => $ligaId]);
+            $query->leftJoin('equipos as eq1', 'jugadores.id_equipo = eq1.id')
+                ->andWhere(['eq1.id_liga' => $ligaId]);
             $dataProvider->query = $query;
         }
     
@@ -41,7 +41,7 @@ class JugadoresController extends Controller
             'ligaId' => $ligaId,
             'searchModel' => $searchModel,
         ]);
-    }    
+    }      
     
     public function actionCreate()
     {

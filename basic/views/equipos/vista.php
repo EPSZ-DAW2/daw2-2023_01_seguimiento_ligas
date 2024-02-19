@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use app\models\EstadisticasJugador;
 ?> 
 
 <div class="contenido-cabecera">  
@@ -35,14 +36,22 @@ use yii\helpers\Html;
     </div>
 
     <div class="liga-container3">
-
     <h2>Jugadores Destacados:</h2>
     <?php foreach ($jugadoresDestacados as $jugador): ?>
-            <h3> <?= $jugador->nombre; ?> </h3>
-            <p> <?= $jugador->estadisticas->puntos; ?> </p>
-            <p> <?= $jugador->estadisticas->rebotes; ?> </p>
-            <p> <?= $jugador->estadisticas->asistencias; ?> </p>
+        <h3><?= $jugador->nombre; ?></h3>
+        <?php
+        // Obtener las estadísticas del jugador
+        $estadisticas = EstadisticasJugador::findOne(['id_jugador' => $jugador->id]);
+
+        if ($estadisticas !== null) {
+            echo "<p>Puntos: {$estadisticas->puntos}</p>";
+            echo "<p>Rebotes: {$estadisticas->rebotes}</p>";
+            echo "<p>Asistencias: {$estadisticas->asistencias}</p>";
+        } else {
+            echo "<p>No hay estadísticas disponibles para este jugador.</p>";
+        }
+        ?>
     <?php endforeach; ?>
-    
-    </div>
+</div>
+
 </div>
