@@ -101,11 +101,17 @@ class EstadisticasJugadorController extends Controller
             $totalPuntos = 0;
             $totalRebotes = 0;
             $totalAsistencias = 0;
+            $partidosJugados = 0; // Inicializar contador de partidos jugados
 
             foreach ($estadisticasJugadorPartido as $estadistica) {
                 $totalPuntos += $estadistica->puntos;
                 $totalRebotes += $estadistica->rebotes;
                 $totalAsistencias += $estadistica->asistencias;
+
+                // Incrementar contador si minutos > 0
+                if ($estadistica->minutos > 0) {
+                    $partidosJugados++;
+                }
             }
 
             // Calcular las medias
@@ -120,11 +126,9 @@ class EstadisticasJugadorController extends Controller
                 $estadisticaJugador->puntos = $mediaPuntos;
                 $estadisticaJugador->rebotes = $mediaRebotes;
                 $estadisticaJugador->asistencias = $mediaAsistencias;
+                $estadisticaJugador->partidos_jugados = $partidosJugados; // Actualizar partidos jugados
                 $estadisticaJugador->save();
             }
         }
-
-        // Redirigir a la página de índice u otra página según corresponda
-        return $this->redirect(['index']);
     }
 }

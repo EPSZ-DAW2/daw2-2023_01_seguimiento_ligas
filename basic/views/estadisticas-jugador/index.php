@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\helpers\Url;
 
-if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5)) {
+if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2  && Yii::$app->user->identity->id_rol != 6)) {
 ?>
 
 <!DOCTYPE html>
@@ -193,7 +193,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
     </div>
 
     <div class="marco">
-        <?= Html::a('Actualizar Estadísticas', ['actualizar-estadisticas'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Actualizar Estadísticas', ['index'], ['class' => 'btn btn-primary']) ?>
     </div>
 </body>
 </html>
