@@ -38,7 +38,7 @@ class Temporadas extends \yii\db\ActiveRecord
             [['texto_de_titulo'], 'string', 'max' => 50],
             [['id_liga'], 'integer'],
             [['texto_de_titulo'], 'unique', 'targetAttribute' => ['texto_de_titulo', 'id_liga'], 'message' => 'Este título ya está siendo utilizado para esta liga.'],
-            [['fecha_inicial', 'fecha_final'], 'validateFecha'], // Agrega la validación de fechas
+            [['fecha_inicial', 'fecha_final'], 'validateFecha'],
         ];
     }
     public function validateFecha($attribute, $params)
@@ -80,6 +80,16 @@ class Temporadas extends \yii\db\ActiveRecord
     public function getLiga()
     {
         return $this->hasOne(Ligas::class, ['id' => 'id_liga']);
+    }
+
+        /**
+     * Gets query for [[Equipo]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEquipos()
+    {
+        return $this->hasMany(Equipos::class, ['id_temporada' => 'id']);
     }
 
     /**

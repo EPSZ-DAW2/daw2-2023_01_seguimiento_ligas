@@ -21,7 +21,7 @@ $this->title = $model->nombre;
 <div id="contenedor-principal">
 
 <?php
-if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5)) {
+if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 6)) {
 ?>
 
 <div class="marco">

@@ -6,7 +6,7 @@ use yii\grid\ActionColumn;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
-if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5)) {
+if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 6)) {
     ?>
     <!DOCTYPE html>
 <html lang="es">

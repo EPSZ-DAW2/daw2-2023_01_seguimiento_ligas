@@ -14,11 +14,15 @@ $this->title = Yii::t('app', 'Usuarios');
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<?php 
+if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2)) {
+?>
 <div class="contenido-cabecera">
 
     <h1>USUARIOS DEL SISTEMA</h1>
 
 </div>
+
 
 <div id="contenedor-izquierda">
 
@@ -79,5 +83,16 @@ $this->title = Yii::t('app', 'Usuarios');
     </p>
     </div>
 
+<?php    
+} else {
+    ?>
+    <div class="contenido-cabecera">
 
+    <h1>USUARIOS DEL SISTEMA</h1>
+
+</div>
+   
+<?php
+}
+?>
 </div>

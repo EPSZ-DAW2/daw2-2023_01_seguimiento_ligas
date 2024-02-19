@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Ligas;
+use app\models\Usuarios;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Equipos */
@@ -65,6 +66,22 @@ $this->title = 'Crear Equipo';
     <br>
     <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo'])->label('Subir Imagen') ?>
     <br>
+
+    <?php
+    $usuarios = Usuarios::find()
+    ->where(['id_rol' => 6])
+    ->all();
+
+    // Convertir los usuarios en un array asociativo para usarlo en el dropdown
+    $usuariosDropdown = ArrayHelper::map($usuarios, 'id', 'nombre');
+    
+    ?>
+
+    <?= $form->field($model, 'gestor_eq')->dropDownList(
+        $usuariosDropdown,
+        ['prompt' => 'Selecciona un gestor']
+    )->label('Gestor del equipo (opcional)') ?>
+
     <p>
         <?= Html::submitButton('Añadir Equipo', ['class' => 'botonFormulario']) ?>
         <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>

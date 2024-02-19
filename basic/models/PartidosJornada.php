@@ -51,7 +51,6 @@ class PartidosJornada extends \yii\db\ActiveRecord
             [['id_equipo_visitante'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo_visitante' => 'id']],
             [['id_jornada'], 'exist', 'skipOnError' => true, 'targetClass' => JornadasTemporada::class, 'targetAttribute' => ['id_jornada' => 'id']],
             ['horario', 'validarHorarioEnJornada'],
-            //['horario', 'datetime', 'format' => 'php:Y-m-d\TH:i', 'min' => date('Y-m-d\TH:i'), 'tooSmall' => 'Selecciona una fecha y hora futura.'],
         ];
     }
 

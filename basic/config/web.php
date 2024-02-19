@@ -13,7 +13,9 @@ $config = [
     ],
 
     'name' => 'ArosInsider',  // Nombre de la apicación
-
+    'controllerMap' => [
+        'base-datos' => 'app\controllers\BaseDatosController',
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -35,6 +37,7 @@ $config = [
             // send all mails to a file by default.
             'useFileTransport' => true,
         ],
+      
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -59,6 +62,8 @@ $config = [
     ],
     'params' => $params,
 ];
+
+
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment

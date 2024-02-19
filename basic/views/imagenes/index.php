@@ -8,7 +8,6 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ImagenesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Imágenes');
@@ -26,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -39,17 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             
-            [
-                'class' => ActionColumn::class,
-                'urlCreator' => function ($action, Imagenes $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                }
-            ],
+          
         ],
     ]); ?>
 
     <?php Pjax::end(); ?>
 
 </div>
-
-
