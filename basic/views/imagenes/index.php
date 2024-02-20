@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'foto',
                 'format' => 'html',
                 'value' => function ($model) {
-                    return Html::img(Url::to('@web/' . $model->foto), ['width' => '50px']);
+                    return Html::img(Url::to('@web/images/' . $model->foto), ['width' => '50px']);
                 },
             ],
             

@@ -11,6 +11,8 @@ class ImagenesController extends Controller
 {
     public function actionCreate()
     {
+
+        
         $model = new Imagenes();
 
         if (Yii::$app->request->isPost) {
@@ -18,10 +20,12 @@ class ImagenesController extends Controller
             $model->imagenFile = UploadedFile::getInstance($model, 'imagenFile');
             
             if ($model->imagenFile) {
+               
+
                 if ($model->validate()) {
-                    
+                   
                     if ($model->saveImagen()) {
-                       
+                        
                         return $this->redirect(['index']);
                     } else {
                        
