@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\PartidosJornada;
 use app\models\JornadasTemporada;
+use app\models\Jugadores;
+use app\models\JugadoresSearch;
 use app\models\Equipos;
 use app\models\Temporadas;
 use app\models\Comentarios;
@@ -56,11 +58,16 @@ class PartidosController extends \yii\web\Controller
         $dataProviderVisitante = new ActiveDataProvider([
             'query' => $model->equipoVisitante->getEstadisticasJugadorPartido(),
         ]);        
-    
+        
+        /*$post=$this->loadModel();
+        $comentarios=$this->actionAgregarComentario($partidoID,$post);*/
+
         // Renderizar la vista de detalles del partido
         return $this->render('view', [
             'model' => $model,
             'comentarios' => $comentarios,
+            'dataProviderLocal' => $dataProviderLocal,
+            'dataProviderVisitante' => $dataProviderVisitante, 
         ]);
     }
     
@@ -139,7 +146,6 @@ class PartidosController extends \yii\web\Controller
             throw new \yii\web\NotFoundHttpException('La jornada o la temporada no existe.');
         }
     }
-
 
     public function actionUpdate($id)
     {
@@ -255,45 +261,45 @@ class PartidosController extends \yii\web\Controller
         return $this->redirect(['index', 'id' => $nuevoPartido->id]);
     }
 
-    public function actionAgregarComentario($id_partido)
+    protected function actionAgregarComentario($id_partido)
     {
         // Verifica si el usuario está autenticado
         if (Yii::$app->user->isGuest) {
             // Si el usuario no está autenticado, redirige a la página de inicio de sesión
             Yii::$app->session->setFlash('error', 'Debes iniciar sesión para escribir comentarios.');
-            return $this->redirect(['site/login']); // Ajusta la URL según la tuya
         }
 
         // Crea un nuevo modelo de Comentarios
         $nuevoComentarioModel = new Comentarios();
 
-        // Asigna los valores del comentario
-        $nuevoComentarioModel->id_partido = $id_partido;
-        $nuevoComentarioModel->id_usuario = Yii::$app->user->id; // Asigna el ID del usuario actual
-        $nuevoComentarioModel->fecha_hora = date('Y-m-d H:i:s'); // Asigna la fecha y hora actual
+        if (Yii::$app->request->isPost) {
 
-        // Guarda el comentario en la base de datos
-        if ($nuevoComentarioModel->save()) {
-            Yii::$app->session->setFlash('success', '¡Comentario agregado exitosamente!');
-        } else {
-            Yii::$app->session->setFlash('error', 'Hubo un error al guardar el comentario.');
+            $nuevoComentarioModel->load(Yii::$app->request->post());
+
+            // Asigna los valores del comentario
+            $nuevoComentarioModel->id_partido = $id_partido;
+            $nuevoComentarioModel->id_usuario = Yii::$app->user->id; // Asigna el ID del usuario actual
+            $nuevoComentarioModel->fecha_hora = date('Y-m-d H:i:s'); // Asigna la fecha y hora actual
+
+            // Guarda el comentario en la base de datos
+            if ($nuevoComentarioModel->save()) {
+                Yii::$app->session->setFlash('success', '¡Comentario agregado exitosamente!');
+                // Redirige al usuario de vuelta a la página de detalles de partido
+                return $this->redirect(['view', 'id_partido' => $id_partido]);
+            } else {
+                // Hubo un error al guardar el comentario.
+                // Mantener el texto del comentario en el formulario.
+                Yii::$app->session->setFlash('error', 'Hubo un error al guardar el comentario.');
+                return $this->render('view', [
+                    'id_partido' => $id_partido,
+                    'nuevoComentarioModel' => $nuevoComentarioModel,
+                ]);
+            }
         }
 
-        // Redirige al usuario de vuelta a la página de comentarios
-        return $this->redirect(['view', 'id_partido' => $id_partido]);
-    }
-
-    public function actionAddStats($idPartido, $idEquipo)
-    {
-        $model = new EstadisticasJugadorPartido();
-        $model->id_partido = $idPartido;
-    
-        // Aquí deberías obtener la lista de jugadores del equipo en función del $idEquipo
-    
-        return $this->render('form', [
-            'model' => $model,
-            'idPartido' => $idPartido,
-            'jugadores' => [], // Pasa aquí la lista de jugadores
+        return $this->render('view', [
+            'id_partido' => $id_partido,
+            'nuevoComentarioModel' => $nuevoComentarioModel,
         ]);
     }
 }

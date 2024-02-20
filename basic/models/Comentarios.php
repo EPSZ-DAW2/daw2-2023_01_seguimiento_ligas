@@ -43,7 +43,7 @@ class Comentarios extends \yii\db\ActiveRecord
             [['fecha_hora', 'fecha_hora_bloqueo'], 'safe'],
             [['texto_comentario'], 'string', 'max' => 255],
             [['hilo_cerrado', 'bloqueado'], 'boolean'],
-            [['id_partido'], 'exist', 'skipOnError' => true, 'targetClass' => Partidos::class, 'targetAttribute' => ['id_partido' => 'id']],
+            [['id_partido'], 'exist', 'skipOnError' => true, 'targetClass' => PartidosJornada::class, 'targetAttribute' => ['id_partido' => 'id']],
             [['id_usuario'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::class, 'targetAttribute' => ['id_usuario' => 'id']],
             [['id_comentario_padre'], 'exist', 'skipOnError' => true, 'targetClass' => Comentarios::class, 'targetAttribute' => ['id_comentario_padre' => 'id']],
         ];
@@ -81,7 +81,7 @@ class Comentarios extends \yii\db\ActiveRecord
      */
     public function getPartido()
     {
-        return $this->hasOne(Partidos::class, ['id' => 'id_partido']);
+        return $this->hasOne(PartidosJornada::class, ['id' => 'id_partido']);
     }
 
     /**
