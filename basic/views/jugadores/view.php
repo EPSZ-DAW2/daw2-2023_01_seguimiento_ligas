@@ -21,7 +21,7 @@ $this->title = $model->nombre;
 <div id="contenedor-principal">
 
 <?php
-if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 5)) {
+if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 6)) {
 ?>
 
 <div class="marco">
@@ -37,6 +37,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
         'attributes' => [
             [
+                'label' => 'Imagen',
                 'attribute' => 'id_imagen',
                 'format' => 'html',
                 'value' => function ($model) {
@@ -50,15 +51,16 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     return 'Sin foto';
                 },
             ],
-            'id',
-            'id_equipo',
+            [
+                'label' => 'Equipo',
+                'value' => $model->equipo->nombre,
+            ],
             'nombre',
             'descripcion',
             'posicion',
             'altura',
             'peso',
             'nacionalidad',
-            'video',
         ],
     ]) ?>
 

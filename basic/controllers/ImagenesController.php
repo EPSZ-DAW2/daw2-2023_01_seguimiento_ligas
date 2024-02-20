@@ -19,21 +19,19 @@ class ImagenesController extends Controller
             
             if ($model->imagenFile) {
                 if ($model->validate()) {
-                    // Guarda la imagen en la tabla imagenes
+                    
                     if ($model->saveImagen()) {
-
-                        // Redirige a la vista de imágenes o a donde desees
+                       
                         return $this->redirect(['index']);
-
                     } else {
-                        // Manejo de errores, por ejemplo, mostrar un mensaje de error
+                       
                         Yii::$app->session->setFlash('error', 'Error al guardar la imagen.');
                     }
                 }
             }
         }
 
-        // Renderiza la vista del formulario
+    
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -49,39 +47,37 @@ class ImagenesController extends Controller
             
             if ($model->imagenFile) {
                 if ($model->validate()) {
-                    // Guarda la imagen en la tabla imagenes
+                 
                     if ($model->saveImagen()) {
-
-                        // Redirige a la vista de imágenes o a donde desees
+                     
                         return $this->redirect(['index']);
-
                     } else {
-                        // Manejo de errores, por ejemplo, mostrar un mensaje de error
+                     
                         Yii::$app->session->setFlash('error', 'Error al guardar la imagen.');
                     }
                 }
             }
         }
 
-        // Renderiza la vista del formulario
+      
         return $this->render('update', [
             'model' => $model,
         ]);
     }
-    //action para eliminar la imagen
+
+
     public function actionDelete($id)
     {
         $model = Imagenes::findOne($id);
         if ($model->deleteImagen()) {
-            // Redirige a la vista de imágenes o a donde desees
+      
             return $this->redirect(['index']);
         } else {
-            // Manejo de errores, por ejemplo, mostrar un mensaje de error
             Yii::$app->session->setFlash('error', 'Error al eliminar la imagen.');
         }
     }
 
-    //action para mostrar la imagen
+   
     public function actionView($id)
     {
         $model = Imagenes::findOne($id);
@@ -92,11 +88,11 @@ class ImagenesController extends Controller
 
     public function actionIndex()
     {
-        $searchModel = new ImagenesSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => Imagenes::find(),
+        ]);
 
         return $this->render('index', [
-            'imagenModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

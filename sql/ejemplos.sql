@@ -1,5 +1,6 @@
 -- INSERTAMOS LOS ROLES
 INSERT IGNORE INTO `roles` (`nombre`) VALUES
+('Superadministrador'),
 ('Administrador'),
 ('Moderador'),
 ('GestorLigas'),
@@ -14,12 +15,13 @@ SET @imagen_perfil := LAST_INSERT_ID();
 
 -- INSERTAMOS USUARIOS DE EJEMPLO
 INSERT IGNORE INTO `usuarios` (`nombre`, `apellido1`, `apellido2`, `email`, `password`, `provincia`, `id_rol`, `username`, `id_imagen`) VALUES
-('Marcos', 'Castro', 'Aragón', 'admin@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 1, 'admin', @imagen_perfil),
-('Iago', 'Gasamans', 'Losada', 'mod@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 2, 'moderador', @imagen_perfil),
-('Jorge', 'Abella', 'Cabezas', 'gestorli@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'León', 3, 'gestorligas', @imagen_perfil),
-('Álex', 'Alonso', 'Vicente', 'patrocinador@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 4, 'patrocinador', @imagen_perfil),
-('David', 'Pérez', 'Esteban', 'gestoreq@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 5, 'gestorequipos', @imagen_perfil),
-('Diego', 'Iglesias', 'Estevez', 'cliente@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 6, 'cliente', @imagen_perfil);
+('Administrador Supremo', 'superadmin', 'superadmin', 'superadmin@usal.es', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 1, 'superadmin', @imagen_perfil),
+('Marcos', 'Castro', 'Aragón', 'admin@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 2, 'admin', @imagen_perfil),
+('Iago', 'Gasamans', 'Losada', 'mod@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 3, 'moderador', @imagen_perfil),
+('Jorge', 'Abella', 'Cabezas', 'gestorli@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'León', 4, 'gestorligas', @imagen_perfil),
+('Álex', 'Alonso', 'Vicente', 'patrocinador@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 5, 'patrocinador', @imagen_perfil),
+('David', 'Pérez', 'Esteban', 'gestoreq@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 6, 'gestorequipos', @imagen_perfil),
+('Diego', 'Iglesias', 'Estevez', 'cliente@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 7, 'cliente', @imagen_perfil);
 
 
 -- INSERTAMOS LAS IMAGENES DE LIGA NBA Y ACB
@@ -36,53 +38,53 @@ SET @imagen_acb := LAST_INSERT_ID();
 
 -- INSERTAMOS LAS LIGAS NBA Y ACB
 INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`) VALUES
-('Liga NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba, 'https://www.youtube.com/embed/uUwb0x_AdL8?si=LIxT8Qet6JkIjksZ');
+('NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba, 'https://www.youtube.com/embed/uUwb0x_AdL8?si=LIxT8Qet6JkIjksZ');
 
 SET @id_nba := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`) VALUES
-('Liga ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb, 'https://www.youtube.com/embed/NQp5KW7rZ9k?si=iiWyQfFnMQf5EKWn');
+('ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb, 'https://www.youtube.com/embed/NQp5KW7rZ9k?si=iiWyQfFnMQf5EKWn');
 
 SET @id_acb := LAST_INSERT_ID();
 
 -- TEMPORADAS 2023-24 DE LAS LIGAS NBA Y ACB
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'Liga NBA 2024-25', '2024-10-20', '2025-04-20');
+(@id_nba, 'NBA 2024-25', '2024-10-20', '2025-04-20');
 
 SET @temporada_nba24 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'Liga NBA 2023-24', '2023-10-24', '2024-04-14');
+(@id_nba, 'NBA 2023-24', '2023-10-24', '2024-04-14');
 
 SET @temporada_nba23 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'Liga NBA 2022-23', '2022-10-18', '2023-04-09');
+(@id_nba, 'NBA 2022-23', '2022-10-18', '2023-04-09');
 
 SET @temporada_nba21 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'Liga NBA 2021-22', '2021-10-19', '2022-04-10');
+(@id_nba, 'NBA 2021-22', '2021-10-19', '2022-04-10');
 
 SET @temporada_nba21 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'Liga ACB 2024-25', '2024-09-14', '2025-06-13');
+(@id_acb, 'ACB 2024-25', '2024-09-14', '2025-06-13');
 
 SET @temporada_acb24 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'Liga ACB 2023-24', '2023-09-23', '2024-06-24');
+(@id_acb, 'ACB 2023-24', '2023-09-23', '2024-06-24');
 
 SET @temporada_acb23 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'Liga ACB 2022-23', '2022-09-17', '2023-06-22');
+(@id_acb, 'ACB 2022-23', '2022-09-17', '2023-06-22');
 
 SET @temporada_acb22 := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'Liga ACB 2021-22', '2021-09-18', '2022-06-19');
+(@id_acb, 'ACB 2021-22', '2021-09-18', '2022-06-19');
 
 SET @temporada_acb21 := LAST_INSERT_ID();
 

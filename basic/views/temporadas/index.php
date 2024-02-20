@@ -25,9 +25,9 @@ foreach ($temporadas as $temporada) {
                 <br>
                 <p><?= Html::a($temporada->texto_de_titulo, ['jornadas/index', 'id' => $temporada->id]) ?></p>
                 
-                <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
+                <?= Html::a('Ver Equipos', ['equipos/ver-por-temporada', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
+                <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
                     <?= Html::a('Ver Detalles', ['temporadas/view', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
-                    <?= Html::a('Copiar Temporada', ['copy', 'id' => $temporada->id], ['class' => 'botonFormulario']) ?>
                     <br>
                 <?php endif ?>
             <?php endforeach; ?>
@@ -35,7 +35,7 @@ foreach ($temporadas as $temporada) {
     <?php endforeach; ?>
 
     <div style="text-align: center; margin-top: 20px;">
-        <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 3)): ?>
+        <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
             <?= Html::a('Añadir Temporada', ['temporadas/create'], ['class' => 'botonFormulario']) ?>
         <?php endif ?>
     </div>

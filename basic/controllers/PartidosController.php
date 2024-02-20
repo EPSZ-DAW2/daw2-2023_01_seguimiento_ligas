@@ -83,7 +83,7 @@ class PartidosController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
         {
             // Usuario no autenticado o no tiene el rol adecuado
             Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
@@ -149,7 +149,7 @@ class PartidosController extends \yii\web\Controller
 
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
         {
             // Usuario no autenticado o no tiene el rol adecuado
             Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
@@ -214,7 +214,7 @@ class PartidosController extends \yii\web\Controller
     // Acción para borrar un partido
     public function actionDelete($id)
     {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
         {
             // Usuario no autenticado o no tiene el rol adecuado
             Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
@@ -235,7 +235,7 @@ class PartidosController extends \yii\web\Controller
     // Acción para copiar un partido
     public function actionCopy($id)
     {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 3))
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
         {
             // Usuario no autenticado o no tiene el rol adecuado
             Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
