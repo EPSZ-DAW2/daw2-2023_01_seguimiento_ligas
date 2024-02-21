@@ -52,6 +52,8 @@ use app\models\EstadisticasJugador;
         }
         ?>
     <?php endforeach; ?>
+
+    <?= Html::a('Ver todos', ['jugadores/ver-por-equipo', 'id'=>$equipo->id], ['class' => 'botonFormulario']) ?>
 </div>
 
 </div>
