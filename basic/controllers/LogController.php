@@ -53,7 +53,7 @@ class LogController extends Controller
             unlink($filePath);
         }
 
-        return $this->redirect(['log']);
+        return $this->redirect(['index']);
     }
 
 

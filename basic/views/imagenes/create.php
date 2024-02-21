@@ -8,26 +8,40 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Imagenes */ 
 
 $this->title = Yii::t('app', 'Registro nueva imagen');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Imagenes'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Imagenes'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="imagenes-create">
+<div class="contenido-cabecera">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>REGISTRO DE UNA NUEVA IMAGEN</h1>
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+</div>
+
+<div id="contenedor-izquierda">
+
+    <div class="marco">
+
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'enableAjaxValidation' => false,
+    'enableClientValidation' => true,]]); ?>
 
     <!-- Agrega el campo para la carga de la imagen -->
-    <?= $form->field($model, 'imagenFile')->fileInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
-    </div>
+    <?= $form->field($model, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo'])->label('Subir Imagen') ?>
+            <!-- Muestra el mensaje de error -->
+            <?php if ($model->hasErrors('imagenFile')): ?>
+            <div class="alert alert-danger">
+                <?= $form->error($model, 'imagenFile') ?>
+            </div>
+        <?php endif; ?>
+    <br>
+    <p>
+        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>
+    </p>
 
     <?php ActiveForm::end(); ?>
 
    
-
+    </div>
 </div>
 

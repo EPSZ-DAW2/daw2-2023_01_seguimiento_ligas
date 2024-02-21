@@ -43,7 +43,7 @@ class PartidosJornada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_jornada', 'id_equipo_local', 'id_equipo_visitante'], 'required'],
+            [['id_jornada', 'id_equipo_local', 'id_equipo_visitante'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_jornada', 'id_equipo_local', 'id_equipo_visitante', 'resultado_local', 'resultado_visitante'], 'integer'],
             [['horario'], 'safe'],
             [['lugar'], 'string', 'max' => 255],
