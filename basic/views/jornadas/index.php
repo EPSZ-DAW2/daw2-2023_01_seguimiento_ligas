@@ -41,10 +41,11 @@ $this->title = 'Jornadas de ' . $temporada->texto_de_titulo;
         <?php endforeach; ?>
     <?php endif; ?>
 
+
     <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
     <?= Html::a('Nueva Jornada', ['jornadas/create', 'temporadaID' => $temporada->id], ['class' => 'botonFormulario']) ?>
     <?php endif ?>
-
+    <?= Html::a(Yii::t('app', 'Atras'), ['temporadas/index'], ['class' => 'botonFormulario']) ?>
     </div>
 
 

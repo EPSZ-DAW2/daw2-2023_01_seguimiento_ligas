@@ -29,7 +29,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 
     <div class="marco">
 
-        <p class="PaginaDeInicio">Listado de jugadores</p>
         <?php
         echo Html::beginForm(['jugadores/index'], 'get');
         echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']); 

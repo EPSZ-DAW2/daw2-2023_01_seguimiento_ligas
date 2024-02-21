@@ -8,6 +8,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
 use yii\db\Transaction;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
 
 class BaseDatosController extends Controller
 {
@@ -62,67 +64,40 @@ public function actionRestaurarcopia()
     $archivos = [];
     
     $rutaDir = Yii::getAlias('@app') . '/copiaSeguridad';
-    
-
-    $indice = Yii::$app->request->post('nombreArchivo');
-    
-
+    $indice = Yii::$app->request->post('archivoZip');
     $archivos = BaseDatos::obtenerCopiasSeguridad();
     
-  
     if ($indice !== null && array_key_exists($indice, $archivos)) {
-       
         $nombreArchivo = $archivos[$indice];
-        
-    
         $rutaFichero = $rutaDir . '/' . $nombreArchivo;
         
-       
         if (file_exists($rutaFichero)) {
-        
             $tempDir = sys_get_temp_dir() . '/' . uniqid('temp_', true);
             mkdir($tempDir);
             
-       
             $zip = new \ZipArchive;
             if ($zip->open($rutaFichero) === TRUE) {
-          
                 $zip->extractTo($tempDir);
                 $zip->close();
                 
-              
-                $files = new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($tempDir),
-                    RecursiveIteratorIterator::LEAVES_ONLY
-                );
-                foreach ($files as $name => $file) {
-                    if (!$file->isDir()) {
-                       
-                        $relativePath = substr($name, strlen($tempDir) + 1);
-                      
-                        $destPath = Yii::getAlias('@app') . '/' . $relativePath;
-                       
-                        if (!file_exists(dirname($destPath))) {
-                            mkdir(dirname($destPath), 0755, true);
-                        }
-                
-                        copy($name, $destPath);
-                    }
-                }
-                
-               
-                $sqlFile = $tempDir . '/backup.sql';
+                $sqlFile = $tempDir . '/ArosInsider.sql';
                 if (file_exists($sqlFile)) {
-                    $command = Yii::$app->db->createCommand(file_get_contents($sqlFile));
-                    $command->execute();
+                    $sqlContent = file_get_contents($sqlFile);
+                    $connection = Yii::$app->db;
+                    $transaction = $connection->beginTransaction();
+                    try {
+                        $connection->createCommand($sqlContent)->execute();
+                        $transaction->commit();
+                        $error = "Copia de seguridad restaurada correctamente";
+                    } catch (\Exception $e) {
+                        $transaction->rollBack();
+                        $error = "Error al restaurar la copia de seguridad: " . $e->getMessage();
+                    }
                 } else {
                     $error = "No se encontró el archivo de respaldo de la base de datos en la copia de seguridad.";
                 }
                 
-             
                 $this->removeDir($tempDir);
-                
-                $error = "Copia de seguridad restaurada correctamente";
             } else {
                 $error = "No se pudo restaurar la copia de seguridad";
             }
@@ -133,7 +108,6 @@ public function actionRestaurarcopia()
         $error = "Índice de archivo no válido";
     }
 
-  
     $copias = BaseDatos::obtenerCopiasSeguridad();
     
     // Renderizar la vista con los resultados
@@ -143,6 +117,7 @@ public function actionRestaurarcopia()
         'archivos' => $archivos, 
     ]);
 }
+
 
 
 private function removeDir($dir) {
@@ -185,20 +160,26 @@ private function removeDir($dir) {
             }
             $db = Yii::$app->db;
             $tablas = $db->schema->getTableNames();
-            $backupFile = 'ArosInsider_' . date('Y-m-d_H-i-s') . '.sql';
+            $backupFile = 'ArosInsider' . '.sql';
             $handle = fopen($backupDir . '/' . $backupFile, 'w');
 
-
+            fwrite($handle, "SET FOREIGN_KEY_CHECKS = 0 ;\n");
+            $sql = 'SET FOREIGN_KEY_CHECKS = 0;';
+            $db->createCommand($sql)->execute();
             foreach ($tablas as $tabla) {
-                fwrite($handle, "DROP TABLE IF EXISTS `$tabla`;\n");
+                fwrite($handle, "DELETE FROM `$tabla`;\n");
+            
+               
+            
+                
                 $sql = 'SHOW CREATE TABLE `' . $tabla . '`';
                 $CrearTabla = $db->createCommand($sql)->queryOne();
-                if($CrearTabla) {
-                    fwrite($handle, $CrearTabla['Create Table'] . ";\n");
+                if ($CrearTabla) {
+                    
                     $query = new \yii\db\Query;
                     $query->select('*')->from($tabla);
                     $result = $query->all();
-                    if(!empty($result)){
+                    if (!empty($result)) {
                         $keys = array_keys($result[0]);
                         foreach ($result as $row) {
                             $values = array_map('addslashes', $row);
@@ -206,7 +187,12 @@ private function removeDir($dir) {
                         }
                     }
                 }
+            
+               
+                
             }
+            fwrite($handle, "SET FOREIGN_KEY_CHECKS = 1 ;\n");
+                $db->createCommand($sql)->execute();
             fclose($handle);
             $zip->addFile($backupDir . '/' . $backupFile, $backupFile);
             $zip->close();

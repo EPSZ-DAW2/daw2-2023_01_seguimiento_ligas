@@ -24,9 +24,10 @@ $this->title = $model->username;
 
     <div class="marco">
 
-    <p class="PaginaDeInicio">Datos:</p>
     <?= DetailView::widget([
     'model' => $model,
+    'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
+    'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
     'attributes' => [
         'id',
         'nombre:ntext',
@@ -55,8 +56,22 @@ $this->title = $model->username;
 ]) ?>
 
 
-    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 6)) {?>
+    <?php if (((Yii::$app->user->identity->id_rol == 1) || (Yii::$app->user->identity->id_rol == 2))) {?>
         
+        <p>
+        <?= Html::a(Yii::t('app', 'Actualizar contenido'), ['update', 'id' => $model->id], ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Borrar cuenta'), ['delete', 'id' => $model->id], [
+            'class' => 'botonFormulario',
+            'data' => [
+                'confirm' => Yii::t('app', '¿Estas seguro que quieres eliminar la cuenta?'),
+                'method' => 'post',
+            ],
+    ]) ?>
+        <?= Html::a(Yii::t('app', 'Tabla de Usuarios'), ['usuarios/index'], ['class' => 'botonFormulario']) ?>
+        </p>
+
+    <?php } else { ?>
+    
         <p>
         <?= Html::a(Yii::t('app', 'Actualizar contenido'), ['update', 'id' => $model->id], ['class' => 'botonFormulario']) ?>
         <?= Html::a(Yii::t('app', 'Borrar cuenta'), ['delete', 'id' => $model->id], [
@@ -68,20 +83,6 @@ $this->title = $model->username;
         ]) ?>
         <?= Html::a(Yii::t('app', 'Ir a Inicio'), Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
         </p>
-
-    <?php } elseif (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 1) { ?>
-    
-    <p>
-    <?= Html::a(Yii::t('app', 'Actualizar contenido'), ['update', 'id' => $model->id], ['class' => 'botonFormulario']) ?>
-    <?= Html::a(Yii::t('app', 'Borrar cuenta'), ['delete', 'id' => $model->id], [
-            'class' => 'botonFormulario',
-            'data' => [
-                'confirm' => Yii::t('app', '¿Estas seguro que quieres eliminar la cuenta?'),
-                'method' => 'post',
-            ],
-    ]) ?>
-    <?= Html::a(Yii::t('app', 'Tabla de Usuarios'), ['usuarios/index'], ['class' => 'botonFormulario']) ?>
-    </p>
 
     <?php } ?>
 
