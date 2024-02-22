@@ -28,9 +28,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 
     <p class="PaginaDeInicio">Datos de <?= Html::encode($this->title) ?></p>
 
-
-
-
     <?= DetailView::widget([
         'model' => $model,
         'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
@@ -79,35 +76,40 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
     <p class="PaginaDeInicio">Datos de <?= Html::encode($this->title) ?></p>
 
     <?= DetailView::widget([
-        'model' => $model,
-        'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
-        'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
-        'attributes' => [
-            [
-                'attribute' => 'id_imagen',
-                'format' => 'html',
-                'value' => function ($model) {
-                    $imagen = \app\models\Imagenes::findOne($model->id_imagen);
+    'model' => $model,
+    'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
+    'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
+    'attributes' => [
+        [
+            'attribute' => 'id_imagen',
+            'format' => 'html',
+            'value' => function ($model) {
+                $imagen = \app\models\Imagenes::findOne($model->id_imagen);
 
-                    if ($imagen && $imagen->foto) {
-                        $urlImagen = Yii::getAlias('@web/images/') . $imagen->foto;
-                        return Html::img($urlImagen, ['alt' => 'Foto de jugador', 'style' => 'width: 60px; height: 60px;']);
-                    }
+                if ($imagen && $imagen->foto) {
+                    $urlImagen = Yii::getAlias('@web/images/') . $imagen->foto;
+                    return Html::img($urlImagen, ['alt' => 'Foto de jugador', 'style' => 'width: 60px; height: 60px;']);
+                }
 
-                    return 'Sin foto';
-                },
-            ],
-            'id',
-            'id_equipo',
-            'nombre',
-            'descripcion',
-            'posicion',
-            'altura',
-            'peso',
-            'nacionalidad',
-            'video',
+                return 'Sin foto';
+            },
         ],
-    ]) ?>
+        'id',
+        'id_equipo',
+        'nombre',
+        'descripcion',
+        'posicion',
+        'altura',
+        'peso',
+        'nacionalidad',
+        'video',
+        [
+            'attribute' => 'activo',
+            'label' => 'Activo',
+            'value' => $model->activo ? 'Sí' : 'No',
+        ],
+    ],
+]) ?>
 
 <p>
         <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'botonFormulario']) ?>

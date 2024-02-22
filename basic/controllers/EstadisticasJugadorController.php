@@ -13,20 +13,21 @@ class EstadisticasJugadorController extends Controller
 {
     public function actionIndex()
     {
-        // Configura el proveedor de datos con paginación
+        // Configura el proveedor de datos con paginación y filtros
         $dataProvider = new ActiveDataProvider([
-            'query' => EstadisticasJugador::find()->with(['equipo', 'jugador', 'temporada']),
+            'query' => EstadisticasJugador::find()
+                ->with(['equipo', 'jugador', 'temporada']),
             'pagination' => [
                 'pageSize' => 10, // Puedes ajustar el tamaño de la página según tus necesidades
             ],
         ]);
-
+    
         // Renderiza la vista y pasa el proveedor de datos como parámetro
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
     }
-
+    
 
     public function actionCreate()
     {
@@ -130,5 +131,6 @@ class EstadisticasJugadorController extends Controller
                 $estadisticaJugador->save();
             }
         }
+        return $this->redirect(['index']);
     }
 }

@@ -151,16 +151,16 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     [
-                        'label' => 'Nombre', // Etiqueta de la columna
-                        'attribute' => 'jugador.nombre', // Utiliza el nombre del jugador
+                        'label' => 'Nombre',
+                        'attribute' => 'jugador.nombre',
                     ],
                     [
-                        'label' => 'Equipo', // Etiqueta de la columna
-                        'attribute' => 'equipo.nombre', // Utiliza el nombre del equipo
+                        'label' => 'Equipo',
+                        'attribute' => 'equipo.nombre',
                     ],
                     [
-                        'label' => 'Temporada', // Etiqueta de la columna
-                        'attribute' => 'temporada.texto_de_titulo', // Utiliza el texto de título de la temporada
+                        'label' => 'Temporada',
+                        'attribute' => 'temporada.texto_de_titulo',
                     ],
                     'partidos_jugados',
                     'puntos',
@@ -193,7 +193,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
     </div>
 
     <div class="marco">
-        <?= Html::a('Actualizar Estadísticas', ['index'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Actualizar Estadísticas', ['actualizar-estadisticas'], ['class' => 'btn btn-primary']) ?>
     </div>
 </body>
 </html>
