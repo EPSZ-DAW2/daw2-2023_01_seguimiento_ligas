@@ -8,30 +8,40 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="estadisticas-jugador-partido-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<div class="contenido-cabecera">  
+    <h1>DETALLES DEL PARTIDO</h1>  
+</div>
 
-    <?= $form->field($model, 'id_partido')->hiddenInput(['value' => $idPartido])->label(false) ?>
+<div id="contenedor-principal">
 
-    <?= $form->field($model, 'id_jugador')->dropDownList($jugadores, ['prompt' => 'Seleccionar Jugador']) ?>
+    <div class="marco">
 
-    <?= $form->field($model, 'id_equipo')->hiddenInput(['value' => $idEquipo])->label(false) ?>
+        <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'minutos')->textInput() ?>
+        <?= $form->field($model, 'id_partido', ['options' => ['class' => 'campoTitulo']])->hiddenInput(['value' => $idPartido, 'class' => 'campo'])->label(false) ?>
+        
+        <?= $form->field($model, 'id_jugador', ['options' => ['class' => 'campoTitulo']])->dropDownList($jugadores, ['prompt' => 'Seleccionar Jugador', 'class' => 'campo']) ?>
+        
+        <?= $form->field($model, 'id_equipo', ['options' => ['class' => 'campoTitulo']])->hiddenInput(['value' => $idEquipo])->label(false) ?>
+        <br>
+        <?= $form->field($model, 'minutos', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese minutos', 'class' => 'campo']) ?>
+        <br>
+        <?= $form->field($model, 'puntos', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese los puntos', 'class' => 'campo']) ?>
+        <br>
+        <?= $form->field($model, 'rebotes', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese los rebotes', 'class' => 'campo']) ?>
+        <br>
+        <?= $form->field($model, 'asistencias', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese las asistencias', 'class' => 'campo']) ?>
+        <br>
 
-    <?= $form->field($model, 'puntos')->textInput() ?>
+        <p>
+            <?= Html::submitButton('Guardar', ['class' => 'botonFormulario']) ?>
+            <?= Html::a('Atras', Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+        </p>
 
-    <?= $form->field($model, 'rebotes')->textInput() ?>
+        <?php ActiveForm::end(); ?>
 
-    <?= $form->field($model, 'asistencias')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>
 
 

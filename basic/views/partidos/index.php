@@ -10,6 +10,20 @@ use app\models\Equipos;
     <h1>PARTIDOS</h1>  
 </div>
 
+<div id="contenedor-principal">
+
+
+<div id="botonArriba2">
+<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
+    <?php if ($jornadaID !== null): ?>
+        <?= Html::a('Nuevo Partido en Jornada', ['partidos/create-en-jornada', 'jornadaID' => $jornadaID], ['class' => 'botonFormulario']) ?>
+    <?php else: ?>
+        <?= Html::a('Nuevo Partido', ['partidos/create'], ['class' => 'botonFormulario']) ?>
+    <?php endif; ?>
+<?php endif; ?>
+    </div>
+
+
 <?php foreach ($partidos as $partido): ?>
     <div class="marco2">
         <h2><?= Html::a($partido->equipoLocal->nombre, ['equipos/vista', 'id' => $partido->equipoLocal->id]) ?> - <?= Html::a($partido->equipoVisitante->nombre, ['equipos/vista', 'id' => $partido->equipoVisitante->id]) ?></h2>
@@ -30,19 +44,13 @@ use app\models\Equipos;
         }
         ?>
 
-        <?= Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Ver Detalles', ['partidos/view', 'id' => $partido->id], ['class' => 'botonFormulario']) ?>
         <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
-            <?= Html::a('Editar Partido', ['partidos/update', 'id' => $partido->id], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Editar Partido', ['partidos/update', 'id' => $partido->id], ['class' => 'botonFormulario']) ?>
         <?php endif ?>
     </div>
 <?php endforeach; ?>
 
 <br><br><br><br>
 
-<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 4)): ?>
-    <?php if ($jornadaID !== null): ?>
-        <?= Html::a('Nuevo Partido en Jornada', ['partidos/create-en-jornada', 'jornadaID' => $jornadaID], ['class' => 'botonFormulario']) ?>
-    <?php else: ?>
-        <?= Html::a('Nuevo Partido', ['partidos/create'], ['class' => 'botonFormulario']) ?>
-    <?php endif; ?>
-<?php endif; ?>
+</div>

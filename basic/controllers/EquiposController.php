@@ -6,6 +6,7 @@ use Yii;
 use app\models\Equipos;
 use app\models\Temporadas;
 use app\models\Ligas;
+use app\models\EstadisticasEquipo;
 use app\models\Imagenes;
 use app\models\PartidosJornada;
 use app\models\Jugadores;
@@ -366,6 +367,29 @@ class EquiposController extends Controller
 
         $equipo = Equipos::findOne($id);
 
+        $fechaActual = new Expression('NOW()');
+
+        $temporadaActual = Temporadas::find()
+        ->joinWith('estadisticasEquipos')
+        ->where(['<=', 'fecha_inicial', $fechaActual])
+        ->andWhere(['>=', 'fecha_final', $fechaActual])
+        ->andWhere(['estadisticas_equipo.id_equipo' => $id])
+        ->one();
+
+        if ($temporadaActual !== null) {
+            // Si se encontró una temporada para el año actual, puedes acceder a su ID
+            $idTemporadaActual = $temporadaActual->id;
+            
+            // Obtener las estadísticas del equipo
+            $estadisticas = EstadisticasEquipo::find()->
+                where(['id_equipo' => $id])
+                ->andWhere(['id_temporada' => $idTemporadaActual])
+                ->one();
+        }
+        else {
+            $estadisticas = NULL;
+        }
+
         // Obtener últimos resultados
         $ultimosResultados = PartidosJornada::find()
         ->where(['<', 'horario', new Expression('NOW()')])
@@ -396,14 +420,12 @@ class EquiposController extends Controller
         ->limit(5)
         ->all();
 
-
-
-
         return $this->render('vista', [
             'equipo' => $equipo,
             'ultimosResultados' => $ultimosResultados,
             'proximosPartidos' => $proximosPartidos,
             'jugadoresDestacados' => $jugadoresDestacados,
+            'estadisticas' => $estadisticas,
         ]);
 
     }

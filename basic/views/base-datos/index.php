@@ -7,34 +7,47 @@ use yii\widgets\ActiveForm;
 /* @var $error string */
 
 $this->title = 'Copias de Seguridad';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="base-datos-index">
+<div class="contenido-cabecera">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>COPIAS DE SEGURIDAD</h1>
 
-    <!-- Formulario para restaurar copia de seguridad -->
-    <?php $form = ActiveForm::begin(['action' => ['restaurarcopia'], 'method' => 'post']); ?>
-    <?= Html::dropDownList('archivoZip', null, $archivos, ['prompt' => 'Seleccionar copia de seguridad']) ?>
-    <?= Html::submitButton('Restaurar', ['class' => 'btn btn-primary']) ?>
-    <?php ActiveForm::end(); ?>
+</div>
 
-    <!-- Formulario para eliminar copia de seguridad -->
-    <?php $form = ActiveForm::begin(['action' => ['eliminarcopia'], 'method' => 'post']); ?>
-    <?= Html::dropDownList('nombreArchivo', null, $archivos, ['prompt' => 'Seleccionar copia de seguridad']) ?>
-    <?= Html::submitButton('Eliminar', ['class' => 'btn btn-danger']) ?>
-    <?php ActiveForm::end(); ?>
+<div id="contenedor-izquierda">
 
-    <!-- Botón para generar copia de seguridad -->
-    <?= Html::a('Crear Copia de Seguridad', ['copiaseguridad'], ['class' => 'btn btn-success']) ?>
+    <div class="marco">
 
-    <!-- boton que redirige a la pagina de inicio -->
-    <?= Html::a('Recargar datos ', ['base-datos/index'], ['class' => 'btn btn-primary']) ?>
+        <p class="PaginaDeInicio"><?= Html::encode($this->title) ?></p>
+        <!-- Formulario para restaurar copia de seguridad -->
+        <?php $form = ActiveForm::begin(['action' => ['restaurarcopia'], 'method' => 'post', 'enableAjaxValidation' => false, 'enableClientValidation' => true,]); ?>
+        <?= Html::dropDownList('archivoZip', null, $archivos, ['prompt' => 'Seleccionar copia de seguridad', 'class' => 'campo']) ?>
+        <br>
+        <?= Html::submitButton('Restaurar', ['class' => 'botonFormulario']) ?>
+        <?php ActiveForm::end(); ?>
+        <br>
+        <!-- Formulario para eliminar copia de seguridad -->
+        <?php $form = ActiveForm::begin(['action' => ['eliminarcopia'], 'method' => 'post', 'method' => 'post', 'enableAjaxValidation' => false, 'enableClientValidation' => true,]); ?>
+        <?= Html::dropDownList('nombreArchivo', null, $archivos, ['prompt' => 'Seleccionar copia de seguridad', 'class' => 'campo']) ?>
+        <br>
+        <?= Html::submitButton('Eliminar', ['class' => 'botonFormulario']) ?>
+        <?php ActiveForm::end(); ?>
 
-    <!-- Mostrar mensajes de error o éxito -->
-    <?php if ($error) : ?>
-        <div class="alert alert-danger"><?= $error ?></div>
-    <?php endif; ?>
+        <br>
+        <p>
+        <!-- Botón para generar copia de seguridad -->
+        <?= Html::a('Crear Copia de Seguridad', ['copiaseguridad'], ['class' => 'botonFormulario']) ?>
 
+        <!-- boton que redirige a la pagina de inicio -->
+        <?= Html::a('Recargar datos ', ['base-datos/index'], ['class' => 'botonFormulario']) ?>
+        </p>
+    
+        <!-- Mostrar mensajes de error o éxito -->
+        <?php if (!empty($error)) : ?>
+            <p style="color: red;"><?= $error ?></p>
+        <?php endif; ?>
+
+    </div>
 </div>

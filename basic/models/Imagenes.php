@@ -36,6 +36,9 @@ class Imagenes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['imagenFile'], 'required', 'message' => 'Debes seleccionar una imagen.'],
+            [['imagenFile'], 'file', 'extensions' => ['png', 'jpg', 'jpeg'],
+            'message' => 'Solo se permiten archivos con extensiones PNG, JPG o JPEG.'],
             [['foto'], 'string', 'max' => 255],
         ];
     }
@@ -124,26 +127,32 @@ class Imagenes extends \yii\db\ActiveRecord
     public function saveImagen()
     {
         if ($this->validate() && $this->imagenFile !== null) {
-            $path = 'images/';  
-    
-         
+            $path = 'images/';
+        
+          
+            if (!$this->save()) {
+                Yii::$app->session->setFlash('error', 'Error al guardar el modelo.');
+                return false;
+            }
+        
             $imageName = $this->imagenFile->basename . '.' . $this->imagenFile->extension;
             $fullPath = Yii::getAlias('@app/web/' . $path) . $imageName;
     
-        
+            
             if (file_exists($fullPath)) {
-    
                 unlink($fullPath);
-                
-                
             }
-
-            $this->imagenFile->saveAs(Yii::getAlias('@app/web/' . $path) . $imageName);
-
-           
+            
+          
+            if (!$this->imagenFile->saveAs(Yii::getAlias('@app/web/' . $path) . $imageName)) {
+                Yii::$app->session->setFlash('error', 'Error al guardar la imagen.');
+                return false;
+            }
+            
             $this->foto = $imageName;
+            $this->save(false); 
     
-            return $this->save();
+            return true;
         } else {
             Yii::$app->session->setFlash('error', 'Debes seleccionar una imagen.');
             return false;
