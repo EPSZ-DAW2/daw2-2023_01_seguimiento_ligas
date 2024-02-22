@@ -56,6 +56,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             'puntos',
             'rebotes',
             'asistencias',
+            
         ],
     ]); ?>
 
@@ -108,6 +109,24 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             'puntos',
             'rebotes',
             'asistencias',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'update' => function ($url, $model, $key) {
+                        return Html::a('Editar', ['estadisticas-jugador-partido/update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                    },
+                    'delete' => function ($url, $model, $key) {
+                        return Html::a('Eliminar', ['estadisticas-jugador-partido/delete', 'id' => $model->id], [
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'confirm' => '¿Estás seguro de que deseas eliminar esta estadística?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    },
+                ],
+            ],
         ],
         ]); ?>
         <p>
@@ -127,6 +146,24 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             'puntos',
             'rebotes',
             'asistencias',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'update' => function ($url, $model, $key) {
+                        return Html::a('Editar', ['estadisticas-jugador-partido/update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                    },
+                    'delete' => function ($url, $model, $key) {
+                        return Html::a('Eliminar', ['estadisticas-jugador-partido/delete', 'id' => $model->id], [
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'confirm' => '¿Estás seguro de que deseas eliminar esta estadística?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    },
+                ],
+            ],
         ],
         ]); ?>
         <?= Html::a('Añadir Estadísticas', ['estadisticas-jugador-partido/form', 'idPartido' => $model->id, 'idEquipo' => $model->equipoVisitante->id], ['class' => 'botonFormulario']) ?>
