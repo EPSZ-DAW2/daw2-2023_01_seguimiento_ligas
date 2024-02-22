@@ -31,9 +31,12 @@ class JugadoresController extends Controller
                 ->andWhere(['eq1.id_liga' => $ligaId]);
             $dataProvider->query = $query;
         }
-    
+
+        // Filtrar jugadores activos
+        $dataProvider->query->andWhere(['activo' => 1]);
+
         $ligas = Ligas::find()->all();
-    
+
         // Renderiza la vista y pasa los datos necesarios
         return $this->render('index', [
             'dataProvider' => $dataProvider,
