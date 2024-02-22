@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Jugadores;
+use yii\data\ActiveDataProvider;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\EstadisticasJugadorPartido */
@@ -12,11 +15,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_partido')->hiddenInput(['value' => $idPartido])->label(false) ?>
+    <?= $form->field($model, 'id_partido')->hiddenInput()->label(false) ?>
 
-    <?= $form->field($model, 'id_jugador')->dropDownList($jugadores, ['prompt' => 'Seleccionar Jugador']) ?>
+    <?= $form->field($model, 'id_jugador')->hiddenInput()->label(false) ?>
 
-    <?= $form->field($model, 'id_equipo')->hiddenInput(['value' => $idEquipo])->label(false) ?>
+    <?= $form->field($model, 'id_equipo')->hiddenInput()->label(false) ?>
 
     <?= $form->field($model, 'minutos')->textInput() ?>
 
@@ -33,5 +36,3 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
-
-

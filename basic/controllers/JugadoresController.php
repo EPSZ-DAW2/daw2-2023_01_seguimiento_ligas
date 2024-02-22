@@ -42,7 +42,7 @@ class JugadoresController extends Controller
             'searchModel' => $searchModel,
         ]);
     }      
-    
+
     public function actionCreate()
     {
         $model = new Jugadores();
@@ -57,30 +57,41 @@ class JugadoresController extends Controller
             } elseif ($imagenModel->validate() && $imagenModel->saveImagen()) {
                 $model->id_imagen = $imagenModel->id;
 
+                // Obtenemos el ID de la temporada más reciente para la liga del jugador
+                $temporadaReciente = Temporadas::find()
+                    ->joinWith('liga')
+                    ->where(['ligas.id' => $model->equipo->id_liga]) // Suponiendo que tienes una relación 'liga' en el modelo Temporadas
+                    ->orderBy(['SUBSTRING_INDEX(texto_de_titulo, " ", -1)' => SORT_DESC]) // Ordenar por las dos últimas cifras del texto_de_titulo
+                    ->one();
+
                 if ($model->save()) {
-
+                    // Crear una nueva instancia de EstadisticasJugador y guardarla
                     $estadisticasJugador = new EstadisticasJugador();
-
-                    $estadisticasJugador->id_temporada = Temporadas::find()->orderBy(['id' => SORT_DESC])->one()->id;
+                    if ($temporadaReciente) {
+                        $estadisticasJugador->id_temporada = $temporadaReciente->id;
+                    }
+                    else
+                    {
+                        $estadisticasJugador->id_temporada = null;
+                    }
                     $estadisticasJugador->id_equipo = $model->id_equipo;
                     $estadisticasJugador->id_jugador = $model->id;
                     $estadisticasJugador->partidos_jugados = 0;
                     $estadisticasJugador->puntos = 0;
                     $estadisticasJugador->rebotes = 0;
                     $estadisticasJugador->asistencias = 0;
-
                     $estadisticasJugador->save();
+
                     return $this->redirect(['jugadores/index']);
                 } else {
-                    print_r($model->errors);
-                    //Yii::$app->session->setFlash('error', 'Error al guardar el jugador.');
-                    
+                    Yii::$app->session->setFlash('error', 'Error al guardar el jugador.');
                     return $this->render('create', [
                         'model' => $model,
                         'imagenModel' => $imagenModel,
                     ]);
                 }
-            } else {
+            }
+            else {
                 Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
         }
@@ -90,6 +101,7 @@ class JugadoresController extends Controller
             'imagenModel' => $imagenModel,
         ]);
     }
+
     
     public function actionUpdate($id)
     {
