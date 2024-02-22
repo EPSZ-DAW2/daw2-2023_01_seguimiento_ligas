@@ -52,6 +52,9 @@ class Equipos extends \yii\db\ActiveRecord
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
             [['id_escudo'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_escudo' => 'id']],
             [['gestor_eq'], 'exist', 'targetClass' => Usuarios::class, 'targetAttribute' => 'id', 'skipOnEmpty' => true],
+            // Agregar nuevas reglas de validación para los campos opcionales
+            [['video'], 'safe'],
+            [['video'], 'string', 'max' => 255],
         ];
     }
 
@@ -68,7 +71,8 @@ class Equipos extends \yii\db\ActiveRecord
             'descripcion' => 'Descripcion',
             'id_escudo' => 'Id Escudo',
             'n_jugadores' => 'Numero Jugadores',
-            'gestor_eq' => 'Gestor del Equipo'
+            'gestor_eq' => 'Gestor del Equipo',
+            'video' => 'Video',
         ];
     }
 
