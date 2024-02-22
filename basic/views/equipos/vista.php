@@ -15,6 +15,7 @@ use app\models\EstadisticasJugador;
     <div class="liga-container3">
 
     <h2>Estadísticas de la temporada:</h2>
+    <?php if ($estadisticas !== null): ?>
     <table style="margin: 0 auto;">
         <tr>
             <th>Partidos Jugados</th>
@@ -22,8 +23,14 @@ use app\models\EstadisticasJugador;
             <th>Derrotas</th>
         </tr>
         <tr>
+            <td><?= $estadisticas->partidos_jugados ?></td>
+            <td><?= $estadisticas->victorias ?></td>
+            <td><?= $estadisticas->derrotas ?></td>
         </tr>
     </table>
+    <?php else: ?>
+        <p>No hay estadísticas disponibles para la temporada actual.</p>
+    <?php endif; ?>
 
     </div>
 

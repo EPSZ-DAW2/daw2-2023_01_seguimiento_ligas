@@ -121,7 +121,7 @@ class PartidosJornada extends \yii\db\ActiveRecord
 
         // Verificar si el horario está dentro del rango de fechas de la jornada
         if (strtotime($horario) < strtotime($jornada->fecha_inicio) || strtotime($horario) > strtotime($jornada->fecha_final)) {
-            $this->addError($attribute, 'El horario del partido debe estar dentro del rango de fechas de la jornada.');
+            $this->addError($attribute, 'El horario del partido de la jornada ' . $jornada->numero . ' debe estar entre ' . $jornada->fecha_inicio . ' y ' . $jornada->fecha_final . '.');
         }
     }
 }

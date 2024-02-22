@@ -828,7 +828,12 @@ INSERT IGNORE INTO `partidos_jornada` (`id_jornada`, `id_equipo_local`, `id_equi
 (@j1acb, @realmadrid, @granada, '2023-09-23 18:30:00', 'WiZink Center Madrid', 83, 76);
 
 INSERT IGNORE INTO `partidos_jornada` (`id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`) VALUES 
-(@j1nba, @bulls, @knicks, '2024-09-25 20:00:00', 'United Center, Chicago, Illniois');
-
-INSERT IGNORE INTO `partidos_jornada` (`id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`) VALUES 
+(@j1nba, @bulls, @knicks, '2024-09-25 20:00:00', 'United Center, Chicago, Illniois'),
 (@j1nba, @lakers, @hawks, '2024-09-26 17:30:00', 'Crypto.com Arena, Los Ángeles, California');
+
+INSERT IGNORE INTO `estadisticas_equipo` (`id_temporada`, `id_equipo`, `partidos_jugados`, `victorias`, `derrotas`) VALUES
+(@temporada_acb23, @realmadrid, 15, 10, 5),
+(@temporada_acb23, @lakers, 12, 9, 3),
+(@temporada_acb22, @realmadrid, 30, 23, 7),
+(@temporada_acb22, @hawks, 30, 22, 8),
+(@temporada_acb22, @granada, 30, 18, 12);
