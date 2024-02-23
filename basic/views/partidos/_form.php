@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
     if ($fechaActual > $fechaPartido) {
     ?>
         <?= $form->field($model, 'resultado_local', ['options' => ['class' => 'campoTitulo']])->textInput(['type' => 'number', 'options' => ['step' => '1'], 'class' => 'campo']) ?>
-
+        <br>
         <?=  $form->field($model, 'resultado_visitante', ['options' => ['class' => 'campoTitulo']])->textInput(['type' => 'number', 'options' => ['step' => '1'], 'class' => 'campo']) ?>
 <?php
     } else {

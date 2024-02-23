@@ -59,6 +59,7 @@ $this->title = $model->id_jugador; // Usar el contenido de id_jugador como títu
         ]) ?>
         <?php } ?>
     <?= Html::a(Yii::t('app', 'Tabla de estadisticas'), ['estadisticas-jugador/index'], ['class' => 'botonFormulario']) ?>
+    <?= Html::a(Yii::t('app', 'Tabla de jugadores'), ['jugadores/index'], ['class' => 'botonFormulario']) ?>
 
     </div>
 </div>
