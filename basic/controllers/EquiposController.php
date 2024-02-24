@@ -300,8 +300,7 @@ class EquiposController extends Controller
         return $this->redirect(['index']);
     }
 
-    // Acción para copiar un equipo
-    public function actionCopy($id)
+    public function actionCambioTemporada($idTemporada, $idEq)
     {
         if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 6))
         {
@@ -309,56 +308,40 @@ class EquiposController extends Controller
             Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
             return $this->redirect(['index']);
         }
+
+        $this->view->title = 'ArosInsider - Equipos';
+
+        // Obtener el modelo de la temporada actual
+        $temporadaActual = Temporadas::findOne($idTemporada);
         
-        $equipoExistente = Equipos::findOne($id);
- 
-        if ($equipoExistente === null) {
-            throw new NotFoundHttpException('El equipo no fue encontrado.');
-        }
- 
-        // Crear una copia del equipo
-        $nuevoEquipo = new Equipos();
+        // Obtener todas las temporadas futuras
+        $temporadasFuturas = Temporadas::find()
+            ->where(['>', 'fecha_inicial', $temporadaActual->fecha_inicial])
+            ->all();
 
-        $nuevoEquipo->nombre = $equipoExistente->nombre . ' (copia)';
+        // Renderizar la vista con las temporadas futuras
+        return $this->render('cambio-temporada', [
+            'temporadaActual' => $temporadaActual,
+            'temporadasFuturas' => $temporadasFuturas,
+            'idEquipo' => $idEq
+        ]);
+    }
 
-        // Asignar un nuevo identificador único al nuevo equipo
-        $nuevoEquipo->id = null;
-
-        // Se copia el resto de campos menos el nombre
-        foreach ($equipoExistente->attributes as $attribute => $value) {
-            if ($attribute !== 'id' && $attribute !== 'nombre') {
-                $nuevoEquipo->$attribute = $value;
-            }
-        }
-
-        $nuevoEquipo->save();
-
-        // Copiar los partidos asociados al equipo
-        $partidos = PartidosJornada::find()
-        ->where(['or', ['id_equipo_local' => $equipoExistente->id], ['id_equipo_visitante' => $equipoExistente->id]])
-        ->all();
-    
-
-        foreach ($partidos as $partido) {
-
-            $nuevoPartido = new PartidosJornada();
-
-            $nuevoPartido->attributes = $partido->attributes;
-
-            if ($partido->id_equipo_local === $equipoExistente->id) {
-                $nuevoPartido->id_equipo_local = $nuevoEquipo->id;
-            }
-
-
-            if ($partido->id_equipo_visitante === $equipoExistente->id) {
-                $nuevoPartido->id_equipo_visitante = $nuevoEquipo->id;
-            }
-
-            $nuevoPartido->save();
+    public function actionCambiarIdTemporada($idTemporada, $idEq)
+    {
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 6))
+        {
+            // Usuario no autenticado o no tiene el rol adecuado
+            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
+            return $this->redirect(['index']);
         }
 
-        // Redirigir a la página de equipos
-        return $this->redirect(['index', 'id' => $nuevoEquipo->id]);
+        $equipo = Equipos::findOne(['id' => $idEq]);
+        
+        $equipo->id_temporada = $idTemporada;
+        $equipo->save();
+
+        return $this->redirect(['index']);
     }
 
     public function actionVista($id)

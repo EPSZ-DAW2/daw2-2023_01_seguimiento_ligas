@@ -6,6 +6,7 @@ use Yii;
 use app\models\Temporadas;
 use app\models\Ligas;
 use app\models\Equipos;
+use app\models\EstadisticasEquipo;
 use app\models\JornadasTemporada;
 use app\models\PartidosJornada;
 use yii\web\Controller;
@@ -123,16 +124,16 @@ class TemporadasController extends \yii\web\Controller
 
         $temporada = Temporadas::findOne($id);
 
-        if ($temporada === null) {
-            throw new NotFoundHttpException('La temporada no fue encontrada.');
+        if ($temporada->getEquipos()->count() > 0) {
+            Yii::$app->session->setFlash('error', 'No se puede eliminar la temporada porque tiene equipos asociados.');
+            
+            return $this->redirect(['index']);
         }
 
-        // Se obtienen los partidos y jornadas asociados a esta temporada
-        $equipos = Equipos::find()->where(['id_temporada' => $temporada->id])->all();
+        $temporada = Temporadas::findOne($id);
 
-        // Eliminar los equipos asociados
-        foreach ($equipos as $equipo) {
-            $equipo->delete();
+        if ($temporada === null) {
+            throw new NotFoundHttpException('La temporada no fue encontrada.');
         }
         
         $jornadas = JornadasTemporada::find()->where(['id_temporada' => $temporada->id])->all();
@@ -155,89 +156,4 @@ class TemporadasController extends \yii\web\Controller
 
         throw new NotFoundHttpException('La página solicitada no existe.');
     }
-
-    // Acción para copiar una temporada y poder actualizar los equipos a una nueva sin problema
-    public function actionCopy($id)
-    {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
-        {
-            // Usuario no autenticado o no tiene el rol adecuado
-            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
-            return $this->redirect(['index']);
-        }
-        
-        $temporadaExistente = Temporadas::findOne($id);
-
-        if ($temporadaExistente === null) {
-            throw new NotFoundHttpException('La temporada no fue encontrada.');
-        }
-
-        // Crear una copia de la temporada
-        $nuevaTemporada = new Temporadas();
-        
-        $nuevaTemporada->texto_de_titulo = $temporadaExistente->texto_de_titulo . " (copia)";
-
-        // Se copia el resto de campos menos el nombre
-        foreach ($temporadaExistente->attributes as $attribute => $value) {
-            if ($attribute !== 'texto_de_titulo') {
-                $nuevaTemporada->$attribute = $value;
-            }
-        }
-
-        // Asignar un nuevo identificador único a la nueva temporada
-        $nuevaTemporada->id = null;
-
-        $nuevaTemporada->save();
-
-        // Copiar los equipos de la temporada existente a la nueva temporada
-        foreach ($temporadaExistente->equipos as $equipoExistente) {
-            $nuevoEquipo = new Equipos();
-            $nuevoEquipo->attributes = $equipoExistente->attributes;
-            $nuevoEquipo->nombre = $equipoExistente->nombre;
-            $nuevoEquipo->id_temporada = $nuevaTemporada->id;
-            $nuevoEquipo->id = null;
-            $nuevoEquipo->save();
-        }
-
-        // Copiar las jornadas de la temporada existente a la nueva temporada
-        foreach ($temporadaExistente->jornadasTemporadas as $jornadaExistente) {
-            $nuevaJornada = new JornadasTemporada();
-
-            foreach ($jornadaExistente->attributes as $attribute => $value) {
-                    $nuevaJornada->$attribute = $value;
-            }
-
-            $nuevaJornada->id_temporada = $nuevaTemporada->id;
-
-            // Asignar un nuevo identificador único a la nueva jornada
-            $nuevaJornada->id = null;
-            
-            $nuevaJornada->save();
-            
-                foreach ($jornadaExistente->partidosJornadas as $partidoExistente) {
-                    $nuevoPartido = new PartidosJornada();
-                    
-                    // Copiar los atributos manualmente
-                    $nuevoPartido->attributes = $partidoExistente->attributes;
-            
-                    $equipoLocalAnterior = Equipos::findOne($partidoExistente->id_equipo_local);
-                    $equipoVisitanteAnterior = Equipos::findOne($partidoExistente->id_equipo_visitante);
-            
-                    $nuevoEquipoLocal = Equipos::findOne(['nombre' => $equipoLocalAnterior->nombre, 'id_temporada' => $nuevaTemporada->id]);
-                    $nuevoEquipoVisitante = Equipos::findOne(['nombre' => $equipoVisitanteAnterior->nombre, 'id_temporada' => $nuevaTemporada->id]);
-                    
-                    $nuevoPartido->id_equipo_local = $nuevoEquipoLocal->id;
-                    $nuevoPartido->id_equipo_visitante = $nuevoEquipoVisitante->id;
-                    $nuevoPartido->id_jornada = $nuevaJornada->id; 
-                    $nuevoPartido->id = null;
-            
-                    $nuevoPartido->save();
-                }
-            }            
-            
-
-        // Redirigir a la página de temporadas
-        return $this->redirect(['index']);
-    }
-
 }

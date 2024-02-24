@@ -689,13 +689,13 @@ SET @imagen_acb := LAST_INSERT_ID();
 
 
 -- INSERTAMOS LAS LIGAS NBA Y ACB
-INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`) VALUES
-('NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba, 'https://www.youtube.com/embed/uUwb0x_AdL8?si=LIxT8Qet6JkIjksZ');
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`, `estado`) VALUES
+('NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba, 'https://www.youtube.com/embed/uUwb0x_AdL8?si=LIxT8Qet6JkIjksZ', 'Activa');
 
 SET @id_nba := LAST_INSERT_ID();
 
-INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`) VALUES
-('ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb, 'https://www.youtube.com/embed/NQp5KW7rZ9k?si=iiWyQfFnMQf5EKWn');
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`, `estado`) VALUES
+('ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb, 'https://www.youtube.com/embed/NQp5KW7rZ9k?si=iiWyQfFnMQf5EKWn', 'Activa');
 
 SET @id_acb := LAST_INSERT_ID();
 
