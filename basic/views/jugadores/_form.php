@@ -47,6 +47,8 @@ use app\models\Jugadores;
     <br>
     <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo'])->label('Subir Imagen')?>
     <br>
+    <?= $form->field($model, 'activo')->checkbox() ?>
+    <br>
     <?= $form->field($model, 'video', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
     <p>

@@ -56,7 +56,7 @@ class LigasController extends Controller
                 } else {
                     print_r($model->errors);
                     
-                    Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
+                    //Yii::$app->session->setFlash('error', 'Error al guardar el equipo.');
                     
                     return $this->render('create', [
                         'model' => $model,
@@ -65,7 +65,7 @@ class LigasController extends Controller
                 }
             } else {
                 
-                Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
+                //Yii::$app->session->setFlash('error', 'Error al cargar la imagen.');
             }
         }
 

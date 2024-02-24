@@ -11,20 +11,25 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Imágenes');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="imagenes-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="contenido-cabecera">
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Subir nueva imagen'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <h1>IMAGENES</h1>
+
+</div>
+
+<div id="contenedor-izquierda">
+
+    <div class="marco">
 
     <?php Pjax::begin(); ?>
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+        'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -39,8 +44,14 @@ $this->params['breadcrumbs'][] = $this->title;
             
           
         ],
+
     ]); ?>
 
-    <?php Pjax::end(); ?>
 
+    <p>
+        <?= Html::a(Yii::t('app', 'Subir nueva imagen'), ['create'], ['class' => 'botonFormulario']) ?>
+    </p>
+
+    <?php Pjax::end(); ?>
+    </div>
 </div>

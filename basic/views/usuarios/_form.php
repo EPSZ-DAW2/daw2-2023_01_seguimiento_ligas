@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
     <br>
     <?= $form->field($model, 'provincia', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingresela provincia', 'class' => 'campo']) ?>
     <br>
-    <?= $form->field($model, 'id_rol')->hiddenInput(['value' => 6])->label(false) ?>
+    <?= $form->field($model, 'id_rol')->hiddenInput(['value' => 7])->label(false) ?>
 
     <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre de usuario', 'class' => 'campo']) ?>
     <br>

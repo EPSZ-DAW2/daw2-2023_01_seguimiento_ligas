@@ -29,7 +29,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 
     <div class="marco">
 
-        <p class="PaginaDeInicio">Listado de jugadores</p>
         <?php
         echo Html::beginForm(['jugadores/index'], 'get');
         echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']); 
@@ -128,9 +127,10 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             <br>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
                 'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
-                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
-                'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
+                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
+                'emptyText' => 'No se encontraron resultados.',
                 'columns' => [
                     [
                 'attribute' => 'imagen',

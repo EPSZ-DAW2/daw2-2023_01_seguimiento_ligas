@@ -36,7 +36,7 @@ class Partidos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_liga', 'id_temporada', 'id_jornada', 'id_equipo_local', 'id_equipo_visitante'], 'required'],
+            [['id_liga', 'id_temporada', 'id_jornada', 'id_equipo_local', 'id_equipo_visitante', 'horario', 'lugar', 'resultado_local', 'resultado_visitante'], 'required', 'message' => 'Este campo es obligatorio.'],
             ['horario', 'date', 'format' => 'yyyy-MM-dd HH:mm:ss'],
             ['lugar', 'string', 'max' => 255],
             [['resultado_local', 'resultado_visitante'], 'integer'],

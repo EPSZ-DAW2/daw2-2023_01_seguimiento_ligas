@@ -71,7 +71,7 @@ $url = Url::to(['usuarios/view', 'id' => $userId]);
 
 <?php ActiveForm::end(); ?>
 
-<?php } else { ?>
+<?php } elseif (Yii::$app->user->identity->id_rol == 2) { ?>
 
     <div class="marco">
 
@@ -79,8 +79,13 @@ $url = Url::to(['usuarios/view', 'id' => $userId]);
     'id' => 'usuarios-form',
     'enableAjaxValidation' => false,
     'enableClientValidation' => true,
-]); ?>
+]); 
 
+       
+            if ((Yii::$app->user->identity->id_rol == 2 && $model->id_rol == 2)&&(Yii::$app->user->identity->id != $model->id) ){
+            
+            }else{?>
+    
     <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
     <?= $form->field($model, 'apellido1', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
@@ -125,7 +130,54 @@ $url = Url::to(['usuarios/view', 'id' => $userId]);
 
 <?php ActiveForm::end(); ?>
 
-<?php } ?>
+<?php }} else{
+    ?>
+<div class="marco">
 
+<?php $form = ActiveForm::begin([
+    'id' => 'usuarios-form',
+    'enableAjaxValidation' => false,
+    'enableClientValidation' => true,
+]); ?>
+
+    <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'apellido1', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'apellido2', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'email', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'password', ['options' => ['class' => 'campoTitulo']])->passwordInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'provincia', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+    <br>
+    <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo'])->label('Subir Imagen') ?>
+    <br>
+
+
+    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 6)) {?>
+    
+    <p>
+    <?= Html::submitButton(Yii::t('app', 'Modificar'), ['class' => 'botonFormulario']) ?>
+    <?= Html::a(Yii::t('app', 'Volver'), $url, ['class' => 'botonFormulario']) ?>
+    </p>
+
+    <?php } else { ?>
+    
+    <p>
+    <?= Html::submitButton(Yii::t('app', 'Modificar'), ['class' => 'botonFormulario']) ?>
+    <?= Html::a(Yii::t('app', 'Tabla de Usuarios'), ['usuarios/index'], ['class' => 'botonFormulario']) ?>
+    </p>
+
+    <?php } ?>
+
+
+
+<?php ActiveForm::end(); ?>
+
+<?php } ?>
 
 </div>

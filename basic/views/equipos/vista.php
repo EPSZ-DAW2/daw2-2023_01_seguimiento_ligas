@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use app\models\EstadisticasJugador;
 ?> 
 
 <div class="contenido-cabecera">  
@@ -13,6 +14,28 @@ use yii\helpers\Html;
     
     <div class="liga-container3">
 
+    <h2>Estadísticas de la temporada:</h2>
+    <?php if ($estadisticas !== null): ?>
+    <table style="margin: 0 auto;">
+        <tr>
+            <th>Partidos Jugados</th>
+            <th>Victorias</th>
+            <th>Derrotas</th>
+        </tr>
+        <tr>
+            <td><?= $estadisticas->partidos_jugados ?></td>
+            <td><?= $estadisticas->victorias ?></td>
+            <td><?= $estadisticas->derrotas ?></td>
+        </tr>
+    </table>
+    <?php else: ?>
+        <p>No hay estadísticas disponibles para la temporada actual.</p>
+    <?php endif; ?>
+
+    </div>
+
+    <div class="liga-container3">
+
     <h2>Últimos Resultados:</h2>
     <?php foreach ($ultimosResultados as $resultado): ?>
             <h3><?= Html::a($resultado->equipoLocal->nombre, ['equipos/vista', 'id' => $resultado->equipoLocal->id], ['class' => 'enlace-equipo']) ?> - <?= Html::a($resultado->equipoVisitante->nombre, ['equipos/vista', 'id' => $resultado->equipoVisitante->id], ['class' => 'enlace-equipo']) ?></h3>
@@ -21,7 +44,6 @@ use yii\helpers\Html;
     <?php endforeach; ?>
 
     </div>
-
 
     <div class="liga-container3">
 
@@ -35,14 +57,24 @@ use yii\helpers\Html;
     </div>
 
     <div class="liga-container3">
-
     <h2>Jugadores Destacados:</h2>
     <?php foreach ($jugadoresDestacados as $jugador): ?>
-            <h3> <?= $jugador->nombre; ?> </h3>
-            <p> <?= $jugador->estadisticas->puntos; ?> </p>
-            <p> <?= $jugador->estadisticas->rebotes; ?> </p>
-            <p> <?= $jugador->estadisticas->asistencias; ?> </p>
+        <h3><?= $jugador->nombre; ?></h3>
+        <?php
+        // Obtener las estadísticas del jugador
+        $estadisticas = EstadisticasJugador::findOne(['id_jugador' => $jugador->id]);
+
+        if ($estadisticas !== null) {
+            echo "<p>Puntos: {$estadisticas->puntos}</p>";
+            echo "<p>Rebotes: {$estadisticas->rebotes}</p>";
+            echo "<p>Asistencias: {$estadisticas->asistencias}</p>";
+        } else {
+            echo "<p>No hay estadísticas disponibles para este jugador.</p>";
+        }
+        ?>
     <?php endforeach; ?>
-    
-    </div>
+
+    <?= Html::a('Ver todos', ['jugadores/ver-por-equipo', 'id'=>$equipo->id], ['class' => 'botonFormulario']) ?>
+</div>
+
 </div>

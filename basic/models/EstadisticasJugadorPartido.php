@@ -36,7 +36,7 @@ class EstadisticasJugadorPartido extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_jugador', 'id_partido', 'id_equipo'], 'required'],
+            [['id_jugador', 'id_partido', 'id_equipo', 'minutos', 'puntos', 'rebotes', 'asistencias'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_jugador', 'id_partido', 'id_equipo', 'minutos', 'puntos', 'rebotes', 'asistencias'], 'integer'],
             [['id_jugador'], 'exist', 'skipOnError' => true, 'targetClass' => Jugadores::class, 'targetAttribute' => ['id_jugador' => 'id']],
             [['id_partido'], 'exist', 'skipOnError' => true, 'targetClass' => PartidosJornada::class, 'targetAttribute' => ['id_partido' => 'id']],
