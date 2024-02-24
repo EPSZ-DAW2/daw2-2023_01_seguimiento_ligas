@@ -49,7 +49,8 @@ foreach ($query->each() as $equipo) {
                         <p class="PaginaDeInicio"><?= $equipo->temporada->texto_de_titulo ?></p>
                         <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 6)): ?>
                             <?= Html::a('Ver Detalles', ['equipos/view', 'id' => $equipo->id], ['class' => 'botonFormulario']) ?>
-                            <?= Html::a('Copiar Equipo', ['copy', 'id' => $equipo->id], ['class' => 'botonFormulario']) ?>
+                            <br><br>
+                            <?= Html::a('Ingresar en nueva temporada', ['cambio-temporada', 'idTemporada' => $equipo->id_temporada, 'idEq' => $equipo->id], ['class' => 'botonFormulario']) ?>
                         <?php endif ?>
                     </div>
                     <br>

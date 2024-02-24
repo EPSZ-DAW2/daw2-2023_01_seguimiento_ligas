@@ -46,7 +46,7 @@ $this->title = $temporada->texto_de_titulo;
                     'method' => 'post',
                 ],
             ]) ?>
-            <?= Html::a(Yii::t('app', 'Tabla de temporadas'), ['temporadas/index'], ['class' => 'botonFormulario']) ?>
+            <?= Html::a(Yii::t('app', 'Volver atrás'), ['temporadas/index'], ['class' => 'botonFormulario']) ?>
         </p>
     </div>
 </div>

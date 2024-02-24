@@ -65,5 +65,7 @@ $this->title = $equipo->nombre;
             ]) ?>
             <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>
         </p>
+
+        <?= Html::a('Ingresar en nueva temporada', ['cambio-temporada', 'idTemporada' => $equipo->id_temporada, 'idEq' => $equipo->id], ['class' => 'botonFormulario']) ?>
     </div>
 </div>

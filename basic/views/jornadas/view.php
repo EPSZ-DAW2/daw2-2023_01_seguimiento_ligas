@@ -44,7 +44,7 @@ $this->title = "JORNADA " . $jornada->numero;
                     'method' => 'post',
                 ],
             ]) ?>
-            <?= Html::a('Atras', ['index', 'id' => $jornada->temporada->id], ['class' => 'botonFormulario']) ?>
+            <?= Html::a('Volver atrás', ['index', 'id' => $jornada->temporada->id], ['class' => 'botonFormulario']) ?>
 
 
         </p>

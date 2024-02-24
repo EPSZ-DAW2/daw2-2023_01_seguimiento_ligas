@@ -122,29 +122,10 @@ class JornadasController extends \yii\web\Controller
 
         $jornada = JornadasTemporada::findOne($id);
 
-        if ($jornada === null) {
-            throw new NotFoundHttpException('La jornada no fue encontrada.');
-        }
-
-        $id_temporada = $jornada->temporada->id;
-
-        // Obtener el modelo de la temporada correspondiente
-        $temporada = Temporadas::findOne($id_temporada);
-
-        if ($temporada === null) {
-            throw new NotFoundHttpException('La temporada no fue encontrada.');
-        }
-
-        // Obtener los partidos asociados al equipo (local o visitante)
-        $partidosLocal = PartidosJornada::find()->where(['id_equipo_local' => $jornada->id])->all();
-        $partidosVisitante = PartidosJornada::find()->where(['id_equipo_visitante' => $jornada->id])->all();
-
-        $partidos = array_merge($partidosLocal, $partidosVisitante);
-
-
-        // Eliminar los partidos asociados
-        foreach ($partidos as $partido) {
-            $partido->delete();
+        if ($jornada->getPartidosJornadas()->count() > 0) {
+            Yii::$app->session->setFlash('error', 'No se puede eliminar la temporada porque tiene partidos asociados.');
+            
+            return $this->redirect(['index', 'id' => $jornada->id_temporada]);
         }
         
         $jornada->delete();
@@ -152,42 +133,4 @@ class JornadasController extends \yii\web\Controller
         return $this->redirect(['jornadas/index', 'id' => $jornada->id_temporada]);
 
     }
-
-    // Acción para copiar una jornada
-    /*
-    public function actionCopy($id)
-    {
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4))
-        {
-            // Usuario no autenticado o no tiene el rol adecuado
-            Yii::$app->session->setFlash('error', 'No tienes permisos para realizar esta acción.');
-            return $this->redirect(['index']);
-        }
-        
-        $jornadaExistente = JornadasTemporada::findOne($id);
- 
-        if ($jornadaExistente === null) {
-            throw new NotFoundHttpException('La jornada no fue encontrada.');
-        }
- 
-        // Crear una copia de la jornada
-        $nuevaJornada = new JornadasTemporada();
-
-        // Asignar un nuevo identificador único a la nueva jornada
-        $nuevaJornada->id = null;
-
-        // Se copia el resto de campos menos el nombre
-        foreach ($jornadaExistente->attributes as $attribute => $value) {
-            if ($attribute !== 'id') {
-                $nuevaJornada->$attribute = $value;
-            }
-        }
-
-        $nuevaJornada->save();
-
-        // Redirigir a la página de jornadas
-        return $this->redirect(['index', 'id' => $nuevaJornada->id_temporada]);
-    }
-    */
-
 }
