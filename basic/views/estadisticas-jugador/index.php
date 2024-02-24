@@ -107,6 +107,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         <div class="marco">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
+                'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
                 'columns' => [
                     [
                         'label' => 'Nombre', // Etiqueta de la columna
@@ -146,21 +149,26 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         <h1>ESTADISTICA DE JUGADORES</h1>
     </div>
 
+    <div  id="contenedor-principal">
+
         <div class="marco">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
+                'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
                 'columns' => [
                     [
-                        'label' => 'Nombre', // Etiqueta de la columna
-                        'attribute' => 'jugador.nombre', // Utiliza el nombre del jugador
+                        'label' => 'Nombre',
+                        'attribute' => 'jugador.nombre',
                     ],
                     [
-                        'label' => 'Equipo', // Etiqueta de la columna
-                        'attribute' => 'equipo.nombre', // Utiliza el nombre del equipo
+                        'label' => 'Equipo',
+                        'attribute' => 'equipo.nombre',
                     ],
                     [
-                        'label' => 'Temporada', // Etiqueta de la columna
-                        'attribute' => 'temporada.texto_de_titulo', // Utiliza el texto de título de la temporada
+                        'label' => 'Temporada',
+                        'attribute' => 'temporada.texto_de_titulo',
                     ],
                     'partidos_jugados',
                     'puntos',
@@ -171,14 +179,14 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                         'template' => '{update} {view} {delete}',
                         'buttons' => [
                             'update' => function ($url, $model, $key) {
-                                return Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                                return Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'botonFormulario']);
                             },
                             'view' => function ($url, $model, $key) {
-                                return Html::a('Ver', ['view', 'id' => $model->id], ['class' => 'btn btn-success']);
+                                return Html::a('Ver', ['view', 'id' => $model->id], ['class' => 'botonFormulario']);
                             },
                             'delete' => function ($url, $model, $key) {
                                 return Html::a('Eliminar', ['delete', 'id' => $model->id], [
-                                    'class' => 'btn btn-danger',
+                                    'class' => 'botonFormulario',
                                     'data' => [
                                         'confirm' => '¿Estás seguro de que deseas eliminar esta estadística?',
                                         'method' => 'post',
@@ -189,11 +197,11 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     ],
                 ],
             ]); ?>
-        </div>
-    </div>
 
-    <div class="marco">
-        <?= Html::a('Actualizar Estadísticas', ['index'], ['class' => 'btn btn-primary']) ?>
+
+
+        <?= Html::a('Actualizar Estadísticas', ['actualizar-estadisticas'], ['class' => 'botonFormulario']) ?>
+        </div>
     </div>
 </body>
 </html>

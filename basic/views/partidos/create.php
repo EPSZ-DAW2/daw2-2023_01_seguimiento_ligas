@@ -21,64 +21,77 @@ $this->title = 'Crear Partido';
 // Registrar el archivo CSS
 $this->registerCssFile('@web/css/equipos.css');
 ?>
-<div class="marco">
 
-    <h2 class="equipos_presentacion"><?= Html::encode($this->title) ?></h2>
+<div class="contenido-cabecera">  
+    <h1>CREADOR DE PARTIDOS</h1>  
+</div>
+
+<div id="contenedor-principal">
+
+<div class="marco">
 
     <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de un partido:</p>
 
 
     <?php $form = ActiveForm::begin([
         'options' => ['enctype' => 'multipart/form-data'],
+        'enableAjaxValidation' => false,
+        'enableClientValidation' => true,
     ]); ?>
 
-    <?= $form->field($model, 'id_liga_seleccionada')->dropDownList(
+    <?= $form->field($model, 'id_liga_seleccionada', ['options' => ['class' => 'campoTitulo']])->dropDownList(
         ArrayHelper::map(Ligas::find()->all(), 'id', 'nombre'),
         [
             'prompt' => 'Seleccionar Liga',
             'id' => 'liga-dropdown', // ID para el dropdown de ligas
+            'class' => 'campo',
         ]
     )->label('Ligas') ?>
-
-    <?= $form->field($model, 'id_temporada_seleccionada')->dropDownList(
+    <br>
+    <?= $form->field($model, 'id_temporada_seleccionada', ['options' => ['class' => 'campoTitulo']])->dropDownList(
         [], // Este dropdown se llenará dinámicamente
         [
             'prompt' => 'Seleccionar Temporada',
             'id' => 'temporada-dropdown', // ID para el dropdown de temporadas
+            'class' => 'campo',
         ]
     )->label('Temporadas') ?>
-
-    <?= $form->field($model, 'id_jornada')->dropDownList(
+    <br>
+    <?= $form->field($model, 'id_jornada', ['options' => ['class' => 'campoTitulo']])->dropDownList(
         [], // Este dropdown se llenará dinámicamente
         [
             'prompt' => 'Seleccionar Jornada',
             'id' => 'jornada-dropdown', // ID para el dropdown de jornadas
+            'class' => 'campo',
         ]
     )->label('Jornadas') ?>    
-
-    <?= $form->field($model, 'id_equipo_local')->dropDownList(
+    <br>
+    <?= $form->field($model, 'id_equipo_local', ['options' => ['class' => 'campoTitulo']])->dropDownList(
     [], // Este dropdown se llenará dinámicamente
     [
         'prompt' => 'Seleccionar Equipo',
         'id' => 'equipo-local-dropdown', // ID para el dropdown de equipos
+        'class' => 'campo',
     ]
     )->label('Equipos Locales') ?>
-
-    <?= $form->field($model, 'id_equipo_visitante')->dropDownList(
+    <br>
+    <?= $form->field($model, 'id_equipo_visitante', ['options' => ['class' => 'campoTitulo']])->dropDownList(
     [], // Este dropdown se llenará dinámicamente
     [
         'prompt' => 'Seleccionar Equipo',
         'id' => 'equipo-dropdown',
+        'class' => 'campo',
     ]
     )->label('Equipos Visitantes') ?>
-
-    <?= $form->field($model, 'horario')->textInput(['type' => 'datetime-local', 'class' => 'form-control'])->label('Horario') ?>
-
-    <?= $form->field($model, 'lugar')->textInput(['placeholder' => 'Ingrese la ubicación...']) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Añadir Partido', ['class' => 'botonInicioSesion']) ?>
-    </div>
+    <br>
+    <?= $form->field($model, 'horario', ['options' => ['class' => 'campoTitulo']])->textInput(['type' => 'datetime-local', 'class' => 'campo'])->label('Horario') ?>
+    <br>
+    <?= $form->field($model, 'lugar', ['options' => ['class' => 'campoTitulo']])->textInput(['placeholder' => 'Ingrese la ubicación...', 'class' => 'campo']) ?>
+    <br>
+    <p>
+        <?= Html::submitButton('Añadir Partido', ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>
+    </p>
 
     <?php ActiveForm::end(); ?>
 
@@ -149,6 +162,6 @@ $this->registerCssFile('@web/css/equipos.css');
     // Registrar el script en la vista
     $this->registerJs($script);
 ?>
-
+</div>
 </div>
 

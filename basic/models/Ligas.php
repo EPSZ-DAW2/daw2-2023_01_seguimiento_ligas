@@ -13,6 +13,7 @@ use Yii;
  * @property string $pais País en el que acontece la liga
  * @property int $id_imagen
  * @property string $video Video de la liga
+ * @property string $estado Estado de la liga
  *
  * @property Equipos[] $equipos
  * @property Imagenes $imagen
@@ -36,7 +37,7 @@ class Ligas extends \yii\db\ActiveRecord
         return [
             [['nombre', 'pais', 'descripcion', 'id_imagen', 'video'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_imagen'], 'integer'],
-            [['nombre', 'pais'], 'string', 'max' => 50],
+            [['nombre', 'pais','estado'], 'string', 'max' => 50],
             [['nombre'], 'unique', 'message' => 'La liga "{value}" ya existe.'],
             [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id']],
             [['video'], 'string', 'max' => 255],
@@ -58,6 +59,7 @@ class Ligas extends \yii\db\ActiveRecord
             'pais' => 'Pais',
             'id_imagen' => 'Id Imagen',
             'video' => 'Video',
+            'estado' => 'Estado',
         ];
     }
 

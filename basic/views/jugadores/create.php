@@ -20,8 +20,6 @@ $this->title = 'Crear Jugadores';
 <div  id="contenedor-principal">
     <div class="marco">
 
-        <h2><?= Html::encode($this->title) ?></h2>
-
         <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de un jugador::</p>
 
         <?= $this->render('_form', [

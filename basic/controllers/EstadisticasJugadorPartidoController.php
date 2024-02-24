@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 class EstadisticasJugadorPartidoController extends Controller
 {
@@ -76,6 +77,47 @@ class EstadisticasJugadorPartidoController extends Controller
             'dataProviderVisitante' => $dataProviderVisitante,
         ]);
     }    
+
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+        
+        if ($model === null) {
+            throw new NotFoundHttpException('Las estadísticas del jugador solicitadas no existen.');
+        }
+        
+        $idPartido = $model->id_partido; // Obtener el ID del partido asociado al modelo
+        
+        // Obtener el ID del jugador y del equipo asociados a la estadística de jugador actual
+        $idJugador = $model->id_jugador;
+        $idEquipo = $model->id_equipo;
+    
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // Redirigir a la vista del partido correspondiente
+            return $this->redirect(['partidos/view', 'id' => $idPartido]);
+        }
+    
+        return $this->render('update', [
+            'model' => $model,
+            'idPartido' => $idPartido, // Pasar el ID del partido a la vista
+            'idJugador' => $idJugador, // Pasar el ID del jugador a la vista
+            'idEquipo' => $idEquipo, // Pasar el ID del equipo a la vista
+        ]);
+    }
+                  
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        $idPartido = $model->id_partido; // Obtener el ID del partido antes de eliminar el registro
+    
+        if ($model === null) {
+            throw new NotFoundHttpException('El registro de estadísticas del jugador no existe.');
+        }
+    
+        $model->delete();
+    
+        return $this->redirect(['partidos/view', 'id' => $idPartido]); // Redirigir a la vista de detalles del partido después de eliminar
+    }
 
     public function actionForm($idPartido, $idEquipo)
     {

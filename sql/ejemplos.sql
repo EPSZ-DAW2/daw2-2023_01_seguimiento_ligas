@@ -37,13 +37,13 @@ SET @imagen_acb := LAST_INSERT_ID();
 
 
 -- INSERTAMOS LAS LIGAS NBA Y ACB
-INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`) VALUES
-('NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba, 'https://www.youtube.com/embed/uUwb0x_AdL8?si=LIxT8Qet6JkIjksZ');
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`, `estado`) VALUES
+('NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba, 'https://www.youtube.com/embed/uUwb0x_AdL8?si=LIxT8Qet6JkIjksZ', 'Activa');
 
 SET @id_nba := LAST_INSERT_ID();
 
-INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`) VALUES
-('ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb, 'https://www.youtube.com/embed/NQp5KW7rZ9k?si=iiWyQfFnMQf5EKWn');
+INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`, `estado`) VALUES
+('ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb, 'https://www.youtube.com/embed/NQp5KW7rZ9k?si=iiWyQfFnMQf5EKWn', 'Activa');
 
 SET @id_acb := LAST_INSERT_ID();
 
@@ -157,19 +157,17 @@ INSERT IGNORE INTO `jornadas_temporada` (`id_temporada`, `numero`, `fecha_inicio
 (@temporada_nba23, 1, '2023-10-24', '2023-10-29'),
 (@temporada_nba23, 2, '2023-10-30', '2023-11-05'),
 (@temporada_nba23, 3, '2023-11-06', '2023-11-12'),
-(@temporada_nba23, 4, '2023-11-13', '2023-11-19'),
-(@temporada_nba23, 5, '2023-11-20', '2023-11-26');
+(@temporada_nba23, 4, '2024-04-20', '2024-04-24'),
+(@temporada_nba23, 5, '2024-05-01', '2024-05-03');
 
 SET @j1nba := LAST_INSERT_ID();
 
 INSERT IGNORE INTO `jornadas_temporada` (`id_temporada`, `numero`, `fecha_inicio`, `fecha_final`) VALUES
 (@temporada_acb23, 1, '2023-09-23', '2023-09-24'),
 (@temporada_acb23, 2, '2023-09-27', '2023-10-04'),
-(@temporada_acb23, 3, '2023-09-30', '2023-10-11'),
-(@temporada_acb23, 4, '2023-10-07', '2023-10-08'),
-(@temporada_acb23, 5, '2023-10-14', '2023-10-15'),
-(@temporada_acb23, 21, '2024-02-03', '2023-02-04'),
-(@temporada_acb23, 22, '2024-02-10', '2023-02-11');
+(@temporada_acb23, 3, '2024-03-10', '2024-03-12'),
+(@temporada_acb23, 4, '2024-03-18', '2024-03-22'),
+(@temporada_acb23, 5, '2024-04-03', '2024-04-06');
 
 SET @j1acb := LAST_INSERT_ID();
 

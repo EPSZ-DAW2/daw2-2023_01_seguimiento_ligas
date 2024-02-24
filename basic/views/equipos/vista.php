@@ -14,6 +14,28 @@ use app\models\EstadisticasJugador;
     
     <div class="liga-container3">
 
+    <h2>Estadísticas de la temporada:</h2>
+    <?php if ($estadisticas !== null): ?>
+    <table style="margin: 0 auto;">
+        <tr>
+            <th>Partidos Jugados</th>
+            <th>Victorias</th>
+            <th>Derrotas</th>
+        </tr>
+        <tr>
+            <td><?= $estadisticas->partidos_jugados ?></td>
+            <td><?= $estadisticas->victorias ?></td>
+            <td><?= $estadisticas->derrotas ?></td>
+        </tr>
+    </table>
+    <?php else: ?>
+        <p>No hay estadísticas disponibles para la temporada actual.</p>
+    <?php endif; ?>
+
+    </div>
+
+    <div class="liga-container3">
+
     <h2>Últimos Resultados:</h2>
     <?php foreach ($ultimosResultados as $resultado): ?>
             <h3><?= Html::a($resultado->equipoLocal->nombre, ['equipos/vista', 'id' => $resultado->equipoLocal->id], ['class' => 'enlace-equipo']) ?> - <?= Html::a($resultado->equipoVisitante->nombre, ['equipos/vista', 'id' => $resultado->equipoVisitante->id], ['class' => 'enlace-equipo']) ?></h3>
@@ -22,7 +44,6 @@ use app\models\EstadisticasJugador;
     <?php endforeach; ?>
 
     </div>
-
 
     <div class="liga-container3">
 
@@ -52,6 +73,8 @@ use app\models\EstadisticasJugador;
         }
         ?>
     <?php endforeach; ?>
+
+    <?= Html::a('Ver todos', ['jugadores/ver-por-equipo', 'id'=>$equipo->id], ['class' => 'botonFormulario']) ?>
 </div>
 
 </div>

@@ -5,14 +5,13 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<div class="marco">
 
 <?php $form = ActiveForm::begin(); ?>
 
-<?= $form->field($model, 'lugar')->textInput(['maxlength' => true]) ?>
-
-<?= $form->field($model, 'horario')->textInput(['type' => 'datetime-local']) ?>
-
+<?= $form->field($model, 'lugar', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
+<br>
+<?= $form->field($model, 'horario', ['options' => ['class' => 'campoTitulo']])->textInput(['type' => 'datetime-local', 'class' => 'campo']) ?>
+<br>
 <?php
     // Obtener la fecha actual
     $fechaActual = new DateTime();
@@ -23,20 +22,21 @@ use yii\widgets\ActiveForm;
     // Si la fecha del partido ha pasado
     if ($fechaActual > $fechaPartido) {
     ?>
-        <?= $form->field($model, 'resultado_local')->textInput(['type' => 'number', 'options' => ['step' => '1']]) ?>
-
-        <?=  $form->field($model, 'resultado_visitante')->textInput(['type' => 'number', 'options' => ['step' => '1']]) ?>
+        <?= $form->field($model, 'resultado_local', ['options' => ['class' => 'campoTitulo']])->textInput(['type' => 'number', 'options' => ['step' => '1'], 'class' => 'campo']) ?>
+        <br>
+        <?=  $form->field($model, 'resultado_visitante', ['options' => ['class' => 'campoTitulo']])->textInput(['type' => 'number', 'options' => ['step' => '1'], 'class' => 'campo']) ?>
 <?php
     } else {
             echo "Partido no jugado";
+            ?>
+            <br>
+<?php
     }
 ?>
-
-
-<div class="form-group">
-    <?= Html::submitButton('Guardar Cambios', ['class' => 'btn btn-success']) ?>
-</div>
+<br>
+<p>
+    <?= Html::submitButton('Guardar Cambios', ['class' => 'botonFormulario']) ?>
+    <?= Html::a(Yii::t('app', 'Partidos'), ['index'], ['class' => 'botonFormulario']) ?>
+</p>
 
 <?php ActiveForm::end(); ?>
-
-</div>

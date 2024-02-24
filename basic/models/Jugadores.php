@@ -51,6 +51,7 @@ class Jugadores extends \yii\db\ActiveRecord
             [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id'],],
             [['video'], 'url', 'message' => 'El formato de la URL no es válido.'],
             [['video'], 'string', 'max' => 255],
+            [['activo'], 'boolean'],
 
             [['altura'], 'validateAltura'],
             [['peso'], 'validatePeso'],
@@ -73,6 +74,7 @@ class Jugadores extends \yii\db\ActiveRecord
             'peso' => 'Peso',
             'nacionalidad' => 'Nacionalidad',
             'video'=> 'Video',
+            'activo' => 'Activo',
         ];
     }
 
