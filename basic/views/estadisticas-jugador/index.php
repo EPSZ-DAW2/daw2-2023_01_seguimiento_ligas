@@ -1,8 +1,11 @@
 <?php
+use app\models\Usuarios;
+use app\models\Ligas;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2  && Yii::$app->user->identity->id_rol != 6)) {
 ?>
@@ -105,30 +108,40 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 </div>
 
         <div class="marco">
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
-                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
-                'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
-                'columns' => [
-                    [
-                        'label' => 'Nombre', // Etiqueta de la columna
-                        'attribute' => 'jugador.nombre', // Utiliza el nombre del jugador
-                    ],
-                    [
-                        'label' => 'Equipo', // Etiqueta de la columna
-                        'attribute' => 'equipo.nombre', // Utiliza el nombre del equipo
-                    ],
-                    [
-                        'label' => 'Temporada', // Etiqueta de la columna
-                        'attribute' => 'temporada.texto_de_titulo', // Utiliza el texto de título de la temporada
-                    ],
-                    'partidos_jugados',
-                    'puntos',
-                    'rebotes',
-                    'asistencias',
+        <?php
+        echo Html::beginForm(['estadisticas-jugador/index'], 'get');
+        echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
+        echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
+        echo Html::endForm();
+        ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+            'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
+            'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
+            'columns' => [
+                [
+                    'label' => 'Nombre del Jugador', // Etiqueta de la columna
+                    'attribute' => 'id_jugador',
+                    'value' => 'jugador.nombre',
                 ],
-            ]); ?>
+                [
+                    'label' => 'Nombre del Equipo', // Etiqueta de la columna
+                    'attribute' => 'id_equipo',
+                    'value' => 'equipo.nombre',
+                ],
+                [
+                    'label' => 'Temporada', // Etiqueta de la columna
+                    'attribute' => 'id_temporada',
+                    'value' => 'temporada.texto_de_titulo',
+                ],
+                'partidos_jugados',
+                'puntos',
+                'rebotes',
+                'asistencias',
+            ],
+        ]); ?>
         </div>
     </div>
 </body>
@@ -152,8 +165,16 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
     <div  id="contenedor-principal">
 
         <div class="marco">
+            <?php
+            echo Html::beginForm(['estadisticas-jugador/index'], 'get');
+            echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
+            echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
+            echo Html::endForm();
+            ?>
+            <br>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
                 'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
                 'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
                 'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
@@ -197,7 +218,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     ],
                 ],
             ]); ?>
-
 
 
         <?= Html::a('Actualizar Estadísticas', ['actualizar-estadisticas'], ['class' => 'botonFormulario']) ?>

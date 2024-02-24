@@ -4,8 +4,10 @@ namespace app\controllers;
 
 use Yii;
 use app\models\EstadisticasJugador;
+use app\models\EstadisticasJugadorSearch;
 use app\models\EstadisticasJugadorPartido;
 use app\models\Jugadores;
+use app\models\Ligas;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
 
@@ -13,22 +15,26 @@ class EstadisticasJugadorController extends Controller
 {
     public function actionIndex()
     {
-        // Configura el proveedor de datos con paginación y filtros
-        $dataProvider = new ActiveDataProvider([
-            'query' => EstadisticasJugador::find()
-                ->with(['equipo', 'jugador', 'temporada']),
-            'pagination' => [
-                'pageSize' => 10, // Puedes ajustar el tamaño de la página según tus necesidades
-            ],
-        ]);
+        $searchModel = new EstadisticasJugadorSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     
-        // Renderiza la vista y pasa el proveedor de datos como parámetro
+        // Obtener las ligas para el dropdown
+        $ligas = Ligas::find()->all();
+    
+        // Filtrar por la liga seleccionada
+        $ligaId = Yii::$app->request->get('ligaId');
+        if (!empty($ligaId)) {
+            $dataProvider->query->leftJoin('equipos as e', 'estadisticas_jugador.id_equipo = e.id')
+                ->andWhere(['e.id_liga' => $ligaId]);
+        }
+    
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'ligas' => $ligas,
         ]);
-    }
+    } 
     
-
     public function actionCreate()
     {
         $model = new EstadisticasJugador();  // Crea una nueva instancia del modelo EstadisticasJugador

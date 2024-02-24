@@ -131,6 +131,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
                 'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
                 'emptyText' => 'No se encontraron resultados.',
+                'pager' => [
+                    'linkOptions' => ['class' => 'btn'],
+                ],
                 'columns' => [
                     [
                 'attribute' => 'imagen',
@@ -159,6 +162,12 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                         'label' => 'Equipo',
                     ],
                     'video',
+                    [
+                        'attribute' => 'activo',
+                        'value' => function ($model) {
+                            return $model->activo ? 'Activo' : 'Inactivo';
+                        },
+                    ],
                     [
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, app\models\Jugadores $model, $key, $index, $column) {

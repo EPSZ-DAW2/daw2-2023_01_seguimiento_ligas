@@ -29,12 +29,17 @@ class JugadoresController extends Controller
             $query = $dataProvider->query;
             $query->leftJoin('equipos as eq1', 'jugadores.id_equipo = eq1.id')
                 ->andWhere(['eq1.id_liga' => $ligaId]);
-            $dataProvider->query = $query;
+                $dataProvider->query = $query;
         }
 
         // Filtrar jugadores activos
-        $dataProvider->query->andWhere(['activo' => 1]);
+        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 6))
+        {
+            $dataProvider->query->andWhere(['activo' => 1]);
+        }
 
+        $dataProvider->pagination->pageSize = 12;
+ 
         $ligas = Ligas::find()->all();
 
         // Renderiza la vista y pasa los datos necesarios
