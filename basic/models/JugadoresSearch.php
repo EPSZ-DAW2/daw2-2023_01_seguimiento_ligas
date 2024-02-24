@@ -22,36 +22,37 @@ class JugadoresSearch extends Jugadores
     {
         return Model::scenarios();
     }
-
+    
     public function search($params)
     {
         $query = Jugadores::find()->joinWith('equipo'); // Usa joinWith para acceder a la relación
-
+    
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+    
         $this->load($params);
-
+    
         if (!$this->validate()) {
             return $dataProvider;
         }
-
+    
         $query->andFilterWhere([
-            'id' => $this->id,
-            'id_equipo' => $this->id_equipo,
-            'id_imagen' => $this->id_imagen,
+            'jugadores.id' => $this->id,
+            'jugadores.id_equipo' => $this->id_equipo,
+            'jugadores.id_imagen' => $this->id_imagen,
         ]);
-
-        $query->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'descripcion', $this->descripcion])
-            ->andFilterWhere(['like', 'posicion', $this->posicion])
-            ->andFilterWhere(['like', 'altura', $this->altura])
-            ->andFilterWhere(['like', 'peso', $this->peso])
-            ->andFilterWhere(['like', 'nacionalidad', $this->nacionalidad])
-            ->andFilterWhere(['like', 'video', $this->video])
+    
+        $query->andFilterWhere(['like', 'jugadores.nombre', $this->nombre])
+            ->andFilterWhere(['like', 'jugadores.descripcion', $this->descripcion])
+            ->andFilterWhere(['like', 'jugadores.posicion', $this->posicion])
+            ->andFilterWhere(['like', 'jugadores.altura', $this->altura])
+            ->andFilterWhere(['like', 'jugadores.peso', $this->peso])
+            ->andFilterWhere(['like', 'jugadores.nacionalidad', $this->nacionalidad])
+            ->andFilterWhere(['like', 'jugadores.video', $this->video])
             ->andFilterWhere(['like', 'equipos.nombre', $this->nombre_equipo]); // Filtra por el nombre del equipo
-
+    
         return $dataProvider;
     }
+    
 }

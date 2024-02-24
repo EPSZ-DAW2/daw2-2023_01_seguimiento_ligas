@@ -13,6 +13,7 @@ use app\models\Ligas;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
+use app\models\Usuarios;
 
 class JugadoresController extends Controller
 {
@@ -20,26 +21,30 @@ class JugadoresController extends Controller
     {
         $searchModel = new JugadoresSearch();
         $ligaId = Yii::$app->request->get('ligaId');
-        
-        // Aplicar condiciones de búsqueda si se envían parámetros
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // Filtrar jugadores por equipo si el usuario es un gestor de equipos
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 6) {
+            $usuarioId = Yii::$app->user->identity->id;
+            $equipoId = Equipos::find()->select('id')->where(['gestor_eq' => $usuarioId])->scalar();
+            
+            if ($equipoId !== null) {
+                $dataProvider->query->andWhere(['id_equipo' => $equipoId]);
+            }
+        }
         
         // Agregar condiciones adicionales si se especifica la liga
         if (!empty($ligaId) && $ligaId != -1) {
-            $query = $dataProvider->query;
-            $query->leftJoin('equipos as eq1', 'jugadores.id_equipo = eq1.id')
-                ->andWhere(['eq1.id_liga' => $ligaId]);
-                $dataProvider->query = $query;
+            $dataProvider->query->joinWith('equipo')->andWhere(['equipos.id_liga' => $ligaId]);
         }
 
         // Filtrar jugadores activos
-        if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 6))
-        {
+        if (Yii::$app->user->isGuest || !in_array(Yii::$app->user->identity->id_rol, [1, 2, 6])) {
             $dataProvider->query->andWhere(['activo' => 1]);
         }
 
         $dataProvider->pagination->pageSize = 12;
- 
+    
         $ligas = Ligas::find()->all();
 
         // Renderiza la vista y pasa los datos necesarios
@@ -49,7 +54,7 @@ class JugadoresController extends Controller
             'ligaId' => $ligaId,
             'searchModel' => $searchModel,
         ]);
-    }      
+    }     
 
     public function actionCreate()
     {
