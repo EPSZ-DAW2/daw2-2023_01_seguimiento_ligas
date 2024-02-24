@@ -11,7 +11,7 @@ use yii\db\Expression;
 
 </div>
 
-<div id="contenedor-principal">
+<div class="marco">
     <p>Temporada Actual: <?= $temporadaActual->texto_de_titulo ?></p>
 
     <ul>
