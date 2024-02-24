@@ -19,15 +19,10 @@ $this->params['breadcrumbs'][] = ['label' => 'Partidos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<<<<<<< HEAD
-<div class="partidos-jornada-view">
-    <h1><?= Html::encode($this->title) ?></h1>
-=======
 <?php
 if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2)) {
 ?>
     <div class="partidos-jornada-view">
->>>>>>> fd999738c508f1fb2f51727de9d93bfb576488d8
 
         <h1><?= Html::encode($this->title) ?></h1>
 
@@ -77,31 +72,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 
         <h1><?= Html::encode($this->title) ?></h1>
 
-<div class="marco">
-    <?php if (!empty($comentarios)): ?>
-        <?php foreach ($comentarios as $comentario): ?>
-            <?php if ($comentario->id_partido == $model->id): ?>
-                <div class="comentario">
-                    <p><?= Html::encode($comentario->texto_comentario) ?></p>
-                    <small>Por: <?= Html::encode($comentario->usuario->nombre) ?> el <?= Html::encode($comentario->fecha_hora) ?></small>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>No hay comentarios disponibles.</p>
-    <?php endif; ?>
-
-    <?php if (!Yii::$app->user->isGuest): ?>
-        <?php $form = ActiveForm::begin(['action' => ['PartidosController/actionAgregarComentario($id_partido)']]); ?>
-            <?php $comentario = new Comentarios(); ?>
-            <?= $form->field($comentario, 'texto_comentario')->textInput(['maxlength' => true]) ?>
-            <?= Html::submitButton('Guardar Comentario', ['class' => 'btn btn-success']) ?>
-        <?php ActiveForm::end(); ?>
-    <?php else: ?>
-        <?php // Si el usuario no ha iniciado sesión, redirigirlo a la página de inicio de sesión ?>
-        <?php return Yii::$app->controller->redirect(['usuarios/login']); ?>
-    <?php endif; ?>
-</div>
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -144,4 +114,30 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         ]); ?>
 
         </div>
+
+    <div class="marco">
+        <?php if (!empty($comentarios)): ?>
+            <?php foreach ($comentarios as $comentario): ?>
+                <?php if ($comentario->id_partido == $model->id): ?>
+                    <div class="comentario">
+                        <p><?= Html::encode($comentario->texto_comentario) ?></p>
+                        <small>Por: <?= Html::encode($comentario->usuario->nombre) ?> el <?= Html::encode($comentario->fecha_hora) ?></small>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No hay comentarios disponibles.</p>
+        <?php endif; ?>
+
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <?php $form = ActiveForm::begin(); ?>
+                <?php $comentario = new Comentarios(); ?>
+                <?= $form->field($comentario, 'texto_comentario')->textInput(['maxlength' => true]) ?>
+                <?= Html::submitButton('Guardar Comentario', ['class' => 'btn btn-success']) ?>
+            <?php ActiveForm::end(); ?>
+        <?php else: ?>
+            <?php // Si el usuario no ha iniciado sesión, redirigirlo a la página de inicio de sesión ?>
+            <?php return Yii::$app->controller->redirect(['usuarios/login']); ?>
+        <?php endif; ?>
+    </div>
 <?php } ?>

@@ -49,6 +49,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Jugadores', 'url' => ['/jugadores/index']],
             ['label' => 'Noticias', 'url' => ['/noticias/index']],
             ['label' => 'E_Jugador', 'url' => ['/estadisticas-jugador/index']],
+            ['label' => 'Patrocinadores', 'url' => ['/patrocinadores/index']],
             //['label' => 'Usuarios', 'url' => ['/usuarios/index']],
         ]
     ]);

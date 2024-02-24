@@ -92,3 +92,4 @@ class Comentarios extends \yii\db\ActiveRecord
         return $this->hasOne(Comentarios::class, ['id' => 'id_comentario_padre']);
     }
 }
+?>
