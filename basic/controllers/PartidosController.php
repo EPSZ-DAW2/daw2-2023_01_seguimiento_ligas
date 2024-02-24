@@ -5,8 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\PartidosJornada;
 use app\models\JornadasTemporada;
+use app\models\Jugadores;
+use app\models\JugadoresSearch;
 use app\models\Equipos;
 use app\models\Temporadas;
+use app\models\Comentarios;
 use app\models\Ligas;
 use yii\data\ActiveDataProvider;
 
@@ -31,12 +34,18 @@ class PartidosController extends \yii\web\Controller
         ]);
     }
 
-    public function actionView($id)
+    public function actionView($id, $partidoID = null)
     {
-        // Buscar el partido por su ID
-        $model = PartidosJornada::findOne($id);
-    
-        // Verificar si el partido existe
+        $model = $this->findModel($id);
+         // Filtrar comentarios si se proporciona el partidoID
+         $query = Comentarios::find();
+         if ($partidoID !== null) {
+             $query->where(['id_partido' => $partidoID]);
+         }
+ 
+         $comentarios = $query->all();
+
+        // Verificar si el equipo existe
         if ($model === null) {
             throw new NotFoundHttpException('El partido no fue encontrado.');
         }
@@ -49,12 +58,16 @@ class PartidosController extends \yii\web\Controller
         $dataProviderVisitante = new ActiveDataProvider([
             'query' => $model->equipoVisitante->getEstadisticasJugadorPartido(),
         ]);        
-    
+        
+        /*$post=$this->loadModel();
+        $comentarios=$this->actionAgregarComentario($partidoID,$post);*/
+
         // Renderizar la vista de detalles del partido
         return $this->render('view', [
             'model' => $model,
+            'comentarios' => $comentarios,
             'dataProviderLocal' => $dataProviderLocal,
-            'dataProviderVisitante' => $dataProviderVisitante,
+            'dataProviderVisitante' => $dataProviderVisitante, 
         ]);
     }
     
@@ -133,7 +146,6 @@ class PartidosController extends \yii\web\Controller
             throw new \yii\web\NotFoundHttpException('La jornada o la temporada no existe.');
         }
     }
-
 
     public function actionUpdate($id)
     {
@@ -249,19 +261,46 @@ class PartidosController extends \yii\web\Controller
         return $this->redirect(['index', 'id' => $nuevoPartido->id]);
     }
 
-    public function actionAddStats($idPartido, $idEquipo)
+    protected function actionAgregarComentario($id_partido)
     {
-        $model = new EstadisticasJugadorPartido();
-        $model->id_partido = $idPartido;
-    
-        // Aquí deberías obtener la lista de jugadores del equipo en función del $idEquipo
-    
-        return $this->render('form', [
-            'model' => $model,
-            'idPartido' => $idPartido,
-            'jugadores' => [], // Pasa aquí la lista de jugadores
+        // Verifica si el usuario está autenticado
+        if (Yii::$app->user->isGuest) {
+            // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+            Yii::$app->session->setFlash('error', 'Debes iniciar sesión para escribir comentarios.');
+        }
+
+        // Crea un nuevo modelo de Comentarios
+        $nuevoComentarioModel = new Comentarios();
+
+        if (Yii::$app->request->isPost) {
+
+            $nuevoComentarioModel->load(Yii::$app->request->post());
+
+            // Asigna los valores del comentario
+            $nuevoComentarioModel->id_partido = $id_partido;
+            $nuevoComentarioModel->id_usuario = Yii::$app->user->id; // Asigna el ID del usuario actual
+            $nuevoComentarioModel->fecha_hora = date('Y-m-d H:i:s'); // Asigna la fecha y hora actual
+
+            // Guarda el comentario en la base de datos
+            if ($nuevoComentarioModel->save()) {
+                Yii::$app->session->setFlash('success', '¡Comentario agregado exitosamente!');
+                // Redirige al usuario de vuelta a la página de detalles de partido
+                return $this->redirect(['view', 'id_partido' => $id_partido]);
+            } else {
+                // Hubo un error al guardar el comentario.
+                // Mantener el texto del comentario en el formulario.
+                Yii::$app->session->setFlash('error', 'Hubo un error al guardar el comentario.');
+                return $this->render('view', [
+                    'id_partido' => $id_partido,
+                    'nuevoComentarioModel' => $nuevoComentarioModel,
+                ]);
+            }
+        }
+
+        return $this->render('view', [
+            'id_partido' => $id_partido,
+            'nuevoComentarioModel' => $nuevoComentarioModel,
         ]);
     }
-    
-
 }
+?>
