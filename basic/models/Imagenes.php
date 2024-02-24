@@ -40,6 +40,8 @@ class Imagenes extends \yii\db\ActiveRecord
             [['imagenFile'], 'file', 'extensions' => ['png', 'jpg', 'jpeg'],
             'message' => 'Solo se permiten archivos con extensiones PNG, JPG o JPEG.'],
             [['foto'], 'string', 'max' => 255],
+            
+            
         ];
     }
 

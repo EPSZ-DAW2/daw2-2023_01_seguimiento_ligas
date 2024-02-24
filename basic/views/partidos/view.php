@@ -1,9 +1,15 @@
 <?php
+/** @var yii\web\View $this */
+/** @var app\models\PartidosJornada $model */
+/** @var app\models\Comentarios $nuevoComentarioModel */
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\EstadisticasJugador;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
+use app\models\PartidosJornada;
+use app\models\Comentarios;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PartidosJornada */
@@ -168,6 +174,33 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         ]); ?>
         <?= Html::a('Añadir Estadísticas', ['estadisticas-jugador-partido/form', 'idPartido' => $model->id, 'idEquipo' => $model->equipoVisitante->id], ['class' => 'botonFormulario']) ?>
 
+        </div>
+
+    <div class="marco">
+        <?php if (!empty($comentarios)): ?>
+            <?php foreach ($comentarios as $comentario): ?>
+                <?php if ($comentario->id_partido == $model->id): ?>
+                    <div class="comentario">
+                        <p><?= Html::encode($comentario->texto_comentario) ?></p>
+                        <small>Por: <?= Html::encode($comentario->usuario->nombre) ?> el <?= Html::encode($comentario->fecha_hora) ?></small>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No hay comentarios disponibles.</p>
+        <?php endif; ?>
+
+        <?php if (!Yii::$app->user->isGuest): ?>
+            <?php $form = ActiveForm::begin(); ?>
+                <?php $comentario = new Comentarios(); ?>
+                <?= $form->field($comentario, 'texto_comentario')->textInput(['maxlength' => true]) ?>
+                <?= Html::submitButton('Guardar Comentario', ['class' => 'btn btn-success']) ?>
+            <?php ActiveForm::end(); ?>
+        <?php else: ?>
+            <?php // Si el usuario no ha iniciado sesión, redirigirlo a la página de inicio de sesión ?>
+            <?php return Yii::$app->controller->redirect(['usuarios/login']); ?>
+        <?php endif; ?>
+    </div>
 <?php } ?>
     <br>
     <hr>

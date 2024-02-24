@@ -9,7 +9,9 @@ use app\models\LigasSearch;
 
 
 if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2 && Yii::$app->user->identity->id_rol != 4)) {
+    
    foreach ($ligas as $liga): ?>
+  <?php if($liga->estado == 'Activa'){?>
     <div class="contenido-cabecera">
 
     <h1>LIGAS</h1>
@@ -33,8 +35,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 
     </div>
     </div>
-<?php endforeach; ?>
-<?php } else { ?>
+<?php }endforeach; ?>
+<?php 
+} else { ?>
 
 <?php
 
@@ -84,6 +87,7 @@ $this->title = Yii::t('app', 'Ligas');
             'descripcion:ntext',
             'pais:ntext',
             'video:ntext',
+            'estado:ntext',
 
             [
                 'class' => ActionColumn::className(),
