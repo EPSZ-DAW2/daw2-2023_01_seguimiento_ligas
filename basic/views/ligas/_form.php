@@ -40,6 +40,13 @@ $url = Url::to(['ligas/view', 'id' => $ligaId]);
     <br>
     <?= $form->field($model, 'video', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
+    <?= $form->field($model, 'estado', ['options' => ['class' => 'campoTitulo']])->dropDownList(
+            ['Activa' => 'Activa', 'Inactiva' => 'Inactiva'],
+            ['prompt' => 'Selecciona un estado', 'class' => 'campo']
+            
+            
+            
+        ) ?>
 
     <?= Html::submitButton('Modificar', ['class' => 'botonFormulario']) ?>
     <?= Html::a(Yii::t('app', 'Datos del equipo'), $url, ['class' => 'botonFormulario']) ?>

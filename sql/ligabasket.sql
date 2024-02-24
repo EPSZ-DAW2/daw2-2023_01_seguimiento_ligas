@@ -194,7 +194,8 @@ CREATE TABLE `ligas` (
   `descripcion` varchar(255) NOT NULL COMMENT 'Descripción de la liga',
   `pais` varchar(50) NOT NULL COMMENT 'País en el que acontece la liga',
   `id_imagen` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional'
+  `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional',
+  `estado` varchar(255) DEFAULT NULL COMMENT 'Estado de la liga'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
