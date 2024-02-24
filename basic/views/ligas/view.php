@@ -33,6 +33,7 @@ $this->title = $model->nombre;
             'pais',
             'id_imagen',
             'video',
+            'estado',
         ],
     ]) ?>
 
