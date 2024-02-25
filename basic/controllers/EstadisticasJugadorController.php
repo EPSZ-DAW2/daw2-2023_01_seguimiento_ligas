@@ -28,12 +28,18 @@ class EstadisticasJugadorController extends Controller
                 ->andWhere(['e.id_liga' => $ligaId]);
         }
     
+        // Mostrar todos los registros si se activa el parámetro showAll
+        $showAll = Yii::$app->request->get('showAll', false);
+        if (!$showAll) {
+            $dataProvider->query->andWhere(['>', 'partidos_jugados', 0]);
+        }
+    
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'ligas' => $ligas,
         ]);
-    } 
+    }       
     
     public function actionCreate()
     {
@@ -139,4 +145,40 @@ class EstadisticasJugadorController extends Controller
         }
         return $this->redirect(['index']);
     }
+
+    public function actionCrearEstadisticas($idTemporada, $idEquipo)
+    {
+        // Obtener la lista de jugadores del equipo para la temporada actual
+        $jugadoresEquipo = Jugadores::find()->where(['id_equipo' => $idEquipo])->all();
+
+        // Iterar sobre cada jugador del equipo
+        foreach ($jugadoresEquipo as $jugador) {
+            // Verificar si ya existe una entrada para este jugador y esta temporada
+            $existingStats = EstadisticasJugador::find()
+                ->where(['id_temporada' => $idTemporada, 'id_jugador' => $jugador->id])
+                ->exists();
+
+            // Si no existe una entrada para este jugador y esta temporada, crear una nueva
+            if (!$existingStats) {
+                $estadisticas = new EstadisticasJugador();
+                $estadisticas->id_temporada = $idTemporada;
+                $estadisticas->id_equipo = $idEquipo;
+                $estadisticas->id_jugador = $jugador->id;
+                $estadisticas->partidos_jugados = 0;
+                $estadisticas->puntos = 0;
+                $estadisticas->rebotes = 0;
+                $estadisticas->asistencias = 0;
+
+                // Guardar las estadísticas
+                if (!$estadisticas->save()) {
+                    Yii::error('Error al guardar las estadísticas para el jugador: ' . $jugador->nombre);
+                    // Manejar el error según sea necesario
+                }
+            }
+        }
+
+        // Redirigir a la vista de la temporada
+        return $this->redirect(['equipos/ver-por-temporada', 'id' => $idTemporada]);
+    }
+
 }

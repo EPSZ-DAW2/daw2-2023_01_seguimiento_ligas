@@ -123,9 +123,9 @@ class EstadisticasJugadorPartidoController extends Controller
     {
         $model = new EstadisticasJugadorPartido();
 
-        // Obtener los jugadores del equipo correspondiente
+        // Obtener los jugadores del equipo correspondiente con activo = 1
         $jugadores = Jugadores::find()
-            ->where(['id_equipo' => $idEquipo])
+            ->where(['id_equipo' => $idEquipo, 'activo' => 1]) // Filtrar por activo = 1
             ->select(['id', 'nombre'])
             ->asArray()
             ->all();

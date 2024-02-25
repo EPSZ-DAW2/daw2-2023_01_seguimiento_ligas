@@ -171,6 +171,8 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
             echo Html::endForm();
             ?>
+            <br>        
+            <?= Html::a('Mostrar todos los registros', ['index', 'showAll' => true], ['class' => 'btn btn-primary']) ?>
             <br>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -180,16 +182,19 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
                 'columns' => [
                     [
-                        'label' => 'Nombre',
-                        'attribute' => 'jugador.nombre',
+                        'label' => 'Nombre del Jugador', // Etiqueta de la columna
+                        'attribute' => 'id_jugador',
+                        'value' => 'jugador.nombre',
                     ],
                     [
-                        'label' => 'Equipo',
-                        'attribute' => 'equipo.nombre',
+                        'label' => 'Nombre del Equipo', // Etiqueta de la columna
+                        'attribute' => 'id_equipo',
+                        'value' => 'equipo.nombre',
                     ],
                     [
-                        'label' => 'Temporada',
-                        'attribute' => 'temporada.texto_de_titulo',
+                        'label' => 'Temporada', // Etiqueta de la columna
+                        'attribute' => 'id_temporada',
+                        'value' => 'temporada.texto_de_titulo',
                     ],
                     'partidos_jugados',
                     'puntos',

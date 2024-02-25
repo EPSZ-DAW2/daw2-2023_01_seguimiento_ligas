@@ -64,7 +64,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             'asistencias',
             
         ],
-    ]); ?>
+        ]); ?>
 
         <h3>Equipo Visitante: <?= Html::encode($model->equipoVisitante->nombre) ?></h3>
         <?= GridView::widget([

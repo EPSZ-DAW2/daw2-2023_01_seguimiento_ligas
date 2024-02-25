@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use yii\web\NotFoundHttpException;
 use Yii;
 use app\models\Jugadores;
 use app\models\JugadoresSearch;
@@ -158,10 +159,20 @@ class JugadoresController extends Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $jugador = $this->findModel($id);
+        
+        // Eliminar las estadísticas de jugador asociadas al jugador
+        EstadisticasJugador::deleteAll(['id_jugador' => $id]);
+        
+        // Eliminar las estadísticas de jugador partido asociadas al jugador
+        EstadisticasJugadorPartido::deleteAll(['id_jugador' => $id]);
+        
+        // Eliminar al jugador
+        $jugador->delete();
+    
         return $this->redirect(['index']);
     }
+    
     
     protected function findModel($id)
     {
