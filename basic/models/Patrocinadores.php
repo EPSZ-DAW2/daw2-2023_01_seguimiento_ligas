@@ -31,6 +31,7 @@ class Patrocinadores extends \yii\db\ActiveRecord
     {
         return [
             [['id_imagen'], 'integer'],
+            [['nombre', 'descripcion'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['nombre', 'descripcion'], 'string','max' => 255],
             [['id_imagen'], 'exist', 'skipOnError' => true, 'targetClass' => Imagenes::class, 'targetAttribute' => ['id_imagen' => 'id']],
         ];

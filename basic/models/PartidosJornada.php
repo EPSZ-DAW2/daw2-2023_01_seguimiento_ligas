@@ -43,7 +43,7 @@ class PartidosJornada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_jornada', 'id_equipo_local', 'id_equipo_visitante'], 'required', 'message' => 'Este campo es obligatorio.'],
+            [['id_jornada', 'id_equipo_local', 'id_equipo_visitante', 'horario', 'lugar'], 'required', 'message' => 'Este campo es obligatorio.'],
             [['id_jornada', 'id_equipo_local', 'id_equipo_visitante', 'resultado_local', 'resultado_visitante'], 'integer'],
             [['horario'], 'safe'],
             [['lugar'], 'string', 'max' => 255],
@@ -51,6 +51,7 @@ class PartidosJornada extends \yii\db\ActiveRecord
             [['id_equipo_visitante'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo_visitante' => 'id']],
             [['id_jornada'], 'exist', 'skipOnError' => true, 'targetClass' => JornadasTemporada::class, 'targetAttribute' => ['id_jornada' => 'id']],
             ['horario', 'validarHorarioEnJornada'],
+            [['id_equipo_local', 'id_equipo_visitante'], 'noiguales'],
         ];
     }
 
@@ -122,6 +123,13 @@ class PartidosJornada extends \yii\db\ActiveRecord
         // Verificar si el horario está dentro del rango de fechas de la jornada
         if (strtotime($horario) < strtotime($jornada->fecha_inicio) || strtotime($horario) > strtotime($jornada->fecha_final)) {
             $this->addError($attribute, 'El horario del partido de la jornada ' . $jornada->numero . ' debe estar entre ' . $jornada->fecha_inicio . ' y ' . $jornada->fecha_final . '.');
+        }
+    }
+
+    public function noiguales($attribute, $params)
+    {
+        if ($this->id_equipo_local === $this->id_equipo_visitante) {
+            $this->addError($attribute, 'El equipo local y el equipo visitante no pueden ser el mismo.');
         }
     }
 }

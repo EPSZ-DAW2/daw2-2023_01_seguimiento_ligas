@@ -7,6 +7,16 @@ use app\models\Usuarios;
     <h1>PATROCINADORES</h1>  
 </div>
 
+
+<div id="contenedor-principal">
+
+<div id="botonArriba2">
+    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 6)): ?>
+        <?= Html::a('Crear Nuevo Patrocinador', ['patrocinadores/create'], ['class' => 'botonFormulario']) ?>
+    <?php endif; ?>
+</div>
+
+
 <?php foreach ($patrocinadores as $patrocinador): ?>
     <div class="marco2">
         <h2><?= $patrocinador->nombre ?></h2>
@@ -20,8 +30,6 @@ use app\models\Usuarios;
     </div>
 <?php endforeach; ?>
 
-<div id="botonAbajo">
-    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 6)): ?>
-        <?= Html::a('Crear Nuevo Patrocinador', ['patrocinadores/create'], ['class' => 'botonFormulario']) ?>
-    <?php endif; ?>
+
+
 </div>
