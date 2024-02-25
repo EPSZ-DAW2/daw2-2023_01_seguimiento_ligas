@@ -113,9 +113,9 @@ CREATE TABLE `estadisticas_jugador` (
   `id_equipo` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_jugador` int(6) UNSIGNED ZEROFILL NOT NULL,
   `partidos_jugados` int(6) DEFAULT NULL,
-  `puntos` int(6) DEFAULT NULL,
-  `rebotes` int(6) DEFAULT NULL,
-  `asistencias` int(6) DEFAULT NULL,
+  `puntos` float(6) DEFAULT NULL,
+  `rebotes` float(6) DEFAULT NULL,
+  `asistencias` float(6) DEFAULT NULL,
   `activo` tinyint DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
