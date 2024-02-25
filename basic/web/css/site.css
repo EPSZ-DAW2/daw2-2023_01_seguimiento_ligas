@@ -500,3 +500,25 @@ a.boton:hover {
 .estadistica p {
     font-weight: bold;
 }
+
+/* estilos.css */
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.paginas li {
+    margin-bottom: 6%;
+}
+
+.enlace-lista a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold; /* Añadimos negrita */
+    transition: color 0.3s;
+}
+
+.enlace-lista a:hover {
+    color: red;
+}

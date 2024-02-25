@@ -11,14 +11,22 @@ use yii\db\Expression;
 
 </div>
 
-<div class="marco">
-    <p>Temporada Actual: <?= $temporadaActual->texto_de_titulo ?></p>
+<div id="contenedor-principal">
 
-    <ul>
+<div class="marco">
+    
+    <p class="PaginaDeInicio">Temporada Actual: <?= $temporadaActual->texto_de_titulo ?></p>
+
+    <ul class="enlace-lista">
         <?php foreach ($temporadasFuturas as $temporada): ?>
-            <li>
+            <li class="paginas">
                 <?= Html::a($temporada->texto_de_titulo, ['cambiar-id-temporada', 'idTemporada' => $temporada->id, 'idEq' => $idEquipo]) ?>
+                
             </li>
         <?php endforeach; ?>
     </ul>
+
+    <?= Html::button('Volver', ['class' => 'botonFormulario', 'onclick' => 'window.history.back();']) ?>
+
+</div>
 </div>

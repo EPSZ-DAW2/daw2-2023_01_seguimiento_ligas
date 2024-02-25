@@ -35,7 +35,7 @@ $this->title = 'Actualizar Patrocinador: ' . $patrocinador->nombre;
 
     <p>
         <?= Html::submitButton('Actualizar', ['class' => 'botonFormulario']) ?>
-        <?= Html::a('Atras', ['view', 'id' => $patrocinador->id], ['class' => 'botonFormulario']) ?>
+        <?= Html::a('Atras', ['vista', 'id' => $patrocinador->id], ['class' => 'botonFormulario']) ?>
     </p>
 
     <?php ActiveForm::end(); ?>
