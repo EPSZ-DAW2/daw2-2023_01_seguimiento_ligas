@@ -11,28 +11,40 @@ use yii\data\ActiveDataProvider;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="estadisticas-jugador-partido-form">
+<div class="contenido-cabecera">
+
+<h1>ESTADISITICAS DE JUGADOR POR PARTIDO</h1>
+
+</div>
+
+<div  id="contenedor-principal">
+
+<div class="marco">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_partido')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'id_partido', ['options' => ['class' => 'campoTitulo']])->hiddenInput()->label(false) ?>
 
-    <?= $form->field($model, 'id_jugador')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'id_jugador', ['options' => ['class' => 'campoTitulo']])->hiddenInput()->label(false) ?>
 
-    <?= $form->field($model, 'id_equipo')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'id_equipo', ['options' => ['class' => 'campoTitulo']])->hiddenInput()->label(false) ?>
 
-    <?= $form->field($model, 'minutos')->textInput() ?>
+    <?= $form->field($model, 'minutos', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese los minutos jugados', 'class' => 'campo']) ?>
 
-    <?= $form->field($model, 'puntos')->textInput() ?>
+    <?= $form->field($model, 'puntos', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese los puntos', 'class' => 'campo']) ?>
 
-    <?= $form->field($model, 'rebotes')->textInput() ?>
+    <?= $form->field($model, 'rebotes', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese los rebotes', 'class' => 'campo']) ?>
 
-    <?= $form->field($model, 'asistencias')->textInput() ?>
+    <?= $form->field($model, 'asistencias', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese las asistencias', 'class' => 'campo']) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
-    </div>
+    <br>
+    <p>
+        <?= Html::submitButton('Guardar', ['class' => 'botonFormulario']) ?>
+        <?= Html::a('Atras', Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+
+    </p>
 
     <?php ActiveForm::end(); ?>
 
+</div>
 </div>
