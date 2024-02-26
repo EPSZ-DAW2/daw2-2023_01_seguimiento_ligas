@@ -34,7 +34,7 @@ class EstadisticasEquipo extends \yii\db\ActiveRecord
     {
         return [
             [['id_temporada', 'id_equipo'], 'required'],
-            [['id_temporada', 'id_equipo', 'partidos_jugados', 'victorias', 'derrotas'], 'integer'],
+            [['id_temporada', 'id_equipo', 'partidos_jugados', 'victorias', 'derrotas', 'empates'], 'integer'],
             [['id_equipo'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo' => 'id']],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
         ];
@@ -52,6 +52,7 @@ class EstadisticasEquipo extends \yii\db\ActiveRecord
             'partidos_jugados' => 'Partidos Jugados',
             'victorias' => 'Victorias',
             'derrotas' => 'Derrotas',
+            'empates' => 'Empates'
         ];
     }
 

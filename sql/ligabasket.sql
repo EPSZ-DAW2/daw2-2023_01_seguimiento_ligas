@@ -98,7 +98,8 @@ CREATE TABLE `estadisticas_equipo` (
   `id_equipo` int(6) UNSIGNED ZEROFILL NOT NULL,
   `partidos_jugados` int(6) DEFAULT NULL,
   `victorias` int(6) DEFAULT NULL,
-  `derrotas` int(6) DEFAULT NULL
+  `derrotas` int(6) DEFAULT NULL,
+  `empates` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
