@@ -120,11 +120,11 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 'template' => '{update} {delete}',
                 'buttons' => [
                     'update' => function ($url, $model, $key) {
-                        return Html::a('Editar', ['estadisticas-jugador-partido/update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                        return Html::a('Editar', ['estadisticas-jugador-partido/update', 'id' => $model->id], ['class' => 'botonFormulario']);
                     },
                     'delete' => function ($url, $model, $key) {
                         return Html::a('Eliminar', ['estadisticas-jugador-partido/delete', 'id' => $model->id], [
-                            'class' => 'btn btn-danger',
+                            'class' => 'botonFormulario',
                             'data' => [
                                 'confirm' => '¿Estás seguro de que deseas eliminar esta estadística?',
                                 'method' => 'post',
@@ -157,11 +157,11 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 'template' => '{update} {delete}',
                 'buttons' => [
                     'update' => function ($url, $model, $key) {
-                        return Html::a('Editar', ['estadisticas-jugador-partido/update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                        return Html::a('Editar', ['estadisticas-jugador-partido/update', 'id' => $model->id], ['class' => 'botonFormulario']);
                     },
                     'delete' => function ($url, $model, $key) {
                         return Html::a('Eliminar', ['estadisticas-jugador-partido/delete', 'id' => $model->id], [
-                            'class' => 'btn btn-danger',
+                            'class' => 'botonFormulario',
                             'data' => [
                                 'confirm' => '¿Estás seguro de que deseas eliminar esta estadística?',
                                 'method' => 'post',
@@ -176,7 +176,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 
         </div>
 
-    <div class="marco">
+    <!--  <div class="marco">
         <?php if (!empty($comentarios)): ?>
             <?php foreach ($comentarios as $comentario): ?>
                 <?php if ($comentario->id_partido == $model->id): ?>
@@ -200,7 +200,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             <?php // Si el usuario no ha iniciado sesión, redirigirlo a la página de inicio de sesión ?>
             <?php return Yii::$app->controller->redirect(['usuarios/login']); ?>
         <?php endif; ?>
-    </div>
+    </div> -->
 <?php } ?>
     <br>
     <hr>
