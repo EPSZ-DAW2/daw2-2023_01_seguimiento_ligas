@@ -11,11 +11,10 @@ use yii\helpers\Html;
         <div class="marco2">
             <div class="jugador-content">
                 <?php
-                // Mostrar la foto del jugador con estilos CSS
                 if ($jugador->imagen) {
                     echo Html::a(
                         Html::img(Yii::getAlias('@web/images/') . $jugador->imagen->foto, ['alt' => 'Foto de ' . $jugador->nombre, 'style' => 'max-width: 200px; max-height: 200px;']),
-                        ['jugadores/view', 'id' => $jugador->id], // Enlace a la vista 'jugadores/view.php' con el ID del jugador
+                        ['jugadores/view', 'id' => $jugador->id],
                         ['class' => 'jugador-link']
                     );
                 }

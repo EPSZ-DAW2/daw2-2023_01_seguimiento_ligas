@@ -12,13 +12,16 @@ use app\models\Jugadores;
 
 ?>
 
+<?php 
+    if ((!Yii::$app->user->isGuest) && (in_array(Yii::$app->user->identity->id_rol, [1, 2]) || (Yii::$app->user->identity->id_rol == 6 && $esGestor))){ 
+?>
 <div>
     <?php $form = ActiveForm::begin([
         'enableAjaxValidation' => false,
         'enableClientValidation' => true,
     ]); ?>
 
-    <?php if (!$esGestorEquipo): ?>
+    <?php if (!$esGestor): ?>
         <?= $form->field($model, 'id_equipo', ['options' => ['class' => 'campoTitulo']])->dropDownList(
             \yii\helpers\ArrayHelper::map(\app\models\Equipos::find()->all(), 'id', 'nombre'),
             ['prompt' => 'Selecciona un equipo', 'class' => 'campo']
@@ -63,3 +66,8 @@ use app\models\Jugadores;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php }else{
+    echo "El acceso a está página esta restringido";
+}
+?>

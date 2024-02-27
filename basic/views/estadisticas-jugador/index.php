@@ -7,7 +7,7 @@ use yii\grid\ActionColumn;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 
-if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2  && Yii::$app->user->identity->id_rol != 6)) {
+if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2)) {
 ?>
 
 <!DOCTYPE html>
@@ -118,21 +118,21 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
-            'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
-            'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
+            'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
+            'emptyText' => 'No se encontraron resultados.',
             'columns' => [
                 [
-                    'label' => 'Nombre del Jugador', // Etiqueta de la columna
+                    'label' => 'Nombre del Jugador',
                     'attribute' => 'id_jugador',
                     'value' => 'jugador.nombre',
                 ],
                 [
-                    'label' => 'Nombre del Equipo', // Etiqueta de la columna
+                    'label' => 'Nombre del Equipo',
                     'attribute' => 'id_equipo',
                     'value' => 'equipo.nombre',
                 ],
                 [
-                    'label' => 'Temporada', // Etiqueta de la columna
+                    'label' => 'Temporada',
                     'attribute' => 'id_temporada',
                     'value' => 'temporada.texto_de_titulo',
                 ],
@@ -178,21 +178,21 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
-                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
-                'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
+                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
+                'emptyText' => 'No se encontraron resultados.',
                 'columns' => [
                     [
-                        'label' => 'Nombre del Jugador', // Etiqueta de la columna
+                        'label' => 'Nombre del Jugador',
                         'attribute' => 'id_jugador',
                         'value' => 'jugador.nombre',
                     ],
                     [
-                        'label' => 'Nombre del Equipo', // Etiqueta de la columna
+                        'label' => 'Nombre del Equipo',
                         'attribute' => 'id_equipo',
                         'value' => 'equipo.nombre',
                     ],
                     [
-                        'label' => 'Temporada', // Etiqueta de la columna
+                        'label' => 'Temporada',
                         'attribute' => 'id_temporada',
                         'value' => 'temporada.texto_de_titulo',
                     ],
@@ -201,25 +201,10 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     'rebotes',
                     'asistencias',
                     [
-                        'class' => ActionColumn::class,
-                        'template' => '{update} {view} {delete}',
-                        'buttons' => [
-                            'update' => function ($url, $model, $key) {
-                                return Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'botonFormulario']);
-                            },
-                            'view' => function ($url, $model, $key) {
-                                return Html::a('Ver', ['view', 'id' => $model->id], ['class' => 'botonFormulario']);
-                            },
-                            'delete' => function ($url, $model, $key) {
-                                return Html::a('Eliminar', ['delete', 'id' => $model->id], [
-                                    'class' => 'botonFormulario',
-                                    'data' => [
-                                        'confirm' => '¿Estás seguro de que deseas eliminar esta estadística?',
-                                        'method' => 'post',
-                                    ],
-                                ]);
-                            },
-                        ],
+                        'class' => ActionColumn::className(),
+                        'urlCreator' => function ($action, app\models\EstadisticasJugador $model, $key, $index, $column) {
+                            return Url::toRoute([$action, 'id' => $model->id]);
+                         }
                     ],
                 ],
             ]); ?>

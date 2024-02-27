@@ -19,15 +19,22 @@ $this->title = 'Crear Jugadores';
 
 <div  id="contenedor-principal">
     <div class="marco">
+    <?php 
+    if ((!Yii::$app->user->isGuest) && (in_array(Yii::$app->user->identity->id_rol, [1, 2]) || (Yii::$app->user->identity->id_rol == 6 && $esGestor))){ 
+    ?>
 
-        <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de un jugador::</p>
+        <p class="PaginaDeInicio">Por favor, rellene los campos para la creación de un jugador:</p>
 
         <?= $this->render('_form', [
             'model' => $model,
             'imagenModel' => $imagenModel,
-            'esGestorEquipo' => $esGestorEquipo, // Pasa la variable al formulario
-            'equipoId' => $equipoId, // Pasa la variable al formulario
+            'esGestor' => $esGestor,
+            'equipoId' => $equipoId,
         ]) ?>
 
     </div>
 </div>
+<?php }else{
+    echo "El acceso a está página esta restringido";
+}
+?>

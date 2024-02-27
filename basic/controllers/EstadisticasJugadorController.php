@@ -18,17 +18,14 @@ class EstadisticasJugadorController extends Controller
         $searchModel = new EstadisticasJugadorSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     
-        // Obtener las ligas para el dropdown
         $ligas = Ligas::find()->all();
     
-        // Filtrar por la liga seleccionada
         $ligaId = Yii::$app->request->get('ligaId');
         if (!empty($ligaId)) {
             $dataProvider->query->leftJoin('equipos as e', 'estadisticas_jugador.id_equipo = e.id')
                 ->andWhere(['e.id_liga' => $ligaId]);
         }
     
-        // Mostrar todos los registros si se activa el parámetro showAll
         $showAll = Yii::$app->request->get('showAll', false);
         if (!$showAll) {
             $dataProvider->query->andWhere(['>', 'partidos_jugados', 0]);
@@ -41,13 +38,11 @@ class EstadisticasJugadorController extends Controller
         ]);
     }
        
-    
     public function actionCreate()
     {
-        $model = new EstadisticasJugador();  // Crea una nueva instancia del modelo EstadisticasJugador
+        $model = new EstadisticasJugador();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            // Manejar la lógica después de guardar el modelo (por ejemplo, redirigir a la vista de detalles)
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -101,99 +96,81 @@ class EstadisticasJugadorController extends Controller
     }
 
     public function actionActualizarEstadisticas()
-{
-    // Obtener todos los jugadores
-    $jugadores = Jugadores::find()->all();
+    {
 
-    foreach ($jugadores as $jugador) {
-        // Obtener los registros de EstadisticasJugadorPartido para el jugador actual
-        $estadisticasJugadorPartido = EstadisticasJugadorPartido::find()
-            ->where(['id_jugador' => $jugador->id])
-            ->andWhere(['>=', 'minutos', 0])
-            ->all();
+        $jugadores = Jugadores::find()->all();
 
-        // Obtener temporadas únicas de los registros del jugador actual
-        $temporadas = array_unique(array_map(function ($estadistica) {
-            return $estadistica->partido->jornada->temporada->id;
-        }, $estadisticasJugadorPartido));
+        foreach ($jugadores as $jugador) {
+            $estadisticasJugadorPartido = EstadisticasJugadorPartido::find()
+                ->where(['id_jugador' => $jugador->id])
+                ->andWhere(['>=', 'minutos', 0])
+                ->all();
 
-        // Iterar sobre cada temporada
-        foreach ($temporadas as $temporadaId) {
-            // Reiniciar variables para calcular medias y partidos jugados
-            $totalPuntos = 0;
-            $totalRebotes = 0;
-            $totalAsistencias = 0;
-            $partidosJugados = 0;
+            $temporadas = array_unique(array_map(function ($estadistica) {
+                return $estadistica->partido->jornada->temporada->id;
+            }, $estadisticasJugadorPartido));
 
-            // Filtrar registros por temporada actual
-            $estadisticasTemporada = array_filter($estadisticasJugadorPartido, function ($estadistica) use ($temporadaId) {
-                return $estadistica->partido->jornada->temporada->id == $temporadaId;
-            });
+            foreach ($temporadas as $temporadaId) {
+                $totalPuntos = 0;
+                $totalRebotes = 0;
+                $totalAsistencias = 0;
+                $partidosJugados = 0;
 
-            // Calcular las medias y partidos jugados para la temporada actual
-            foreach ($estadisticasTemporada as $estadistica) {
-                $totalPuntos += $estadistica->puntos;
-                $totalRebotes += $estadistica->rebotes;
-                $totalAsistencias += $estadistica->asistencias;
+                $estadisticasTemporada = array_filter($estadisticasJugadorPartido, function ($estadistica) use ($temporadaId) {
+                    return $estadistica->partido->jornada->temporada->id == $temporadaId;
+                });
 
-                // Incrementar contador si minutos > 0
-                if ($estadistica->minutos > 0) {
-                    $partidosJugados++;
+                foreach ($estadisticasTemporada as $estadistica) {
+                    if ($estadistica->minutos > 0) {
+                        $partidosJugados++;
+                        $totalPuntos += $estadistica->puntos;
+                        $totalRebotes += $estadistica->rebotes;
+                        $totalAsistencias += $estadistica->asistencias;
+                    }
                 }
+
+                $mediaPuntos = count($estadisticasTemporada) > 0 ? $totalPuntos / $partidosJugados : 0;
+                $mediaRebotes = count($estadisticasTemporada) > 0 ? $totalRebotes / $partidosJugados : 0;
+                $mediaAsistencias = count($estadisticasTemporada) > 0 ? $totalAsistencias / $partidosJugados : 0;
+
+                $estadisticaJugador = EstadisticasJugador::find()
+                    ->where(['id_jugador' => $jugador->id, 'id_temporada' => $temporadaId])
+                    ->one();
+
+                if ($estadisticaJugador === null) {
+                    $estadisticaJugador = new EstadisticasJugador();
+                    $estadisticaJugador->id_jugador = $jugador->id;
+                    $estadisticaJugador->id_temporada = $temporadaId;
+                }
+
+                $estadisticaJugador->puntos = $mediaPuntos;
+                $estadisticaJugador->rebotes = $mediaRebotes;
+                $estadisticaJugador->asistencias = $mediaAsistencias;
+                $estadisticaJugador->partidos_jugados = $partidosJugados;
+                $estadisticaJugador->save();
             }
-
-            // Calcular las medias para la temporada actual
-            $mediaPuntos = count($estadisticasTemporada) > 0 ? $totalPuntos / count($estadisticasTemporada) : 0;
-            $mediaRebotes = count($estadisticasTemporada) > 0 ? $totalRebotes / count($estadisticasTemporada) : 0;
-            $mediaAsistencias = count($estadisticasTemporada) > 0 ? $totalAsistencias / count($estadisticasTemporada) : 0;
-
-            // Actualizar la entrada en EstadisticasJugador para la temporada actual
-            $estadisticaJugador = EstadisticasJugador::find()
-                ->where(['id_jugador' => $jugador->id, 'id_temporada' => $temporadaId])
-                ->one();
-
-            if ($estadisticaJugador === null) {
-                $estadisticaJugador = new EstadisticasJugador();
-                $estadisticaJugador->id_jugador = $jugador->id;
-                $estadisticaJugador->id_temporada = $temporadaId;
-            }
-
-            // Asignar nuevas medias y partidos jugados
-            $estadisticaJugador->puntos = $mediaPuntos;
-            $estadisticaJugador->rebotes = $mediaRebotes;
-            $estadisticaJugador->asistencias = $mediaAsistencias;
-            $estadisticaJugador->partidos_jugados = $partidosJugados;
-            $estadisticaJugador->save();
         }
+
+        $medias = [
+            'puntos' => $mediaPuntos,
+            'rebotes' => $mediaRebotes,
+            'asistencias' => $mediaAsistencias,
+            'id_estadisticas' => $estadisticaJugador->id,
+        ];
+        var_dump($medias);
+
+        return $this->redirect(['estadisticas-jugador/index']);
     }
-
-    // Mostrar los valores de las medias
-    $medias = [
-        'puntos' => $mediaPuntos,
-        'rebotes' => $mediaRebotes,
-        'asistencias' => $mediaAsistencias,
-        'id_estadisticas' => $estadisticaJugador->id,
-    ];
-    var_dump($medias);
-
-    // Redirigir a la página de estadísticas del jugador
-    return $this->redirect(['estadisticas-jugador/index']);
-}
-
 
     public function actionCrearEstadisticas($idTemporada, $idEquipo)
     {
-        // Obtener la lista de jugadores del equipo para la temporada actual
         $jugadoresEquipo = Jugadores::find()->where(['id_equipo' => $idEquipo])->all();
 
-        // Iterar sobre cada jugador del equipo
         foreach ($jugadoresEquipo as $jugador) {
-            // Verificar si ya existe una entrada para este jugador y esta temporada
             $existingStats = EstadisticasJugador::find()
                 ->where(['id_temporada' => $idTemporada, 'id_jugador' => $jugador->id])
                 ->exists();
 
-            // Si no existe una entrada para este jugador y esta temporada, crear una nueva
             if (!$existingStats) {
                 $estadisticas = new EstadisticasJugador();
                 $estadisticas->id_temporada = $idTemporada;
@@ -204,16 +181,12 @@ class EstadisticasJugadorController extends Controller
                 $estadisticas->rebotes = 0;
                 $estadisticas->asistencias = 0;
 
-                // Guardar las estadísticas
                 if (!$estadisticas->save()) {
                     Yii::error('Error al guardar las estadísticas para el jugador: ' . $jugador->nombre);
-                    // Manejar el error según sea necesario
                 }
             }
         }
 
-        // Redirigir a la vista de la temporada
         return $this->redirect(['equipos/ver-por-temporada', 'id' => $idTemporada]);
     }
-
 }

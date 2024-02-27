@@ -24,53 +24,58 @@ class JugadoresController extends Controller
         $searchModel = new JugadoresSearch();
         $ligaId = Yii::$app->request->get('ligaId');
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $equipoId = null;
+        $esGestor = false;
 
-        // Filtrar jugadores por equipo si el usuario es un gestor de equipos
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 6) {
             $usuarioId = Yii::$app->user->identity->id;
             $equipoId = Equipos::find()->select('id')->where(['gestor_eq' => $usuarioId])->scalar();
-            
-            if ($equipoId !== null) {
+
+            if ($equipoId !== false) {
+                $esGestor = true;
                 $dataProvider->query->andWhere(['id_equipo' => $equipoId]);
             }
+            else
+            {
+                $dataProvider->query->andWhere(['id_equipo' => 0]);
+            }
         }
-        
-        // Agregar condiciones adicionales si se especifica la liga
+
         if (!empty($ligaId) && $ligaId != -1) {
             $dataProvider->query->joinWith('equipo')->andWhere(['equipos.id_liga' => $ligaId]);
         }
 
-        // Filtrar jugadores activos
         if (Yii::$app->user->isGuest || !in_array(Yii::$app->user->identity->id_rol, [1, 2, 6])) {
             $dataProvider->query->andWhere(['activo' => 1]);
         }
 
         $dataProvider->pagination->pageSize = 12;
-    
+
         $ligas = Ligas::find()->all();
 
-        // Renderiza la vista y pasa los datos necesarios
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'ligas' => $ligas,
             'ligaId' => $ligaId,
             'searchModel' => $searchModel,
+            'equipoId' => $equipoId,
+            'esGestor' => $esGestor,
         ]);
-    }     
+    }
 
     public function actionCreate()
     {
         $model = new Jugadores();
         $imagenModel = new Imagenes();
-        $esGestorEquipo = false; // Define la variable $esGestorEquipo
-        $equipoId = null; // Define la variable $equipoId
+        $esGestor = false;
+        $equipoId = null;
 
         if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 6) {
             $usuarioId = Yii::$app->user->identity->id;
             $equipoId = Equipos::find()->select('id')->where(['gestor_eq' => $usuarioId])->scalar();
 
             if ($equipoId !== null) {
-                $esGestorEquipo = true;
+                $esGestor = true;
             }
         }
 
@@ -83,15 +88,13 @@ class JugadoresController extends Controller
             } elseif ($imagenModel->validate() && $imagenModel->saveImagen()) {
                 $model->id_imagen = $imagenModel->id;
 
-                // Obtenemos el ID de la temporada más reciente para la liga del jugador
                 $temporadaReciente = Temporadas::find()
                     ->joinWith('liga')
-                    ->where(['ligas.id' => $model->equipo->id_liga]) // Suponiendo que tienes una relación 'liga' en el modelo Temporadas
-                    ->orderBy(['SUBSTRING_INDEX(texto_de_titulo, " ", -1)' => SORT_DESC]) // Ordenar por las dos últimas cifras del texto_de_titulo
+                    ->where(['ligas.id' => $model->equipo->id_liga])
+                    ->orderBy(['SUBSTRING_INDEX(texto_de_titulo, " ", -1)' => SORT_DESC])
                     ->one();
 
                 if ($model->save()) {
-                    // Crear una nueva instancia de EstadisticasJugador y guardarla
                     $estadisticasJugador = new EstadisticasJugador();
                     if ($temporadaReciente) {
                         $estadisticasJugador->id_temporada = $temporadaReciente->id;
@@ -125,18 +128,16 @@ class JugadoresController extends Controller
         return $this->render('create', [
             'model' => $model,
             'imagenModel' => $imagenModel,
-            'esGestorEquipo' => $esGestorEquipo, // Pasa la variable al formulario
-            'equipoId' => $equipoId, // Pasa la variable al formulario
+            'esGestor' => $esGestor,
+            'equipoId' => $equipoId,
         ]);
     }
 
-    
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
         $imagenModel = ($model->imagen) ? $model->imagen : new Imagenes();
     
-        // Verifica si el usuario es el gestor del equipo
         $esGestorEquipo = !Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 6;
         $equipoId = null;
     
@@ -145,14 +146,12 @@ class JugadoresController extends Controller
             $equipoId = Equipos::find()->select('id')->where(['gestor_eq' => $usuarioId])->scalar();
         }
     
-        // Si es una solicitud POST, intenta actualizar el modelo y la imagen
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
     
             if ($imagenModel->validate() && $imagenModel->saveImagen()) {
                 $model->id_imagen = $imagenModel->id;
-                // Si el usuario es gestor, establece el equipo del jugador como el equipo del gestor
                 if ($esGestorEquipo) {
                     $model->id_equipo = $equipoId;
                 }
@@ -170,12 +169,11 @@ class JugadoresController extends Controller
         return $this->render('update', [
             'model' => $model,
             'imagenModel' => $imagenModel,
-            'esGestorEquipo' => $esGestorEquipo, // Asegúrate de pasar la variable a la vista
+            'esGestorEquipo' => $esGestorEquipo,
             'equipoId' => $equipoId,
         ]);
     }
     
-
     public function actionView($id)
     {
         $model = $this->findModel($id);
@@ -192,18 +190,14 @@ class JugadoresController extends Controller
     {
         $jugador = $this->findModel($id);
         
-        // Eliminar las estadísticas de jugador asociadas al jugador
         EstadisticasJugador::deleteAll(['id_jugador' => $id]);
         
-        // Eliminar las estadísticas de jugador partido asociadas al jugador
         EstadisticasJugadorPartido::deleteAll(['id_jugador' => $id]);
         
-        // Eliminar al jugador
         $jugador->delete();
     
         return $this->redirect(['index']);
     }
-    
     
     protected function findModel($id)
     {
@@ -226,5 +220,4 @@ class JugadoresController extends Controller
             'equipo' => $equipo,
         ]);
     } 
-
 }

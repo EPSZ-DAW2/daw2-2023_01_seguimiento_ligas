@@ -9,8 +9,13 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<div class="marco">
+<?php 
+    if (Yii::$app->user->isGuest || (Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2)){ 
+        echo "El acceso a está página esta restringido";
+    }else{
+?>
 
+<div class="marco">
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'id_temporada', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
@@ -34,7 +39,10 @@ use yii\widgets\ActiveForm;
     <?= Html::submitButton('Guardar', ['class' => 'botonFormulario']) ?>
     <?= Html::a(Yii::t('app', 'Tabla de estadisticas'), ['estadisticas-jugador/index'], ['class' => 'botonFormulario']) ?>
 
-
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php 
+}
+?>
+

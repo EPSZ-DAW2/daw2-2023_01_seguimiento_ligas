@@ -8,7 +8,7 @@ use app\models\Jugadores;
 
 class JugadoresSearch extends Jugadores
 {
-    public $nombre_equipo; // Variable para almacenar el nombre del equipo
+    public $nombre_equipo;
 
     public function rules()
     {
@@ -25,7 +25,7 @@ class JugadoresSearch extends Jugadores
     
     public function search($params)
     {
-        $query = Jugadores::find()->joinWith('equipo'); // Usa joinWith para acceder a la relación
+        $query = Jugadores::find()->joinWith('equipo');
     
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -50,9 +50,8 @@ class JugadoresSearch extends Jugadores
             ->andFilterWhere(['like', 'jugadores.peso', $this->peso])
             ->andFilterWhere(['like', 'jugadores.nacionalidad', $this->nacionalidad])
             ->andFilterWhere(['like', 'jugadores.video', $this->video])
-            ->andFilterWhere(['like', 'equipos.nombre', $this->nombre_equipo]); // Filtra por el nombre del equipo
+            ->andFilterWhere(['like', 'equipos.nombre', $this->nombre_equipo]);
     
         return $dataProvider;
-    }
-    
+    } 
 }

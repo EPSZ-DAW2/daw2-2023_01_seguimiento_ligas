@@ -16,6 +16,11 @@ use yii\widgets\ActiveForm;
 <div id="contenedor-principal">
 
     <div class="marco">
+    <?php 
+    if (Yii::$app->user->isGuest || (Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2)){ 
+        echo "El acceso a está página esta restringido";
+    }else{
+    ?>
 
         <?php $form = ActiveForm::begin(); ?>
 
@@ -44,4 +49,6 @@ use yii\widgets\ActiveForm;
     </div>
 </div>
 
-
+<?php     
+}
+?>

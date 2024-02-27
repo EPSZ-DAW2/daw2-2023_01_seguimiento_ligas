@@ -20,8 +20,8 @@ $this->title = 'Modificar Jugadores: ' . $model->nombre;
         <?= $this->render('_form', [
             'model' => $model,
             'imagenModel' => $imagenModel,
-            'esGestorEquipo' => $esGestorEquipo, // Pasa la variable al formulario
-            'equipoId' => $equipoId, // Pasa la variable al formulario
+            'esGestorEquipo' => $esGestorEquipo,
+            'equipoId' => $equipoId,
         ]) ?>
     </div>
 </div>
