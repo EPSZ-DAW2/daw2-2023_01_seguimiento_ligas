@@ -52,7 +52,11 @@ use yii\helpers\ArrayHelper;
 
         <p>    
         <?= Html::submitButton('Añadir Jornada', ['class' => 'botonFormulario']) ?>
-        <?= Html::a('Atras', Yii::$app->request->referrer ?: Yii::$app->homeUrl, ['class' => 'botonFormulario']) ?>
+        <?= Html::a(Yii::t('app', 'Atras'), ['partidos/index', 'jornadaID' => $jornadaID], ['class' => 'botonFormulario']) ?>
+
+
+
+
         </p>
         <?php ActiveForm::end(); ?>
     </div>

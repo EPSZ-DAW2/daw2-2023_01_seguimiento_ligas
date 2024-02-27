@@ -341,6 +341,13 @@ class EquiposController extends Controller
         $equipo->id_temporada = $idTemporada;
         $equipo->save();
 
+        // Crear un nuevo registro de estadísticas para el equipo en la nueva temporada
+        $nuevasEstadisticas = new EstadisticasEquipo();
+        $nuevasEstadisticas->id_equipo = $idEq;
+        $nuevasEstadisticas->id_temporada = $idTemporada;
+        $nuevasEstadisticas->save();
+
+
         return $this->redirect(['index']);
     }
 

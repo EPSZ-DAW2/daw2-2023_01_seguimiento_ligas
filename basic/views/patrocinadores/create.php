@@ -26,9 +26,6 @@ $this->title = 'Crear Patrocinador';
         'enableClientValidation' => true,
     ]); ?>
 
-    <br>
-
-    <br>
     <?= $form->field($model, 'nombre', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'placeholder' => 'Ingrese el nombre del patrocinador', 'class' => 'campo']) ?>
     <br>
     <?= $form->field($model, 'descripcion', ['options' => ['class' => 'campoTitulo']])->textarea(['rows' => 6, 'placeholder' => 'Ingrese el nombre de la liga', 'class' => 'campo']) ?>

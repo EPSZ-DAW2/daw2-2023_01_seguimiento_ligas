@@ -26,6 +26,7 @@ use app\models\EstadisticasJugador;
             <td><?= $estadisticas->partidos_jugados ?></td>
             <td><?= $estadisticas->victorias ?></td>
             <td><?= $estadisticas->derrotas ?></td>
+            <td><?= $estadisticas->empates ?></td>
         </tr>
     </table>
     <?php else: ?>

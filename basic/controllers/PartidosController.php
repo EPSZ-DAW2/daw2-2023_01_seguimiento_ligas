@@ -95,6 +95,17 @@ class PartidosController extends \yii\web\Controller
 
             $model->load(Yii::$app->request->post());
   
+            if($model->id_equipo_local == $model->id_equipo_visitante)
+            {
+                print_r($model->errors);
+                // Muestra los errores de validación del modelo Equipos
+                Yii::$app->session->setFlash('error', 'Los equipos son iguales.');
+
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+
             if ($model->save()) {
                 return $this->redirect(['partidos/index']);
             } else {
@@ -130,8 +141,22 @@ class PartidosController extends \yii\web\Controller
             $liga = [$jornada->temporada->liga->id => $jornada->temporada->liga->nombre];
 
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['partidos/index', 'jornadaID' => $jornadaID]);
+            if ($model->load(Yii::$app->request->post()))
+            {
+                if($model->id_equipo_local == $model->id_equipo_visitante)
+                {
+                    print_r($model->errors);
+                    // Muestra los errores de validación del modelo Equipos
+                    Yii::$app->session->setFlash('error', 'Los equipos son iguales.');
+    
+                    return $this->render('create-en-jornada', [
+                        'model' => $model,
+                    ]);
+                }
+            
+                if($model->save()) {
+                    return $this->redirect(['partidos/index', 'jornadaID' => $jornadaID]);
+                }
             }
 
             return $this->render('create-en-jornada', [
