@@ -48,7 +48,7 @@ $this->title = $model->id_jugador; // Usar el contenido de id_jugador como títu
         ],
     ]) ?>
 
-<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 6)) { ?>
+<?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->id == $equipo->gestor_eq)) { ?>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'botonFormulario']) ?>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'botonFormulario',

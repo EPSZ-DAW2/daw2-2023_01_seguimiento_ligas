@@ -25,7 +25,7 @@ use yii\db\Expression;
         </div>
         <div class="liga-image" style="background-image: url('<?= Yii::getAlias('@web/images/' . $equipo->imagen->foto) ?>');"></div>
         <br>
-        <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 6)): ?>
+        <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->id == $equipo->gestor_eq)): ?>
                 <?= Html::a('Ver Detalles', ['equipos/view', 'id' => $equipo->id], ['class' => 'botonFormulario']) ?>
                 <br><br>
                 <?= Html::a('Ingresar en nueva temporada', ['cambio-temporada', 'idTemporada' => $equipo->id_temporada, 'idEq' => $equipo->id], ['class' => 'botonFormulario']) ?>
@@ -34,7 +34,7 @@ use yii\db\Expression;
 <?php endforeach; ?>
 
     <div style="text-align: center; margin-top: 5%;">
-        <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2 || Yii::$app->user->identity->id_rol == 6)): ?>
+        <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 1 || Yii::$app->user->identity->id_rol == 2)): ?>
             <?= Html::a('Crear Equipo en Temporada', ['equipos/create-en-temporada', 'temporadaID' => $temporada->id], ['class' => 'botonFormulario']) ?>
         <?php endif ?>
     </div>
