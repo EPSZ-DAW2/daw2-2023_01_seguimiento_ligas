@@ -7,6 +7,7 @@ use Yii;
 use app\models\Jugadores;
 use app\models\JugadoresSearch;
 use app\models\EstadisticasJugador;
+use app\models\EstadisticasJugadorPartido;
 use app\models\Imagenes;
 use app\models\Equipos;
 use app\models\Temporadas;
@@ -61,6 +62,17 @@ class JugadoresController extends Controller
     {
         $model = new Jugadores();
         $imagenModel = new Imagenes();
+        $esGestorEquipo = false; // Define la variable $esGestorEquipo
+        $equipoId = null; // Define la variable $equipoId
+
+        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 6) {
+            $usuarioId = Yii::$app->user->identity->id;
+            $equipoId = Equipos::find()->select('id')->where(['gestor_eq' => $usuarioId])->scalar();
+
+            if ($equipoId !== null) {
+                $esGestorEquipo = true;
+            }
+        }
 
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
@@ -113,6 +125,8 @@ class JugadoresController extends Controller
         return $this->render('create', [
             'model' => $model,
             'imagenModel' => $imagenModel,
+            'esGestorEquipo' => $esGestorEquipo, // Pasa la variable al formulario
+            'equipoId' => $equipoId, // Pasa la variable al formulario
         ]);
     }
 
@@ -122,12 +136,26 @@ class JugadoresController extends Controller
         $model = $this->findModel($id);
         $imagenModel = ($model->imagen) ? $model->imagen : new Imagenes();
     
+        // Verifica si el usuario es el gestor del equipo
+        $esGestorEquipo = !Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 6;
+        $equipoId = null;
+    
+        if ($esGestorEquipo) {
+            $usuarioId = Yii::$app->user->identity->id;
+            $equipoId = Equipos::find()->select('id')->where(['gestor_eq' => $usuarioId])->scalar();
+        }
+    
+        // Si es una solicitud POST, intenta actualizar el modelo y la imagen
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $imagenModel->imagenFile = UploadedFile::getInstance($imagenModel, 'imagenFile');
     
             if ($imagenModel->validate() && $imagenModel->saveImagen()) {
                 $model->id_imagen = $imagenModel->id;
+                // Si el usuario es gestor, establece el equipo del jugador como el equipo del gestor
+                if ($esGestorEquipo) {
+                    $model->id_equipo = $equipoId;
+                }
     
                 if ($model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -142,8 +170,11 @@ class JugadoresController extends Controller
         return $this->render('update', [
             'model' => $model,
             'imagenModel' => $imagenModel,
+            'esGestorEquipo' => $esGestorEquipo, // Asegúrate de pasar la variable a la vista
+            'equipoId' => $equipoId,
         ]);
     }
+    
 
     public function actionView($id)
     {

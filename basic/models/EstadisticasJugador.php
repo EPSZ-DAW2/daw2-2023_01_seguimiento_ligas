@@ -12,9 +12,9 @@ use Yii;
  * @property int $id_equipo
  * @property int $id_jugador
  * @property int|null $partidos_jugados
- * @property int|null $puntos
- * @property int|null $rebotes
- * @property int|null $asistencias
+ * @property float|null $puntos
+ * @property float|null $rebotes
+ * @property float|null $asistencias
  *
  * @property Equipos $equipo
  * @property Jugadores $jugador
@@ -37,7 +37,8 @@ class EstadisticasJugador extends \yii\db\ActiveRecord
     {
         return [
             [['id_temporada', 'id_equipo', 'id_jugador'], 'required'],
-            [['id_temporada', 'id_equipo', 'id_jugador', 'partidos_jugados', 'puntos', 'rebotes', 'asistencias'], 'integer'],
+            [['id_temporada', 'id_equipo', 'id_jugador', 'partidos_jugados'], 'integer'],
+            [['puntos', 'rebotes', 'asistencias'], 'number'],
             [['id_equipo'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo' => 'id']],
             [['id_jugador'], 'exist', 'skipOnError' => true, 'targetClass' => Jugadores::class, 'targetAttribute' => ['id_jugador' => 'id']],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],

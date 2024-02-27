@@ -1,5 +1,6 @@
 <?php
 use app\models\Usuarios;
+use app\models\Equipos;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
@@ -125,6 +126,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             echo Html::endForm();
             ?>
             <br>
+
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
@@ -160,7 +162,13 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     [
                         'attribute' => 'equipo.nombre',
                         'label' => 'Equipo',
-                    ],
+                        'value' => function ($model) {
+                            return $model->equipo->nombre; // Accede al nombre del equipo a través de la relación
+                        },
+                        'filter' => Html::textInput('JugadoresSearch[nombre_equipo]', isset(Yii::$app->request->get('JugadoresSearch')['nombre_equipo']) ? Yii::$app->request->get('JugadoresSearch')['nombre_equipo'] : null, ['class' => 'form-control']),
+                        'filterInputOptions' => ['placeholder' => 'Buscar por nombre de equipo'],
+                        'filterOptions' => ['class' => 'col-md-6'],
+                    ], 
                     'video',
                     [
                         'attribute' => 'activo',

@@ -25,6 +25,8 @@ $this->title = 'Crear Jugadores';
         <?= $this->render('_form', [
             'model' => $model,
             'imagenModel' => $imagenModel,
+            'esGestorEquipo' => $esGestorEquipo, // Pasa la variable al formulario
+            'equipoId' => $equipoId, // Pasa la variable al formulario
         ]) ?>
 
     </div>

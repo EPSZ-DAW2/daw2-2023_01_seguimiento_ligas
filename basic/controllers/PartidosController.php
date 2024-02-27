@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\EstadisticasJugadorPartido;
 use app\models\PartidosJornada;
 use app\models\JornadasTemporada;
 use app\models\Jugadores;
@@ -34,44 +35,42 @@ class PartidosController extends \yii\web\Controller
         ]);
     }
 
+    // Action in PartidosController.php
     public function actionView($id, $partidoID = null)
     {
         $model = $this->findModel($id);
-         // Filtrar comentarios si se proporciona el partidoID
-         $query = Comentarios::find();
-         if ($partidoID !== null) {
-             $query->where(['id_partido' => $partidoID]);
-         }
- 
-         $comentarios = $query->all();
+        // Filtrar comentarios si se proporciona el partidoID
+        $query = Comentarios::find();
+        if ($partidoID !== null) {
+            $query->where(['id_partido' => $partidoID]);
+        }
+
+        $comentarios = $query->all();
 
         // Verificar si el equipo existe
         if ($model === null) {
             throw new NotFoundHttpException('El partido no fue encontrado.');
         }
-    
+
         // Obtener las estadísticas de los jugadores del equipo local y visitante
         $dataProviderLocal = new ActiveDataProvider([
-            'query' => $model->equipoLocal->getEstadisticasJugadorPartido(),
+            'query' => EstadisticasJugadorPartido::find()->where(['id_partido' => $id, 'id_equipo' => $model->equipoLocal->id]),
         ]);
-        
+
         $dataProviderVisitante = new ActiveDataProvider([
-            'query' => $model->equipoVisitante->getEstadisticasJugadorPartido(),
-        ]);        
-        
-        /*$post=$this->loadModel();
-        $comentarios=$this->actionAgregarComentario($partidoID,$post);*/
+            'query' => EstadisticasJugadorPartido::find()->where(['id_partido' => $id, 'id_equipo' => $model->equipoVisitante->id]),
+        ]);
 
         // Renderizar la vista de detalles del partido
         return $this->render('view', [
             'model' => $model,
             'comentarios' => $comentarios,
             'dataProviderLocal' => $dataProviderLocal,
-            'dataProviderVisitante' => $dataProviderVisitante, 
+            'dataProviderVisitante' => $dataProviderVisitante,
+            'partidoID' => $id, // Pasar el ID del partido a la vista
         ]);
     }
-    
-    
+ 
     protected function findModel($id)
     {
         if (($model = PartidosJornada::findOne($id)) !== null) {

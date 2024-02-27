@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\EstadisticasJugadorPartido;
+use app\models\Equipos;
 use app\models\EstadisticasJugadorPartidoSearch;
 use app\models\PartidosJornada;
 use app\models\Jugadores;
