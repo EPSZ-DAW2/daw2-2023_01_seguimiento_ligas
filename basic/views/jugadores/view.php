@@ -61,6 +61,11 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         ],
     ]) ?>
 
+    <p class="PaginaDeInicio">Videos con sus mejores jugadas</p>
+    <iframe width="560" height="315" src="<?= Html::encode($model->video) ?>"
+        title="YouTube video player" frameborder="0"
+        allowfullscreen></iframe>
+    <br><br>
     <p>
         <?= Html::a('Ver Estadísticas', ['estadisticas-jugador/view', 'id' => $model->estadisticasJugador ? $model->estadisticasJugador->id : null], ['class' => 'botonFormulario']) ?>
         <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>
