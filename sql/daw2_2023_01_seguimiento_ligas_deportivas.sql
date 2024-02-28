@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `daw2_2023_01_seguimiento_ligas_deportivas`
 --
+
+DROP DATABASE IF EXISTS `daw2_2023_01_seguimiento_ligas_deportivas`;
+
 CREATE DATABASE IF NOT EXISTS `daw2_2023_01_seguimiento_ligas_deportivas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `daw2_2023_01_seguimiento_ligas_deportivas`;
 
