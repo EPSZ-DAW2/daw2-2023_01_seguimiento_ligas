@@ -522,3 +522,15 @@ ul {
 .enlace-lista a:hover {
     color: red;
 }
+
+.jugador-container {
+    display: inline-block;
+
+    margin: 2%; /* Espacio entre cada jugador */
+    vertical-align: top; /* Alinea los elementos en la parte superior */
+}
+
+.boton-container {
+    text-align: center; /* Centra el botón */
+    margin-top: 0.1%; /* Ajusta el margen superior según sea necesario */
+}

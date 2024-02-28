@@ -60,22 +60,28 @@ use app\models\EstadisticasJugador;
     <div class="liga-container3">
     <h2>Jugadores Destacados:</h2>
     <?php foreach ($jugadoresDestacados as $jugador): ?>
-        <h3><?= $jugador->nombre; ?></h3>
-        <?php
-        // Obtener las estadísticas del jugador
-        $estadisticas = EstadisticasJugador::findOne(['id_jugador' => $jugador->id]);
+        <div class="jugador-container">
+            <h3><?= $jugador->nombre; ?></h3>
+            <?php
+            // Obtener las estadísticas del jugador
+            $estadisticas = EstadisticasJugador::findOne(['id_jugador' => $jugador->id]);
 
-        if ($estadisticas !== null) {
-            echo "<p>Puntos: {$estadisticas->puntos}</p>";
-            echo "<p>Rebotes: {$estadisticas->rebotes}</p>";
-            echo "<p>Asistencias: {$estadisticas->asistencias}</p>";
-        } else {
-            echo "<p>No hay estadísticas disponibles para este jugador.</p>";
-        }
-        ?>
+            if ($estadisticas !== null) {
+                echo "<p>Puntos: {$estadisticas->puntos}</p>";
+                echo "<p>Rebotes: {$estadisticas->rebotes}</p>";
+                echo "<p>Asistencias: {$estadisticas->asistencias}</p>";
+            } else {
+                echo "<p>No hay estadísticas disponibles para este jugador.</p>";
+            }
+            ?>
+        </div>
     <?php endforeach; ?>
 
-    <?= Html::a('Ver todos', ['jugadores/ver-por-equipo', 'id'=>$equipo->id], ['class' => 'botonFormulario']) ?>
+    <div class="boton-container">
+        <?= Html::a('Ver todos', ['jugadores/ver-por-equipo', 'id'=>$equipo->id], ['class' => 'botonFormulario']) ?>
+    </div>
 </div>
+
+
 
 </div>

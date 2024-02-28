@@ -45,6 +45,7 @@ $this->title = 'Crear Liga';
             
         ) ?>
 
+        <br>
         <?= Html::submitButton('Añadir Liga', ['class' => 'botonFormulario']) ?>
         <?= Html::a(Yii::t('app', 'Tabla de Ligas'), ['ligas/index'], ['class' => 'botonFormulario']) ?>
 

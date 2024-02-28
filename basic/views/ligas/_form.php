@@ -48,6 +48,7 @@ $url = Url::to(['ligas/view', 'id' => $ligaId]);
             
         ) ?>
 
+    <br>
     <?= Html::submitButton('Modificar', ['class' => 'botonFormulario']) ?>
     <?= Html::a(Yii::t('app', 'Datos del equipo'), $url, ['class' => 'botonFormulario']) ?>
     <?= Html::a(Yii::t('app', 'Tabla de ligas'), ['ligas/index'], ['class' => 'botonFormulario']) ?>
