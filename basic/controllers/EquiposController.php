@@ -351,6 +351,45 @@ class EquiposController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionVistaTemporada($id, $temp)
+    {
+        $this->view->title = 'ArosInsider - Equipos';
+
+        $equipo = Equipos::findOne($id);
+
+        $estadisticas = EstadisticasEquipo::find()->
+        where(['id_equipo' => $id])
+        ->andWhere(['id_temporada' => $temp])
+        ->one();
+
+        // Obtener últimos resultados
+        $ultimosResultados = PartidosJornada::find()
+        ->where(['<', 'horario', new Expression('NOW()')])
+        ->andWhere(['or',
+            ['id_equipo_local' => $id],
+            ['id_equipo_visitante' => $id],
+        ])
+        ->orderBy(['horario' => SORT_DESC])
+        ->limit(5)
+        ->all();
+
+        // Obtener los jugadores del equipo que tengan más puntos en las estadísticas de jugador
+        $jugadoresDestacados = Jugadores::find()
+        ->leftJoin('estadisticas_jugador', 'jugadores.id = estadisticas_jugador.id_jugador')
+        ->where(['estadisticas_jugador.id_equipo' => $id]) // Filtrar por el ID del equipo
+        ->orderBy(['estadisticas_jugador.puntos' => SORT_DESC])
+        ->limit(5)
+        ->all();
+
+        return $this->render('vista-temporada', [
+            'equipo' => $equipo,
+            'ultimosResultados' => $ultimosResultados,
+            'jugadoresDestacados' => $jugadoresDestacados,
+            'estadisticas' => $estadisticas,
+        ]);
+    
+    }
+
     public function actionVista($id)
     {
         $this->view->title = 'ArosInsider - Equipos';
@@ -418,6 +457,5 @@ class EquiposController extends Controller
             'estadisticas' => $estadisticas,
         ]);
 
-    }
-    
+    }  
 }

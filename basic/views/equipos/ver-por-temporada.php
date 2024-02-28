@@ -19,7 +19,7 @@ use yii\db\Expression;
 <?php foreach ($equipos as $equipo): ?>
     <div class="marco2">
         <div class="liga-content">
-            <h2><?= Html::a($equipo->nombre, ['vista', 'id' => $equipo->id], ['class' => 'enlace-equipo']) ?></h2>
+            <h2><?= Html::a($equipo->nombre, ['vista-temporada', 'id' => $equipo->id, 'temp' => $equipo->id_temporada], ['class' => 'enlace-equipo']) ?></h2>
             <p><?= $equipo->descripcion ?></p>
             <p><?= $equipo->temporada->texto_de_titulo ?></p>
         </div>

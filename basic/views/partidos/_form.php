@@ -21,11 +21,19 @@ use yii\widgets\ActiveForm;
 
     // Si la fecha del partido ha pasado
     if ($fechaActual > $fechaPartido) {
+        if($model->resultado_local != null || $model->resultado_visitante != null)
+        {
+            echo "Los resultados ya se han introducido: <br>";
+            echo $model->resultado_local . "-" . $model->resultado_visitante;
+        }
+        else
+        {
     ?>
         <?= $form->field($model, 'resultado_local', ['options' => ['class' => 'campoTitulo']])->textInput(['type' => 'number', 'options' => ['step' => '1'], 'class' => 'campo']) ?>
         <br>
         <?=  $form->field($model, 'resultado_visitante', ['options' => ['class' => 'campoTitulo']])->textInput(['type' => 'number', 'options' => ['step' => '1'], 'class' => 'campo']) ?>
 <?php
+        }
     } else {
             echo "Partido no jugado";
             ?>

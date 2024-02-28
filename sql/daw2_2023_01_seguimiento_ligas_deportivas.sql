@@ -362,6 +362,7 @@ CREATE TABLE `partidos_jornada` (
 
 INSERT INTO `partidos_jornada` (`id`, `id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`, `resultado_local`, `resultado_visitante`) VALUES
 (000001, 000006, 000005, 000006, '2023-09-23 18:30:00', 'WiZink Center Madrid', 83, 76),
+(000005, 000006, 000006, 000005, '2023-09-23 20:00:00', 'Un estadio', NULL, NULL),
 (000002, 000001, 000003, 000002, '2024-09-25 20:00:00', 'United Center, Chicago, Illniois', NULL, NULL),
 (000003, 000001, 000001, 000004, '2024-09-26 17:30:00', 'Crypto.com Arena, Los Ángeles, California', NULL, NULL),
 (000004, 000005, 000001, 000003, '2024-05-02 16:40:00', 'Aqui', NULL, NULL);

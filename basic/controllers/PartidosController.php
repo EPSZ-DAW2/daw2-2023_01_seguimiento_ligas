@@ -9,6 +9,7 @@ use app\models\JornadasTemporada;
 use app\models\Jugadores;
 use app\models\JugadoresSearch;
 use app\models\Equipos;
+use app\models\EstadisticasEquipo;
 use app\models\Temporadas;
 use app\models\Comentarios;
 use app\models\Ligas;
@@ -192,6 +193,48 @@ class PartidosController extends \yii\web\Controller
         if (Yii::$app->request->isPost) {
             // Cargar los datos del formulario en el modelo de partido
             if ($partido->load(Yii::$app->request->post()) && $partido->save()) {
+                // Determinar el equipo ganador y perdedor
+            if ($partido->resultado_local > $partido->resultado_visitante) {
+                $equipoGanadorId = $partido->id_equipo_local;
+                $equipoPerdedorId = $partido->id_equipo_visitante;
+            } elseif ($partido->resultado_local < $partido->resultado_visitante) {
+                $equipoGanadorId = $partido->id_equipo_visitante;
+                $equipoPerdedorId = $partido->id_equipo_local;
+            } else {
+                $equipoGanadorId = null;
+                $equipoPerdedorId = null;
+            }
+
+            // Actualizar el contador de victorias, derrotas y empates de los equipos
+            if ($equipoGanadorId !== null && $equipoPerdedorId !== null) {
+                $equipoGanador = EstadisticasEquipo::findOne(['id_equipo' => $equipoGanadorId]);
+                $equipoPerdedor = EstadisticasEquipo::findOne(['id_equipo' => $equipoPerdedorId]);
+
+                if ($equipoGanador !== null && $equipoPerdedor !== null) {   
+                    $equipoGanador->partidos_jugados += 1;
+                    $equipoPerdedor->partidos_jugados += 1;
+                    $equipoGanador->victorias += 1;
+                    $equipoPerdedor->derrotas += 1;
+
+                    // Guardar los cambios en los modelos de equipos
+                    $equipoGanador->save();
+                    $equipoPerdedor->save();
+                }
+            } else if ($equipoGanadorId === null && $equipoPerdedorId === null) {
+                $equipoLocal = EstadisticasEquipo::findOne(['id_equipo' => $partido->id_equipo_local]);
+                $equipoVisitante = EstadisticasEquipo::findOne(['id_equipo' => $partido->id_equipo_visitante]);
+
+                if ($equipoLocal !== null && $equipoVisitante !== null) {
+                    $equipoLocal->partidos_jugados += 1;
+                    $equipoVisitante->partidos_jugados += 1;
+                    $equipoLocal->empates += 1;
+                    $equipoVisitante->empates += 1;
+
+                    $equipoLocal->save();
+                    $equipoVisitante->save();
+                }
+            }
+
                 // Redirigir a la vista de detalles después de la actualización exitosa
                 return $this->redirect(['view', 'id' => $partido->id]);
             }
