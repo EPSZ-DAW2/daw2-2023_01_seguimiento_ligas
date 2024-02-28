@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-01-2024 a las 12:02:11
+-- Tiempo de generación: 28-02-2024 a las 15:35:38
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -16,10 +16,9 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-DROP DATABASE IF EXISTS `daw2_2023_01_seguimiento_ligas_deportivas`;
 
 --
--- Base de datos: `ligabasket`
+-- Base de datos: `daw2_2023_01_seguimiento_ligas_deportivas`
 --
 CREATE DATABASE IF NOT EXISTS `daw2_2023_01_seguimiento_ligas_deportivas` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `daw2_2023_01_seguimiento_ligas_deportivas`;
@@ -71,9 +70,21 @@ CREATE TABLE `equipos` (
   `descripcion` varchar(200) NOT NULL COMMENT 'Descripción general del equipo',
   `id_escudo` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen del escudo',
   `n_jugadores` int(2) NOT NULL COMMENT 'Número de jugadores que componen el equipo',
-  `gestor_eq` int(6) UNSIGNED ZEROFILL NULL COMMENT 'Gestor único del equipo',
+  `gestor_eq` int(6) UNSIGNED ZEROFILL DEFAULT NULL COMMENT 'Gestor único del equipo',
   `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `equipos`
+--
+
+INSERT INTO `equipos` (`id`, `id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`, `gestor_eq`, `video`) VALUES
+(000001, 000002, 000006, 'Los Angeles Lakers', 'Equipo de División Pacífico de la Conferencia Oeste', 000004, 15, 000006, NULL),
+(000002, 000001, 000002, 'New York Knicks', 'Equipo de División Atlántico de la Conferencia Este', 000007, 15, NULL, NULL),
+(000003, 000001, 000002, 'Chicago Bulls', 'Equipo de División Central de la Conferencia Este', 000009, 15, NULL, NULL),
+(000004, 000001, 000002, 'Atlanta Hawks', 'Equipo de División Sureste de la Conferencia Este', 000008, 15, NULL, NULL),
+(000005, 000002, 000006, 'Real Madrid Baloncesto', 'Equipo de 1931 apodado los Blancos', 000005, 14, NULL, NULL),
+(000006, 000002, 000006, 'Fundación CB Granada', 'Fundado en 2012 con presente y mucho futuro', 000006, 11, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -102,6 +113,19 @@ CREATE TABLE `estadisticas_equipo` (
   `empates` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `estadisticas_equipo`
+--
+
+INSERT INTO `estadisticas_equipo` (`id`, `id_temporada`, `id_equipo`, `partidos_jugados`, `victorias`, `derrotas`, `empates`) VALUES
+(000001, 000006, 000005, 15, 10, 5, NULL),
+(000002, 000006, 000001, 12, 9, 3, NULL),
+(000003, 000007, 000005, 30, 23, 7, NULL),
+(000004, 000007, 000004, 30, 22, 8, NULL),
+(000005, 000007, 000006, 30, 18, 12, NULL),
+(000006, 000001, 000003, NULL, NULL, NULL, NULL),
+(000007, 000005, 000001, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -114,11 +138,25 @@ CREATE TABLE `estadisticas_jugador` (
   `id_equipo` int(6) UNSIGNED ZEROFILL NOT NULL,
   `id_jugador` int(6) UNSIGNED ZEROFILL NOT NULL,
   `partidos_jugados` int(6) DEFAULT NULL,
-  `puntos` float(6) DEFAULT NULL,
-  `rebotes` float(6) DEFAULT NULL,
-  `asistencias` float(6) DEFAULT NULL,
-  `activo` tinyint DEFAULT 1
+  `puntos` float DEFAULT NULL,
+  `rebotes` float DEFAULT NULL,
+  `asistencias` float DEFAULT NULL,
+  `activo` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `estadisticas_jugador`
+--
+
+INSERT INTO `estadisticas_jugador` (`id`, `id_temporada`, `id_equipo`, `id_jugador`, `partidos_jugados`, `puntos`, `rebotes`, `asistencias`, `activo`) VALUES
+(000006, 000002, 000001, 000006, 1, 12, 5, 7, 1),
+(000007, 000002, 000001, 000007, 2, 5, 8.5, 1, 1),
+(000009, 000001, 000002, 000009, 0, 0, 0, 0, 1),
+(000010, 000002, 000004, 000010, 1, 3, 5, 7, 1),
+(000011, 000001, 000004, 000011, 0, 0, 0, 0, 1),
+(000012, 000005, 000005, 000012, 0, 0, 0, 0, 1),
+(000013, 000005, 000005, 000013, 0, 0, 0, 0, 1),
+(000014, 000005, 000006, 000014, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -137,6 +175,16 @@ CREATE TABLE `estadisticas_jugador_partido` (
   `minutos` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `estadisticas_jugador_partido`
+--
+
+INSERT INTO `estadisticas_jugador_partido` (`id`, `id_jugador`, `id_partido`, `id_equipo`, `puntos`, `rebotes`, `asistencias`, `minutos`) VALUES
+(000001, 000007, 000003, 000001, 11, 10, 2, 5),
+(000002, 000010, 000003, 000004, 3, 5, 7, 12),
+(000003, 000007, 000004, 000001, 0, 7, 0, 1),
+(000005, 000006, 000004, 000001, 12, 5, 7, 23);
+
 -- --------------------------------------------------------
 
 --
@@ -147,6 +195,35 @@ CREATE TABLE `imagenes` (
   `id` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Identificador interno de la imagen',
   `foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `imagenes`
+--
+
+INSERT INTO `imagenes` (`id`, `foto`) VALUES
+(000001, 'perfil-blanco.png'),
+(000002, 'liga-nba.png'),
+(000003, 'liga-acb.png'),
+(000004, 'lakers-logo.png'),
+(000005, 'realmadrid-logo.png'),
+(000006, 'Escudo_Covirán_Granada.png'),
+(000007, 'knicks.png'),
+(000008, 'hawks.png'),
+(000009, 'bulls.png'),
+(000010, 'davis.png'),
+(000011, 'caruso.jpg'),
+(000012, 'lavine.png'),
+(000013, 'lonzo.jpg'),
+(000014, 'vicevic.png'),
+(000015, 'austin.jpg'),
+(000016, 'R.png'),
+(000017, 'bogdanovic.png'),
+(000018, 'brunson.png'),
+(000019, 'trae.jpg'),
+(000020, 'capela.png'),
+(000021, 'rudy.jpg'),
+(000022, 'sin-foto.png'),
+(000023, 'sin-foto.png');
 
 -- --------------------------------------------------------
 
@@ -162,6 +239,22 @@ CREATE TABLE `jornadas_temporada` (
   `fecha_final` date NOT NULL,
   `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `jornadas_temporada`
+--
+
+INSERT INTO `jornadas_temporada` (`id`, `id_temporada`, `numero`, `fecha_inicio`, `fecha_final`, `video`) VALUES
+(000001, 000002, 1, '2023-10-24', '2023-10-29', NULL),
+(000002, 000002, 2, '2023-10-30', '2023-11-05', NULL),
+(000003, 000002, 3, '2023-11-06', '2023-11-12', NULL),
+(000004, 000002, 4, '2024-04-20', '2024-04-24', NULL),
+(000005, 000002, 5, '2024-05-01', '2024-05-03', NULL),
+(000006, 000006, 1, '2023-09-23', '2023-09-24', NULL),
+(000007, 000006, 2, '2023-09-27', '2023-10-04', NULL),
+(000008, 000006, 3, '2024-03-10', '2024-03-12', NULL),
+(000009, 000006, 4, '2024-03-18', '2024-03-22', NULL),
+(000010, 000006, 5, '2024-04-03', '2024-04-06', NULL);
 
 -- --------------------------------------------------------
 
@@ -180,8 +273,28 @@ CREATE TABLE `jugadores` (
   `peso` double DEFAULT NULL,
   `nacionalidad` varchar(50) DEFAULT NULL,
   `video` varchar(255) DEFAULT NULL COMMENT 'Vídeo promocional',
-  `activo` tinyint DEFAULT 1
+  `activo` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `jugadores`
+--
+
+INSERT INTO `jugadores` (`id`, `id_equipo`, `nombre`, `descripcion`, `id_imagen`, `posicion`, `altura`, `peso`, `nacionalidad`, `video`, `activo`) VALUES
+(000001, 000001, 'Anthony Davis', 'Ala-pívot apodado \"La Ceja\"', 000010, 'Ala-pívot', 2.11, 115, 'Estados Unidos de America', 'https://www.youtube.com/embed/0ufyaXWbsnc?si=mwk8hZpAGwNmjo37', 1),
+(000002, 000003, 'Alex Caruso', 'Alero muy sacrificado y luchador', 000011, 'Alero', 1.93, 83.01, 'Estados Unidos de America', 'https://www.youtube.com/embed/eoT0S5gAJYY?si=_gsUw1sfnEWKDIuk', 1),
+(000003, 000003, 'Zach Lavine', 'Escolta con gran potencia de salto', 000012, 'Escolta', 1.96, 91, 'Estados Unidos de America', '', 1),
+(000004, 000003, 'Lonzo Ball', 'Base con buena visión de juego', 000013, 'Base', 1.98, 86, 'Estados Unidos de America', '', 1),
+(000005, 000003, 'Nikola Vucevic', 'Pívot poderoso con grandes movimientos', 000014, 'Pívot', 2.11, 118, 'Montenegro', '', 1),
+(000006, 000001, 'Austin Reeves', 'Escolta novato con gran proyección', 000015, 'Escolta', 1.96, 93, 'Estados Unidos de America', '', 1),
+(000007, 000001, 'Lebron James', 'Alero considerado el mejor jugador de la historia', 000016, 'Alero', 2.06, 113, 'Estados Unidos de America', '', 0),
+(000008, 000002, 'Bodjan Bogdanovic', 'Alero polivalente', 000017, 'Alero', 2.03, 103, 'Croacia', '', 1),
+(000009, 000002, 'Jalen Brunson', 'Base sacrificado y con gran tiro de 3', 000018, 'Base', 1.85, 83, 'Estados Unidos de America', '', 1),
+(000010, 000004, 'Trae Young', 'Base provocador con gran tiro', 000019, 'Base', 1.85, 82, 'Estados Unidos de America', '', 1),
+(000011, 000004, 'Clint Capela', 'Pívot reboteador y luchador', 000020, 'Pívot', 2.08, 109, 'Suiza', '', 1),
+(000012, 000005, 'Rudy Fernández', 'Alero con gran tiro de tres puntos', 000021, 'Alero', 1.95, 87, 'España', '', 1),
+(000013, 000005, 'Facundo Campazzo', 'Base muy rápido y buen pasador', 000022, 'Base', 1.8, 88.5, 'Argentina', '', 1),
+(000014, 000006, 'Cristiano Felicio', 'Pívot anotador y con gran presencia en la zona', 000023, 'Pívot', 2.11, 103, 'Brasil', '', 1);
 
 -- --------------------------------------------------------
 
@@ -199,10 +312,15 @@ CREATE TABLE `ligas` (
   `estado` varchar(255) DEFAULT NULL COMMENT 'Estado de la liga'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `ligas`
+--
+
+INSERT INTO `ligas` (`id`, `nombre`, `descripcion`, `pais`, `id_imagen`, `video`, `estado`) VALUES
+(000001, 'NBA', 'Liga Estadounidense de Basket', 'USA', 000002, 'https://www.youtube.com/embed/uUwb0x_AdL8?si=LIxT8Qet6JkIjksZ', 'Activa'),
+(000002, 'ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', 000003, 'https://www.youtube.com/embed/NQp5KW7rZ9k?si=iiWyQfFnMQf5EKWn', 'Activa');
+
 -- --------------------------------------------------------
-
-
-
 
 --
 -- Estructura de tabla para la tabla `noticias`
@@ -235,6 +353,16 @@ CREATE TABLE `partidos_jornada` (
   `resultado_visitante` int(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `partidos_jornada`
+--
+
+INSERT INTO `partidos_jornada` (`id`, `id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`, `resultado_local`, `resultado_visitante`) VALUES
+(000001, 000006, 000005, 000006, '2023-09-23 18:30:00', 'WiZink Center Madrid', 83, 76),
+(000002, 000001, 000003, 000002, '2024-09-25 20:00:00', 'United Center, Chicago, Illniois', NULL, NULL),
+(000003, 000001, 000001, 000004, '2024-09-26 17:30:00', 'Crypto.com Arena, Los Ángeles, California', NULL, NULL),
+(000004, 000005, 000001, 000003, '2024-05-02 16:40:00', 'Aqui', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -259,6 +387,19 @@ CREATE TABLE `roles` (
   `nombre` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id`, `nombre`) VALUES
+(000001, 'Superadministrador'),
+(000002, 'Administrador'),
+(000003, 'Moderador'),
+(000004, 'GestorLigas'),
+(000005, 'Patrocinador/Anunciante'),
+(000006, 'GestorEquipos'),
+(000007, 'Cliente');
+
 -- --------------------------------------------------------
 
 --
@@ -272,6 +413,20 @@ CREATE TABLE `temporadas` (
   `fecha_inicial` date DEFAULT NULL,
   `fecha_final` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `temporadas`
+--
+
+INSERT INTO `temporadas` (`id`, `id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
+(000001, 000001, 'NBA 2024-25', '2024-10-20', '2025-04-20'),
+(000002, 000001, 'NBA 2023-24', '2023-10-24', '2024-04-14'),
+(000003, 000001, 'NBA 2022-23', '2022-10-18', '2023-04-09'),
+(000004, 000001, 'NBA 2021-22', '2021-10-19', '2022-04-10'),
+(000005, 000002, 'ACB 2024-25', '2024-09-14', '2025-06-13'),
+(000006, 000002, 'ACB 2023-24', '2023-09-23', '2024-06-24'),
+(000007, 000002, 'ACB 2022-23', '2022-09-17', '2023-06-22'),
+(000008, 000002, 'ACB 2021-22', '2021-09-18', '2022-06-19');
 
 -- --------------------------------------------------------
 
@@ -292,8 +447,18 @@ CREATE TABLE `usuarios` (
   `id_imagen` int(6) UNSIGNED ZEROFILL NOT NULL COMMENT 'Foto del usuario (la de perfil)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+--
+-- Volcado de datos para la tabla `usuarios`
+--
 
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido1`, `apellido2`, `email`, `password`, `provincia`, `id_rol`, `username`, `id_imagen`) VALUES
+(000001, 'Administrador Supremo', 'superadmin', 'superadmin', 'superadmin@usal.es', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 000001, 'superadmin', 000001),
+(000002, 'Marcos', 'Castro', 'Aragón', 'admin@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 000002, 'admin', 000001),
+(000003, 'Iago', 'Gasamans', 'Losada', 'mod@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 000003, 'moderador', 000001),
+(000004, 'Jorge', 'Abella', 'Cabezas', 'gestorli@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'León', 000004, 'gestorligas', 000001),
+(000005, 'Álex', 'Alonso', 'Vicente', 'patrocinador@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 000005, 'patrocinador', 000001),
+(000006, 'David', 'Pérez', 'Esteban', 'gestoreq@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 000006, 'gestorequipos', 000001),
+(000007, 'Diego', 'Iglesias', 'Estevez', 'cliente@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 000007, 'cliente', 000001);
 
 --
 -- Índices para tablas volcadas
@@ -432,7 +597,6 @@ ALTER TABLE `usuarios`
   ADD KEY `fk_id_idRoles` (`id_rol`),
   ADD KEY `fk_id_idImagenU` (`id_imagen`);
 
-
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
@@ -453,49 +617,49 @@ ALTER TABLE `comentarios`
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Identificador interno del equipo';
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Identificador interno del equipo', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `estadisticas_equipo`
 --
 ALTER TABLE `estadisticas_equipo`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `estadisticas_jugador`
 --
 ALTER TABLE `estadisticas_jugador`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `estadisticas_jugador_partido`
 --
 ALTER TABLE `estadisticas_jugador_partido`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Identificador interno de la imagen';
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Identificador interno de la imagen', AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `jornadas_temporada`
 --
 ALTER TABLE `jornadas_temporada`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `jugadores`
 --
 ALTER TABLE `jugadores`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `ligas`
 --
 ALTER TABLE `ligas`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Identificador interno de la liga';
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'Identificador interno de la liga', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `noticias`
@@ -507,7 +671,7 @@ ALTER TABLE `noticias`
 -- AUTO_INCREMENT de la tabla `partidos_jornada`
 --
 ALTER TABLE `partidos_jornada`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `patrocinadores`
@@ -519,19 +683,19 @@ ALTER TABLE `patrocinadores`
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `temporadas`
 --
 ALTER TABLE `temporadas`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -557,9 +721,9 @@ ALTER TABLE `comentarios`
 --
 ALTER TABLE `equipos`
   ADD CONSTRAINT `equipos_ibfk_1` FOREIGN KEY (`id_liga`) REFERENCES `ligas` (`id`),
+  ADD CONSTRAINT `fk_gestor_eq` FOREIGN KEY (`gestor_eq`) REFERENCES `usuarios` (`id`),
   ADD CONSTRAINT `fk_idTemporada` FOREIGN KEY (`id_temporada`) REFERENCES `temporadas` (`id`),
-  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_escudo`) REFERENCES `imagenes` (`id`),
-  ADD CONSTRAINT `fk_gestor_eq` FOREIGN KEY (`gestor_eq`) REFERENCES `usuarios` (`id`);
+  ADD CONSTRAINT `fk_id_idImagenL` FOREIGN KEY (`id_escudo`) REFERENCES `imagenes` (`id`);
 
 --
 -- Filtros para la tabla `equipos_patrocinadores`
@@ -587,9 +751,9 @@ ALTER TABLE `estadisticas_jugador`
 -- Filtros para la tabla `estadisticas_jugador_partido`
 --
 ALTER TABLE `estadisticas_jugador_partido`
+  ADD CONSTRAINT `fk_id_idEquipoE` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`),
   ADD CONSTRAINT `fk_id_idJugadorP` FOREIGN KEY (`id_jugador`) REFERENCES `jugadores` (`id`),
-  ADD CONSTRAINT `fk_id_idPartidoJ` FOREIGN KEY (`id_partido`) REFERENCES `partidos_jornada` (`id`),
-  ADD CONSTRAINT `fk_id_idEquipoE` FOREIGN KEY (`id_equipo`) REFERENCES `equipos` (`id`);
+  ADD CONSTRAINT `fk_id_idPartidoJ` FOREIGN KEY (`id_partido`) REFERENCES `partidos_jornada` (`id`);
 
 --
 -- Filtros para la tabla `jornadas_temporada`
@@ -641,201 +805,10 @@ ALTER TABLE `temporadas`
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD CONSTRAINT `fk_id_idRoles` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`),
-  ADD CONSTRAINT `fk_id_idImagenU` FOREIGN KEY (`id_imagen`) REFERENCES `imagenes` (`id`);
+  ADD CONSTRAINT `fk_id_idImagenU` FOREIGN KEY (`id_imagen`) REFERENCES `imagenes` (`id`),
+  ADD CONSTRAINT `fk_id_idRoles` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-/* --------------  EJEMPLOS  --------------------------- */
-
--- INSERTAMOS LOS ROLES
-INSERT IGNORE INTO `roles` (`nombre`) VALUES
-('Superadministrador'),
-('Administrador'),
-('Moderador'),
-('GestorLigas'),
-('Patrocinador/Anunciante'),
-('GestorEquipos'),
-('Cliente');
-
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('perfil-blanco.png');
-
-SET @imagen_perfil := LAST_INSERT_ID();
-
--- INSERTAMOS USUARIOS DE EJEMPLO
-INSERT IGNORE INTO `usuarios` (`nombre`, `apellido1`, `apellido2`, `email`, `password`, `provincia`, `id_rol`, `username`, `id_imagen`) VALUES
-('Administrador Supremo', 'superadmin', 'superadmin', 'superadmin@usal.es', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 1, 'superadmin', @imagen_perfil),
-('Marcos', 'Castro', 'Aragón', 'admin@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 2, 'admin', @imagen_perfil),
-('Iago', 'Gasamans', 'Losada', 'mod@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 3, 'moderador', @imagen_perfil),
-('Jorge', 'Abella', 'Cabezas', 'gestorli@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'León', 4, 'gestorligas', @imagen_perfil),
-('Álex', 'Alonso', 'Vicente', 'patrocinador@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 5, 'patrocinador', @imagen_perfil),
-('David', 'Pérez', 'Esteban', 'gestoreq@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 6, 'gestorequipos', @imagen_perfil),
-('Diego', 'Iglesias', 'Estevez', 'cliente@email.com', '$2y$13$cv/e83DBf4PuC6DRYmDvqO3.4692vmpOS5vpzPxMMTgz9vyLS5lRu', 'Zamora', 7, 'cliente', @imagen_perfil);
-
-
--- INSERTAMOS LAS IMAGENES DE LIGA NBA Y ACB
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('liga-nba.png');
-
-SET @imagen_nba := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('liga-acb.png');
-
-SET @imagen_acb := LAST_INSERT_ID();
-
-
--- INSERTAMOS LAS LIGAS NBA Y ACB
-INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`, `estado`) VALUES
-('NBA', 'Liga Estadounidense de Basket', 'USA', @imagen_nba, 'https://www.youtube.com/embed/uUwb0x_AdL8?si=LIxT8Qet6JkIjksZ', 'Activa');
-
-SET @id_nba := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `ligas` (`nombre`, `descripcion`, `pais`, `id_imagen`, `video`, `estado`) VALUES
-('ACB', 'Liga Española, ahora llamada Endesa por patrocinio', 'España', @imagen_acb, 'https://www.youtube.com/embed/NQp5KW7rZ9k?si=iiWyQfFnMQf5EKWn', 'Activa');
-
-SET @id_acb := LAST_INSERT_ID();
-
--- TEMPORADAS 2023-24 DE LAS LIGAS NBA Y ACB
-INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'NBA 2024-25', '2024-10-20', '2025-04-20');
-
-SET @temporada_nba24 := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'NBA 2023-24', '2023-10-24', '2024-04-14');
-
-SET @temporada_nba23 := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'NBA 2022-23', '2022-10-18', '2023-04-09');
-
-SET @temporada_nba21 := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_nba, 'NBA 2021-22', '2021-10-19', '2022-04-10');
-
-SET @temporada_nba21 := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'ACB 2024-25', '2024-09-14', '2025-06-13');
-
-SET @temporada_acb24 := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'ACB 2023-24', '2023-09-23', '2024-06-24');
-
-SET @temporada_acb23 := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'ACB 2022-23', '2022-09-17', '2023-06-22');
-
-SET @temporada_acb22 := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `temporadas` (`id_liga`, `texto_de_titulo`, `fecha_inicial`, `fecha_final`) VALUES
-(@id_acb, 'ACB 2021-22', '2021-09-18', '2022-06-19');
-
-SET @temporada_acb21 := LAST_INSERT_ID();
-
-
--- INSERTAMOS LAS IMAGENES DE LOS ESCUDOS DE LOS EQUIPOS DE LA LIGA NBA Y ACB
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('lakers-logo.png');
-
-SET @escudo_lakers := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('realmadrid-logo.png');
-
-SET @escudo_realmadrid := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('Escudo_Covirán_Granada.png');
-
-SET @escudo_granada:= LAST_INSERT_ID();
-
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('knicks.png');
-
-SET @escudo_knicks:= LAST_INSERT_ID();
-
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('hawks.png');
-
-SET @escudo_hawks:= LAST_INSERT_ID();
-
-INSERT IGNORE INTO `imagenes` (`foto`) VALUES
-('bulls.png');
-
-SET @escudo_bulls:= LAST_INSERT_ID();
-
--- ALGUNOS EQUIPOS DE LA NBA Y ACB
-
-INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
-(@id_nba, @temporada_nba23, 'Los Angeles Lakers', 'Equipo de División Pacífico de la Conferencia Oeste', @escudo_lakers, 15);
-
-SET @lakers:= LAST_INSERT_ID();
-
-INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
-(@id_nba, @temporada_nba23, 'New York Knicks', 'Equipo de División Atlántico de la Conferencia Este', @escudo_knicks, 15);
-
-SET @knicks:= LAST_INSERT_ID();
-
-INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
-(@id_nba, @temporada_nba23, 'Chicago Bulls', 'Equipo de División Central de la Conferencia Este', @escudo_bulls, 15);
-
-SET @bulls:= LAST_INSERT_ID();
-
-INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
-(@id_nba, @temporada_nba23, 'Atlanta Hawks', 'Equipo de División Sureste de la Conferencia Este', @escudo_hawks, 15);
-
-SET @hawks:= LAST_INSERT_ID();
-
-INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
-(@id_acb, @temporada_acb23, 'Real Madrid Baloncesto', 'Equipo de 1931 apodado los Blancos', @escudo_realmadrid, 14);
-
-SET @realmadrid:= LAST_INSERT_ID();
-
-INSERT IGNORE INTO `equipos` (`id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`) VALUES
-(@id_acb, @temporada_acb23, 'Fundación CB Granada', 'Fundado en 2012 con presente y mucho futuro', @escudo_granada, 11);
-
-SET @granada:= LAST_INSERT_ID();
-
--- ALGUNAS JORNADAS
-INSERT IGNORE INTO `jornadas_temporada` (`id_temporada`, `numero`, `fecha_inicio`, `fecha_final`) VALUES
-(@temporada_nba23, 1, '2023-10-24', '2023-10-29'),
-(@temporada_nba23, 2, '2023-10-30', '2023-11-05'),
-(@temporada_nba23, 3, '2023-11-06', '2023-11-12'),
-(@temporada_nba23, 4, '2024-04-20', '2024-04-24'),
-(@temporada_nba23, 5, '2024-05-01', '2024-05-03');
-
-SET @j1nba := LAST_INSERT_ID();
-
-INSERT IGNORE INTO `jornadas_temporada` (`id_temporada`, `numero`, `fecha_inicio`, `fecha_final`) VALUES
-(@temporada_acb23, 1, '2023-09-23', '2023-09-24'),
-(@temporada_acb23, 2, '2023-09-27', '2023-10-04'),
-(@temporada_acb23, 3, '2024-03-10', '2024-03-12'),
-(@temporada_acb23, 4, '2024-03-18', '2024-03-22'),
-(@temporada_acb23, 5, '2024-04-03', '2024-04-06');
-
-SET @j1acb := LAST_INSERT_ID();
-
--- PARTIDOS DE EJEMPLO
-
-INSERT IGNORE INTO `partidos_jornada` (`id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`, `resultado_local`,`resultado_visitante`) VALUES 
-(@j1acb, @realmadrid, @granada, '2023-09-23 18:30:00', 'WiZink Center Madrid', 83, 76);
-
-INSERT IGNORE INTO `partidos_jornada` (`id_jornada`, `id_equipo_local`, `id_equipo_visitante`, `horario`, `lugar`) VALUES 
-(@j1nba, @bulls, @knicks, '2024-09-25 20:00:00', 'United Center, Chicago, Illniois'),
-(@j1nba, @lakers, @hawks, '2024-09-26 17:30:00', 'Crypto.com Arena, Los Ángeles, California');
-
-INSERT IGNORE INTO `estadisticas_equipo` (`id_temporada`, `id_equipo`, `partidos_jugados`, `victorias`, `derrotas`) VALUES
-(@temporada_acb23, @realmadrid, 15, 10, 5),
-(@temporada_acb23, @lakers, 12, 9, 3),
-(@temporada_acb22, @realmadrid, 30, 23, 7),
-(@temporada_acb22, @hawks, 30, 22, 8),
-(@temporada_acb22, @granada, 30, 18, 12);
