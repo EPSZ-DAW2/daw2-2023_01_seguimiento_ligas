@@ -32,6 +32,8 @@ class EstadisticasJugadorController extends Controller
                                  ->andWhere(['>=', 'estadisticas_jugador.partidos_jugados', 1]);
         }
     
+        $dataProvider->pagination->pageSize = 10;
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

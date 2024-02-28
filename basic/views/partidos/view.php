@@ -36,20 +36,34 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 
         <p class="PaginaDeInicio"><?= Html::encode($this->title) ?></p>
 
-        <?= DetailView::widget([
-            'model' => $model,
-            'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
-            'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
-            'attributes' => [
-                'id',
-                'fecha',
-                'hora',
-                'lugar',
-                'resultado_local',
-                'resultado_visitante',
-                'observaciones:ntext',
-            ],
-        ]) ?>
+<?= DetailView::widget([
+    'model' => $model,
+    'options' => ['class' => 'table table-bordered detail-view', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 1px solid #000;'], // Clase, fondo blanco y bordes
+    'template' => "<tr><th style='width:20%; text-align: center; font-weight: bold;'>{label}</th><td style='width:80%; text-align: center;'>{value}</td></tr>", // Plantilla personalizada sin centrado
+    'attributes' => [
+        [
+            'attribute' => 'horario',
+            'format' => 'text',
+            'value' => function ($model) {
+                return Yii::$app->formatter->asDatetime($model->horario, 'php:d-m-Y H:i:s');
+            },
+        ],
+        [
+            'attribute' => 'lugar',
+            'format' => 'text',
+            'value' => $model->lugar ? $model->lugar : 'Por definir',
+        ],
+        [
+            'attribute' => 'resultado_local',
+            'value' => $model->resultado_local ? $model->resultado_local : '-',
+        ],
+        [
+            'attribute' => 'resultado_visitante',
+            'value' => $model->resultado_visitante ? $model->resultado_visitante : '-',
+        ],
+    ],
+]) ?>
+
 
         <h2>Estadísticas de Jugadores</h2>
 
@@ -77,7 +91,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             'asistencias',
         ],
     ]); ?>
-
 
 <?php 
     } else { ?>
@@ -201,7 +214,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             <?php return Yii::$app->controller->redirect(['usuarios/login']); ?>
         <?php endif; ?>
     </div> -->
-<?php } ?>
     <br>
     <hr>
     <?= Html::a(Yii::t('app', 'Actualizar Partido'), ['update', 'id' => $model->id], ['class' => 'botonFormulario']) ?>
@@ -214,4 +226,5 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         ]) ?>
     <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>
     </div>
+<?php } ?>
 </div>

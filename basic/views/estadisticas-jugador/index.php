@@ -47,7 +47,8 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ->all();
         
                 foreach ($siguientesPuntos as $jugadorPuntos) {
-                    echo "<p class='nombre-secundario'>{$jugadorPuntos->jugador->nombre}</p>";
+                    $puntos = $jugadorPuntos->puntos !== null ? $jugadorPuntos->puntos : 'Sin datos';
+                    echo "<p class='nombre-secundario'>{$jugadorPuntos->jugador->nombre}: {$puntos}</p>";
                 }
             }
             ?>
@@ -73,7 +74,8 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ->all();
         
                 foreach ($siguientesAsistencias as $jugadorAsistencias) {
-                    echo "<p class='nombre-secundario'>{$jugadorAsistencias->jugador->nombre}</p>";
+                    $asistencias = $jugadorAsistencias->asistencias !== null ? $jugadorAsistencias->asistencias : 'Sin datos';
+                    echo "<p class='nombre-secundario'>{$jugadorAsistencias->jugador->nombre}: {$asistencias}</p>";
                 }
             }
             ?>
@@ -99,7 +101,8 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ->all();
         
                 foreach ($siguientesRebotes as $jugadorRebotes) {
-                    echo "<p class='nombre-secundario'>{$jugadorRebotes->jugador->nombre}</p>";
+                    $rebotes = $jugadorRebotes->rebotes !== null ? $jugadorRebotes->rebotes : 'Sin datos';
+                    echo "<p class='nombre-secundario'>{$jugadorRebotes->jugador->nombre}: {$rebotes}</p>";
                 }
             }
             ?>
@@ -120,6 +123,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
             'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
             'emptyText' => 'No se encontraron resultados.',
+            'pager' => [
+                'linkOptions' => ['class' => 'btn'],
+            ],
             'columns' => [
                 [
                     'label' => 'Nombre del Jugador',
@@ -180,6 +186,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
                 'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
                 'emptyText' => 'No se encontraron resultados.',
+                'pager' => [
+                    'linkOptions' => ['class' => 'btn'],
+                ],
                 'columns' => [
                     [
                         'label' => 'Nombre del Jugador',

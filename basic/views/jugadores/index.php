@@ -129,10 +129,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             echo Html::endForm();
             ?>
             <br>
-            <?php 
-                echo Html::a('Mostrar Jugadores del Equipo', ['jugadores/index', 'equipoId' => $equipoId], ['class' => 'btn btn-primary']);
-            ?>
-            <br>
 
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,

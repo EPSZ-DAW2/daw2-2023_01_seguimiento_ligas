@@ -49,7 +49,7 @@ class JugadoresController extends Controller
             $dataProvider->query->andWhere(['activo' => 1]);
         }
 
-        $dataProvider->pagination->pageSize = 12;
+        $dataProvider->pagination->pageSize = 10;
 
         $ligas = Ligas::find()->all();
 
