@@ -28,7 +28,8 @@ class EstadisticasJugadorController extends Controller
     
         $showAll = Yii::$app->request->get('showAll', false);
         if (!$showAll) {
-            $dataProvider->query->andWhere(['>', 'partidos_jugados', 0]);
+            $dataProvider->query->andWhere(['estadisticas_jugador.activo' => 1])
+                                 ->andWhere(['>=', 'estadisticas_jugador.partidos_jugados', 1]);
         }
     
         return $this->render('index', [
@@ -36,7 +37,7 @@ class EstadisticasJugadorController extends Controller
             'dataProvider' => $dataProvider,
             'ligas' => $ligas,
         ]);
-    }
+    }    
        
     public function actionCreate()
     {

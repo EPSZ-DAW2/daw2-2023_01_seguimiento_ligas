@@ -138,10 +138,10 @@ class JugadoresController extends Controller
         $model = $this->findModel($id);
         $imagenModel = ($model->imagen) ? $model->imagen : new Imagenes();
     
-        $esGestorEquipo = !Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 6;
+        $esGestor = !Yii::$app->user->isGuest && Yii::$app->user->identity->id_rol == 6;
         $equipoId = null;
     
-        if ($esGestorEquipo) {
+        if ($esGestor) {
             $usuarioId = Yii::$app->user->identity->id;
             $equipoId = Equipos::find()->select('id')->where(['gestor_eq' => $usuarioId])->scalar();
         }
@@ -152,7 +152,7 @@ class JugadoresController extends Controller
     
             if ($imagenModel->validate() && $imagenModel->saveImagen()) {
                 $model->id_imagen = $imagenModel->id;
-                if ($esGestorEquipo) {
+                if ($esGestor) {
                     $model->id_equipo = $equipoId;
                 }
     
@@ -169,7 +169,7 @@ class JugadoresController extends Controller
         return $this->render('update', [
             'model' => $model,
             'imagenModel' => $imagenModel,
-            'esGestorEquipo' => $esGestorEquipo,
+            'esGestor' => $esGestor,
             'equipoId' => $equipoId,
         ]);
     }
@@ -213,7 +213,7 @@ class JugadoresController extends Controller
         $this->view->title = 'ArosInsider - Jugadores del Equipo';
         
         $equipo = Equipos::findOne($id);
-        $jugadores = Jugadores::find()->where(['id_equipo' => $id])->all();
+        $jugadores = Jugadores::find()->where(['id_equipo' => $id, 'activo' => 1])->all();
     
         return $this->render('ver-por-equipo', [
             'jugadores' => $jugadores,

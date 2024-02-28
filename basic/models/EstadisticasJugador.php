@@ -42,6 +42,7 @@ class EstadisticasJugador extends \yii\db\ActiveRecord
             [['id_equipo'], 'exist', 'skipOnError' => true, 'targetClass' => Equipos::class, 'targetAttribute' => ['id_equipo' => 'id']],
             [['id_jugador'], 'exist', 'skipOnError' => true, 'targetClass' => Jugadores::class, 'targetAttribute' => ['id_jugador' => 'id']],
             [['id_temporada'], 'exist', 'skipOnError' => true, 'targetClass' => Temporadas::class, 'targetAttribute' => ['id_temporada' => 'id']],
+            [['activo'], 'boolean'],
         ];
     }
 
@@ -59,6 +60,7 @@ class EstadisticasJugador extends \yii\db\ActiveRecord
             'puntos' => 'Puntos',
             'rebotes' => 'Rebotes',
             'asistencias' => 'Asistencias',
+            'activo' => 'Activo',
         ];
     }
 

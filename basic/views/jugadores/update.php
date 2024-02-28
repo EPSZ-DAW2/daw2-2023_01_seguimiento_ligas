@@ -20,7 +20,7 @@ $this->title = 'Modificar Jugadores: ' . $model->nombre;
         <?= $this->render('_form', [
             'model' => $model,
             'imagenModel' => $imagenModel,
-            'esGestorEquipo' => $esGestorEquipo,
+            'esGestor' => $esGestor,
             'equipoId' => $equipoId,
         ]) ?>
     </div>

@@ -201,6 +201,12 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     'rebotes',
                     'asistencias',
                     [
+                        'attribute' => 'activo',
+                        'value' => function ($model) {
+                            return $model->activo ? 'Activo' : 'Inactivo';
+                        },
+                    ],
+                    [
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, app\models\EstadisticasJugador $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id' => $model->id]);

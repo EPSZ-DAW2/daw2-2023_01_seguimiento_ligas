@@ -45,6 +45,11 @@ $this->title = $model->id_jugador; // Usar el contenido de id_jugador como títu
             'puntos',
             'rebotes',
             'asistencias',
+            [
+                'attribute' => 'activo',
+                'label' => 'Activo',
+                'value' => $model->activo ? 'Sí' : 'No',
+            ],
         ],
     ]) ?>
 

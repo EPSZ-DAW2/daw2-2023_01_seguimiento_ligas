@@ -35,6 +35,9 @@ use yii\widgets\ActiveForm;
     <br>
     <?= $form->field($model, 'asistencias', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
+    <br>
+    <?= $form->field($model, 'activo')->checkbox() ?>
+    <br>
     
     <?= Html::submitButton('Guardar', ['class' => 'botonFormulario']) ?>
     <?= Html::a(Yii::t('app', 'Tabla de estadisticas'), ['estadisticas-jugador/index'], ['class' => 'botonFormulario']) ?>
