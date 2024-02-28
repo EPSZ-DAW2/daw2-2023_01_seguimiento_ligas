@@ -65,23 +65,7 @@ use app\models\EstadisticasJugador;
             <?php
             // Obtener las estadísticas del jugador
             $estadisticas = EstadisticasJugador::findOne(['id_jugador' => $jugador->id]);
-            ?>
-        <div class="jugador-container">
-            <h3><?= $jugador->nombre; ?></h3>
-            <?php
-            // Obtener las estadísticas del jugador
-            $estadisticas = EstadisticasJugador::findOne(['id_jugador' => $jugador->id]);
-
-            if ($estadisticas !== null) {
-                echo "<p>Puntos: {$estadisticas->puntos}</p>";
-                echo "<p>Rebotes: {$estadisticas->rebotes}</p>";
-                echo "<p>Asistencias: {$estadisticas->asistencias}</p>";
-            } else {
-                echo "<p>No hay estadísticas disponibles para este jugador.</p>";
-            }
-            ?>
-        </div>
-    <?php 
+   
             if ($estadisticas !== null) {
                 echo "<p>Puntos: {$estadisticas->puntos}</p>";
                 echo "<p>Rebotes: {$estadisticas->rebotes}</p>";

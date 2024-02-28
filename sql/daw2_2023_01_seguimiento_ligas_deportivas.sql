@@ -82,7 +82,7 @@ CREATE TABLE `equipos` (
 --
 
 INSERT INTO `equipos` (`id`, `id_liga`, `id_temporada`, `nombre`, `descripcion`, `id_escudo`, `n_jugadores`, `gestor_eq`, `video`) VALUES
-(000001, 000002, 000006, 'Los Angeles Lakers', 'Equipo de División Pacífico de la Conferencia Oeste', 000004, 15, 000006, NULL),
+(000001, 000001, 000002, 'Los Angeles Lakers', 'Equipo de División Pacífico de la Conferencia Oeste', 000004, 15, 000006, NULL),
 (000002, 000001, 000002, 'New York Knicks', 'Equipo de División Atlántico de la Conferencia Este', 000007, 15, NULL, NULL),
 (000003, 000001, 000002, 'Chicago Bulls', 'Equipo de División Central de la Conferencia Este', 000009, 15, NULL, NULL),
 (000004, 000001, 000002, 'Atlanta Hawks', 'Equipo de División Sureste de la Conferencia Este', 000008, 15, NULL, NULL),
