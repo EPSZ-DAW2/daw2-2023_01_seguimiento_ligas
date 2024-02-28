@@ -45,13 +45,14 @@ $url = Url::to(['usuarios/view', 'id' => $userId]);
         ['prompt' => 'Seleccionar Rol', 'class' => 'campo']
     )
     ->label('Rol') ?>
+    <br>
     <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
     <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo'])->label('Subir Imagen') ?>
     <br>
 
 
-    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 6)) {?>
+    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 7)) {?>
     
     <p>
     <?= Html::submitButton(Yii::t('app', 'Modificar'), ['class' => 'botonFormulario']) ?>
@@ -104,13 +105,14 @@ $url = Url::to(['usuarios/view', 'id' => $userId]);
         ['prompt' => 'Seleccionar Rol', 'class' => 'campo']
     )
     ->label('Rol') ?>
+    <br>
     <?= $form->field($model, 'username', ['options' => ['class' => 'campoTitulo']])->textInput(['maxlength' => true, 'class' => 'campo']) ?>
     <br>
     <?= $form->field($imagenModel, 'imagenFile', ['options' => ['class' => 'campoTitulo']])->fileInput(['class' => 'campo'])->label('Subir Imagen') ?>
     <br>
 
 
-    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 6)) {?>
+    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 7)) {?>
     
     <p>
     <?= Html::submitButton(Yii::t('app', 'Modificar'), ['class' => 'botonFormulario']) ?>
@@ -158,7 +160,7 @@ $url = Url::to(['usuarios/view', 'id' => $userId]);
     <br>
 
 
-    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 6)) {?>
+    <?php if (!Yii::$app->user->isGuest && (Yii::$app->user->identity->id_rol == 7)) {?>
     
     <p>
     <?= Html::submitButton(Yii::t('app', 'Modificar'), ['class' => 'botonFormulario']) ?>

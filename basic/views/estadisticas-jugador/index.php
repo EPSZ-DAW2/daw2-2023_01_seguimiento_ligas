@@ -174,18 +174,19 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             <?php
             echo Html::beginForm(['estadisticas-jugador/index'], 'get');
             echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
-            echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
+            echo Html::submitButton('Filtrar', ['class' => 'botonFormulario']);
             echo Html::endForm();
             ?>
             <br>        
-            <?= Html::a('Mostrar todos los registros', ['index', 'showAll' => true], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Mostrar todos los registros', ['index', 'showAll' => true], ['class' => 'botonFormulario']) ?>
             <br>
             <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
-                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
-                'emptyText' => 'No se encontraron resultados.',
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+            'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
+            'emptyText' => 'No se encontraron resultados.',
+            'columns' => [
                 'pager' => [
                     'linkOptions' => ['class' => 'btn'],
                 ],
@@ -222,7 +223,9 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                          }
                     ],
                 ],
+            ]
             ]); ?>
+        
 
 
         <?= Html::a('Actualizar Estadísticas', ['actualizar-estadisticas'], ['class' => 'botonFormulario']) ?>
