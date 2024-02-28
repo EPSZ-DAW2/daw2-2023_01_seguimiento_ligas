@@ -12,11 +12,12 @@ $this->title = $model->nombre;
 \yii\web\YiiAsset::register($this);
 
 $idJugador = $model->id;
-$idTemporadaEquipo = $model->equipo->id_temporada;
 
-$existeRegistro = \app\models\EstadisticasJugador::find()
+// Verificar si existen estadísticas para el jugador actual
+$existeEstadisticas = \app\models\EstadisticasJugador::find()
     ->where(['id_jugador' => $idJugador])
     ->exists();
+    
 ?>
 
 <div class="contenido-cabecera">
@@ -74,6 +75,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         allowfullscreen></iframe>
     <br><br>
     <p>
+
     <?php
     if ($existeRegistro) {
         echo Html::a('Ver Estadísticas', ['estadisticas-jugador/index', 'id_jugador' => $model->id, 'fromPlayerView' => true], ['class' => 'botonFormulario']);
@@ -136,12 +138,6 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 'method' => 'post',
             ],
         ]) ?>
-
-    <?php
-    if ($existeRegistro) {
-        echo Html::a('Ver Estadísticas', ['estadisticas-jugador/index', 'id_jugador' => $model->id, 'fromPlayerView' => true], ['class' => 'botonFormulario']);
-    }
-    ?>
     </p>
 
     </div>

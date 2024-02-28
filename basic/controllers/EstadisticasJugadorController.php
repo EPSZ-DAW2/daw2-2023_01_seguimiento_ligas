@@ -32,13 +32,12 @@ class EstadisticasJugadorController extends Controller
                                  ->andWhere(['>=', 'estadisticas_jugador.partidos_jugados', 1]);
         }
     
-        // Verificar si se accede desde la vista de jugadores
         $fromPlayerView = Yii::$app->request->get('fromPlayerView');
         if ($fromPlayerView) {
             $id_jugador = Yii::$app->request->get('id_jugador');
             $dataProvider->query->andWhere(['id_jugador' => $id_jugador]);
         }
-    
+
         $dataProvider->pagination->pageSize = 10;
     
         return $this->render('index', [
