@@ -1,5 +1,6 @@
 <?php
 use app\models\Usuarios;
+use app\models\Equipos;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
@@ -44,8 +45,11 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
-            'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
-            'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
+            'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
+            'emptyText' => 'No se encontraron resultados.',
+            'pager' => [
+                'linkOptions' => ['class' => 'btn'],
+            ],
             'columns' => [
                 [
                     'attribute' => 'imagen',
@@ -74,7 +78,7 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     'attribute' => 'equipo.nombre',
                     'label' => 'Equipo',
                     'value' => function ($model) {
-                        return $model->equipo->nombre; // Accede al nombre del equipo a través de la relación
+                        return $model->equipo->nombre;
                     },
                     'filter' => Html::textInput('JugadoresSearch[nombre_equipo]', isset(Yii::$app->request->get('JugadoresSearch')['nombre_equipo']) ? Yii::$app->request->get('JugadoresSearch')['nombre_equipo'] : null, ['class' => 'form-control']),
                     'filterInputOptions' => ['placeholder' => 'Buscar por nombre de equipo'],
@@ -125,12 +129,16 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             echo Html::endForm();
             ?>
             <br>
+
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
                 'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
                 'emptyText' => 'No se encontraron resultados.',
+                'pager' => [
+                    'linkOptions' => ['class' => 'btn'],
+                ],
                 'columns' => [
                     [
                 'attribute' => 'imagen',
@@ -157,8 +165,20 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                     [
                         'attribute' => 'equipo.nombre',
                         'label' => 'Equipo',
-                    ],
+                        'value' => function ($model) {
+                            return $model->equipo->nombre;
+                        },
+                        'filter' => Html::textInput('JugadoresSearch[nombre_equipo]', isset(Yii::$app->request->get('JugadoresSearch')['nombre_equipo']) ? Yii::$app->request->get('JugadoresSearch')['nombre_equipo'] : null, ['class' => 'form-control']),
+                        'filterInputOptions' => ['placeholder' => 'Buscar por nombre de equipo'],
+                        'filterOptions' => ['class' => 'col-md-6'],
+                    ], 
                     'video',
+                    [
+                        'attribute' => 'activo',
+                        'value' => function ($model) {
+                            return $model->activo ? 'Activo' : 'Inactivo';
+                        },
+                    ],
                     [
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, app\models\Jugadores $model, $key, $index, $column) {
@@ -169,8 +189,10 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ],
             ]); ?>
         <br>
-        <?= \yii\helpers\Html::a('Registrar Jugador', ['jugadores/create'], ['class' => 'botonFormulario']) ?>
-    
+        <?php if ((!Yii::$app->user->isGuest) && (in_array(Yii::$app->user->identity->id_rol, [1, 2]) || (Yii::$app->user->identity->id_rol == 6 && $esGestor))): ?>
+            <?= \yii\helpers\Html::a('Registrar Jugador', ['jugadores/create'], ['class' => 'botonFormulario']) ?>
+        <?php endif; ?>
+
     </body>
     </html>
 <?php } ?>

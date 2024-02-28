@@ -190,7 +190,5 @@ class Jugadores extends \yii\db\ActiveRecord
     private function replaceNonNumericChars($string)
     {
         return preg_replace('/[^0-9\.]/', '.', $string);
-    }
-    
-        
+    }      
 }

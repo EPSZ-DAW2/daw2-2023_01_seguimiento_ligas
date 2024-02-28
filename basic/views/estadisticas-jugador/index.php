@@ -1,10 +1,13 @@
 <?php
+use app\models\Usuarios;
+use app\models\Ligas;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
-if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2  && Yii::$app->user->identity->id_rol != 6)) {
+if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$app->user->identity->id_rol != 2)) {
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +47,8 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ->all();
         
                 foreach ($siguientesPuntos as $jugadorPuntos) {
-                    echo "<p class='nombre-secundario'>{$jugadorPuntos->jugador->nombre}</p>";
+                    $puntos = $jugadorPuntos->puntos !== null ? $jugadorPuntos->puntos : 'Sin datos';
+                    echo "<p class='nombre-secundario'>{$jugadorPuntos->jugador->nombre}: {$puntos}</p>";
                 }
             }
             ?>
@@ -70,7 +74,8 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ->all();
         
                 foreach ($siguientesAsistencias as $jugadorAsistencias) {
-                    echo "<p class='nombre-secundario'>{$jugadorAsistencias->jugador->nombre}</p>";
+                    $asistencias = $jugadorAsistencias->asistencias !== null ? $jugadorAsistencias->asistencias : 'Sin datos';
+                    echo "<p class='nombre-secundario'>{$jugadorAsistencias->jugador->nombre}: {$asistencias}</p>";
                 }
             }
             ?>
@@ -96,7 +101,8 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
                 ->all();
         
                 foreach ($siguientesRebotes as $jugadorRebotes) {
-                    echo "<p class='nombre-secundario'>{$jugadorRebotes->jugador->nombre}</p>";
+                    $rebotes = $jugadorRebotes->rebotes !== null ? $jugadorRebotes->rebotes : 'Sin datos';
+                    echo "<p class='nombre-secundario'>{$jugadorRebotes->jugador->nombre}: {$rebotes}</p>";
                 }
             }
             ?>
@@ -105,30 +111,43 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
 </div>
 
         <div class="marco">
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
-                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
-                'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
-                'columns' => [
-                    [
-                        'label' => 'Nombre', // Etiqueta de la columna
-                        'attribute' => 'jugador.nombre', // Utiliza el nombre del jugador
-                    ],
-                    [
-                        'label' => 'Equipo', // Etiqueta de la columna
-                        'attribute' => 'equipo.nombre', // Utiliza el nombre del equipo
-                    ],
-                    [
-                        'label' => 'Temporada', // Etiqueta de la columna
-                        'attribute' => 'temporada.texto_de_titulo', // Utiliza el texto de título de la temporada
-                    ],
-                    'partidos_jugados',
-                    'puntos',
-                    'rebotes',
-                    'asistencias',
+        <?php
+        echo Html::beginForm(['estadisticas-jugador/index'], 'get');
+        echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
+        echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
+        echo Html::endForm();
+        ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
+            'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
+            'emptyText' => 'No se encontraron resultados.',
+            'pager' => [
+                'linkOptions' => ['class' => 'btn'],
+            ],
+            'columns' => [
+                [
+                    'label' => 'Nombre del Jugador',
+                    'attribute' => 'id_jugador',
+                    'value' => 'jugador.nombre',
                 ],
-            ]); ?>
+                [
+                    'label' => 'Nombre del Equipo',
+                    'attribute' => 'id_equipo',
+                    'value' => 'equipo.nombre',
+                ],
+                [
+                    'label' => 'Temporada',
+                    'attribute' => 'id_temporada',
+                    'value' => 'temporada.texto_de_titulo',
+                ],
+                'partidos_jugados',
+                'puntos',
+                'rebotes',
+                'asistencias',
+            ],
+        ]); ?>
         </div>
     </div>
 </body>
@@ -152,52 +171,58 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
     <div  id="contenedor-principal">
 
         <div class="marco">
+            <?php
+            echo Html::beginForm(['estadisticas-jugador/index'], 'get');
+            echo Html::dropDownList('ligaId', Yii::$app->request->get('ligaId'), \yii\helpers\ArrayHelper::map($ligas, 'id', 'nombre'), ['prompt' => 'Selecciona una liga']);
+            echo Html::submitButton('Filtrar', ['class' => 'btn btn-primary']);
+            echo Html::endForm();
+            ?>
+            <br>        
+            <?= Html::a('Mostrar todos los registros', ['index', 'showAll' => true], ['class' => 'btn btn-primary']) ?>
+            <br>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
                 'tableOptions' => ['class' => 'table table-striped table-bordered', 'style' => 'background-color: rgba(255, 255, 255, 0.8); border: 2px solid #000;'],
-                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>', // Personalizar el mensaje
-                'emptyText' => 'No se encontraron resultados.', // Personalizar el mensaje para cuando no hay resultados
+                'summary' => '<p class="PaginaDeInicio">Mostrando {begin}-{end} de {totalCount} elementos</p>',
+                'emptyText' => 'No se encontraron resultados.',
+                'pager' => [
+                    'linkOptions' => ['class' => 'btn'],
+                ],
                 'columns' => [
                     [
-                        'label' => 'Nombre',
-                        'attribute' => 'jugador.nombre',
+                        'label' => 'Nombre del Jugador',
+                        'attribute' => 'id_jugador',
+                        'value' => 'jugador.nombre',
                     ],
                     [
-                        'label' => 'Equipo',
-                        'attribute' => 'equipo.nombre',
+                        'label' => 'Nombre del Equipo',
+                        'attribute' => 'id_equipo',
+                        'value' => 'equipo.nombre',
                     ],
                     [
                         'label' => 'Temporada',
-                        'attribute' => 'temporada.texto_de_titulo',
+                        'attribute' => 'id_temporada',
+                        'value' => 'temporada.texto_de_titulo',
                     ],
                     'partidos_jugados',
                     'puntos',
                     'rebotes',
                     'asistencias',
                     [
-                        'class' => ActionColumn::class,
-                        'template' => '{update} {view} {delete}',
-                        'buttons' => [
-                            'update' => function ($url, $model, $key) {
-                                return Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'botonFormulario']);
-                            },
-                            'view' => function ($url, $model, $key) {
-                                return Html::a('Ver', ['view', 'id' => $model->id], ['class' => 'botonFormulario']);
-                            },
-                            'delete' => function ($url, $model, $key) {
-                                return Html::a('Eliminar', ['delete', 'id' => $model->id], [
-                                    'class' => 'botonFormulario',
-                                    'data' => [
-                                        'confirm' => '¿Estás seguro de que deseas eliminar esta estadística?',
-                                        'method' => 'post',
-                                    ],
-                                ]);
-                            },
-                        ],
+                        'attribute' => 'activo',
+                        'value' => function ($model) {
+                            return $model->activo ? 'Activo' : 'Inactivo';
+                        },
+                    ],
+                    [
+                        'class' => ActionColumn::className(),
+                        'urlCreator' => function ($action, app\models\EstadisticasJugador $model, $key, $index, $column) {
+                            return Url::toRoute([$action, 'id' => $model->id]);
+                         }
                     ],
                 ],
             ]); ?>
-
 
 
         <?= Html::a('Actualizar Estadísticas', ['actualizar-estadisticas'], ['class' => 'botonFormulario']) ?>

@@ -29,6 +29,8 @@ use yii\db\Expression;
                 <?= Html::a('Ver Detalles', ['equipos/view', 'id' => $equipo->id], ['class' => 'botonFormulario']) ?>
                 <br><br>
                 <?= Html::a('Ingresar en nueva temporada', ['cambio-temporada', 'idTemporada' => $equipo->id_temporada, 'idEq' => $equipo->id], ['class' => 'botonFormulario']) ?>
+                <br><br>
+                <?= Html::a('Crear estadísticas', ['estadisticas-jugador/crear-estadisticas', 'idTemporada' => $equipo->id_temporada, 'idEquipo' => $equipo->id], ['class' => 'botonFormulario']) ?>
         <?php endif ?>
     </div>
 <?php endforeach; ?>

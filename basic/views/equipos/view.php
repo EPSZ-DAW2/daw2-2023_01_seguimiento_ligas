@@ -67,5 +67,6 @@ $this->title = $equipo->nombre;
         </p>
 
         <?= Html::a('Ingresar en nueva temporada', ['cambio-temporada', 'idTemporada' => $equipo->id_temporada, 'idEq' => $equipo->id], ['class' => 'botonFormulario']) ?>
+        <?= Html::a('Crear estadísticas', ['estadisticas-jugador/crear-estadisticas', 'idTemporada' => $equipo->id_temporada, 'idEquipo' => $equipo->id], ['class' => 'botonFormulario']) ?>
     </div>
 </div>
