@@ -10,6 +10,13 @@ $this->title = $model->nombre;
 //$this->params['breadcrumbs'][] = ['label' => 'Jugadores', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+$idJugador = $model->id;
+$idTemporadaEquipo = $model->equipo->id_temporada;
+
+$existeRegistro = \app\models\EstadisticasJugador::find()
+    ->where(['id_jugador' => $idJugador])
+    ->exists();
 ?>
 
 <div class="contenido-cabecera">
@@ -67,7 +74,11 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
         allowfullscreen></iframe>
     <br><br>
     <p>
-        <?= Html::a('Ver Estadísticas', ['estadisticas-jugador/view', 'id' => $model->estadisticasJugador ? $model->estadisticasJugador->id : null], ['class' => 'botonFormulario']) ?>
+    <?php
+    if ($existeRegistro) {
+        echo Html::a('Ver Estadísticas', ['estadisticas-jugador/index', 'id_jugador' => $model->id, 'fromPlayerView' => true], ['class' => 'botonFormulario']);
+    }
+?>
         <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>
     </p>
 
@@ -126,8 +137,11 @@ if (Yii::$app->user->isGuest ||(Yii::$app->user->identity->id_rol != 1 && Yii::$
             ],
         ]) ?>
 
-        <?= Html::a('Ver Estadísticas', ['estadisticas-jugador/view', 'id' => $model->estadisticasJugador ? $model->estadisticasJugador->id : null], ['class' => 'botonFormulario']) ?>
-        <?= Html::a(Yii::t('app', 'Atras'), ['index'], ['class' => 'botonFormulario']) ?>
+    <?php
+    if ($existeRegistro) {
+        echo Html::a('Ver Estadísticas', ['estadisticas-jugador/index', 'id_jugador' => $model->id, 'fromPlayerView' => true], ['class' => 'botonFormulario']);
+    }
+    ?>
     </p>
 
     </div>
